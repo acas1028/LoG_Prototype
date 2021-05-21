@@ -37,7 +37,7 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> bM_Character_Team1;
     public List<GameObject> bM_Character_Team2;
     public int bM_Phase { get; set; }
-    public bool bM_Is_Preemitive { get; set; }
+    public bool bM_Team1_Is_Preemitive { get; set; }
     public int bM_Remain_Character_Team1 { get; set; }
     public int bM_Remain_Character_Team2 { get; set; }
     public int bM_Remain_HP_Team1 { get; set; }
@@ -55,7 +55,7 @@ public class BattleManager : MonoBehaviour
             Instantiate(bM_Character_Team2[i]);
         }
         bM_Phase = 0;
-        bM_Is_Preemitive = false;
+        bM_Team1_Is_Preemitive = true;
         bM_Remain_Character_Team1 = 0;
         bM_Remain_Character_Team2 = 0;
         bM_Remain_HP_Team1 = 0;
@@ -74,8 +74,11 @@ public class BattleManager : MonoBehaviour
         {
             case 0:
                 BM_Character_Setting();
+                bM_Phase++;
                 break;
             case 1:
+                Battle(bM_Phase);
+                Battle(bM_Phase);
                 break;
             default:
                 break;      
@@ -87,12 +90,56 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             bM_Character_Team1[i].GetComponent<Character_Script>().Character_Setting(i + 1);
-            Debug.Log(bM_Character_Team1[i].GetComponent<Character_Script>().character_HP);
+            bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Speed = i + 1; // Debuging
+            Debug.Log("team1 " + i + bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Speed);
+            bM_Character_Team1[i].GetComponent<Character_Script>().character_Is_Preemptive = true; // Debuging
         }
         for (int i = 0; i < 5; i++)
         {
             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Setting(i + 1);
-            Debug.Log(bM_Character_Team2[i].GetComponent<Character_Script>().character_HP);
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Speed = i + 1; // Debuging
+            Debug.Log("team2 " + i + bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Speed);
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Is_Preemptive = false; // Debuging
         }
+    }
+
+    void Battle(int phase)
+    {
+        if (bM_Team1_Is_Preemitive)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Speed == phase)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Range[j] == true ||
+                           bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Greed == j)
+                        {
+                            bM_Character_Team1[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team2[i]);
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Speed == phase)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Range[j] == true ||
+                           bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Greed == j)
+                        {
+                            bM_Character_Team2[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team1[i]);
+                        }
+                    }
+                }
+            }
+        }
+        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
+        bM_Phase++;
     }
 }

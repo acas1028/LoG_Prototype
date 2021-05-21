@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character_Script : MonoBehaviour
-{
+{ 
     public int character_ID { get; set; } // 캐릭터 ID
     public bool character_Is_Allive { get; set; } // 캐릭터 생존 유무
     public int character_HP { get; set; } // 체력
@@ -137,7 +137,7 @@ public class Character_Script : MonoBehaviour
                 character_Attack_Range[arrayNumber] = false;
             else
                 character_Attack_Range[arrayNumber] = true;
-
+            arrayNumber++;
             number /= 10;
         }
     }
