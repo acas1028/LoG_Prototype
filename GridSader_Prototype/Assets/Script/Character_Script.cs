@@ -11,7 +11,7 @@ public class Character_Script : MonoBehaviour
     public int character_Attack_Damage { get; set; } // 공격력
     public int character_Num_Of_Attack_Range { get; set; } // 공격 범위 숫자
     public int character_Num_Of_Greed { get; set; } // 그리드 넘버
-    public int character_Attack_Speed { get; set; } // 공격 순서
+    public int character_Attack_Order { get; set; } // 공격 순서
     public bool character_Is_Preemptive { get; set; } // 선공 후공 true = 선공 false = 후공
     public bool[] character_Attack_Range { get; set; } // 공격 범위
     public int character_Attack_Count { get; set; } // 공격 횟수
@@ -23,9 +23,18 @@ public class Character_Script : MonoBehaviour
 
     List<Dictionary<string, object>> character_data; // 데이터 저장소
 
+    // Debug
+
+    public bool[] Debug_character_Attack_Range;
+    public int Debug_character_Greed_Number;
+    public int Debug_Character_Damage;
+    public int Debug_Character_HP;
+
+    // Debug
     // Start is called before the first frame update
     void Start()
     {
+        Debug_character_Attack_Range = new bool[9];
         Character_Reset();
        
     }
@@ -45,7 +54,7 @@ public class Character_Script : MonoBehaviour
         character_Attack_Damage = 0;
         character_Num_Of_Attack_Range = 0;
         character_Num_Of_Greed = 0;
-        character_Attack_Speed = 0;
+        character_Attack_Order = 0;
         character_Is_Preemptive = false;
         character_Attack_Range = new bool[9]
             { false, false, false,
@@ -65,6 +74,7 @@ public class Character_Script : MonoBehaviour
         enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
 
         enemy_Character_Script.character_Damaged = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
+        enemy_Character_Script.Character_Damaged();
     }
 
     public void Character_Damaged()
@@ -83,6 +93,7 @@ public class Character_Script : MonoBehaviour
             character_HP = 0;
             Character_Dead();
         }
+        character_Damaged = 0;
     }
 
     public void Character_Dead()
@@ -104,7 +115,7 @@ public class Character_Script : MonoBehaviour
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
         character_Num_Of_Attack_Range = (int)character_data[num]["Num_Of_Attack_Range"];
         character_Num_Of_Greed = (int)character_data[num]["Num_Of_Greed"];
-        character_Attack_Speed = (int)character_data[num]["Attack_Speed"];
+        character_Attack_Order = (int)character_data[num]["Attack_Order"];
         if ((int)character_data[num]["Is_Preemptive"] == 0)
             character_Is_Preemptive = false;
         else
@@ -140,5 +151,13 @@ public class Character_Script : MonoBehaviour
             arrayNumber++;
             number /= 10;
         }
+    }
+
+    public void Debuging_Character()
+    {
+        Debug_Character_HP = character_HP;
+        Debug_character_Attack_Range = character_Attack_Range;
+        Debug_character_Greed_Number = character_Num_Of_Greed;
+        Debug_Character_Damage = character_Attack_Damage;
     }
 }

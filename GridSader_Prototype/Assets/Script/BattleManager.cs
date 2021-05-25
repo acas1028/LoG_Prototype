@@ -46,14 +46,8 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < 5; i++)
-        {
-            Instantiate(bM_Character_Team1[i]);
-        }
-        for (int i = 0; i < 5; i++)
-        {
-            Instantiate(bM_Character_Team2[i]);
-        }
+        
+
         bM_Phase = 0;
         bM_Team1_Is_Preemitive = true;
         bM_Remain_Character_Team1 = 0;
@@ -79,6 +73,27 @@ public class BattleManager : MonoBehaviour
             case 1:
                 Battle(bM_Phase);
                 Battle(bM_Phase);
+                bM_Phase++;
+                break;
+            case 2:
+                Battle(bM_Phase);
+                Battle(bM_Phase);
+                bM_Phase++;
+                break;
+            case 3:
+                Battle(bM_Phase);
+                Battle(bM_Phase);
+                bM_Phase++;
+                break;
+            case 4:
+                Battle(bM_Phase);
+                Battle(bM_Phase);
+                bM_Phase++;
+                break;
+            case 5:
+                Battle(bM_Phase);
+                Battle(bM_Phase);
+                bM_Phase++;
                 break;
             default:
                 break;      
@@ -90,17 +105,18 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             bM_Character_Team1[i].GetComponent<Character_Script>().Character_Setting(i + 1);
-            bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Speed = i + 1; // Debuging
-            Debug.Log("team1 " + i + bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Speed);
+            bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team1[i].GetComponent<Character_Script>().character_Is_Preemptive = true; // Debuging
-        }
-        for (int i = 0; i < 5; i++)
-        {
+            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Greed = i;
+            bM_Character_Team1[i].GetComponent<Character_Script>().Debuging_Character();
+
             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Setting(i + 1);
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Speed = i + 1; // Debuging
-            Debug.Log("team2 " + i + bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Speed);
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Is_Preemptive = false; // Debuging
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Greed = i;
+            bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
         }
+      
     }
 
     void Battle(int phase)
@@ -109,14 +125,15 @@ public class BattleManager : MonoBehaviour
         {
             for (int i = 0; i < 5; i++)
             {
-                if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Speed == phase)
+                if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Order == phase)
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Range[j] == true ||
+                        if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Range[j] == true &&
                            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Greed == j)
                         {
                             bM_Character_Team1[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team2[i]);
+                            Debug.Log("Team1 num " + i + 1 + " Attack " + bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Damage);
                         }
                     }
                 }
@@ -126,20 +143,36 @@ public class BattleManager : MonoBehaviour
         {
             for (int i = 0; i < 5; i++)
             {
-                if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Speed == phase)
+                if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order == phase)
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Range[j] == true ||
+                        if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Range[j] == true &&
                            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Greed == j)
                         {
                             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team1[i]);
+                            Debug.Log("Team2 num " + i + 1 + " Attack " + bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Damage);
                         }
                     }
                 }
             }
         }
         bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
-        bM_Phase++;
+
+        Calculate_Remain_HP();
+
+        Debug.Log("Phase " + bM_Phase + " Team1 남은체력 = " + bM_Remain_HP_Team1);
+        Debug.Log("Phase " + bM_Phase + " Team2 남은체력 = " + bM_Remain_HP_Team2);
+    }
+
+    void Calculate_Remain_HP()
+    {
+        bM_Remain_HP_Team1 = 0;
+        bM_Remain_HP_Team2 = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            bM_Remain_HP_Team1 += bM_Character_Team1[i].GetComponent<Character_Script>().character_HP;
+            bM_Remain_HP_Team2 += bM_Character_Team2[i].GetComponent<Character_Script>().character_HP;
+        }
     }
 }
