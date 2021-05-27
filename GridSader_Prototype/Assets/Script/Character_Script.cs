@@ -18,6 +18,8 @@ public class Character_Script : MonoBehaviour
     public int character_Damaged { get; set; } // 받을 데미지
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
+
+    public int character_ID_Number;
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
 
@@ -34,6 +36,7 @@ public class Character_Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Character_Setting(character_ID_Number);
         Debug_character_Attack_Range = new bool[9];
         Character_Reset();
        
