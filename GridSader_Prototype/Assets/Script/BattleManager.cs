@@ -107,13 +107,13 @@ public class BattleManager : MonoBehaviour
             bM_Character_Team1[i].GetComponent<Character_Script>().Character_Setting(i + 1);
             bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team1[i].GetComponent<Character_Script>().character_Is_Preemptive = true; // Debuging
-            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Greed = i;
+            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid = i;
             bM_Character_Team1[i].GetComponent<Character_Script>().Debuging_Character();
 
             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Setting(i + 1);
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Is_Preemptive = false; // Debuging
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Greed = i;
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = i;
             bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
         }
       
@@ -130,7 +130,7 @@ public class BattleManager : MonoBehaviour
                     for (int j = 0; j < 9; j++)
                     {
                         if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Range[j] == true &&
-                           bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Greed == j)
+                           bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid == j)
                         {
                             bM_Character_Team1[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team2[i]);
                             Debug.Log("Team1 num " + i + 1 + " Attack " + bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Damage);
@@ -148,7 +148,7 @@ public class BattleManager : MonoBehaviour
                     for (int j = 0; j < 9; j++)
                     {
                         if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Range[j] == true &&
-                           bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Greed == j)
+                           bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid == j)
                         {
                             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team1[i]);
                             Debug.Log("Team2 num " + i + 1 + " Attack " + bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Damage);

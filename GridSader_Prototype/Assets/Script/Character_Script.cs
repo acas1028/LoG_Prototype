@@ -10,7 +10,7 @@ public class Character_Script : MonoBehaviour
     public int character_AP { get; set; } // AP
     public int character_Attack_Damage { get; set; } // 공격력
     public int character_Num_Of_Attack_Range { get; set; } // 공격 범위 숫자
-    public int character_Num_Of_Greed { get; set; } // 그리드 넘버
+    public int character_Num_Of_Grid { get; set; } // 그리드 넘버
     public int character_Attack_Order { get; set; } // 공격 순서
     public bool character_Is_Preemptive { get; set; } // 선공 후공 true = 선공 false = 후공
     public bool[] character_Attack_Range { get; set; } // 공격 범위
@@ -28,7 +28,7 @@ public class Character_Script : MonoBehaviour
     // Debug
 
     public bool[] Debug_character_Attack_Range;
-    public int Debug_character_Greed_Number;
+    public int Debug_character_Grid_Number;
     public int Debug_Character_Damage;
     public int Debug_Character_HP;
 
@@ -56,7 +56,7 @@ public class Character_Script : MonoBehaviour
         character_AP = 0;
         character_Attack_Damage = 0;
         character_Num_Of_Attack_Range = 0;
-        character_Num_Of_Greed = 0;
+        character_Num_Of_Grid = 0;
         character_Attack_Order = 0;
         character_Is_Preemptive = false;
         character_Attack_Range = new bool[9]
@@ -117,7 +117,7 @@ public class Character_Script : MonoBehaviour
         character_AP = (int)character_data[num]["AP"];
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
         character_Num_Of_Attack_Range = (int)character_data[num]["Num_Of_Attack_Range"];
-        character_Num_Of_Greed = (int)character_data[num]["Num_Of_Greed"];
+        character_Num_Of_Grid = (int)character_data[num]["Num_Of_Grid"];
         character_Attack_Order = (int)character_data[num]["Attack_Order"];
         if ((int)character_data[num]["Is_Preemptive"] == 0)
             character_Is_Preemptive = false;
@@ -160,7 +160,31 @@ public class Character_Script : MonoBehaviour
     {
         Debug_Character_HP = character_HP;
         Debug_character_Attack_Range = character_Attack_Range;
-        Debug_character_Greed_Number = character_Num_Of_Greed;
+        Debug_character_Grid_Number = character_Num_Of_Grid;
         Debug_Character_Damage = character_Attack_Damage;
+    }
+
+    public void Copy_Character_Stat(GameObject copyObject) // 캐릭터스크립트 내의 변수들을 복사하는 함수
+    {
+        Character_Script copy = copyObject.GetComponent<Character_Script>();
+        character_ID = copy.character_ID;
+        character_Is_Allive = copy.character_Is_Allive;
+        character_HP = copy.character_HP;
+        character_AP = copy.character_AP;
+        character_Attack_Damage = copy.character_Attack_Damage;
+        for(int i = 0; i < 9; i++)
+        {
+            character_Attack_Range[i] = copy.character_Attack_Range[i];
+        }
+        character_Num_Of_Grid = copy.character_Num_Of_Grid;
+        character_Attack_Order = copy.character_Attack_Order;
+        character_Is_Preemptive = copy.character_Is_Preemptive;
+        character_Attack_Range = copy.character_Attack_Range;
+        character_Attack_Count = copy.character_Attack_Count;
+        character_Damaged = copy.character_Damaged;
+        character_Buffed_Attack = copy.character_Buffed_Attack;
+        character_Buffed_Damaged = copy.character_Buffed_Damaged;
+        character_Divine_Shield = copy.character_Divine_Shield;
+        character_Revivial = copy.character_Revivial;
     }
 }
