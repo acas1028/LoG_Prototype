@@ -18,8 +18,6 @@ public class Character_Script : MonoBehaviour
     public int character_Damaged { get; set; } // 받을 데미지
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
-
-    public int character_ID_Number;
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
 
@@ -31,21 +29,20 @@ public class Character_Script : MonoBehaviour
     public int Debug_character_Grid_Number;
     public int Debug_Character_Damage;
     public int Debug_Character_HP;
+    public int Debug_Character_Attack_order;
 
     // Debug
     // Start is called before the first frame update
     void Start()
     {
-        Character_Setting(character_ID_Number);
         Debug_character_Attack_Range = new bool[9];
         Character_Reset();
-       
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+ 
     }
 
     public void Character_Reset()
@@ -162,6 +159,7 @@ public class Character_Script : MonoBehaviour
         Debug_character_Attack_Range = character_Attack_Range;
         Debug_character_Grid_Number = character_Num_Of_Grid;
         Debug_Character_Damage = character_Attack_Damage;
+        Debug_Character_Attack_order = character_Attack_Order;
     }
 
     public void Copy_Character_Stat(GameObject copyObject) // 캐릭터스크립트 내의 변수들을 복사하는 함수
