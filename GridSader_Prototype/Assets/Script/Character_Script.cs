@@ -98,6 +98,7 @@ public class Character_Script : MonoBehaviour
 
     public void Character_Dead()
     {
+        Debug.Log(character_Num_Of_Grid + " is Dead");
         Character_Reset();
     }
 

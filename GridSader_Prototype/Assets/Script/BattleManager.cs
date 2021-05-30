@@ -34,8 +34,10 @@ public class BattleManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public List<GameObject> bM_Character_Team1;
-    public List<GameObject> bM_Character_Team2;
+
+
+    public GameObject[] bM_Character_Team1;
+    public GameObject[] bM_Character_Team2;
     public int bM_Phase { get; set; }
     public bool bM_Team1_Is_Preemitive { get; set; }
     public int bM_Remain_Character_Team1 { get; set; }
@@ -43,10 +45,12 @@ public class BattleManager : MonoBehaviour
     public int bM_Remain_HP_Team1 { get; set; }
     public int bM_Remain_HP_Team2 { get; set; }
 
+    private float Debug_Delay;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug_Delay = 0.0f;
 
         bM_Phase = 0;
         bM_Team1_Is_Preemitive = true;
@@ -59,7 +63,13 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Running_Phase();
+        Debug_Delay += Time.deltaTime;
+
+        if (Debug_Delay > 2)
+        {
+            Running_Phase();
+            Debug_Delay = 0;
+        }
     }
 
     void Running_Phase()
@@ -107,54 +117,62 @@ public class BattleManager : MonoBehaviour
             bM_Character_Team1[i].GetComponent<Character_Script>().Character_Setting(i + 1);
             bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team1[i].GetComponent<Character_Script>().character_Is_Preemptive = true; // Debuging
-            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid = i;
+            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
             bM_Character_Team1[i].GetComponent<Character_Script>().Debuging_Character();
 
             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Setting(i + 1);
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Is_Preemptive = false; // Debuging
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = i;
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
             bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
         }
       
     }
-
-    void Battle(int phase)
+    void Character_Attack(GameObject attacker,GameObject[] enemy_Characters,int attacked_Grid) //캐릭터 공격
+    {
+        foreach(GameObject enemy_Character in enemy_Characters)
+        {
+            if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == attacked_Grid
+            && enemy_Character.GetComponent<Character_Script>().character_Is_Allive)
+            {
+                Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
+                    " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
+                attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
+            }
+        }
+    }
+    void Battle(int phase) // 선공,후공에 따라 배틀을 진행한다.
     {
         if (bM_Team1_Is_Preemitive)
         {
-            for (int i = 0; i < 5; i++)
+            foreach(GameObject team1_Character in bM_Character_Team1)
             {
-                if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Order == phase)
+                if(team1_Character.GetComponent<Character_Script>().character_Attack_Order == phase
+                && team1_Character.GetComponent<Character_Script>().character_Is_Allive)
                 {
-                    for (int j = 0; j < 9; j++)
+                    for(int j = 0; j < 9; j++)
                     {
-                        if (bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Range[j] == true &&
-                           bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid == j)
-                        {
-                            bM_Character_Team1[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team2[i]);
-                            Debug.Log("Team1 num " + i + 1 + " Attack " + bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Damage);
-                        }
+                        if (team1_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true)
+                            Character_Attack(team1_Character,bM_Character_Team2, j + 1);
                     }
                 }
+                team1_Character.GetComponent<Character_Script>().Debuging_Character();
             }
         }
         else
         {
-            for (int i = 0; i < 5; i++)
+            foreach (GameObject team2_Character in bM_Character_Team2)
             {
-                if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order == phase)
+                if (team2_Character.GetComponent<Character_Script>().character_Attack_Order == phase
+                 && team2_Character.GetComponent<Character_Script>().character_Is_Allive)
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        if (bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Range[j] == true &&
-                           bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid == j)
-                        {
-                            bM_Character_Team2[i].GetComponent<Character_Script>().Character_Attack(bM_Character_Team1[i]);
-                            Debug.Log("Team2 num " + i + 1 + " Attack " + bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Damage);
-                        }
+                        if (team2_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true)
+                            Character_Attack(team2_Character, bM_Character_Team1, j + 1);
                     }
                 }
+                team2_Character.GetComponent<Character_Script>().Debuging_Character();
             }
         }
         bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
@@ -165,7 +183,7 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Phase " + bM_Phase + " Team2 남은체력 = " + bM_Remain_HP_Team2);
     }
 
-    void Calculate_Remain_HP()
+    void Calculate_Remain_HP() //남은 체력 계산
     {
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
