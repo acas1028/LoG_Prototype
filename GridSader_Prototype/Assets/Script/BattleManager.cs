@@ -65,7 +65,7 @@ public class BattleManager : MonoBehaviour
     {
         Debug_Delay += Time.deltaTime;
 
-        if (Debug_Delay > 2)
+        if (Debug_Delay > 2) // 디버깅용.
         {
             Running_Phase();
             Debug_Delay = 0;
@@ -77,7 +77,7 @@ public class BattleManager : MonoBehaviour
         switch(bM_Phase)
         {
             case 0:
-                BM_Character_Setting();
+                BM_Character_Setting(); // 디버깅용이니 차후 변경예정.
                 bM_Phase++;
                 break;
             case 1:
@@ -117,19 +117,21 @@ public class BattleManager : MonoBehaviour
             bM_Character_Team1[i].GetComponent<Character_Script>().Character_Setting(i + 1);
             bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team1[i].GetComponent<Character_Script>().character_Is_Preemptive = true; // Debuging
-            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
+            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1; // Debuging
             bM_Character_Team1[i].GetComponent<Character_Script>().Debuging_Character();
 
             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Setting(i + 1);
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Is_Preemptive = false; // Debuging
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1; // Debuging
             bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
         }
       
     }
     void Character_Attack(GameObject attacker,GameObject[] enemy_Characters,int attacked_Grid) //캐릭터 공격
     {
+        // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
+        // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
         foreach(GameObject enemy_Character in enemy_Characters)
         {
             if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == attacked_Grid
@@ -143,16 +145,16 @@ public class BattleManager : MonoBehaviour
     }
     void Battle(int phase) // 선공,후공에 따라 배틀을 진행한다.
     {
-        if (bM_Team1_Is_Preemitive)
+        if (bM_Team1_Is_Preemitive) // 선공 판별 (차후 변경 예정)
         {
             foreach(GameObject team1_Character in bM_Character_Team1)
             {
                 if(team1_Character.GetComponent<Character_Script>().character_Attack_Order == phase
-                && team1_Character.GetComponent<Character_Script>().character_Is_Allive)
+                && team1_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀1의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                 {
                     for(int j = 0; j < 9; j++)
                     {
-                        if (team1_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true)
+                        if (team1_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
                             Character_Attack(team1_Character,bM_Character_Team2, j + 1);
                     }
                 }
@@ -164,18 +166,18 @@ public class BattleManager : MonoBehaviour
             foreach (GameObject team2_Character in bM_Character_Team2)
             {
                 if (team2_Character.GetComponent<Character_Script>().character_Attack_Order == phase
-                 && team2_Character.GetComponent<Character_Script>().character_Is_Allive)
+                 && team2_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀2의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        if (team2_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true)
+                        if (team2_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
                             Character_Attack(team2_Character, bM_Character_Team1, j + 1);
                     }
                 }
                 team2_Character.GetComponent<Character_Script>().Debuging_Character();
             }
         }
-        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
+        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive; // 선후공 변경!
 
         Calculate_Remain_HP();
 
