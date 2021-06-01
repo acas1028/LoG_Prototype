@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -46,29 +48,55 @@ public class UI_Manager : MonoBehaviour
         use_of_job_skills, character_stat_distribution, character_placement
     }
 
-    //각각의 순서를 명시하는 변수
-    private orders ui_order;
+   
+    private orders ui_order; //각각의 순서를 명시하는 변수
+    private GameObject arraymanager; //오브젝트 arraymanager
+    private GameObject character_inventory; //오브젝트 panel
+    private GameObject arrayButton; // 오브젝트 arraybutton
+    private GameObject popup; // 오브젝트 popup
+    private GameObject[] character_inventory_button; // 오브젝트 inventory(캐릭터 관련 버튼)
+    private GameObject[] null_Character; //오브젝트 nullcharacter
 
-    
+    private int arraybutton_On = 0;
 
     private void Start()
     {
         ui_order = orders.use_of_job_skills;// 일단 job skill 사용을 처음으로 설정
+        arraymanager = GameObject.FindWithTag("ArrayManager"); // find를 이용할 시 오류가 일어날 수가 있으니 버그가 발생했을 경우 이곳을 주시(unity communication  피셜) 
+        arraymanager.SetActive(false);
+        character_inventory_button = GameObject.FindGameObjectsWithTag("Character_inventory_Button");// tag를 이용한 character inventory button 가져오기
+        character_inventory = GameObject.FindWithTag("Character_inventory"); //tag를 이용한 panel 가져오기
+        character_inventory.SetActive(false);
+        arrayButton = GameObject.FindWithTag("ArrayButton"); //tag를 이용한 arrayButton 가져오기
+        arrayButton.SetActive(false);
+        null_Character = GameObject.FindGameObjectsWithTag("Null_Character"); // tag를 이용한 nullcharacter 가져오기
+        popup = GameObject.FindWithTag("Popup"); // tag를 이용한 popup 가져오기
+        popup.SetActive(false);
     }
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space)) // 임시로 다음 단계로 이동하기 위한 수단
+        {
+            Debug_Manager();
+            ui_order += 1;
+        }
+
+        Use_of_job_skills();
+
+        Character_stat_distribution();
+
+        Character_placement();
         
     }
 
-    void GetMOuseclick_Vector() //레이 케스트를 이용한 방법으로 마우스 클릭 좌표 흭득
+    void Use_of_job_skills()// 직업 능력을 사용할때 함수 작동
     {
-        if(Input.GetMouseButtonDown(0))
+        if(ui_order == orders.use_of_job_skills)
         {
-            Vector3 Mouse_Position = Input.mousePosition;
-            
 
         }
+
     }
 
 
@@ -76,12 +104,24 @@ public class UI_Manager : MonoBehaviour
     {
         if(ui_order== orders.character_stat_distribution)
         {
-            //일단 밑에 캐릭터 인벤토리 등장은 이 스크립트가 아닌 오브젝트 내에 스크립트를 추가시켜 지금 순서가 캐릭터 스텟분배이면 곧바로 나타나도록 설정.
+            if(arraybutton_On==0) //arraybutton이 한번만 true가 되도록(이렇게 하지 않을 경우 button이 이 차례일때 사라지지 않음)
+            {
+                arrayButton.SetActive(true);
+                arraybutton_On++;
+            }
 
-            //인벤토리내 캐릭터 배치는 인벤토리의 크기를 설정하고 제작해야하므로 일단 잠시 보류.
+            for (int i = 0; i < character_inventory_button.Length; i++) //이 차례일시 버튼이 사라지지 않도록
+            {
+                character_inventory_button[i].SetActive(true);
+            }
 
-            //레이캐스트 제작이 끝났을시 캐릭터 클릭-> 팝업창 정보 등장하도록 설정
-            
+            for (int i = 0; i < null_Character.Length; i++) //배치에 직접적으로 관련있는 nullcharacter를 이 차례때는 off 시킨다.
+            {
+                null_Character[i].SetActive(false);
+            }
+
+
+
         }
 
     }
@@ -90,8 +130,24 @@ public class UI_Manager : MonoBehaviour
     {
         if(ui_order==orders.character_placement)
         {
-
+            
+            arraymanager.SetActive(true);
+            for(int i=0; i<null_Character.Length;i++) //배치에 직접적으로 관련있는 nullCharacter를 다시 on시킨다.
+            {
+                null_Character[i].SetActive(true);
+            }
+            popup.SetActive(false);//이 차례시 popbutton이 등장하지 않도록
+            
+      
+            
         }
 
+    }
+
+    void Debug_Manager() //디버그용 함수
+    {
+        Debug.Log(ui_order);
+        Debug.Log(arraybutton_On);
+        Debug.Log(character_inventory_button[0]);
     }
 }
