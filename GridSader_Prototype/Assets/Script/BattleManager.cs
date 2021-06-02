@@ -44,7 +44,8 @@ public class BattleManager : MonoBehaviour
     public int bM_Remain_Character_Team2 { get; set; }
     public int bM_Remain_HP_Team1 { get; set; }
     public int bM_Remain_HP_Team2 { get; set; }
-
+    
+    public GameObject Damaged_Grid;
     private float Debug_Delay;
 
     // Start is called before the first frame update
@@ -58,7 +59,50 @@ public class BattleManager : MonoBehaviour
         bM_Remain_Character_Team2 = 0;
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
+
+        GameObject map = null;
+        map = GameObject.Find("Castle_Background");
+        if(map != null)
+        {
+            Debug.Log(map.name + " 오브젝트를 불러오는데 성공");
+            map.transform.position = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            Debug.LogError(map.name + " 불러오는데 실패");
+        }
+        
+        GameObject Damaged_Gird = Instantiate(Damaged_Grid);
+
+        for (float x= -6.7f; x<=-2f;)
+        {
+            for(float y=-2f; y<=3;)
+            {
+                Instantiate(Damaged_Grid, new Vector3(x, y, 0), Quaternion.identity);
+                y += 2.25f;
+
+            }
+
+            x +=2.25f;
+        }
+        // (grid-1)%3 %3->열 결정
+        for (float x = 2.2f; x <= 6.7f;)
+        {
+
+            for (float y = -2f; y <= 3;)
+            {
+                Instantiate(Damaged_Grid, new Vector3(x, y, 0), Quaternion.identity);
+                y += 2.25f;
+
+            }
+
+            x += 2.25f;
+        }
+        // Instantiate(Damaged_Grid, new Vector3(-4.5f, 2.5f, 0), Quaternion.identity);
+        // Instantiate(Damaged_Grid, new Vector3(-2.2f, 2.5f, 0), Quaternion.identity);
+        
     }
+
 
     // Update is called once per frame
     void Update()
@@ -126,8 +170,9 @@ public class BattleManager : MonoBehaviour
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
             bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
         }
-      
+        
     }
+
     void Character_Attack(GameObject attacker,GameObject[] enemy_Characters,int attacked_Grid) //캐릭터 공격
     {
         foreach(GameObject enemy_Character in enemy_Characters)
@@ -194,3 +239,4 @@ public class BattleManager : MonoBehaviour
         }
     }
 }
+
