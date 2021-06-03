@@ -66,7 +66,7 @@ public class UI_Manager : MonoBehaviour
         arraymanager.SetActive(false);
         character_inventory_button = GameObject.FindGameObjectsWithTag("Character_inventory_Button");// tag를 이용한 character inventory button 가져오기
         character_inventory = GameObject.FindWithTag("Character_inventory"); //tag를 이용한 panel 가져오기
-        character_inventory.SetActive(false);
+        character_inventory.SetActive(true);
         arrayButton = GameObject.FindWithTag("ArrayButton"); //tag를 이용한 arrayButton 가져오기
         arrayButton.SetActive(false);
         null_Character = GameObject.FindGameObjectsWithTag("Null_Character"); // tag를 이용한 nullcharacter 가져오기
@@ -136,7 +136,7 @@ public class UI_Manager : MonoBehaviour
             {
                 null_Character[i].SetActive(true);
             }
-            popup.SetActive(false);//이 차례시 popbutton이 등장하지 않도록
+            //popup.SetActive(false);//이 차례시 popbutton이 등장하지 않도록
             
       
             

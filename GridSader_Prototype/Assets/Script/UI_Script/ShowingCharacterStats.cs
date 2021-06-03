@@ -11,6 +11,22 @@ public class ShowingCharacterStats : MonoBehaviour
     public Text attack_Damage;
     public Text health_Point;
 
+    private static ShowingCharacterStats PopUp_Manager;
+    public static ShowingCharacterStats PopUp_instance
+    {
+        get
+        {
+            if (!PopUp_Manager)
+            {
+                PopUp_Manager = FindObjectOfType(typeof(ShowingCharacterStats)) as ShowingCharacterStats;
+
+                if (PopUp_Manager == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return PopUp_Manager;
+        }
+    }
+
     public void Awake()
     {
         attack_Grid_Tile = GameObject.FindGameObjectsWithTag("Attack_Grid_Tile");
