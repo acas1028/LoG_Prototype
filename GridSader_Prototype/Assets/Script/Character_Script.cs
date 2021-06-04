@@ -45,7 +45,7 @@ public class Character_Script : MonoBehaviour
  
     }
 
-    public void Character_Reset()
+    public void Character_Reset() // 캐릭터의 정보를 초기화한다.
     {
         character_ID = 0;
         character_Is_Allive = false;
@@ -68,27 +68,30 @@ public class Character_Script : MonoBehaviour
         character_Revivial = false;
     }
 
-    public void Character_Attack(GameObject enemy_Character)
+    public void Character_Attack(GameObject enemy_Character) // 캐릭터 스크립트 내에 있는 공격 함수.
     {
+        // 적 캐릭터를 받아와서, 그 캐릭터의 정보에 접근하여 받을 데미지에 공격력 만큼을 저장시킴.
+
         Character_Script enemy_Character_Script;
         enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
 
         enemy_Character_Script.character_Damaged = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
-        enemy_Character_Script.Character_Damaged();
+        enemy_Character_Script.Character_Damaged(); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
     }
 
-    public void Character_Damaged()
+    public void Character_Damaged() // 피격 함수
     {
+        // 받을 데미지를 다시 계산.
         character_Damaged = (character_Damaged * (100 + character_Buffed_Damaged)) / 100;
 
-        if(character_Divine_Shield)
+        if(character_Divine_Shield) // 나중에 들어가겠지만 간단해서 넣어뒀음. 천상의보호막임.
         {
             character_Divine_Shield = false;
         }
-        else
+        else // 천보없으면 체력닳아야죠?
             character_HP -= character_Damaged;
 
-        if(character_HP <= 0)
+        if(character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         {
             character_HP = 0;
             Character_Dead();
@@ -96,7 +99,7 @@ public class Character_Script : MonoBehaviour
         character_Damaged = 0;
     }
 
-    public void Character_Dead()
+    public void Character_Dead() // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
     {
         Debug.Log(character_Num_Of_Grid + " is Dead");
         Character_Reset();
@@ -104,6 +107,14 @@ public class Character_Script : MonoBehaviour
 
     public void Character_Setting(int num) // 데이터 세팅
     {
+        //데이터 세팅.
+
+        // 혹시나 사용법 궁금할까봐 남기는 주석
+        // character_data 에 모든 데이터들이 저장되고,
+        // 그 데이터의 사용법은 이러하다
+        // character_data[원하는 행(가로줄)]["원하는 변수"]
+        // 쓸일없기를 바람. 어차피 초기화용도임.
+
         character_data = CSVReader.Read("Character_DB");
 
         character_ID = (int)character_data[num]["ID"];
