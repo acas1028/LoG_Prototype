@@ -1,17 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Arrayment_Manager: MonoBehaviour
 {
-    private static Arrayment_Manager ArrayManager;
+   
     private bool Character_instance = true;
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
     public Queue<GameObject> Order = new Queue<GameObject>();
     private GameObject[] Grids;
+    private GameObject[] Inventory;
+    public GameObject[] Block_Inventory;
+    public GameObject PopUp_UI;
+    public GameObject Array_Cancle_Button;
+    public GameObject PopUp_Manager;
+    private GameObject Cancle_Character;
+
+    private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
     {
         get
@@ -42,14 +52,11 @@ public class Arrayment_Manager: MonoBehaviour
     void Start()
     {
         Grids = GameObject.FindGameObjectsWithTag("Null_Character");
+        Inventory = GameObject.FindGameObjectsWithTag("Character_inventory_Button");
     }
     void Update()
     {
-        if(Character_instance==true)
-        {
-            Arrayment_Raycast();
-        }
-
+        Arrayment_Raycast();
     }
     public void Arrayment_Raycast()
     {
@@ -60,30 +67,61 @@ public class Arrayment_Manager: MonoBehaviour
 
                 RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000);
 
-                if (hit.transform.CompareTag("Null_Character"))//Null_Character로 태그 되어 있는 물체에게 raycast가 닿으면.
+                if (hit.transform.CompareTag("Character")&&Character_instance==false)
                 {
-
-                Character_Instantiate = hit.collider.gameObject;
-                Character_Instantiate.tag = "Character";//Character로 태그를 변경한다. 예외처리.
-                Character_Instantiate.GetComponent<Character_Script>().character_ID = Prefeb_Character.GetComponent<Character_Script>().character_ID;
-                Character_Instantiate.GetComponent<Character_Script>().Character_Setting(Character_Instantiate.GetComponent<Character_Script>().character_ID);
-                for (int i = 0; i < Grids.Length; i++)
+                    PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character_Script>().character_ID);
+                    Cancle_Character = hit.transform.gameObject;
+                    Array_Cancle_Button.SetActive(true);
+                    PopUp_UI.SetActive(true);                   
+                }
+                if (hit.transform.CompareTag("Null_Character")&&Character_instance == true)//Null_Character로 태그 되어 있는 물체에게 raycast가 닿으면.
                 {
-                    if (Character_Instantiate == Grids[i])
+                    Character_Instantiate = hit.collider.gameObject;
+                    Character_Instantiate.tag = "Character";//Character로 태그를 변경한다. 예외처리.
+                    Character_Instantiate.GetComponent<Character_Script>().character_ID = Prefeb_Character.GetComponent<Character_Script>().character_ID;
+                    Character_Instantiate.GetComponent<Character_Script>().Character_Setting(Character_Instantiate.GetComponent<Character_Script>().character_ID);
+                    for (int i = 0; i < Grids.Length; i++)
                     {
-                        Character_Instantiate.GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
+                        if (Character_Instantiate == Grids[i])
+                        {
+                            Character_Instantiate.GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
+                        }
                     }
+                    for (int i = 0; i < Inventory.Length; i++)
+                    {
+                    Debug.Log(Inventory[i].GetComponent<Inventory_ID>().m_Inventory_ID);
+                    Debug.Log(Character_Instantiate.GetComponent<Character_Script>().character_ID);
+                    if (Inventory[i].GetComponent<Inventory_ID>().m_Inventory_ID == Character_Instantiate.GetComponent<Character_Script>().character_ID) //ID가 변동 되므로 수정 해야함.
+                    {
+                        Debug.Log("확인");
+                        Inventory[i].GetComponent<Inventory_ID>().is_Arrayed = true;
+                    }
+
+                    }
+                    Character_Instantiate.GetComponent<Character_Script>().Debuging_Character();
+                    Order.Enqueue(Character_Instantiate);
+                    PopUp_UI.SetActive(false);
+                    Character_instance = false;
                 }
-                Character_Instantiate.GetComponent<Character_Script>().Debuging_Character();
-                Order.Enqueue(Character_Instantiate);
-                Character_instance = false;
-                }
-                else
-                {
-                Debug.Log("Null Reperence");
-                }
+
 
             }
+
+    }
+    public void Cancle_Array()
+    {
+        for (int i = 0; i < Inventory.Length; i++)
+        {
+            if(Inventory[i].GetComponent<Inventory_ID>().m_Inventory_ID == Cancle_Character.GetComponent<Character_Script>().character_ID)
+            {
+                Inventory[i].GetComponent<Inventory_ID>().is_Arrayed = false;
+            }
+        }
+        Cancle_Character.tag = "Null_Character";
+        Order.Enqueue(Cancle_Character);
+        Cancle_Character.GetComponent<Character_Script>().character_ID = 0;
+        Cancle_Character.GetComponent<Character_Script>().Character_Setting(Cancle_Character.GetComponent<Character_Script>().character_ID);
+        Cancle_Character.GetComponent<Character_Script>().Debuging_Character();
 
     }
     public void Attack_Order()
