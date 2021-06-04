@@ -45,12 +45,16 @@ public class BattleManager : MonoBehaviour
     public int bM_Remain_HP_Team1 { get; set; }
     public int bM_Remain_HP_Team2 { get; set; }
     
-    public GameObject Damaged_Grid;
     private float Debug_Delay;
+
+    private Renderer rend;
+    [SerializeField]
+    private Color colorToTurnTo = Color.red;
 
     // Start is called before the first frame update
     void Start()
     {
+        rend = GetComponent<Renderer>();
         Debug_Delay = 0.0f;
 
         bM_Phase = 0;
@@ -72,34 +76,7 @@ public class BattleManager : MonoBehaviour
             Debug.LogError(map.name + " 불러오는데 실패");
         }
         
-        GameObject Damaged_Gird = Instantiate(Damaged_Grid);
-
-        for (float x= -6.7f; x<=-2f;)
-        {
-            for(float y=-2f; y<=3;)
-            {
-                Instantiate(Damaged_Grid, new Vector3(x, y, 0), Quaternion.identity);
-                y += 2.25f;
-
-            }
-
-            x +=2.25f;
-        }
-        // (grid-1)%3 %3->열 결정
-        for (float x = 2.2f; x <= 6.7f;)
-        {
-
-            for (float y = -2f; y <= 3;)
-            {
-                Instantiate(Damaged_Grid, new Vector3(x, y, 0), Quaternion.identity);
-                y += 2.25f;
-
-            }
-
-            x += 2.25f;
-        }
-        // Instantiate(Damaged_Grid, new Vector3(-4.5f, 2.5f, 0), Quaternion.identity);
-        // Instantiate(Damaged_Grid, new Vector3(-2.2f, 2.5f, 0), Quaternion.identity);
+        
         
     }
 
@@ -185,6 +162,7 @@ public class BattleManager : MonoBehaviour
                 Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
                     " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
                 attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
+                enemy_Character.GetComponent<ColorChange>().Color_Change();
             }
         }
     }
@@ -200,7 +178,7 @@ public class BattleManager : MonoBehaviour
                     for(int j = 0; j < 9; j++)
                     {
                         if (team1_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
-                            Character_Attack(team1_Character,bM_Character_Team2, j + 1);
+                            Character_Attack(team1_Character, bM_Character_Team2, j + 1);
                     }
                 }
                 team1_Character.GetComponent<Character_Script>().Debuging_Character();
