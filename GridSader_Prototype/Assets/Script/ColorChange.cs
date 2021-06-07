@@ -11,8 +11,6 @@ public class ColorChange : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
-
-        
     }
 
     // Update is called once per frame

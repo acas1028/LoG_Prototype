@@ -26,7 +26,7 @@ public class Character_Position_Changer : MonoBehaviour
     public void Position_Change() // 할당된 위치배열에 따라 캐릭터 위치 변경
     {
         
-        Grid_Position_Team1[0] = new Vector3(-6.7f, 2.5f, 0f);
+        Grid_Position_Team1[0] = new Vector3(-6.6f, 2.5f, 0f);
         Grid_Position_Team1[1] = new Vector3(-4.4f, 2.5f, 0f);
         Grid_Position_Team1[2] = new Vector3(-2.2f, 2.5f, 0f);
         Grid_Position_Team1[3] = new Vector3(-6.7f, 0f, 0f);
@@ -53,7 +53,7 @@ public class Character_Position_Changer : MonoBehaviour
                 if (BattleManager.Instance.bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid == (j+1)) // 배틀매니저의 캐릭터 그리드 값이 배열과 일치하면
                 {
                     BattleManager.Instance.bM_Character_Team1[i].transform.position = Grid_Position_Team1[j]; // 캐릭터의 위치를 위치배열로 이동
-                    Debug.Log("Grid_Position"+ BattleManager.Instance.bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid);
+                    //Debug.Log("Grid_Position"+ BattleManager.Instance.bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid);
                 }
             }
         }
@@ -64,7 +64,6 @@ public class Character_Position_Changer : MonoBehaviour
                 if (BattleManager.Instance.bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid == (j+1))
                 {
                     BattleManager.Instance.bM_Character_Team2[i].transform.position = Grid_Position_Team2[j];
-                    //Instantiate(BattleManager.Instance.bM_Character_Team2[i], Grid_Position[j], Quaternion.identity);
                 }
             }
         }

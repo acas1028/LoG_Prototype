@@ -35,7 +35,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-
+    public GameObject GridManager;
     public GameObject[] bM_Character_Team1;
     public GameObject[] bM_Character_Team2;
     public int bM_Phase { get; set; }
@@ -47,14 +47,9 @@ public class BattleManager : MonoBehaviour
     
     private float Debug_Delay;
 
-    private Renderer rend;
-    [SerializeField]
-    private Color colorToTurnTo = Color.red;
-
     // Start is called before the first frame update
     void Start()
     {
-        rend = GetComponent<Renderer>();
         Debug_Delay = 0.0f;
 
         bM_Phase = 0;
@@ -163,6 +158,8 @@ public class BattleManager : MonoBehaviour
                     " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
                 attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
                 enemy_Character.GetComponent<ColorChange>().Color_Change();
+                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(attacked_Grid); // 피격범위의 캐릭터 붉게 변경
+                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(attacked_Grid); // 피격범위의 그리드에 붉은 그리드 생성
             }
         }
     }
