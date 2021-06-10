@@ -9,6 +9,7 @@ public class Arrayment_Manager: MonoBehaviour
 {
    
     private bool Character_instance = true;
+    public bool Ready_Array = false;
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
@@ -20,6 +21,7 @@ public class Arrayment_Manager: MonoBehaviour
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     private GameObject Cancle_Character;
+    private int Count = 0;
 
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
@@ -41,6 +43,8 @@ public class Arrayment_Manager: MonoBehaviour
         if (ArrayManager == null)
         {
             ArrayManager = this;
+
+            DontDestroyOnLoad(this.gameObject);
         }
         // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
         else if (!ArrayManager != this)
@@ -78,22 +82,21 @@ public class Arrayment_Manager: MonoBehaviour
                 {
                     Character_Instantiate = hit.collider.gameObject;
                     Character_Instantiate.tag = "Character";//Character로 태그를 변경한다. 예외처리.
+                    Count++;
                     Character_Instantiate.GetComponent<Character_Script>().character_ID = Prefeb_Character.GetComponent<Character_Script>().character_ID;
                     Character_Instantiate.GetComponent<Character_Script>().Character_Setting(Character_Instantiate.GetComponent<Character_Script>().character_ID);
-                    for (int i = 0; i < Grids.Length; i++)
+                    for (int i = 0; i < Grids.Length; i++)//캐릭터에 Grid_Number 삽입
                     {
                         if (Character_Instantiate == Grids[i])
                         {
                             Character_Instantiate.GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
                         }
                     }
-                    for (int i = 0; i < Inventory.Length; i++)
+                    for (int i = 0; i < Inventory.Length; i++)//인벤토리 개별화
                     {
-                    Debug.Log(Inventory[i].GetComponent<Inventory_ID>().m_Inventory_ID);
-                    Debug.Log(Character_Instantiate.GetComponent<Character_Script>().character_ID);
                     if (Inventory[i].GetComponent<Inventory_ID>().m_Inventory_ID == Character_Instantiate.GetComponent<Character_Script>().character_ID) //ID가 변동 되므로 수정 해야함.
                     {
-                        Debug.Log("확인");
+
                         Inventory[i].GetComponent<Inventory_ID>().is_Arrayed = true;
                     }
 
@@ -118,7 +121,7 @@ public class Arrayment_Manager: MonoBehaviour
             }
         }
         Cancle_Character.tag = "Null_Character";
-        Order.Enqueue(Cancle_Character);
+        //Order.Enqueue(Cancle_Character);
         Cancle_Character.GetComponent<Character_Script>().character_ID = 0;
         Cancle_Character.GetComponent<Character_Script>().Character_Setting(Cancle_Character.GetComponent<Character_Script>().character_ID);
         Cancle_Character.GetComponent<Character_Script>().Debuging_Character();
@@ -126,14 +129,15 @@ public class Arrayment_Manager: MonoBehaviour
     }
     public void Attack_Order()
     {
-        for (int i = 0; i < 5; i++)//정상
+        for (int i = 0; i < Count; i++)
         {
-            GameObject TestOrder = Order.Dequeue();//정상
-            TestOrder.GetComponent<Character_Script>().character_Attack_Order = i + 1;//정상
+            GameObject TestOrder = Order.Dequeue();
+            TestOrder.GetComponent<Character_Script>().character_Attack_Order = i + 1;
             TestOrder.GetComponent<Character_Script>().Debuging_Character();
         }
+        Ready_Array = true;
     }
-    public void Get_Button(int num)
+    public void Get_Button(int num)// 인벤토리 클릭시 발생
     {
         Character_instance = true;
         Prefeb_Character.GetComponent<Character_Script>().Character_Setting(num);
