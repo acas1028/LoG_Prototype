@@ -38,19 +38,19 @@ public class BattleManager : MonoBehaviour
     public GameObject GridManager;
     public GameObject[] bM_Character_Team1;
     public GameObject[] bM_Character_Team2;
+    public GameObject Character_Prefab;
     public int bM_Phase { get; set; }
     public bool bM_Team1_Is_Preemitive { get; set; }
     public int bM_Remain_Character_Team1 { get; set; }
     public int bM_Remain_Character_Team2 { get; set; }
     public int bM_Remain_HP_Team1 { get; set; }
     public int bM_Remain_HP_Team2 { get; set; }
-    
-    private float Debug_Delay;
+
+    public int bM_Round { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug_Delay = 0.0f;
 
         bM_Phase = 0;
         bM_Team1_Is_Preemitive = true;
@@ -58,71 +58,47 @@ public class BattleManager : MonoBehaviour
         bM_Remain_Character_Team2 = 0;
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
+        bM_Round = 0;
 
-        GameObject map = null;
-        map = GameObject.Find("Castle_Background");
-        if(map != null)
+        bM_Character_Team1 = new GameObject[5];
+        bM_Character_Team2 = new GameObject[5];
+
+        for(int i = 0; i < 5; i++)
         {
-            Debug.Log(map.name + " 오브젝트를 불러오는데 성공");
-            map.transform.position = new Vector3(0, 0, 0);
+            bM_Character_Team1[i] = Instantiate(Character_Prefab);
+            bM_Character_Team2[i] = Instantiate(Character_Prefab);
         }
-        else
-        {
-            Debug.LogError(map.name + " 불러오는데 실패");
-        }
-        
-        
-        
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        Debug_Delay += Time.deltaTime;
-
-        if (Debug_Delay > 2) // 디버깅용.
-        {
-            Running_Phase();
-            Debug_Delay = 0;
-        }
+        StartBattle();
     }
 
-    void Running_Phase()
+    void StartBattle()
     {
-        switch(bM_Phase)
+        if (bM_Phase != 0) return;
+
+        BM_Character_Setting();
+        bM_Phase++;
+        StartCoroutine(Running_Phase());    
+    }
+
+    IEnumerator Running_Phase()
+    {
+        while (bM_Phase < 6)
         {
-            case 0:
-                BM_Character_Setting(); // 디버깅용이니 차후 변경예정.
+            Battle(bM_Phase, bM_Team1_Is_Preemitive);
+            bM_Round++;
+            bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
+            if(bM_Round == 2)
+            {
                 bM_Phase++;
-                break;
-            case 1:
-                Battle(bM_Phase);
-                Battle(bM_Phase);
-                bM_Phase++;
-                break;
-            case 2:
-                Battle(bM_Phase);
-                Battle(bM_Phase);
-                bM_Phase++;
-                break;
-            case 3:
-                Battle(bM_Phase);
-                Battle(bM_Phase);
-                bM_Phase++;
-                break;
-            case 4:
-                Battle(bM_Phase);
-                Battle(bM_Phase);
-                bM_Phase++;
-                break;
-            case 5:
-                Battle(bM_Phase);
-                Battle(bM_Phase);
-                bM_Phase++;
-                break;
-            default:
-                break;      
+                bM_Round = 0;
+            }    
+            yield return new WaitForSeconds(3.0f);
         }
     }
 
@@ -139,7 +115,7 @@ public class BattleManager : MonoBehaviour
             bM_Character_Team2[i].GetComponent<Character_Script>().Character_Setting(i + 1);
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Is_Preemptive = false; // Debuging
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1; // Debuging
+            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = Reverse_Enemy(i + 1); // Debuging // 좌우반전
             bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
         }
         
@@ -157,15 +133,12 @@ public class BattleManager : MonoBehaviour
                 Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
                     " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
                 attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
-                enemy_Character.GetComponent<ColorChange>().Color_Change();
-                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(attacked_Grid); // 피격범위의 캐릭터 붉게 변경
-                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(attacked_Grid); // 피격범위의 그리드에 붉은 그리드 생성
             }
         }
     }
-    void Battle(int phase) // 선공,후공에 따라 배틀을 진행한다.
+    void Battle(int phase,bool team1_Is_Preemitive) // 선공,후공에 따라 배틀을 진행한다.
     {
-        if (bM_Team1_Is_Preemitive) // 선공 판별 (차후 변경 예정)
+        if (team1_Is_Preemitive) // 선공 판별 
         {
             foreach(GameObject team1_Character in bM_Character_Team1)
             {
@@ -175,7 +148,10 @@ public class BattleManager : MonoBehaviour
                     for(int j = 0; j < 9; j++)
                     {
                         if (team1_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
+                        {
                             Character_Attack(team1_Character, bM_Character_Team2, j + 1);
+                            GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(j+1);
+                        }
                     }
                 }
                 team1_Character.GetComponent<Character_Script>().Debuging_Character();
@@ -191,15 +167,18 @@ public class BattleManager : MonoBehaviour
                     for (int j = 0; j < 9; j++)
                     {
                         if (team2_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
-                            Character_Attack(team2_Character, bM_Character_Team1, j + 1);
+                        {
+                            Character_Attack(team2_Character, bM_Character_Team1, Reverse_Enemy(j+1)); // 좌우반전
+                            GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(Reverse_Enemy(j + 1)); // 좌우반전
+                        }
                     }
                 }
                 team2_Character.GetComponent<Character_Script>().Debuging_Character();
             }
         }
-        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive; // 선후공 변경!
 
         Calculate_Remain_HP();
+        Destory_Red_Grid();
 
         Debug.Log("Phase " + bM_Phase + " Team1 남은체력 = " + bM_Remain_HP_Team1);
         Debug.Log("Phase " + bM_Phase + " Team2 남은체력 = " + bM_Remain_HP_Team2);
@@ -214,6 +193,52 @@ public class BattleManager : MonoBehaviour
             bM_Remain_HP_Team1 += bM_Character_Team1[i].GetComponent<Character_Script>().character_HP;
             bM_Remain_HP_Team2 += bM_Character_Team2[i].GetComponent<Character_Script>().character_HP;
         }
+    }
+
+    void Destory_Red_Grid()
+    {
+        GameObject[] red_Grid = GameObject.FindGameObjectsWithTag("BattleScene_Damaged_Grid");
+
+        foreach(var redGrid in red_Grid)
+        {
+            Destroy(redGrid, 2.0f);
+        }
+    }
+
+    int Reverse_Enemy(int num) // 적 공격 시 공격범위를 좌우반전시킴.
+    {
+        int dummy = 0;
+        switch(num)
+        {
+            case 1:
+                dummy = 3;
+                break;
+            case 2:
+                dummy = 2;
+                break;
+            case 3:
+                dummy = 1;
+                break;
+            case 4:
+                dummy = 6;
+                break;
+            case 5:
+                dummy = 5;
+                break;
+            case 6:
+                dummy = 4;
+                break;
+            case 7:
+                dummy = 9;
+                break;
+            case 8:
+                dummy = 8;
+                break;
+            case 9:
+                dummy = 7;
+                break;
+        }
+        return dummy;
     }
 }
 
