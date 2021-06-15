@@ -9,6 +9,7 @@ public class Arrayed_Character_Data : MonoBehaviour
 
     private GameObject[] Array_Team;
     public GameObject[] Pass_Data;
+    public ArrData_Sync arrdata_sync;
 
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class Arrayed_Character_Data : MonoBehaviour
             }
             Pass_Data[i].GetComponent<Character_Script>().Debuging_Character();
         }
+        // arrdata_sync.DataSync(Pass_Data);
         SceneManager.LoadScene("BattleScene");
     }
 }
