@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using Photon.Pun;
 using Photon.Realtime;
 
-namespace Photon.Pun.Demo.PunBasics
-{
 #pragma warning disable 649
 
 	public class Lobby : MonoBehaviourPunCallbacks
@@ -26,11 +25,11 @@ namespace Photon.Pun.Demo.PunBasics
 
 		[Tooltip("로딩 효과")]
 		[SerializeField]
-		private LoaderAnime loaderAnime;
+		private LoadingEffect loadingEffect;
 
 		#endregion
 
-		#region Private Fields
+		#region Private 변수
 		/// <summary>
 		/// Keep track of the current process. Since connection is asynchronous and is based on several callbacks from Photon, 
 		/// we need to keep track of this to properly adjust the behavior when we receive call back by Photon.
@@ -45,16 +44,16 @@ namespace Photon.Pun.Demo.PunBasics
 
 		#endregion
 
-		#region MonoBehaviour CallBacks
+		#region MonoBehaviour 콜백 함수
 
 		/// <summary>
 		/// MonoBehaviour method called on GameObject by Unity during early initialization phase.
 		/// </summary>
 		void Awake()
 		{
-			if (loaderAnime == null)
+			if (loadingEffect == null)
 			{
-				Debug.LogError("<Color=Red><b>Missing</b></Color> loaderAnime 찾을 수 없음.", this);
+				Debug.LogError("<Color=Red><b>Missing</b></Color> 로딩 이펙트 찾을 수 없음.", this);
 			}
 
 			// #Critical
@@ -66,7 +65,7 @@ namespace Photon.Pun.Demo.PunBasics
 		#endregion
 
 
-		#region Public Methods
+		#region Public 함수
 
 		/// <summary>
 		/// Start the connection process. 
@@ -85,9 +84,9 @@ namespace Photon.Pun.Demo.PunBasics
 			loginPanel.SetActive(false);
 
 			// start the loader animation for visual effect.
-			if (loaderAnime != null)
+			if (loadingEffect != null)
 			{
-				loaderAnime.StartLoaderAnimation();
+				loadingEffect.StartLoaderAnimation();
 			}
 
 			// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
@@ -125,7 +124,7 @@ namespace Photon.Pun.Demo.PunBasics
 		#endregion
 
 
-		#region MonoBehaviourPunCallbacks CallBacks
+		#region 포톤 콜백 함수
 		// below, we implement some callbacks of PUN
 		// you can find PUN's callbacks in the class MonoBehaviourPunCallbacks
 
@@ -173,7 +172,7 @@ namespace Photon.Pun.Demo.PunBasics
 			Debug.LogError("연결 해제됨");
 
 			// #Critical: we failed to connect or got disconnected. There is not much we can do. Typically, a UI system should be in place to let the user attemp to connect again.
-			loaderAnime.StopLoaderAnimation();
+			loadingEffect.StopLoaderAnimation();
 
 			isConnecting = false;
 			loginPanel.SetActive(true);
@@ -202,4 +201,3 @@ namespace Photon.Pun.Demo.PunBasics
 		#endregion
 
 	}
-}

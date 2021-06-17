@@ -23,6 +23,8 @@ public class Arrayment_Manager: MonoBehaviour
     private GameObject Cancle_Character;
     private int Count = 0;
 
+    public Text debugText;
+
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
     {
@@ -90,6 +92,7 @@ public class Arrayment_Manager: MonoBehaviour
                         if (Character_Instantiate == Grids[i])
                         {
                             Character_Instantiate.GetComponent<Character_Script>().character_Num_Of_Grid = i + 1;
+                            debugText.text += ((i + 1) + ", ");
                         }
                     }
                     for (int i = 0; i < Inventory.Length; i++)//인벤토리 개별화
