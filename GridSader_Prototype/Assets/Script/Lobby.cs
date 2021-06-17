@@ -99,9 +99,7 @@ namespace Photon.Pun.Demo.PunBasics
 			}
 			else
 			{
-
 				LogFeedback("연결 중...");
-
 				// #Critical, we must first and foremost connect to Photon Online Server.
 				PhotonNetwork.ConnectUsingSettings();
 				PhotonNetwork.GameVersion = this.gameVersion;
@@ -143,7 +141,7 @@ namespace Photon.Pun.Demo.PunBasics
 			if (isConnecting)
 			{
 				LogFeedback("OnConnectedToMaster: 무작위 룸에 참가합니다.");
-				Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room.\n Calling: PhotonNetwork.JoinRandomRoom(); Operation will fail if no room found");
+				Debug.Log("OnConnectedToMaster() 호출\n당신은 서버와 연결되었고 룸에 참가할 수 있습니다.");
 
 				// #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
 				PhotonNetwork.JoinRandomRoom();
@@ -159,7 +157,7 @@ namespace Photon.Pun.Demo.PunBasics
 		public override void OnJoinRandomFailed(short returnCode, string message)
 		{
 			LogFeedback("<Color=Red>OnJoinRandomFailed</Color>: 입장 가능한 룸이 없어 새 룸을 만듭니다.");
-			Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+			Debug.Log("OnJoinRandomFailed() 호출\n입장 가능한 룸이 없어 새 룸을 만듭니다.");
 
 			// #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
 			PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = this.maxPlayersPerRoom });
@@ -172,7 +170,7 @@ namespace Photon.Pun.Demo.PunBasics
 		public override void OnDisconnected(DisconnectCause cause)
 		{
 			LogFeedback("<Color=Red>OnDisconnected</Color> " + cause);
-			Debug.LogError("PUN Basics Tutorial/Launcher:Disconnected");
+			Debug.LogError("연결 해제됨");
 
 			// #Critical: we failed to connect or got disconnected. There is not much we can do. Typically, a UI system should be in place to let the user attemp to connect again.
 			loaderAnime.StopLoaderAnimation();
@@ -195,19 +193,10 @@ namespace Photon.Pun.Demo.PunBasics
 		/// </remarks>
 		public override void OnJoinedRoom()
 		{
-			LogFeedback("<Color=Green>OnJoinedRoom</Color> with " + PhotonNetwork.CurrentRoom.PlayerCount + " Player(s)");
-			Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.\nFrom here on, your game would be running.");
+			LogFeedback("<Color=Green>OnJoinedRoom</Color> " + PhotonNetwork.CurrentRoom.PlayerCount + "명이 있는 룸에 입장합니다.");
+			Debug.Log("OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.");
 
-			// #Critical: We only load if we are the first player, else we rely on  PhotonNetwork.AutomaticallySyncScene to sync our instance scene.
-			if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-			{
-				Debug.Log("We load the 'Room for 1' ");
-
-				// #Critical
-				// Load the Room Level. 
-				PhotonNetwork.LoadLevel("Arrayment_Scene");
-
-			}
+			PhotonNetwork.LoadLevel("Arrayment_Scene");
 		}
 
 		#endregion
