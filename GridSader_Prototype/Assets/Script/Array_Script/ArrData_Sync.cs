@@ -17,9 +17,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     public Text playerName;
     public Text roomStatusText;
+    public Text isEnemyReadyText;
     public Button readyButton;
 
     private bool isReady;
+    private bool isEnemyReady;
 
     private void Awake()
     {
@@ -65,8 +67,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         roomStatusText.text = " ";
+        isEnemyReadyText.text = " ";
 
         isReady = false;
+        isEnemyReady = false;
     }
 
     // Start is called before the first frame update
@@ -106,16 +110,15 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             team1_table[(i + 1) + "_BuffedDamaged"] = cs.character_Buffed_Damaged;
             team1_table[(i + 1) + "_DivineShield"] = cs.character_Divine_Shield;
             team1_table[(i + 1) + "_Revivial"] = cs.character_Revivial;
-
-            Debug.Log("보낸 그리드 넘버: " + cs.character_Num_Of_Grid);
         }
-        result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
-        if (!result)
-            Debug.Log("Team1 Custom Property 설정 실패");
-        
+
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
         if (!result)
             Debug.Log("IsReady Custom Property 설정 실패");
+
+        result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
+        if (!result)
+            Debug.Log("Team1 Custom Property 설정 실패");
     }
 
     public void LeaveRoom()
@@ -131,7 +134,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         object o_isEnemyReady;
-        bool isEnemyReady = false;
         bool isAllPlayerReady;
 
         object o_id;
@@ -150,59 +152,66 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_revivial;
         Character_Script cs;
 
-        // 상대 플레이어가 준비되었는지 여부를 받아오는 과정
-        if (targetPlayer != PhotonNetwork.LocalPlayer)
+        foreach (Player player in PhotonNetwork.PlayerListOthers)
         {
-            targetPlayer.CustomProperties.TryGetValue("PlayerIsReady", out o_isEnemyReady);
-            isEnemyReady = (bool)o_isEnemyReady;
-        }
-        Debug.LogWarning("isEnemyReady = " + isEnemyReady);
-
-        // 상대가 준비 버튼을 눌렀을 때만
-        if (isEnemyReady && targetPlayer != PhotonNetwork.LocalPlayer)
-        {
-            for (int i = 0; i < team2.Length; i++)
+            // isReady_table 을 받아온 경우에만
+            if (changedProps.ContainsKey("PlayerIsReady"))
             {
-                // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
+                player.CustomProperties.TryGetValue("PlayerIsReady", out o_isEnemyReady);
+                isEnemyReady = (bool)o_isEnemyReady;
 
-                // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
-                cs = team2[i].GetComponent<Character_Script>();
-                if (!cs)
-                    return;
+                if (isEnemyReady)
+                    isEnemyReadyText.text = "상대 준비 완료";
+                else
+                    isEnemyReadyText.text = "상대 준비 미완료";
 
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackCount", out o_attackCount);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_Damaged", out o_damaged);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_BuffedAttack", out o_buffedAttack);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_BuffedDamaged", out o_buffedDamaged);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_DivineShield", out o_divineShield);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_Revivial", out o_revivial);
+                // 캐릭터 정보 Property가 아닌 준비 여부 Property를 받아온 경우 아래 과정을 스킵한다.
+                continue;
+            }
 
-                Debug.Log("받은 그리드 넘버: " + (int)o_gridNumber);
+            if (isEnemyReady)
+            {
+                for (int i = 0; i < team2.Length; i++)
+                {
+                    // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
 
-                cs.character_ID = (int)o_id;
-                cs.character_Is_Allive = (bool)o_isAlive;
-                cs.character_HP = (int)o_hp;
-                cs.character_AP = (int)o_ap;
-                cs.character_Attack_Damage = (int)o_attackDamage;
-                cs.character_Attack_Range = (bool[])o_attackRange;
-                cs.character_Num_Of_Grid = (int)o_gridNumber;
-                cs.character_Attack_Order = (int)o_attackOrder;
-                cs.character_Attack_Count = (int)o_attackCount;
-                cs.character_Damaged = (int)o_damaged;
-                cs.character_Buffed_Attack = (int)o_buffedAttack;
-                cs.character_Buffed_Damaged = (int)o_buffedDamaged;
-                cs.character_Divine_Shield = (bool)o_divineShield;
-                cs.character_Revivial = (bool)o_revivial;
+                    // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
+                    cs = team2[i].GetComponent<Character_Script>();
+                    if (!cs)
+                        return;
 
-                cs.Debuging_Character();
+                    player.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
+                    player.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
+                    player.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
+                    player.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
+                    player.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
+                    player.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
+                    player.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
+                    player.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
+                    player.CustomProperties.TryGetValue((i + 1) + "_AttackCount", out o_attackCount);
+                    player.CustomProperties.TryGetValue((i + 1) + "_Damaged", out o_damaged);
+                    player.CustomProperties.TryGetValue((i + 1) + "_BuffedAttack", out o_buffedAttack);
+                    player.CustomProperties.TryGetValue((i + 1) + "_BuffedDamaged", out o_buffedDamaged);
+                    player.CustomProperties.TryGetValue((i + 1) + "_DivineShield", out o_divineShield);
+                    player.CustomProperties.TryGetValue((i + 1) + "_Revivial", out o_revivial);
+
+                    cs.character_ID = (int)o_id;
+                    cs.character_Is_Allive = (bool)o_isAlive;
+                    cs.character_HP = (int)o_hp;
+                    cs.character_AP = (int)o_ap;
+                    cs.character_Attack_Damage = (int)o_attackDamage;
+                    cs.character_Attack_Range = (bool[])o_attackRange;
+                    cs.character_Num_Of_Grid = (int)o_gridNumber;
+                    cs.character_Attack_Order = (int)o_attackOrder;
+                    cs.character_Attack_Count = (int)o_attackCount;
+                    cs.character_Damaged = (int)o_damaged;
+                    cs.character_Buffed_Attack = (int)o_buffedAttack;
+                    cs.character_Buffed_Damaged = (int)o_buffedDamaged;
+                    cs.character_Divine_Shield = (bool)o_divineShield;
+                    cs.character_Revivial = (bool)o_revivial;
+
+                    cs.Debuging_Character();
+                }
             }
         }
 
