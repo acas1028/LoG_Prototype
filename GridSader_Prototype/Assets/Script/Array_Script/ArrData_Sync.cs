@@ -47,6 +47,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < 5; i++)
         {
+            team1_table.Add((i + 1) + "_ID", null);
             team1_table.Add((i + 1) + "_AttackRange", null);
             team1_table.Add((i + 1) + "_GridNumber", null);
             team1_table.Add((i + 1) + "_Damage", null);
@@ -83,7 +84,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         for (int i = 0; i < array_team.Length; i++)
         {
             cs = team1[i].GetComponent<Character_Script>();
-            team1_table[(i + 1) + "_AttackRange"] = cs.character_Attack_Range;
+            team1_table[(i + 1) + "_ID"] = cs.character_ID;
             team1_table[(i + 1) + "_AttackRange"] = cs.character_Attack_Range;
             team1_table[(i + 1) + "_GridNumber"] = cs.character_Num_Of_Grid;
             team1_table[(i + 1) + "_Damage"] = cs.character_Attack_Damage;
@@ -117,6 +118,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         bool isEnemyReady = false;
         bool isAllPlayerReady;
 
+        object o_id;
         object o_attackRange;
         object o_gridNumber;
         object o_damage;
@@ -144,6 +146,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 if (!cs)
                     return;
 
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
                 targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
                 targetPlayer.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
                 targetPlayer.CustomProperties.TryGetValue((i + 1) + "_Damage", out o_damage);
@@ -152,6 +155,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                 Debug.Log("받은 그리드 넘버: " + (int)o_gridNumber);
 
+                cs.character_ID = (int)o_id;
                 cs.character_Attack_Range = (bool[])o_attackRange;
                 cs.character_Num_Of_Grid = (int)o_gridNumber;
                 cs.character_Attack_Damage = (int)o_damage;
