@@ -14,7 +14,8 @@ public class Arrayment_Manager: MonoBehaviour
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
     public Queue<GameObject> Order = new Queue<GameObject>();
-    private GameObject[] Grids;
+
+    public GameObject[] Grids;
     private GameObject[] Inventory;
     public GameObject[] Block_Inventory;
     public GameObject PopUp_UI;
@@ -57,7 +58,8 @@ public class Arrayment_Manager: MonoBehaviour
 
     void Start()
     {
-        Grids = GameObject.FindGameObjectsWithTag("Null_Character");
+        // FindGameObejctsWithTag 를 사용할 경우 에디터와 빌드상에서 서로 다른 순서대로 오브젝트를 가져온다.
+        // Grids = GameObject.FindGameObjectsWithTag("Null_Character");
         Inventory = GameObject.FindGameObjectsWithTag("Character_inventory_Button");
     }
     void Update()
