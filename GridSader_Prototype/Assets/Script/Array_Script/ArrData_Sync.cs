@@ -48,11 +48,19 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         for (int i = 0; i < 5; i++)
         {
             team1_table.Add((i + 1) + "_ID", null);
+            team1_table.Add((i + 1) + "_IsAlive", null);
+            team1_table.Add((i + 1) + "_HP", null);
+            team1_table.Add((i + 1) + "_AP", null);
+            team1_table.Add((i + 1) + "_AttackDamage", null);
             team1_table.Add((i + 1) + "_AttackRange", null);
             team1_table.Add((i + 1) + "_GridNumber", null);
-            team1_table.Add((i + 1) + "_Damage", null);
-            team1_table.Add((i + 1) + "_HP", null);
             team1_table.Add((i + 1) + "_AttackOrder", null);
+            team1_table.Add((i + 1) + "_AttackCount", null);
+            team1_table.Add((i + 1) + "_Damaged", null);
+            team1_table.Add((i + 1) + "_BuffedAttack", null);
+            team1_table.Add((i + 1) + "_BuffedDamaged", null);
+            team1_table.Add((i + 1) + "_DivineShield", null);
+            team1_table.Add((i + 1) + "_Revivial", null);
         }
 
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
@@ -85,11 +93,19 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         {
             cs = team1[i].GetComponent<Character_Script>();
             team1_table[(i + 1) + "_ID"] = cs.character_ID;
+            team1_table[(i + 1) + "_IsAlive"] = cs.character_Is_Allive;
+            team1_table[(i + 1) + "_HP"] = cs.character_HP;
+            team1_table[(i + 1) + "_AP"] = cs.character_AP;
+            team1_table[(i + 1) + "_AttackDamage"] = cs.character_Attack_Damage;
             team1_table[(i + 1) + "_AttackRange"] = cs.character_Attack_Range;
             team1_table[(i + 1) + "_GridNumber"] = cs.character_Num_Of_Grid;
-            team1_table[(i + 1) + "_Damage"] = cs.character_Attack_Damage;
-            team1_table[(i + 1) + "_HP"] = cs.character_HP;
             team1_table[(i + 1) + "_AttackOrder"] = cs.character_Attack_Order;
+            team1_table[(i + 1) + "_AttackCount"] = cs.character_Attack_Count;
+            team1_table[(i + 1) + "_Damaged"] = cs.character_Damaged;
+            team1_table[(i + 1) + "_BuffedAttack"] = cs.character_Buffed_Attack;
+            team1_table[(i + 1) + "_BuffedDamaged"] = cs.character_Buffed_Damaged;
+            team1_table[(i + 1) + "_DivineShield"] = cs.character_Divine_Shield;
+            team1_table[(i + 1) + "_Revivial"] = cs.character_Revivial;
 
             Debug.Log("보낸 그리드 넘버: " + cs.character_Num_Of_Grid);
         }
@@ -119,11 +135,19 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         bool isAllPlayerReady;
 
         object o_id;
+        object o_isAlive;
+        object o_hp;
+        object o_ap;
+        object o_attackDamage;
         object o_attackRange;
         object o_gridNumber;
-        object o_damage;
-        object o_hp;
         object o_attackOrder;
+        object o_attackCount;
+        object o_damaged;
+        object o_buffedAttack;
+        object o_buffedDamaged;
+        object o_divineShield;
+        object o_revivial;
         Character_Script cs;
 
         // 상대 플레이어가 준비되었는지 여부를 받아오는 과정
@@ -147,18 +171,26 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                     return;
 
                 targetPlayer.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
                 targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
                 targetPlayer.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_Damage", out o_damage);
-                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
                 targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackCount", out o_attackCount);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_Damaged", out o_damaged);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_BuffedAttack", out o_buffedAttack);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_BuffedDamaged", out o_buffedDamaged);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_DivineShield", out o_divineShield);
+                targetPlayer.CustomProperties.TryGetValue((i + 1) + "_Revivial", out o_revivial);
 
                 Debug.Log("받은 그리드 넘버: " + (int)o_gridNumber);
 
                 cs.character_ID = (int)o_id;
                 cs.character_Attack_Range = (bool[])o_attackRange;
                 cs.character_Num_Of_Grid = (int)o_gridNumber;
-                cs.character_Attack_Damage = (int)o_damage;
+                cs.character_Attack_Damage = (int)o_attackDamage;
                 cs.character_HP = (int)o_hp;
                 cs.character_Attack_Order = (int)o_attackOrder;
 
