@@ -188,11 +188,19 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 Debug.Log("받은 그리드 넘버: " + (int)o_gridNumber);
 
                 cs.character_ID = (int)o_id;
+                cs.character_Is_Allive = (bool)o_isAlive;
+                cs.character_HP = (int)o_hp;
+                cs.character_AP = (int)o_ap;
+                cs.character_Attack_Damage = (int)o_attackDamage;
                 cs.character_Attack_Range = (bool[])o_attackRange;
                 cs.character_Num_Of_Grid = (int)o_gridNumber;
-                cs.character_Attack_Damage = (int)o_attackDamage;
-                cs.character_HP = (int)o_hp;
                 cs.character_Attack_Order = (int)o_attackOrder;
+                cs.character_Attack_Count = (int)o_attackCount;
+                cs.character_Damaged = (int)o_damaged;
+                cs.character_Buffed_Attack = (int)o_buffedAttack;
+                cs.character_Buffed_Damaged = (int)o_buffedDamaged;
+                cs.character_Divine_Shield = (bool)o_divineShield;
+                cs.character_Revivial = (bool)o_revivial;
 
                 cs.Debuging_Character();
             }
