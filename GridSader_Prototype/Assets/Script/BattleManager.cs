@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleManager : MonoBehaviour
+using Photon.Pun;
+
+public class BattleManager : MonoBehaviourPunCallbacks
 {
     public GameObject GridManager;
     public GameObject[] bM_Character_Team1;
@@ -57,7 +59,13 @@ public class BattleManager : MonoBehaviour
     {
 
         bM_Phase = 0;
-        bM_Team1_Is_Preemitive = true;
+
+        // 내가 방장일 때만 나는 선공이다.
+        if (PhotonNetwork.IsMasterClient)
+            bM_Team1_Is_Preemitive = true;
+        else
+            bM_Team1_Is_Preemitive = false;
+
         bM_Remain_Character_Team1 = 0;
         bM_Remain_Character_Team2 = 0;
         bM_Remain_HP_Team1 = 0;
