@@ -8,6 +8,7 @@ using Photon.Pun;
 
 public class ArrData_Sync : MonoBehaviourPunCallbacks
 {
+    public static ArrData_Sync instance = null;
     public GameObject[] team1;
     public GameObject[] team2;
 
@@ -20,6 +21,19 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     private bool isReady;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Start()
     {

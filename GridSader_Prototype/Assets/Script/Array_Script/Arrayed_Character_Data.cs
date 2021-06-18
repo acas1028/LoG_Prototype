@@ -5,25 +5,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Arrayed_Character_Data : MonoBehaviour
 {
-    public static Arrayed_Character_Data instance = null;
-
     private GameObject[] Array_Team;
     public GameObject[] Pass_Data;
     public ArrData_Sync arrdata_sync;
 
     private void Awake()
     {
-        if(instance==null)
-        {
-            instance = this;
 
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
     }
+
     void Start()
     {
         

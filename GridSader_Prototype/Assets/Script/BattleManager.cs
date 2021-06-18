@@ -82,8 +82,9 @@ public class BattleManager : MonoBehaviour
         if (bM_Phase != 0) return;
 
         BM_Character_Setting();
-        bM_Phase++;
-        StartCoroutine(Running_Phase());    
+
+        if (bM_Phase >= 1)
+            StartCoroutine(Running_Phase());
     }
 
     IEnumerator Running_Phase()
@@ -118,7 +119,7 @@ public class BattleManager : MonoBehaviour
             bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = Reverse_Enemy(i + 1); // Debuging // 좌우반전
             bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
         }
-        
+        bM_Phase++;
     }
 
     void Character_Attack(GameObject attacker,GameObject[] enemy_Characters,int attacked_Grid) //캐릭터 공격
