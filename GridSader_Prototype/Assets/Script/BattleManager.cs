@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    public GameObject GridManager;
+    public GameObject[] bM_Character_Team1;
+    public GameObject[] bM_Character_Team2;
+    public GameObject Character_Prefab;
+    public GameObject DataSync;
+    public int bM_Phase { get; set; }
+    public bool bM_Team1_Is_Preemitive { get; set; }
+    public int bM_Remain_Character_Team1 { get; set; }
+    public int bM_Remain_Character_Team2 { get; set; }
+    public int bM_Remain_HP_Team1 { get; set; }
+    public int bM_Remain_HP_Team2 { get; set; }
+
+    public int bM_Round { get; set; }
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -33,22 +46,13 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DataSync = GameObject.FindGameObjectWithTag("Character_Sync");
     }
 
-    public GameObject GridManager;
-    public GameObject[] bM_Character_Team1;
-    public GameObject[] bM_Character_Team2;
-    public GameObject Character_Prefab;
-    public int bM_Phase { get; set; }
-    public bool bM_Team1_Is_Preemitive { get; set; }
-    public int bM_Remain_Character_Team1 { get; set; }
-    public int bM_Remain_Character_Team2 { get; set; }
-    public int bM_Remain_HP_Team1 { get; set; }
-    public int bM_Remain_HP_Team2 { get; set; }
-
-    public int bM_Round { get; set; }
-
     // Start is called before the first frame update
+
+
     void Start()
     {
 
@@ -105,19 +109,15 @@ public class BattleManager : MonoBehaviour
 
     void BM_Character_Setting()
     {
-        for (int i = 0; i < 5; i++)
+        for(int i = 0; i < 5; i++)
         {
-            bM_Character_Team1[i].GetComponent<Character_Script>().Character_Setting(i + 1);
-            bM_Character_Team1[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
-            bM_Character_Team1[i].GetComponent<Character_Script>().character_Is_Preemptive = true; // Debuging
-            bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid = i + 1; // Debuging
-            bM_Character_Team1[i].GetComponent<Character_Script>().Debuging_Character();
+            Character_Script Team1CS = bM_Character_Team1[i].GetComponent<Character_Script>();
+            GameObject Team1Sync = DataSync.GetComponent<ArrData_Sync>().team1[i];
+            Team1CS.Copy_Character_Stat(Team1Sync);
 
-            bM_Character_Team2[i].GetComponent<Character_Script>().Character_Setting(i + 1);
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Attack_Order = i + 1; // Debuging
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Is_Preemptive = false; // Debuging
-            bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid = Reverse_Enemy(i + 1); // Debuging // 좌우반전
-            bM_Character_Team2[i].GetComponent<Character_Script>().Debuging_Character();
+            Character_Script Team2CS = bM_Character_Team2[i].GetComponent<Character_Script>();
+            GameObject Team2Sync = DataSync.GetComponent<ArrData_Sync>().team2[i];
+            Team2CS.Copy_Character_Stat(Team2Sync);
         }
         bM_Phase++;
     }
