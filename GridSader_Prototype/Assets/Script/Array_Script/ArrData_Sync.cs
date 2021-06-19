@@ -8,34 +8,14 @@ using Photon.Pun;
 
 public class ArrData_Sync : MonoBehaviourPunCallbacks
 {
-    public static ArrData_Sync instance = null;
-    public GameObject[] team1;
-    public GameObject[] team2;
+    public RoomManager roomManager;
+    public Arrayed_Data arrayed_Data;
 
     private Hashtable team1_table;
     private Hashtable isReady_table;
 
-    public Text playerName;
-    public Text roomStatusText;
-    public Text isEnemyReadyText;
-    public Button readyButton;
-
     private bool isReady;
     private bool isEnemyReady;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
 
     private void Start()
     {
@@ -65,10 +45,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             team1_table.Add((i + 1) + "_Revivial", null);
         }
 
-        playerName.text = PhotonNetwork.LocalPlayer.NickName;
-        roomStatusText.text = " ";
-        isEnemyReadyText.text = " ";
-
         isReady = false;
         isEnemyReady = false;
     }
@@ -82,20 +58,17 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     public void DataSync(GameObject[] array_team)
     {
         bool result = false;
-        team1 = array_team;
+        arrayed_Data.team1 = array_team;
         Character_Script cs;
         isReady = !isReady;
 
-        ColorBlock cb = readyButton.colors;
-        cb.normalColor = new Color(isReady ? 1.0f : 0.0f, 0.0f, 0.0f);
-        cb.selectedColor = new Color(isReady ? 1.0f : 0.0f, 0.0f, 0.0f);
-        readyButton.colors = cb;
+        roomManager.SetReadyButtonColor(isReady);
 
         isReady_table["PlayerIsReady"] = isReady;
 
         for (int i = 0; i < array_team.Length; i++)
         {
-            cs = team1[i].GetComponent<Character_Script>();
+            cs = arrayed_Data.team1[i].GetComponent<Character_Script>();
             team1_table[(i + 1) + "_ID"] = cs.character_ID;
             team1_table[(i + 1) + "_IsAlive"] = cs.character_Is_Allive;
             team1_table[(i + 1) + "_HP"] = cs.character_HP;
@@ -119,11 +92,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
         if (!result)
             Debug.Log("Team1 Custom Property 설정 실패");
-    }
-
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
     }
 
     #region 포톤 콜백 함수 : MonoBehaviourPunCallbacks 클래스의 상속을 받는 함수
@@ -160,10 +128,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 player.CustomProperties.TryGetValue("PlayerIsReady", out o_isEnemyReady);
                 isEnemyReady = (bool)o_isEnemyReady;
 
-                if (isEnemyReady)
-                    isEnemyReadyText.text = "상대 준비 완료";
-                else
-                    isEnemyReadyText.text = "상대 준비 미완료";
+                roomManager.SetIsEnemyReadyText(isEnemyReady);
 
                 // 캐릭터 정보 Property가 아닌 준비 여부 Property를 받아온 경우 아래 과정을 스킵한다.
                 continue;
@@ -171,12 +136,12 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
             if (isEnemyReady)
             {
-                for (int i = 0; i < team2.Length; i++)
+                for (int i = 0; i < arrayed_Data.team2.Length; i++)
                 {
                     // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
 
                     // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
-                    cs = team2[i].GetComponent<Character_Script>();
+                    cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
                     if (!cs)
                         return;
 
@@ -220,24 +185,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         // 방장이 게임을 시작한다.
         if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
             SceneManager.LoadScene("BattleScene");
-    }
-
-    public override void OnPlayerEnteredRoom(Player other)
-    {
-        roomStatusText.text = "상대 플레이어 " + other.NickName + " 입장";
-        Debug.Log("플레이어 " + other.NickName + " 입장");
-    }
-
-    public override void OnPlayerLeftRoom(Player other)
-    {
-        roomStatusText.text = "상대 플레이어 " + other.NickName + " 퇴장";
-        Debug.Log("플레이어 " + other.NickName + " 퇴장");
-    }
-
-    public override void OnLeftRoom()
-    {
-        Debug.Log("룸을 나갑니다. 로비로 이동합니다.");
-        SceneManager.LoadScene("LobbyScene");
     }
     #endregion
 }

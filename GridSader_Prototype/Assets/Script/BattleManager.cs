@@ -120,11 +120,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
         for(int i = 0; i < 5; i++)
         {
             Character_Script Team1CS = bM_Character_Team1[i].GetComponent<Character_Script>();
-            GameObject Team1Sync = DataSync.GetComponent<ArrData_Sync>().team1[i];
+            GameObject Team1Sync = DataSync.GetComponent<Arrayed_Data>().team1[i];
             Team1CS.Copy_Character_Stat(Team1Sync);
 
             Character_Script Team2CS = bM_Character_Team2[i].GetComponent<Character_Script>();
-            GameObject Team2Sync = DataSync.GetComponent<ArrData_Sync>().team2[i];
+            GameObject Team2Sync = DataSync.GetComponent<Arrayed_Data>().team2[i];
             Team2CS.Copy_Character_Stat(Team2Sync);
         }
         bM_Phase++;
