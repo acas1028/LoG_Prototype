@@ -9,6 +9,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     public Text playerName;
     public Text roomStatusText;
+    public Text joinedPlayerList;
     public Text isEnemyReadyText;
     public Button readyButton;
 
@@ -17,6 +18,20 @@ public class RoomManager : MonoBehaviourPunCallbacks
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         roomStatusText.text = " ";
         isEnemyReadyText.text = " ";
+
+        RenewPlayerList();
+    }
+
+    private void RenewPlayerList()
+    {
+        string playerList = string.Empty;
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            playerList += System.Environment.NewLine + player.NickName;
+        }
+
+        joinedPlayerList.text = "룸에 있는 플레이어" + playerList;
     }
 
     public void SetReadyButtonColor(bool isReady)
@@ -45,12 +60,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         roomStatusText.text = "상대 플레이어 " + other.NickName + " 입장";
         Debug.Log("플레이어 " + other.NickName + " 입장");
+        RenewPlayerList();
     }
 
     public override void OnPlayerLeftRoom(Player other)
     {
         roomStatusText.text = "상대 플레이어 " + other.NickName + " 퇴장";
         Debug.Log("플레이어 " + other.NickName + " 퇴장");
+        RenewPlayerList();
     }
 
     public override void OnLeftRoom()
