@@ -5,48 +5,99 @@ using UnityEngine.UI;
 
 public class Showing_Hp : MonoBehaviour
 {
-    private GameObject character; //캐릭터 지칭
 
-    private int character_full_hp;//캐릭터의 본래 최대 피
+    private float hp;
+    private float original_hp;
+    private int is_this_original_hp_counting=0;
+    private GameObject hp_bar;
+    private GameObject canvas;
 
-    private Slider hp_slider;//캐릭터 hp바
+    public int character_count;
+    public int Team_count;
+
 
     private void Start()
     {
-        character = transform.parent.gameObject;
-        hp_slider = this.GetComponent<Slider>();
+        canvas = this.gameObject.transform.parent.gameObject;
+        original_hp = 1;
+        hp_bar = this.gameObject;
+        
     }
 
+    void showing_Hp_point()
+    {
+        if (Team_count == 1)
+        {
+            hp = BattleManager.Instance.bM_Character_Team1[character_count].GetComponent<Character_Script>().character_HP;
+            hp_bar.GetComponent<Slider>().value = hp;
+        }
 
+        else
+        {
+            hp = BattleManager.Instance.bM_Character_Team2[character_count].GetComponent<Character_Script>().character_HP;
+            hp_bar.GetComponent<Slider>().value = hp;
+        }
+    }
 
+    void original_Hp()
+    {
+        if(hp>0&& is_this_original_hp_counting==0)
+        {
+            original_hp = hp;
+            hp_bar.GetComponent<Slider>().maxValue = original_hp;
+            hp_bar.GetComponent<Slider>().value = original_hp;
+            is_this_original_hp_counting++;
+        }
+    }
+
+    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos)
+    {
+        //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+        Vector2 movePos;
+
+        //Convert the screenpoint to ui rectangle local point
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentCanvas.transform as RectTransform, screenPos, parentCanvas.worldCamera, out movePos);
+        //Convert the local point to world point
+        return parentCanvas.transform.TransformPoint(movePos);
+    }
+
+    void Hp_bar_position_translate()
+    {
+        if (Team_count == 1)
+        {
+            hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position);
+            hp_bar.transform.Translate(0, -70, 0);
+        }
+
+        else
+        {
+            hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team2[character_count].transform.position);
+            hp_bar.transform.Translate(0, -70, 0);
+        }
+    }
 
     private void Update()
     {
-        //hp바를 캐릭터 밑에 소환하기만 하면 끝
-        Full_Hp();
-        Hp_Change();
-    }
+        Debug.Log(BattleManager.Instance.bM_Character_Team1[0]);
+        Debug.Log(BattleManager.Instance.bM_Character_Team1[1]);
 
-    void Full_Hp()//캐릭터 full hp관련 오류가 생겨 만든 함수로 full hp가 0으로 시작되게 되면 slider 자체에 오류가 생겨 만든 함수
-    {
-        if(character_full_hp==0)
+        Debug.Log(BattleManager.Instance.bM_Phase);
+        if (BattleManager.Instance.bM_Phase >= 1)
         {
-            character_full_hp = character.GetComponent<Character_Script>().character_HP;
-        }
-    }
+            original_Hp();
 
-    void Hp_Change()// hp변화를 보여주는 함수
-    {
-        if (character_full_hp != 0)
-        {
-            hp_slider.value = (float)character.GetComponent<Character_Script>().character_HP / character_full_hp;
+            showing_Hp_point();
         }
+
+        Hp_bar_position_translate();
     }
 
 
 
-    
 
-  
+
+
+
 
 }
