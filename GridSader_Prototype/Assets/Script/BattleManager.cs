@@ -19,6 +19,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public int bM_Remain_HP_Team2 { get; set; }
 
     public int bM_Round { get; set; }
+
+    public bool bM_Character_Setting_Finish { get; set; }
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -49,7 +51,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         }
 
-        DataSync = GameObject.FindGameObjectWithTag("Character_Sync");
     }
 
     // Start is called before the first frame update
@@ -71,11 +72,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
         bM_Round = 0;
+        bM_Character_Setting_Finish = false;
 
         bM_Character_Team1 = new GameObject[5];
         bM_Character_Team2 = new GameObject[5];
 
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             bM_Character_Team1[i] = Instantiate(Character_Prefab);
             bM_Character_Team2[i] = Instantiate(Character_Prefab);
@@ -86,18 +88,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        StartBattle();
+        if(bM_Character_Setting_Finish == false)
+            BM_Character_Setting();
     }
 
-    void StartBattle()
-    {
-        if (bM_Phase != 0) return;
-
-        BM_Character_Setting();
-
-        if (bM_Phase >= 1)
-            StartCoroutine(Running_Phase());
-    }
+ 
 
     IEnumerator Running_Phase()
     {
@@ -110,24 +105,41 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 bM_Phase++;
                 bM_Round = 0;
-            }    
+            }
             yield return new WaitForSeconds(3.0f);
         }
     }
 
     void BM_Character_Setting()
     {
-        for(int i = 0; i < 5; i++)
+        int dummy = 0;
+        DataSync = GameObject.FindGameObjectWithTag("Character_Sync");
+
+        for (int i = 0; i < 5; i++)
         {
             Character_Script Team1CS = bM_Character_Team1[i].GetComponent<Character_Script>();
             GameObject Team1Sync = DataSync.GetComponent<Arrayed_Data>().team1[i];
             Team1CS.Copy_Character_Stat(Team1Sync);
-
+            Team1CS.Debuging_Character();
+      
+            if (Team1CS.character_HP != 0)
+                dummy++;
+      
             Character_Script Team2CS = bM_Character_Team2[i].GetComponent<Character_Script>();
             GameObject Team2Sync = DataSync.GetComponent<Arrayed_Data>().team2[i];
             Team2CS.Copy_Character_Stat(Team2Sync);
+            Team2CS.character_Num_Of_Grid = Reverse_Enemy(Team2CS.character_Num_Of_Grid);
+            Team2CS.Debuging_Character();
+      
+            if (Team2CS.character_HP != 0)
+                dummy++;
+      
+            if (dummy == 10)
+                bM_Character_Setting_Finish = true;
         }
-        bM_Phase++;
+
+        if (bM_Character_Setting_Finish == true)
+            StartCoroutine(Running_Phase());
     }
 
     void Character_Attack(GameObject attacker,GameObject[] enemy_Characters,int attacked_Grid) //캐릭터 공격
