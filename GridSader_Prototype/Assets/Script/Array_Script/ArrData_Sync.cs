@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 using ExitGames.Client.Photon;
 using Photon.Realtime;
@@ -19,6 +20,12 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        isReady = false;
+        isEnemyReady = false;
+
+        if (PhotonNetwork.OfflineMode)
+            return;
+
         // 키 타입은 string형, 값 타입은 Character_Script형으로 저장하는 해시테이블
         // C# 해시테이블은 기본적으로 이중 해싱 방법을 사용하여 데이터를 저장한다.
         // 해시테이블을 사용하는 이유는 Photon의 Custom Properties를 사용하려면 Hashtable을 사용해야하기 때문
@@ -44,9 +51,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             team1_table.Add((i + 1) + "_DivineShield", null);
             team1_table.Add((i + 1) + "_Revivial", null);
         }
-
-        isReady = false;
-        isEnemyReady = false;
     }
 
     // Start is called before the first frame update
@@ -55,18 +59,25 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     // Custom Properties 를 이용하여 서버에 Team1의 Character_Script를 전송
     // https://doc.photonengine.com/ko-kr/pun/current/gameplay/synchronization-and-state : 동기화하는 방법 1.PhotonView 2.RPC 3.Custom Properties
     // https://doc.photonengine.com/ko-kr/pun/current/reference/serialization-in-photon : 전송할 수 있는 데이터 타입
-    public void DataSync(GameObject[] array_team)
+    public void DataSync(GameObject[] passData)
     {
         bool result = false;
-        arrayed_Data.team1 = array_team;
         Character_Script cs;
         isReady = !isReady;
+        arrayed_Data.team1 = passData;
 
         roomManager.SetReadyButtonColor(isReady);
 
+        // 오프라인모드인 경우 아래 데이터 동기화 과정을 건너뛰고, team2에는 임의의 데이터를 집어넣는다.
+        if (PhotonNetwork.OfflineMode)
+        {
+            OfflineModeStart();
+            return;
+        }
+
         isReady_table["PlayerIsReady"] = isReady;
 
-        for (int i = 0; i < array_team.Length; i++)
+        for (int i = 0; i < passData.Length; i++)
         {
             cs = arrayed_Data.team1[i].GetComponent<Character_Script>();
             team1_table[(i + 1) + "_ID"] = cs.character_ID;
@@ -94,6 +105,55 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             Debug.Log("Team1 Custom Property 설정 실패");
     }
 
+    private void OfflineModeStart()
+    {
+        List<int> idSet = new List<int>();
+
+        for (int i = 0; i < 9; i++)
+        {
+            idSet.Add(i + 1);
+        }
+
+        ShuffleList<int>(idSet);
+
+        for (int i = 0; i < idSet.Count; i++)
+        {
+            Debug.LogWarning("idSet[" + i + "] = " + idSet[i]);
+        }
+
+        for (int i = 0; i < arrayed_Data.team2.Length; i++)
+        {
+            Character_Script cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
+
+            cs.Character_Setting(i + 1);
+            cs.character_ID = idSet[i];
+            cs.character_Num_Of_Grid = idSet[i];
+            cs.character_Attack_Order = i + 1;
+            cs.Debuging_Character();
+        }
+
+        isEnemyReady = true;
+        PhotonNetwork.LoadLevel("BattleScene");
+    }
+
+    private List<T> ShuffleList<T>(List<T> list)
+    {
+        int random1, random2;
+        T temp;
+
+        for (int i = 0; i < list.Count; ++i)
+        {
+            random1 = Random.Range(0, list.Count);
+            random2 = Random.Range(0, list.Count);
+
+            temp = list[random1];
+            list[random1] = list[random2];
+            list[random2] = temp;
+        }
+
+        return list;
+    }
+
     #region 포톤 콜백 함수 : MonoBehaviourPunCallbacks 클래스의 상속을 받는 함수
 
     /// <summary>
@@ -101,6 +161,9 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        if (PhotonNetwork.OfflineMode)
+            return;
+
         object o_isEnemyReady;
         bool isAllPlayerReady;
 
@@ -182,9 +245,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         isAllPlayerReady = isReady && isEnemyReady;
 
+        Debug.LogWarning("Player Properties Updated");
+
         // 방장이 게임을 시작한다.
         if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
-            SceneManager.LoadScene("BattleScene");
+            PhotonNetwork.LoadLevel("BattleScene");
     }
     #endregion
 }
