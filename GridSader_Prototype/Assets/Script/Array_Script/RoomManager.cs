@@ -78,6 +78,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("룸을 나갑니다. 로비로 이동합니다.");
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.Disconnect();
+        Debug.Log("연결 해제됨");
         PhotonNetwork.LoadLevel("LobbyScene");
     }
     #endregion

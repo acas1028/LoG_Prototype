@@ -92,13 +92,16 @@ public class Lobby : MonoBehaviourPunCallbacks
 		// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
 		if (PhotonNetwork.IsConnected)
 		{
+			// offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
 			LogFeedback("룸에 입장 중...");
+			Debug.Log("현재 서버와 연결되어있습니다. 룸에 입장합니다.");
 			// #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else
 		{
 			LogFeedback("연결 중...");
+			Debug.Log("현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.");
 			// #Critical, we must first and foremost connect to Photon Online Server.
 			PhotonNetwork.ConnectUsingSettings();
 			PhotonNetwork.GameVersion = this.gameVersion;
@@ -142,6 +145,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 	/// </summary>
 	public override void OnConnectedToMaster()
 	{
+		// 최초로 마스터 서버에 연결됐을 때 콜백되는 함수
 		// we don't want to do anything if we are not attempting to join a room. 
 		// this case where isConnecting is false is typically when you lost or quit the game, when this level is loaded, OnConnectedToMaster will be called, in that case
 		// we don't want to do anything.
