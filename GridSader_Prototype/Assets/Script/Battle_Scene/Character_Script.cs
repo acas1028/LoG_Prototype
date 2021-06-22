@@ -115,7 +115,7 @@ public class Character_Script : MonoBehaviour
     {
         Debug.Log(character_Num_Of_Grid + " is Dead");
         this.gameObject.GetComponent<SpriteRenderer>().sprite = null;
-        Character_Reset();
+        character_Is_Allive = false;
     }
 
     public void Character_Setting(int num) // 데이터 세팅
