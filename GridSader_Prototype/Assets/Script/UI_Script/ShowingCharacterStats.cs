@@ -7,10 +7,13 @@ public class ShowingCharacterStats : MonoBehaviour
 {
     public GameObject prefabCharacter;
     public GameObject[] attack_Grid_Tile;
-
+    public GameObject Pop_up_Character_image;
+  
     public Text attack_Damage;
     public Text health_Point;
 
+    private GameObject sprite_Data;
+    
     private static ShowingCharacterStats PopUp_Manager;
     public static ShowingCharacterStats PopUp_instance
     {
@@ -36,6 +39,11 @@ public class ShowingCharacterStats : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        sprite_Data = GameObject.FindGameObjectWithTag("Sprite_Data");
+    }
+
 
     public void Character_Showing_Stats(int num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
     {
@@ -54,9 +62,9 @@ public class ShowingCharacterStats : MonoBehaviour
                 attack_Grid_Tile[i].SetActive(false);
             }
         }
-         
 
-        
+
+        Pop_up_Character_image.GetComponent<Image>().sprite = sprite_Data.GetComponent<Sprite_Data>().Character_Sprite[num - 1];
     }
 
     

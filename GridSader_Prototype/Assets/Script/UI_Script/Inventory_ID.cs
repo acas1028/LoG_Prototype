@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Inventory_ID : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class Inventory_ID : MonoBehaviour
     public int m_Character_ID;
     public GameObject Block_Inventory;
     public bool is_Arrayed;
+   
 
     private void Update()
     {
@@ -19,6 +22,8 @@ public class Inventory_ID : MonoBehaviour
         {
             Block_Inventory.SetActive(false);
         }
+
+       
     }
     public void Setting_Character_Stat()
     {
@@ -28,5 +33,7 @@ public class Inventory_ID : MonoBehaviour
     {
         Arrayment_Manager.Array_instance.Get_Button(m_Character_ID);
     }
+
+    
 
 }

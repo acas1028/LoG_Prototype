@@ -122,6 +122,7 @@ public class Arrayment_Manager: MonoBehaviour
         Cancle_Character.tag = "Null_Character";
         //Order.Enqueue(Cancle_Character);
         Cancle_Character.GetComponent<Character_Script>().character_ID = 0;
+        Cancle_Character.GetComponent<SpriteRenderer>().sprite = null;
         Cancle_Character.GetComponent<Character_Script>().Character_Setting(Cancle_Character.GetComponent<Character_Script>().character_ID);
         Cancle_Character.GetComponent<Character_Script>().Debuging_Character();
 
