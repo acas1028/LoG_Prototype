@@ -18,6 +18,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         if (PhotonNetwork.OfflineMode)
             roomStatusText.text = "<오프라인 모드>";
+        else if (!PhotonNetwork.IsConnected)
+            roomStatusText.text = "로그인이 필요합니다";
         else
             roomStatusText.text = " ";
         isEnemyReadyText.text = " ";

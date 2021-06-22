@@ -46,8 +46,6 @@ public class Arrayment_Manager: MonoBehaviour
         if (ArrayManager == null)
         {
             ArrayManager = this;
-
-            DontDestroyOnLoad(this.gameObject);
         }
         // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
         else if (!ArrayManager != this)

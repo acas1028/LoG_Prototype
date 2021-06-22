@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
@@ -26,7 +25,8 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
-        // 키 타입은 string형, 값 타입은 Character_Script형으로 저장하는 해시테이블
+        // 키 타입은 string형, 값 타입은 int, bool 등 다양한 형으로 저장하는 해시테이블
+        // 해시테이블은 딕셔너리와 다르게 제네릭 타입이 정해져 있지 않아 들어가는 데이터 타입에 제한이 없다. (object 타입으로 인식) 하지만 박싱과 언박싱 과정이 필요하다.
         // C# 해시테이블은 기본적으로 이중 해싱 방법을 사용하여 데이터를 저장한다.
         // 해시테이블을 사용하는 이유는 Photon의 Custom Properties를 사용하려면 Hashtable을 사용해야하기 때문
         team1_table = new Hashtable();
@@ -116,17 +116,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         ShuffleList<int>(idSet);
 
-        for (int i = 0; i < idSet.Count; i++)
-        {
-            Debug.LogWarning("idSet[" + i + "] = " + idSet[i]);
-        }
-
         for (int i = 0; i < arrayed_Data.team2.Length; i++)
         {
             Character_Script cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
 
             cs.Character_Setting(i + 1);
-            cs.character_ID = idSet[i];
             cs.character_Num_Of_Grid = idSet[i];
             cs.character_Attack_Order = i + 1;
             cs.Debuging_Character();
