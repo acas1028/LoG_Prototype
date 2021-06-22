@@ -61,7 +61,7 @@ public class UI_Manager : MonoBehaviour
 
     private void Start()
     {
-        ui_order = orders.character_stat_distribution;// 일단 job skill 사용을 처음으로 설정
+        ui_order = orders.character_placement;
         arraymanager = GameObject.FindWithTag("ArrayManager"); // find를 이용할 시 오류가 일어날 수가 있으니 버그가 발생했을 경우 이곳을 주시(unity communication  피셜) 
         arraymanager.SetActive(false);
         character_inventory_button = GameObject.FindGameObjectsWithTag("Character_inventory_Button");// tag를 이용한 character inventory button 가져오기
@@ -78,7 +78,6 @@ public class UI_Manager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space)) // 임시로 다음 단계로 이동하기 위한 수단
         {
-            Debug_Manager();
             ui_order += 1;
         }
 
