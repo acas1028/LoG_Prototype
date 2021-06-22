@@ -24,5 +24,7 @@ public class Character_inventory_filled : MonoBehaviour
     void inventory_image_filled() // 캐릭터 인벤토리 내용물 채우기
     {
         this.gameObject.GetComponent<Image>().sprite = Character_sprite[character_Id - 1];
+        this.gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Character_sprite[character_Id - 1].rect.height);
+        this.gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Character_sprite[character_Id - 1].rect.width);
     }
 }

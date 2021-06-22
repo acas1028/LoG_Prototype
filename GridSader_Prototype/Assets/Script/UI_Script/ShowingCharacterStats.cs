@@ -65,6 +65,9 @@ public class ShowingCharacterStats : MonoBehaviour
 
 
         Pop_up_Character_image.GetComponent<Image>().sprite = sprite_Data.GetComponent<Sprite_Data>().Character_Sprite[num - 1];
+        Pop_up_Character_image.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, sprite_Data.GetComponent<Sprite_Data>().Character_Sprite[num - 1].rect.height);
+        Pop_up_Character_image.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, sprite_Data.GetComponent<Sprite_Data>().Character_Sprite[num - 1].rect.width);
+        
     }
 
     

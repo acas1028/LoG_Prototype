@@ -6,4 +6,6 @@ using UnityEngine.UI;
 public class Sprite_Data : MonoBehaviour
 {
     public Sprite[] Character_Sprite;
+
+    
 }
