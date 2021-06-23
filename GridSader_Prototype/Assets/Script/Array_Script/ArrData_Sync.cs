@@ -8,7 +8,7 @@ using Photon.Pun;
 
 public class ArrData_Sync : MonoBehaviourPunCallbacks
 {
-    public RoomManager roomManager;
+    public ArrRoomManager roomManager;
     public Arrayed_Data arrayed_Data;
 
     private Hashtable team1_table;

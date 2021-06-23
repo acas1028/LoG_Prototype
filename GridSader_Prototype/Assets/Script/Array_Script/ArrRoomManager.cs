@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
 
-public class RoomManager : MonoBehaviourPunCallbacks
+public class ArrRoomManager : MonoBehaviourPunCallbacks
 {
     public Text playerName;
     public Text roomStatusText;
@@ -60,6 +60,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+
     #region 포톤 콜백 함수
     public override void OnPlayerEnteredRoom(Player other)
     {
@@ -78,9 +79,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("<color=yellow>OnLeftRoom() 호출\n룸을 나갑니다. 로비로 이동합니다.</color>");
-        if (PhotonNetwork.IsConnected)
-            PhotonNetwork.Disconnect();
-        Debug.Log("<color=yellow>Disconnected\n연결 해제됨</color>");
+
         PhotonNetwork.LoadLevel("LobbyScene");
     }
     #endregion

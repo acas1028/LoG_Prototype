@@ -69,6 +69,8 @@ public class Arrayment_Manager: MonoBehaviour
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000);
+            if (!hit)
+                return;
 
             if (hit.transform.CompareTag("Character")&&Character_instance==false)
             {

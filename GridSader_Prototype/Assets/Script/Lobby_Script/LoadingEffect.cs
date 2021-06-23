@@ -75,6 +75,9 @@ public class LoadingEffect : MonoBehaviour
 	/// </summary>
 	public void StopLoaderAnimation()
 	{
+		_isAnimating = false;
+		_transform.rotation = Quaternion.identity;
+		_particleTransform.localPosition = Vector3.zero;
 		particles.SetActive(false);
 	}
 

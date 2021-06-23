@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +13,31 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	#region Private Serializable Fields
 
+	[Header("Login Panel")]
 	[Tooltip("플레이어 이름 입력 패널")]
 	[SerializeField]
-	private GameObject loginPanel;
+	private GameObject LoginPanel;
+
+	[Header("Selection Panel")]
+	[Tooltip("선택 패널")]
+	public GameObject SelectionPanel;
+
+	[Header("Create Room Panel")]
+	[Tooltip("룸 생성 패널")]
+	public GameObject CreateRoomPanel;
+
+	public InputField RoomNameInputField;
+
+	[Header("Join Random Room Panel")]
+	[Tooltip("무작위 룸 입장 패널")]
+	public GameObject JoinRandomRoomPanel;
+
+	[Header("Room List Panel")]
+	[Tooltip("룸 목록 보기 패널")]
+	public GameObject RoomListPanel;
+
+	public GameObject RoomListContent;
+	public GameObject RoomListEntryPrefab;
 
 	[Tooltip("연결 상태 출력 텍스트")]
 	[SerializeField]
@@ -27,15 +51,12 @@ public class Lobby : MonoBehaviourPunCallbacks
 	[SerializeField]
 	private LoadingEffect loadingEffect;
 
+	private Dictionary<string, RoomInfo> cachedRoomList;
+	private Dictionary<string, GameObject> roomListEntries;
+
 	#endregion
 
 	#region Private 변수
-	/// <summary>
-	/// Keep track of the current process. Since connection is asynchronous and is based on several callbacks from Photon, 
-	/// we need to keep track of this to properly adjust the behavior when we receive call back by Photon.
-	/// Typically this is used for the OnConnectedToMaster() callback.
-	/// </summary>
-	bool isConnecting;
 
 	/// <summary>
 	/// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
@@ -46,61 +67,59 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	#region MonoBehaviour 콜백 함수
 
-	/// <summary>
-	/// MonoBehaviour method called on GameObject by Unity during early initialization phase.
-	/// </summary>
-	void Awake()
+	private void Awake()
 	{
+		cachedRoomList = new Dictionary<string, RoomInfo>();
+		roomListEntries = new Dictionary<string, GameObject>();
+
+		// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
+		PhotonNetwork.AutomaticallySyncScene = true;
+
 		if (loadingEffect == null)
 		{
 			Debug.LogError("<Color=Red><b>Missing</b></Color> 로딩 이펙트 찾을 수 없음.", this);
 		}
-
 	}
 
-	#endregion
+    private void Start()
+    {
+		// 룸에서 퇴장한 경우 로그인이 아닌 선택 패널이 바로 나오도록 한다.
+		if (PhotonNetwork.OfflineMode)
+		{
+			PhotonNetwork.Disconnect();
+			SetActivePanel(LoginPanel.name);
+		}
+		else if (PhotonNetwork.IsConnected)
+			SetActivePanel(SelectionPanel.name);
+    }
+
+    #endregion
 
 
-	#region Public 함수
+    #region Public 함수
 
-	/// <summary>
-	/// Start the connection process. 
-	/// - If already connected, we attempt joining a random room
-	/// - if not yet connected, Connect this application instance to Photon Cloud Network
-	/// </summary>
-	public void Connect()
+    public void Connect()
 	{
-		// we want to make sure the log is clear everytime we connect, we might have several failed attempted if connection failed.
-		feedbackText.text = "";
-
-		// keep track of the will to join a room, because when we come back from the game we will get a callback that we are connected, so we need to know what to do then
-		isConnecting = true;
-
-		// 메인 패널 숨기기
-		loginPanel.SetActive(false);
-
 		// start the loader animation for visual effect.
 		if (loadingEffect != null)
 		{
 			loadingEffect.StartLoaderAnimation();
 		}
 
-		// #Critical
-		// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-		PhotonNetwork.AutomaticallySyncScene = true;
-
 		// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
 		if (PhotonNetwork.IsConnected)
 		{
+			SetActivePanel(JoinRandomRoomPanel.name);
+
 			// offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
 			LogFeedback("룸에 입장 중...");
-			Debug.Log("<color=lightblue>현재 서버와 연결되어있습니다. 룸에 입장합니다.</color>");
+			Debug.Log("<color=lightblue>현재 서버와 연결되어있거나 오프라인 모드입니다. 룸에 입장합니다.</color>");
 			// #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else
 		{
-			LogFeedback("연결 중...");
+			LogFeedback("연결됨");
 			Debug.Log("<color=lightblue>현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.</color>");
 			// #Critical, we must first and foremost connect to Photon Online Server.
 			PhotonNetwork.ConnectUsingSettings();
@@ -134,6 +153,118 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	#endregion
 
+	#region Private 함수
+
+	/// <summary>
+	/// 하나만 활성화하고 나머지 패널들을 모두 비활성화하는 함수
+	/// </summary>
+	public void SetActivePanel(string activePanel)
+	{
+		LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
+		SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
+		CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
+		JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
+		RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
+	}
+
+	private void ClearRoomListView()
+	{
+		foreach (GameObject entry in roomListEntries.Values)
+		{
+			Destroy(entry.gameObject);
+		}
+
+		roomListEntries.Clear();
+	}
+
+	private void UpdateCachedRoomList(List<RoomInfo> roomList)
+	{
+		foreach (RoomInfo info in roomList)
+		{
+			// Remove room from cached room list if it got closed, became invisible or was marked as removed
+			if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
+			{
+				if (cachedRoomList.ContainsKey(info.Name))
+				{
+					cachedRoomList.Remove(info.Name);
+				}
+
+				continue;
+			}
+
+			// Update cached room info
+			if (cachedRoomList.ContainsKey(info.Name))
+			{
+				cachedRoomList[info.Name] = info;
+			}
+			// Add new room info to cache
+			else
+			{
+				cachedRoomList.Add(info.Name, info);
+			}
+		}
+	}
+
+	private void UpdateRoomListView()
+	{
+		foreach (RoomInfo info in cachedRoomList.Values)
+		{
+			GameObject entry = Instantiate(RoomListEntryPrefab);
+			entry.transform.SetParent(RoomListContent.transform);
+			entry.transform.localScale = Vector3.one;
+			entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
+
+			roomListEntries.Add(info.Name, entry);
+		}
+	}
+
+	#endregion
+
+	#region UI 버튼 콜백 함수
+
+	public void OnLogoutButtonClicked()
+    {
+		if (PhotonNetwork.IsConnected)
+			PhotonNetwork.Disconnect();
+	}
+
+	public void OnBackButtonClicked()
+	{
+		if (PhotonNetwork.InLobby)
+		{
+			PhotonNetwork.LeaveLobby();
+		}
+
+		SetActivePanel(SelectionPanel.name);
+	}
+
+	public void OnCreateRoomButtonClicked()
+	{
+		string roomName = RoomNameInputField.text;
+		roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1, 100) : roomName;
+
+		PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayersPerRoom }, null);
+	}
+
+	public void OnJoinRandomRoomButtonClicked()
+	{
+		SetActivePanel(JoinRandomRoomPanel.name);
+
+		PhotonNetwork.JoinRandomRoom();
+	}
+
+	public void OnRoomListButtonClicked()
+	{
+		if (!PhotonNetwork.InLobby)
+		{
+			// Photon의 Lobby는 룸 목록을 보는 공간을 의미
+			PhotonNetwork.JoinLobby();
+		}
+
+		SetActivePanel(RoomListPanel.name);
+	}
+
+	#endregion
 
 	#region 포톤 콜백 함수
 	// below, we implement some callbacks of PUN
@@ -149,14 +280,46 @@ public class Lobby : MonoBehaviourPunCallbacks
 		// we don't want to do anything if we are not attempting to join a room. 
 		// this case where isConnecting is false is typically when you lost or quit the game, when this level is loaded, OnConnectedToMaster will be called, in that case
 		// we don't want to do anything.
-		if (isConnecting)
-		{
-			LogFeedback("OnConnectedToMaster: 무작위 룸에 참가합니다.");
-			Debug.Log("<color=yellow>OnConnectedToMaster() 호출\n당신은 서버와 연결되었고 룸에 참가할 수 있습니다.</color>");
 
-			// #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
-			PhotonNetwork.JoinRandomRoom();
-		}
+		Debug.Log("<color=yellow>OnConnectedToMaster() 호출\n마스터 서버 연결됨</color>");
+
+		if (loadingEffect)
+			loadingEffect.StopLoaderAnimation();
+
+		SetActivePanel(SelectionPanel.name);
+	}
+
+	public override void OnRoomListUpdate(List<RoomInfo> roomList)
+	{
+		ClearRoomListView();
+
+		UpdateCachedRoomList(roomList);
+		UpdateRoomListView();
+	}
+
+	// Photon의 Lobby는 룸 목록을 보는 공간을 의미
+	public override void OnJoinedLobby()
+	{
+		// whenever this joins a new lobby, clear any previous room lists
+		cachedRoomList.Clear();
+		ClearRoomListView();
+	}
+
+	// note: when a client joins / creates a room, OnLeftLobby does not get called, even if the client was in a lobby before
+	public override void OnLeftLobby()
+	{
+		cachedRoomList.Clear();
+		ClearRoomListView();
+	}
+
+	public override void OnCreateRoomFailed(short returnCode, string message)
+	{
+		SetActivePanel(SelectionPanel.name);
+	}
+
+	public override void OnJoinRoomFailed(short returnCode, string message)
+	{
+		SetActivePanel(SelectionPanel.name);
 	}
 
 	/// <summary>
@@ -170,8 +333,9 @@ public class Lobby : MonoBehaviourPunCallbacks
 		LogFeedback("<Color=Red>OnJoinRandomFailed</Color>: 입장 가능한 룸이 없어 새 룸을 만듭니다.");
 		Debug.Log("<color=yellow>OnJoinRandomFailed() 호출\n입장 가능한 룸이 없어 새 룸을 만듭니다.</color>");
 
-		// #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-		PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = this.maxPlayersPerRoom });
+		string roomName = "Room " + Random.Range(1, 100);
+
+		PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayersPerRoom }, null);
 	}
 
 
@@ -180,14 +344,10 @@ public class Lobby : MonoBehaviourPunCallbacks
 	/// </summary>
 	public override void OnDisconnected(DisconnectCause cause)
 	{
-		LogFeedback("<Color=Red>OnDisconnected</Color> " + cause);
-		Debug.LogError("<color=yellow>Disconnected\n연결 해제됨</color>");
+		LogFeedback("연결 해제됨");
+		Debug.LogWarning("<color=yellow>Disconnected\n연결 해제됨</color>");
 
-		// #Critical: we failed to connect or got disconnected. There is not much we can do. Typically, a UI system should be in place to let the user attemp to connect again.
-		loadingEffect.StopLoaderAnimation();
-
-		isConnecting = false;
-		loginPanel.SetActive(true);
+		SetActivePanel(LoginPanel.name);
 
 	}
 

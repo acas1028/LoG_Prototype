@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b45ba8fcc1d314fbaa562d69858aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomManager: {fileID: 1191828021}
+  roomManager: {fileID: 2016060956}
   arrayed_Data: {fileID: 1257622925}
 --- !u!4 &158899197
 Transform:
@@ -4947,54 +4947,6 @@ MonoBehaviour:
   - {fileID: 21300008, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300010, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   Character_ID: 0
---- !u!1 &1191828020
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1191828022}
-  - component: {fileID: 1191828021}
-  m_Layer: 0
-  m_Name: RoomManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1191828021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191828020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ac5bcdcc7ced2c47b2ad1dff9836f7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: {fileID: 4271805789537212528}
-  roomStatusText: {fileID: 1922634608}
-  joinedPlayerList: {fileID: 462211486}
-  isEnemyReadyText: {fileID: 706613319}
-  readyButton: {fileID: 151319183}
---- !u!4 &1191828022
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191828020}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1195198000
 GameObject:
   m_ObjectHideFlags: 0
@@ -7438,7 +7390,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uB8F8 \uC0C1\uD0DC \uD14D\uC2A4\uD2B8"
+  m_Text: "\uBC29 \uC0C1\uD0DC \uD14D\uC2A4\uD2B8"
 --- !u!222 &1922634609
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7744,6 +7696,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2016060954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2016060955}
+  - component: {fileID: 2016060956}
+  m_Layer: 0
+  m_Name: ArrRoomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2016060955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016060954}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2016060956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016060954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac5bcdcc7ced2c47b2ad1dff9836f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: {fileID: 4271805789537212528}
+  roomStatusText: {fileID: 1922634608}
+  joinedPlayerList: {fileID: 462211486}
+  isEnemyReadyText: {fileID: 706613319}
+  readyButton: {fileID: 151319183}
 --- !u!1 &2028272804
 GameObject:
   m_ObjectHideFlags: 0
@@ -8362,8 +8362,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191828021}
-        m_TargetAssemblyTypeName: RoomManager, Assembly-CSharp
+      - m_Target: {fileID: 2016060956}
+        m_TargetAssemblyTypeName: ArrRoomManager, Assembly-CSharp
         m_MethodName: LeaveRoom
         m_Mode: 1
         m_Arguments:
@@ -8425,7 +8425,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e00995507c2406448b4c8429136104dd, type: 3}
+    m_Font: {fileID: 12800000, guid: adfc3178150d0b8408316cf372f1d723, type: 3}
     m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
@@ -8437,7 +8437,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quit Room
+  m_Text: "\uBC29 \uB098\uAC00\uAE30"
 --- !u!1 &1181585563295563880
 GameObject:
   m_ObjectHideFlags: 0
