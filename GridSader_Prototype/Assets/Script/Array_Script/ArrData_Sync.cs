@@ -66,7 +66,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         isReady = !isReady;
         arrayed_Data.team1 = passData;
 
-        roomManager.SetReadyButtonColor(isReady);
+        roomManager.SetReadyButtonStatus(isReady);
 
         // 오프라인모드인 경우 아래 데이터 동기화 과정을 건너뛰고, team2에는 임의의 데이터를 집어넣는다.
         if (PhotonNetwork.OfflineMode)
@@ -107,21 +107,21 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     private void OfflineModeStart()
     {
-        List<int> idSet = new List<int>();
+        List<int> gridNumSet = new List<int>();
 
         for (int i = 0; i < 9; i++)
         {
-            idSet.Add(i + 1);
+            gridNumSet.Add(i + 1);
         }
 
-        ShuffleList<int>(idSet);
+        ShuffleList<int>(gridNumSet);
 
         for (int i = 0; i < arrayed_Data.team2.Length; i++)
         {
             Character_Script cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
 
             cs.Character_Setting(i + 1);
-            cs.character_Num_Of_Grid = idSet[i];
+            cs.character_Num_Of_Grid = gridNumSet[i];
             cs.character_Attack_Order = i + 1;
             cs.Debuging_Character();
         }
@@ -239,7 +239,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         isAllPlayerReady = isReady && isEnemyReady;
 
-        Debug.LogWarning("Player Properties Updated");
+        Debug.LogFormat("Player Properties Updated due to <color=green>{0}</color>", changedProps.ToString());
 
         // 방장이 게임을 시작한다.
         if (PhotonNetwork.IsMasterClient && isAllPlayerReady)

@@ -94,14 +94,14 @@ public class Lobby : MonoBehaviourPunCallbacks
 		{
 			// offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
 			LogFeedback("룸에 입장 중...");
-			Debug.Log("현재 서버와 연결되어있습니다. 룸에 입장합니다.");
+			Debug.Log("<color=lightblue>현재 서버와 연결되어있습니다. 룸에 입장합니다.</color>");
 			// #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else
 		{
 			LogFeedback("연결 중...");
-			Debug.Log("현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.");
+			Debug.Log("<color=lightblue>현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.</color>");
 			// #Critical, we must first and foremost connect to Photon Online Server.
 			PhotonNetwork.ConnectUsingSettings();
 			PhotonNetwork.GameVersion = this.gameVersion;
@@ -152,7 +152,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 		if (isConnecting)
 		{
 			LogFeedback("OnConnectedToMaster: 무작위 룸에 참가합니다.");
-			Debug.Log("OnConnectedToMaster() 호출\n당신은 서버와 연결되었고 룸에 참가할 수 있습니다.");
+			Debug.Log("<color=yellow>OnConnectedToMaster() 호출\n당신은 서버와 연결되었고 룸에 참가할 수 있습니다.</color>");
 
 			// #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
 			PhotonNetwork.JoinRandomRoom();
@@ -168,7 +168,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public override void OnJoinRandomFailed(short returnCode, string message)
 	{
 		LogFeedback("<Color=Red>OnJoinRandomFailed</Color>: 입장 가능한 룸이 없어 새 룸을 만듭니다.");
-		Debug.Log("OnJoinRandomFailed() 호출\n입장 가능한 룸이 없어 새 룸을 만듭니다.");
+		Debug.Log("<color=yellow>OnJoinRandomFailed() 호출\n입장 가능한 룸이 없어 새 룸을 만듭니다.</color>");
 
 		// #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
 		PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = this.maxPlayersPerRoom });
@@ -181,7 +181,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public override void OnDisconnected(DisconnectCause cause)
 	{
 		LogFeedback("<Color=Red>OnDisconnected</Color> " + cause);
-		Debug.LogError("연결 해제됨");
+		Debug.LogError("<color=yellow>Disconnected\n연결 해제됨</color>");
 
 		// #Critical: we failed to connect or got disconnected. There is not much we can do. Typically, a UI system should be in place to let the user attemp to connect again.
 		loadingEffect.StopLoaderAnimation();
@@ -205,7 +205,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public override void OnJoinedRoom()
 	{
 		LogFeedback("<Color=Green>OnJoinedRoom</Color> " + PhotonNetwork.CurrentRoom.PlayerCount + "명이 있는 룸에 입장합니다.");
-		Debug.Log("OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.");
+		Debug.Log("<color=yellow>OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.</color>");
 
 		PhotonNetwork.LoadLevel("Arrayment_Scene");
 	}
