@@ -21,7 +21,10 @@ public class Character_Sprite_Changer : MonoBehaviour
     public void Character_Sprite_Setting()
     {
         Character_ID = this.gameObject.GetComponent<Character_Script>().character_ID;
-        if (Character_ID < 1) return;
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID - 1];
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
+
+        if(this.gameObject.GetComponent<Character_Script>().character_Is_Allive == false)
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[0];
+
     }
 }
