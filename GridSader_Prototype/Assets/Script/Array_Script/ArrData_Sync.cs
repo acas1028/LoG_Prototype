@@ -79,6 +79,14 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         isReady_table["PlayerIsReady"] = isReady;
 
+        result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
+        if (!result)
+            Debug.Log("IsReady Custom Property 설정 실패");
+
+        // 준비를 취소한 경우 서버에 내 데이터를 전달하는 과정을 건너뛴다.
+        if (!isReady)
+            return;
+
         for (int i = 0; i < passData.Length; i++)
         {
             cs = arrayed_Data.team1[i].GetComponent<Character_Script>();
@@ -97,10 +105,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             team1_table[(i + 1) + "_DivineShield"] = cs.character_Divine_Shield;
             team1_table[(i + 1) + "_Revivial"] = cs.character_Revivial;
         }
-
-        result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
-        if (!result)
-            Debug.Log("IsReady Custom Property 설정 실패");
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
         if (!result)
