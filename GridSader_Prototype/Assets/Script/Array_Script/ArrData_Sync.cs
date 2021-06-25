@@ -16,11 +16,13 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     private bool isReady;
     private bool isEnemyReady;
+    private bool isGetEnemyData;
 
     private void Start()
     {
         isReady = false;
         isEnemyReady = false;
+        isGetEnemyData = false;
 
         if (PhotonNetwork.OfflineMode)
             return;
@@ -234,6 +236,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                     cs.Debuging_Character();
                 }
+
+                isGetEnemyData = true;
+
+                Debug.Log("Team2 데이터 불러옴");
             }
         }
 
@@ -242,7 +248,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         Debug.LogFormat("Player Properties Updated due to <color=green>{0}</color>", changedProps.ToString());
 
         // 방장이 게임을 시작한다.
-        if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
+        if (PhotonNetwork.IsMasterClient && isAllPlayerReady && isGetEnemyData)
             PhotonNetwork.LoadLevel("BattleScene");
     }
     #endregion
