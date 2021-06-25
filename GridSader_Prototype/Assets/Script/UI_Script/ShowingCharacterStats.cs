@@ -33,10 +33,7 @@ public class ShowingCharacterStats : MonoBehaviour
     public void Awake()
     {
         attack_Grid_Tile = GameObject.FindGameObjectsWithTag("Attack_Grid_Tile");
-        for(int i=0; i<attack_Grid_Tile.Length; i++)
-        {
-            attack_Grid_Tile[i].SetActive(false);
-        }
+        
     }
 
     private void Start()
@@ -55,11 +52,11 @@ public class ShowingCharacterStats : MonoBehaviour
         {
             if(prefabCharacter.GetComponent<Character_Script>().character_Attack_Range[i]== true)
             {
-                attack_Grid_Tile[i].SetActive(true);
+                attack_Grid_Tile[i].GetComponent<Image>().color = Color.red;
             }
             else
             {
-                attack_Grid_Tile[i].SetActive(false);
+                attack_Grid_Tile[i].GetComponent<Image>().color = Color.white;
             }
         }
 
