@@ -39,6 +39,9 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public GameObject RoomListContent;
 	public GameObject RoomListEntryPrefab;
 
+	[Tooltip("연결 상태 텍스트 수직스크롤바")]
+	public Scrollbar statusVerticalBar;
+
 	[Tooltip("연결 상태 출력 텍스트")]
 	[SerializeField]
 	private Text feedbackText;
@@ -136,26 +139,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 	}
 
 	/// <summary>
-	/// Logs the feedback in the UI view for the player, as opposed to inside the Unity Editor for the developer.
-	/// </summary>
-	/// <param name="message">Message.</param>
-	void LogFeedback(string message)
-	{
-		// we do not assume there is a feedbackText defined.
-		if (feedbackText == null)
-		{
-			return;
-		}
-
-		// add new messages as a new line and at the bottom of the log.
-		feedbackText.text += System.Environment.NewLine + message;
-	}
-
-	#endregion
-
-	#region Private 함수
-
-	/// <summary>
 	/// 하나만 활성화하고 나머지 패널들을 모두 비활성화하는 함수
 	/// </summary>
 	public void SetActivePanel(string activePanel)
@@ -166,6 +149,29 @@ public class Lobby : MonoBehaviourPunCallbacks
 		JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
 		RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
 	}
+
+	/// <summary>
+	/// Logs the feedback in the UI view for the player, as opposed to inside the Unity Editor for the developer.
+	/// </summary>
+	/// <param name="message">Message.</param>
+	private void LogFeedback(string message)
+	{
+		// we do not assume there is a feedbackText defined.
+		if (feedbackText == null)
+		{
+			return;
+		}
+
+		if (feedbackText.text.Length > 10)
+			statusVerticalBar.value -= 0.028f;
+
+		// add new messages as a new line and at the bottom of the log.
+		feedbackText.text += System.Environment.NewLine + message;
+	}
+
+	#endregion
+
+	#region Private 함수
 
 	private void ClearRoomListView()
 	{
@@ -291,6 +297,8 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{
+		Debug.Log("<color=yellow>OnRoomListUpdate() 호출\n방 목록 최신화</color>");
+
 		ClearRoomListView();
 
 		UpdateCachedRoomList(roomList);

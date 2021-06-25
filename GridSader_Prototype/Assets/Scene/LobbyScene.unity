@@ -5097,6 +5097,7 @@ MonoBehaviour:
   RoomListPanel: {fileID: 1319054092}
   RoomListContent: {fileID: 858790483}
   RoomListEntryPrefab: {fileID: 114706, guid: d76b92aa72d92214fa57982a72d0a301, type: 3}
+  statusVerticalBar: {fileID: 478107307}
   feedbackText: {fileID: 1213577008}
   maxPlayersPerRoom: 2
   loadingEffect: {fileID: 1916659642}
@@ -5151,7 +5152,7 @@ GameObject:
   - component: {fileID: 73379595}
   - component: {fileID: 73379594}
   m_Layer: 5
-  m_Name: Scroll View
+  m_Name: Status Text Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5192,9 +5193,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1213577007}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -6197,7 +6198,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 440825032}
   m_HandleRect: {fileID: 440825031}
   m_Direction: 2
-  m_Value: 0.9999999
+  m_Value: 1
   m_Size: 0.08635961
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7505,7 +7506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -439.0486}
+  m_AnchoredPosition: {x: 0, y: -439.04868}
   m_SizeDelta: {x: 0.00012207, y: 878.0974}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1213577008
