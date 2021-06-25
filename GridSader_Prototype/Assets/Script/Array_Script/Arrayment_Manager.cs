@@ -13,7 +13,7 @@ public class Arrayment_Manager: MonoBehaviour
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
-    public Queue<GameObject> Order = new Queue<GameObject>();
+    public List<GameObject> Order = new List<GameObject>();
 
     public GameObject[] Grids;
     private GameObject[] Inventory;
@@ -22,7 +22,7 @@ public class Arrayment_Manager: MonoBehaviour
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     private GameObject Cancle_Character;
-    private int Count = 0;
+
 
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
@@ -87,7 +87,6 @@ public class Arrayment_Manager: MonoBehaviour
             {
                 Character_Instantiate = hit.collider.gameObject;
                 Character_Instantiate.tag = "Character";//Character로 태그를 변경한다. 예외처리.
-                Count++;
                 Character_Instantiate.GetComponent<Character_Script>().character_ID = Prefeb_Character.GetComponent<Character_Script>().character_ID;
                 Character_Instantiate.GetComponent<Character_Script>().Character_Setting(Character_Instantiate.GetComponent<Character_Script>().character_ID);
                 for (int i = 0; i < Grids.Length; i++)//캐릭터에 Grid_Number 삽입
@@ -107,7 +106,7 @@ public class Arrayment_Manager: MonoBehaviour
 
                 }
                 Character_Instantiate.GetComponent<Character_Script>().Debuging_Character();
-                Order.Enqueue(Character_Instantiate);
+                Order.Add(Character_Instantiate);
                 PopUp_UI.SetActive(false);
                 Character_instance = false;
             }
@@ -122,6 +121,13 @@ public class Arrayment_Manager: MonoBehaviour
                 Inventory[i].GetComponent<Inventory_ID>().is_Arrayed = false;
             }
         }
+        for (int i = 0; i < Order.Count-1; i++)
+        {
+            if(Cancle_Character==Order[i])
+            {
+                Order.Remove(Order[i]);
+            }
+        }
         Cancle_Character.tag = "Null_Character";
         Cancle_Character.GetComponent<Character_Script>().character_ID = 0;
         Cancle_Character.GetComponent<SpriteRenderer>().sprite = null;
@@ -131,11 +137,11 @@ public class Arrayment_Manager: MonoBehaviour
     }
     public void Attack_Order()
     {
-        for (int i = 0; i < Count; i++)
+        for (int i = 0; i < Order.Count; i++)
         {
-            GameObject TestOrder = Order.Dequeue();
-            TestOrder.GetComponent<Character_Script>().character_Attack_Order = i + 1;
-            TestOrder.GetComponent<Character_Script>().Debuging_Character();
+            Debug.Log(Order[i]);
+            Order[i].GetComponent<Character_Script>().character_Attack_Order = i + 1;
+            Order[i].GetComponent<Character_Script>().Debuging_Character();
         }
         Ready_Array = true;
     }
