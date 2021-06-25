@@ -32,7 +32,7 @@ public class ShowingCharacterStats : MonoBehaviour
 
     public void Awake()
     {
-        attack_Grid_Tile = GameObject.FindGameObjectsWithTag("Attack_Grid_Tile");
+       
         
     }
 
