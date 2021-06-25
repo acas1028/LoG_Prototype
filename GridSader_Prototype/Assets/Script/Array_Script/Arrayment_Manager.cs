@@ -121,7 +121,7 @@ public class Arrayment_Manager: MonoBehaviour
                 Inventory[i].GetComponent<Inventory_ID>().is_Arrayed = false;
             }
         }
-        for (int i = 0; i < Order.Count-1; i++)
+        for (int i = 0; i < Order.Count; i++)
         {
             if(Cancle_Character==Order[i])
             {
@@ -131,7 +131,6 @@ public class Arrayment_Manager: MonoBehaviour
         Cancle_Character.tag = "Null_Character";
         Cancle_Character.GetComponent<Character_Script>().Character_Reset();
         Cancle_Character.GetComponent<SpriteRenderer>().sprite = null;
-        //Cancle_Character.GetComponent<Character_Script>().Character_Setting(Cancle_Character.GetComponent<Character_Script>().character_ID);
         Cancle_Character.GetComponent<Character_Script>().Debuging_Character();
     }
     public void Attack_Order()

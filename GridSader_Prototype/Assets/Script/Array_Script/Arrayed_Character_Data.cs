@@ -35,16 +35,6 @@ public class Arrayed_Character_Data : MonoBehaviour
         for (int i = 0; i < Pass_Data.Length; i++)//공격 순서 초기화
         {
             Pass_Data[i].GetComponent<Character_Script>().Copy_Character_Stat(Array_Team[i]);
-            if(Pass_Data[i].GetComponent<Character_Script>().character_Attack_Order>5)
-            {
-                Pass_Data[i].GetComponent<Character_Script>().character_Attack_Order = Pass_Data[i].GetComponent<Character_Script>().character_Attack_Order % 5;
-                if (Pass_Data[i].GetComponent<Character_Script>().character_Attack_Order % 5 == 0)
-                {
-                    Pass_Data[i].GetComponent<Character_Script>().character_Attack_Order = 5;
-                }
-                Pass_Data[i].GetComponent<Character_Script>().Debuging_Character();
-
-            }
             Pass_Data[i].GetComponent<Character_Script>().Debuging_Character();
         }
         arrdata_sync.DataSync(Pass_Data);
