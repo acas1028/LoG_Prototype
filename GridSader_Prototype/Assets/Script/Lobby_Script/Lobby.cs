@@ -246,6 +246,9 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	public void OnCreateRoomButtonClicked()
 	{
+		if (loadingEffect)
+			loadingEffect.StartLoaderAnimation();
+
 		string roomName = RoomNameInputField.text;
 		roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1, 100) : roomName;
 
@@ -255,6 +258,9 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public void OnJoinRandomRoomButtonClicked()
 	{
 		SetActivePanel(JoinRandomRoomPanel.name);
+
+		if (loadingEffect)
+			loadingEffect.StartLoaderAnimation();
 
 		PhotonNetwork.JoinRandomRoom();
 	}
@@ -372,6 +378,9 @@ public class Lobby : MonoBehaviourPunCallbacks
 	/// </remarks>
 	public override void OnJoinedRoom()
 	{
+		if (loadingEffect)
+			loadingEffect.StopLoaderAnimation();
+
 		LogFeedback("<Color=Green>OnJoinedRoom</Color> " + PhotonNetwork.CurrentRoom.PlayerCount + "명이 있는 룸에 입장합니다.");
 		Debug.Log("<color=yellow>OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.</color>");
 
