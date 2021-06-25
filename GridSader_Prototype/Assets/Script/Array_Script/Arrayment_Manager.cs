@@ -79,6 +79,10 @@ public class Arrayment_Manager: MonoBehaviour
                 Array_Cancle_Button.SetActive(true);
                 PopUp_UI.SetActive(true);                   
             }
+            else
+            {
+                Array_Cancle_Button.SetActive(false);
+            }
             if (hit.transform.CompareTag("Null_Character")&&Character_instance == true)//Null_Character로 태그 되어 있는 물체에게 raycast가 닿으면.
             {
                 Character_Instantiate = hit.collider.gameObject;
@@ -119,7 +123,6 @@ public class Arrayment_Manager: MonoBehaviour
             }
         }
         Cancle_Character.tag = "Null_Character";
-        //Order.Enqueue(Cancle_Character);
         Cancle_Character.GetComponent<Character_Script>().character_ID = 0;
         Cancle_Character.GetComponent<SpriteRenderer>().sprite = null;
         Cancle_Character.GetComponent<Character_Script>().Character_Setting(Cancle_Character.GetComponent<Character_Script>().character_ID);
