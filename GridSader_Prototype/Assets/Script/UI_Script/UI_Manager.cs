@@ -45,16 +45,12 @@ public class UI_Manager : MonoBehaviour
     //순서 변수를 인트화시켜 보기 편화게 설정
     enum orders
     {
-        use_of_job_skills, character_stat_distribution, character_placement
+        character_placement , character_choose_grid_property
     }
 
    
     private orders ui_order; //각각의 순서를 명시하는 변수
     private GameObject arraymanager; //오브젝트 arraymanager
-    private GameObject character_inventory; //오브젝트 panel
-    private GameObject arrayButton; // 오브젝트 arraybutton
-    private GameObject popup; // 오브젝트 popup
-    private GameObject[] character_inventory_button; // 오브젝트 inventory(캐릭터 관련 버튼)
     private GameObject[] null_Character; //오브젝트 nullcharacter
 
     private int arraybutton_On = 0;
@@ -64,66 +60,16 @@ public class UI_Manager : MonoBehaviour
         ui_order = orders.character_placement;
         arraymanager = GameObject.FindWithTag("ArrayManager"); // find를 이용할 시 오류가 일어날 수가 있으니 버그가 발생했을 경우 이곳을 주시(unity communication  피셜) 
         arraymanager.SetActive(false);
-        character_inventory_button = GameObject.FindGameObjectsWithTag("Character_inventory_Button");// tag를 이용한 character inventory button 가져오기
-        character_inventory = GameObject.FindWithTag("Character_inventory"); //tag를 이용한 panel 가져오기
-        character_inventory.SetActive(true);
-        arrayButton = GameObject.FindWithTag("ArrayButton"); //tag를 이용한 arrayButton 가져오기
-        arrayButton.SetActive(false);
         null_Character = GameObject.FindGameObjectsWithTag("Null_Character"); // tag를 이용한 nullcharacter 가져오기
-        popup = GameObject.FindWithTag("Popup"); // tag를 이용한 popup 가져오기
-        popup.SetActive(false);
     }
 
     private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space)) // 임시로 다음 단계로 이동하기 위한 수단
-        {
-            ui_order += 1;
-        }
-
-        Use_of_job_skills();
-
-        Character_stat_distribution();
-
+    { 
         Character_placement();
-        
-    }
-
-    void Use_of_job_skills()// 직업 능력을 사용할때 함수 작동
-    {
-        if(ui_order == orders.use_of_job_skills)
-        {
-
-        }
 
     }
 
 
-    void Character_stat_distribution()// 캐릭터 스탯 분배 차례일때 함수 작동
-    {
-        if(ui_order== orders.character_stat_distribution)
-        {
-            if(arraybutton_On==0) //arraybutton이 한번만 true가 되도록(이렇게 하지 않을 경우 button이 이 차례일때 사라지지 않음)
-            {
-                arrayButton.SetActive(true);
-                arraybutton_On++;
-            }
-
-            for (int i = 0; i < character_inventory_button.Length; i++) //이 차례일시 버튼이 사라지지 않도록
-            {
-                character_inventory_button[i].SetActive(true);
-            }
-
-            for (int i = 0; i < null_Character.Length; i++) //배치에 직접적으로 관련있는 nullcharacter를 이 차례때는 off 시킨다.
-            {
-                null_Character[i].SetActive(false);
-            }
-
-
-
-        }
-
-    }
 
     void Character_placement()// 캐릭터 배치 단계일때 함수 작동
     {
@@ -135,11 +81,13 @@ public class UI_Manager : MonoBehaviour
             {
                 null_Character[i].SetActive(true);
             }
-            //popup.SetActive(false);//이 차례시 popbutton이 등장하지 않도록
-            
-      
-            
+     
         }
+
+    }
+
+    void Charactger_chooose_grid_property() // 칸 지정 특성을 지닌 캐릭터가 배치 될 시, 특성을 사용하는 때
+    {
 
     }
 
@@ -147,6 +95,5 @@ public class UI_Manager : MonoBehaviour
     {
         Debug.Log(ui_order);
         Debug.Log(arraybutton_On);
-        Debug.Log(character_inventory_button[0]);
     }
 }
