@@ -9,15 +9,15 @@ public class Character_Script : MonoBehaviour
     public int character_HP { get; set; } // 체력
     public int character_AP { get; set; } // AP
     public int character_Attack_Damage { get; set; } // 공격력
-    public int character_Num_Of_Attack_Range { get; set; } // 공격 범위 숫자
     public int character_Num_Of_Grid { get; set; } // 그리드 넘버
+    public int character_Team_Number { get; set; } // 팀 넘버(나중에 이름으로 바꾸기!)
     public int character_Attack_Order { get; set; } // 공격 순서
-    public bool character_Is_Preemptive { get; set; } // 선공 후공 true = 선공 false = 후공
     public bool[] character_Attack_Range { get; set; } // 공격 범위
     public int character_Attack_Count { get; set; } // 공격 횟수
     public int character_Damaged { get; set; } // 받을 데미지
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
+    public bool character_Counter { get; set; }
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
 
@@ -47,15 +47,15 @@ public class Character_Script : MonoBehaviour
 
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.
     {
+
         character_ID = 0;
         character_Is_Allive = false;
         character_HP = 0;
         character_AP = 0;
         character_Attack_Damage = 0;
-        character_Num_Of_Attack_Range = 0;
         character_Num_Of_Grid = 0;
+        character_Team_Number = 0;
         character_Attack_Order = 0;
-        character_Is_Preemptive = false;
         character_Attack_Range = new bool[9]
             { false, false, false,
               false, false, false,
@@ -66,6 +66,7 @@ public class Character_Script : MonoBehaviour
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
         character_Revivial = false;
+        character_Counter = false;
     }
 
     IEnumerator SetCharacterRed()
@@ -94,6 +95,9 @@ public class Character_Script : MonoBehaviour
     public void Character_Damaged() // 피격 함수
     {
         // 받을 데미지를 다시 계산.
+
+        Character_Counter();
+
         character_Damaged = (character_Damaged * (100 + character_Buffed_Damaged)) / 100;
 
         if(character_Divine_Shield) // 나중에 들어가겠지만 간단해서 넣어뒀음. 천상의보호막임.
@@ -111,11 +115,49 @@ public class Character_Script : MonoBehaviour
         character_Damaged = 0;
     }
 
+    public void Character_Counter_Attack(GameObject enemy_Character) //카운터 발동
+    {
+        StartCoroutine(SetCharacterRed());
+
+        Character_Script enemy_Character_Script;
+        enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
+
+        enemy_Character_Script.character_Damaged = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
+        enemy_Character_Script.Character_Counter_Damaged(); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+
+        character_Counter = false;
+    }
+
+    public void Character_Counter_Damaged() // 카운터 발동
+    {
+        character_Damaged = (character_Damaged * (100 + character_Buffed_Damaged)) / 100;
+
+        if (character_Divine_Shield) // 나중에 들어가겠지만 간단해서 넣어뒀음. 천상의보호막임.
+        {
+            character_Divine_Shield = false;
+        }
+        else // 천보없으면 체력닳아야죠?
+            character_HP -= character_Damaged;
+
+        if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
+        {
+            character_HP = 0;
+            Character_Dead();
+        }
+        character_Damaged = 0;
+    }
+
+    public void Character_Counter()
+    {
+        character_Counter = true;
+    }
+
     public void Character_Dead() // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
     {
         Debug.Log(character_Num_Of_Grid + " is Dead");
         this.gameObject.GetComponent<SpriteRenderer>().sprite = null;
         character_Is_Allive = false;
+        character_Counter = false;
     }
 
     public void Character_Setting(int num) // 데이터 세팅
@@ -138,13 +180,8 @@ public class Character_Script : MonoBehaviour
         character_HP = (int)character_data[num]["HP"];
         character_AP = (int)character_data[num]["AP"];
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
-        character_Num_Of_Attack_Range = (int)character_data[num]["Num_Of_Attack_Range"];
         character_Num_Of_Grid = (int)character_data[num]["Num_Of_Grid"];
         character_Attack_Order = (int)character_data[num]["Attack_Order"];
-        if ((int)character_data[num]["Is_Preemptive"] == 0)
-            character_Is_Preemptive = false;
-        else
-            character_Is_Preemptive = true;
         character_Attack_Range = new bool[9];
         setting_Attack_Range(num);
         character_Attack_Count = (int)character_data[num]["Attack_Count"];
@@ -201,7 +238,6 @@ public class Character_Script : MonoBehaviour
         }
         character_Num_Of_Grid = copy.character_Num_Of_Grid;
         character_Attack_Order = copy.character_Attack_Order;
-        character_Is_Preemptive = copy.character_Is_Preemptive;
         character_Attack_Range = copy.character_Attack_Range;
         character_Attack_Count = copy.character_Attack_Count;
         character_Damaged = copy.character_Damaged;

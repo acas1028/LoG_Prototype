@@ -68,4 +68,18 @@ public class AlertMessage : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
     }
+
+    public void Counter(int team,int character)
+    {
+        StartCoroutine(CCounter(team,character));
+    }
+    
+    IEnumerator CCounter(int team,int character)
+    {
+        this.GetComponent<Text>().text = team + "팀 " + character + "번 캐릭터 반격!";
+
+        yield return new WaitForSeconds(2.0f);
+
+        this.gameObject.SetActive(false);
+    }
 }

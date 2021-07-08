@@ -109,14 +109,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
         while (bM_Phase < 6)
         {
             Battle(bM_Phase, bM_Team1_Is_Preemitive);
-            bM_Round++;
-            bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
-            if(bM_Round == 2)
-            {
-                bM_Phase++;
-                bM_Round = 0;
-            }
-            yield return new WaitForSeconds(3.0f);
+
+            yield return new WaitUntil(() => Check_Round_Finish());
+            yield return new WaitForSeconds(2.0f);
         }
 
         Finish_Game();
@@ -132,6 +127,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Character_Script Team1CS = bM_Character_Team1[i].GetComponent<Character_Script>();
             GameObject Team1Sync = DataSync.GetComponent<Arrayed_Data>().team1[i];
             Team1CS.Copy_Character_Stat(Team1Sync);
+            Team1CS.character_Team_Number = 1;
             Team1CS.Debuging_Character();
       
             if (Team1CS.character_HP != 0)
@@ -141,6 +137,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             GameObject Team2Sync = DataSync.GetComponent<Arrayed_Data>().team2[i];
             Team2CS.Copy_Character_Stat(Team2Sync);
             Team2CS.character_Num_Of_Grid = Reverse_Enemy(Team2CS.character_Num_Of_Grid);
+            Team2CS.character_Team_Number = 2;
             Team2CS.Debuging_Character();
       
             if (Team2CS.character_HP != 0)
@@ -153,24 +150,85 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void Character_Attack(GameObject attacker,GameObject[] enemy_Characters,int attacked_Grid) //캐릭터 공격
+    bool Check_Round_Finish()
+    {
+        foreach(GameObject team1 in bM_Character_Team1)
+        {
+            if (team1.GetComponent<Character_Script>().character_Counter == true)
+                return false;
+        }
+
+        foreach(GameObject team2 in bM_Character_Team2)
+        {
+            if (team2.GetComponent<Character_Script>().character_Counter == true)
+                return false;
+        }
+
+        return true;
+    }
+    void Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
         // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
         // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
-        foreach(GameObject enemy_Character in enemy_Characters)
+        for (int j = 0; j < 9; j++)
         {
-            if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == attacked_Grid
-            && enemy_Character.GetComponent<Character_Script>().character_Is_Allive)
+            if (attacker.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
             {
-                Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
-                    " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
-                attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
+                foreach (GameObject enemy_Character in enemy_Characters)
+                {
+                    if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == j + 1
+                    && enemy_Character.GetComponent<Character_Script>().character_Is_Allive)
+                    {
+                        Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
+                            " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
+                        attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
+                    }
+                }
+                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(j + 1);
             }
         }
     }
+
+    void Enemy_Character_Attack(GameObject attacker, GameObject[] enemy_Characters)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            if (attacker.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
+            {
+                foreach (GameObject enemy_Character in enemy_Characters)
+                {
+                    if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == Reverse_Enemy(j + 1)
+                    && enemy_Character.GetComponent<Character_Script>().character_Is_Allive)
+                    {
+                        Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
+                            " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
+                        attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
+                    }
+                }
+                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(Reverse_Enemy(j + 1));
+            }
+        }
+    }
+
+    IEnumerator Counter(GameObject attacker, GameObject[] enemy_Characters)
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            Character_Script EnemyScript = enemy_Characters[i].GetComponent<Character_Script>();
+            if (EnemyScript.character_Counter == true)
+            {
+                yield return new WaitForSeconds(2.0f);
+
+                enemy_Characters[i].GetComponent<Character_Script>().Character_Counter_Attack(attacker);
+                AlertMessage.SetActive(true);
+                AlertMessage.GetComponent<AlertMessage>().Counter(EnemyScript.character_Team_Number, EnemyScript.character_Attack_Order);
+            }
+        }
+    }
+
     void Battle(int phase,bool team1_Is_Preemitive) // 선공,후공에 따라 배틀을 진행한다.
     {
-        if (team1_Is_Preemitive) // 선공 판별 
+        if (team1_Is_Preemitive) // 선공 판별  bM_Round = 0;
         {
             foreach(GameObject team1_Character in bM_Character_Team1)
             {
@@ -178,16 +236,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     if (team1_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀1의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                     {
-                        for (int j = 0; j < 9; j++)
-                        {
-                            if (team1_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
-                            {
-                                Character_Attack(team1_Character, bM_Character_Team2, j + 1);
-                                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(j + 1);
-                            }
-                        }
+                        Character_Attack(team1_Character, bM_Character_Team2);
                         AlertMessage.SetActive(true);
                         AlertMessage.GetComponent<AlertMessage>().Attack(1, phase);
+                        StartCoroutine(Counter(team1_Character, bM_Character_Team2));
                     }
                     else
                     {
@@ -198,7 +250,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 team1_Character.GetComponent<Character_Script>().Debuging_Character();
             }
         }
-        else
+        else  // bM_Round = 1;
         {
             foreach (GameObject team2_Character in bM_Character_Team2)
             {
@@ -206,16 +258,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     if (team2_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀2의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                     {
-                        for (int j = 0; j < 9; j++)
-                        {
-                            if (team2_Character.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
-                            {
-                                Character_Attack(team2_Character, bM_Character_Team1, Reverse_Enemy(j + 1)); // 좌우반전
-                                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(Reverse_Enemy(j + 1)); // 좌우반전
-                            }
-                        }
+                        Enemy_Character_Attack(team2_Character, bM_Character_Team1);
                         AlertMessage.SetActive(true);
                         AlertMessage.GetComponent<AlertMessage>().Attack(2, phase);
+                        StartCoroutine(Counter(team2_Character, bM_Character_Team1));
                     }
                     else
                     {
@@ -233,6 +279,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         Debug.Log("Phase " + bM_Phase + " Team1 남은체력 = " + bM_Remain_HP_Team1);
         Debug.Log("Phase " + bM_Phase + " Team2 남은체력 = " + bM_Remain_HP_Team2);
+
+        bM_Round++;
+        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
+        if (bM_Round == 2)
+        {
+            bM_Phase++;
+            bM_Round = 0;
+        }
     }
 
     void Calculate_Remain_HP() //남은 체력 계산
