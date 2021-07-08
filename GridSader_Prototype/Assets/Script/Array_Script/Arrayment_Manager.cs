@@ -11,8 +11,8 @@ public class Arrayment_Manager: MonoBehaviour
    
     private bool Character_instance = true;
     public bool Ready_Array = false;
-    private bool my_turn = true;
-    private bool Pick = true;
+    public bool my_turn = true;
+    public bool Pick = true;
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
@@ -155,6 +155,7 @@ public class Arrayment_Manager: MonoBehaviour
             {
                 case ArrayPhase.FIRST1:
                     my_turn = true;
+                    Pick = true;
                     if (Order[0].tag=="Character")
                     {
                         //준비 완료 버튼 활성화
@@ -164,10 +165,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[0].GetComponent<Character_Script>().character_Attack_Order = 1;
                             Order[0].GetComponent<Character_Script>().Debuging_Character();
                             Arrayed_Character_Data.instance.Pass_Data[0] = Order[0];
-                            Pick = true;
+                            Ready_Array = false;
                         }
-                        Ready_Array = false;
-                        //페이즈 증가.
                     }
                     break;
                 case ArrayPhase.SECOND12:
@@ -175,6 +174,7 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
                 case ArrayPhase.FIRST23:
                     my_turn = true;
+                    Pick = true;
                     if(Order[1].tag=="Character"&&Order[2].tag=="Character")
                     {
                         Pick = false;
@@ -187,9 +187,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[2].GetComponent<Character_Script>().Debuging_Character();
                             Arrayed_Character_Data.instance.Pass_Data[1] = Order[1];
                             Arrayed_Character_Data.instance.Pass_Data[2] = Order[2];
-                            Pick = true;
+                            Ready_Array = false;
                         }
-                        Ready_Array = false;
                     }
                     break;
                 case ArrayPhase.SECOND34:
@@ -197,6 +196,7 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
                 case ArrayPhase.FIRST45:
                     my_turn = true;
+                    Pick = true;
                     if (Order[3].tag == "Character" && Order[4].tag == "Character")
                     {
                         Pick = false;
@@ -209,9 +209,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[4].GetComponent<Character_Script>().Debuging_Character();
                             Arrayed_Character_Data.instance.Pass_Data[3] = Order[3];
                             Arrayed_Character_Data.instance.Pass_Data[4] = Order[4];
-                            Pick = true;
+                            Ready_Array = false;
                         }
-                        Ready_Array = false;
                     }
                     break;
                 case ArrayPhase.SECOND5:
@@ -228,6 +227,7 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
                 case ArrayPhase.SECOND12:
                     my_turn = true;
+                    Pick = true;
                     if (Order[0].tag == "Character" && Order[1].tag == "Character")
                     {
                         Pick = false;
@@ -240,9 +240,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[1].GetComponent<Character_Script>().Debuging_Character();
                             Arrayed_Character_Data.instance.Pass_Data[0] = Order[0];
                             Arrayed_Character_Data.instance.Pass_Data[1] = Order[1];
-                            Pick = true;
+                            Ready_Array = false;
                         }
-                        Ready_Array = false;
                     }
                     break;
                 case ArrayPhase.FIRST23:
@@ -250,6 +249,7 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
                 case ArrayPhase.SECOND34:
                     my_turn = true;
+                    Pick = true;
                     if (Order[2].tag == "Character" && Order[3].tag == "Character")
                     {
                         Pick = false;
@@ -262,9 +262,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[3].GetComponent<Character_Script>().Debuging_Character();
                             Arrayed_Character_Data.instance.Pass_Data[2] = Order[2];
                             Arrayed_Character_Data.instance.Pass_Data[3] = Order[3];
-                            Pick = true;
+                            Ready_Array = false;
                         }
-                        Ready_Array = false;
                     }
                     break;
                 case ArrayPhase.FIRST45:
@@ -272,6 +271,7 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
                 case ArrayPhase.SECOND5:
                     my_turn = true;
+                    Pick = true;
                     if (Order[4].tag == "Character")
                     {
                         Pick = false;
@@ -281,9 +281,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
                             Order[4].GetComponent<Character_Script>().Debuging_Character();
                             Arrayed_Character_Data.instance.Pass_Data[4] = Order[4];
-                            Pick = true;
+                            Ready_Array = false;
                         }
-                        Ready_Array = false;
                     }
                     break;
             }
@@ -293,6 +292,7 @@ public class Arrayment_Manager: MonoBehaviour
     public void BanPick_Ready()
     {
         Ready_Array = true;
+        Phase++;
     }
     public void Get_Button(int num)// 인벤토리 클릭시 발생
     {
