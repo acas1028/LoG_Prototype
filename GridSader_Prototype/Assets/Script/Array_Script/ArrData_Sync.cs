@@ -251,9 +251,13 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         Debug.LogFormat("Player Properties Updated due to <color=green>{0}</color>", changedProps.ToString());
 
+        // 두 플레이어 준비 완료 후 배치 시작
+        if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
+            roomManager.StartArrayPhase();
+
         // 방장이 게임을 시작한다.
-        if (PhotonNetwork.IsMasterClient && isAllPlayerReady && isGetEnemyData)
-            PhotonNetwork.LoadLevel("BattleScene");
+        //if (PhotonNetwork.IsMasterClient && isAllPlayerReady && isGetEnemyData)
+        //    PhotonNetwork.LoadLevel("BattleScene");
     }
     #endregion
 }
