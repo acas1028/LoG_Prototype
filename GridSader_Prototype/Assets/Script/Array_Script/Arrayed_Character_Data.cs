@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Arrayed_Character_Data : MonoBehaviour
 {
-    private GameObject[] Array_Team;
     public GameObject[] Pass_Data;
     public ArrData_Sync arrdata_sync;
+    public static Arrayed_Character_Data instance;
 
     private void Awake()
     {
@@ -24,19 +24,12 @@ public class Arrayed_Character_Data : MonoBehaviour
     {
         if (Arrayment_Manager.Array_instance.Ready_Array == true)
         {
-            Array_Team = GameObject.FindGameObjectsWithTag("Character");
-            Arrayment_Manager.Array_instance.Ready_Array = false;
             initial_Ready();
         }
     }
 
     public void initial_Ready()//Ready버튼을 눌렀을시.
     {
-        for (int i = 0; i < Pass_Data.Length; i++)//공격 순서 초기화
-        {
-            Pass_Data[i].GetComponent<Character_Script>().Copy_Character_Stat(Array_Team[i]);
-            Pass_Data[i].GetComponent<Character_Script>().Debuging_Character();
-        }
         arrdata_sync.DataSync(Pass_Data);
     }
 }

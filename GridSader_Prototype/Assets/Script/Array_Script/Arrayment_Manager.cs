@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
@@ -10,6 +11,8 @@ public class Arrayment_Manager: MonoBehaviour
    
     private bool Character_instance = true;
     public bool Ready_Array = false;
+    private bool my_turn = true;
+    private bool Pick = true;
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
@@ -22,6 +25,8 @@ public class Arrayment_Manager: MonoBehaviour
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     private GameObject Cancle_Character;
+
+    public ArrayPhase Phase = ArrayPhase.FIRST1;
 
 
     private static Arrayment_Manager ArrayManager;
@@ -54,13 +59,15 @@ public class Arrayment_Manager: MonoBehaviour
 
     void Start()
     {
-        // FindGameObejctsWithTag 를 사용할 경우 에디터와 빌드상에서 서로 다른 순서대로 오브젝트를 가져온다.
-        // Grids = GameObject.FindGameObjectsWithTag("Null_Character");
         Inventory = GameObject.FindGameObjectsWithTag("Character_inventory_Button");
     }
     void Update()
     {
-        Arrayment_Raycast();
+        if(my_turn==true&&Pick==true)
+        {
+            Arrayment_Raycast();
+        }
+        Array_Order();
     }
     public void Arrayment_Raycast()
     {
@@ -114,33 +121,177 @@ public class Arrayment_Manager: MonoBehaviour
     }
     public void Cancle_Array()
     {
-        for (int i = 0; i < Inventory.Length; i++)
-        {
-            if(Inventory[i].GetComponent<Inventory_ID>().m_Inventory_ID == Cancle_Character.GetComponent<Character_Script>().character_ID)
+
+            for (int i = 0; i < Inventory.Length; i++)
             {
-                Inventory[i].GetComponent<Inventory_ID>().is_Arrayed = false;
+                if (Inventory[i].GetComponent<Inventory_ID>().m_Inventory_ID == Cancle_Character.GetComponent<Character_Script>().character_ID)
+                {
+                    Inventory[i].GetComponent<Inventory_ID>().is_Arrayed = false;
+                }
             }
-        }
-        for (int i = 0; i < Order.Count; i++)
-        {
-            if(Cancle_Character==Order[i])
+            for (int i = 0; i < Order.Count; i++)
             {
-                Order.Remove(Order[i]);
+                if (Cancle_Character == Order[i])
+                {
+                    Order.Remove(Order[i]);
+                }
             }
-        }
-        Cancle_Character.tag = "Null_Character";
-        Cancle_Character.GetComponent<Character_Script>().Character_Reset();
-        Cancle_Character.GetComponent<SpriteRenderer>().sprite = null;
-        Cancle_Character.GetComponent<Character_Script>().Debuging_Character();
+            Cancle_Character.tag = "Null_Character";
+            Cancle_Character.GetComponent<Character_Script>().Character_Reset();
+            Cancle_Character.GetComponent<SpriteRenderer>().sprite = null;
+            Cancle_Character.GetComponent<Character_Script>().Debuging_Character();
     }
-    public void Attack_Order()
+    public void Array_Order()
     {
-        for (int i = 0; i < Order.Count; i++)
+         /* 선공일 경우
+         * 1페이즈 -> myturn -> Order[0]이 차면 !=null -> 준비 완료 버튼 활성화 -> 인벤토리 클릭 금지 -> 준비 완료 버튼 누르면 -> 데이터 넘기고 -> 캐릭터 비 활성화 -> 다음 페이즈.
+         * 2페이즈 -> myturn = false;
+         * 3페이즈 -> myturn -> Order[1],[2] "
+         * 4페이즈 -> myturn = false;*/
+         
+        if(PhotonNetwork.IsMasterClient)
         {
-            Debug.Log(Order[i]);
-            Order[i].GetComponent<Character_Script>().character_Attack_Order = i + 1;
-            Order[i].GetComponent<Character_Script>().Debuging_Character();
+            switch (Phase)
+            {
+                case ArrayPhase.FIRST1:
+                    my_turn = true;
+                    if (Order[0].tag=="Character")
+                    {
+                        //준비 완료 버튼 활성화
+                        Pick = false;
+                        if(Ready_Array == true)
+                        {
+                            Order[0].GetComponent<Character_Script>().character_Attack_Order = 1;
+                            Order[0].GetComponent<Character_Script>().Debuging_Character();
+                            Arrayed_Character_Data.instance.Pass_Data[0] = Order[0];
+                            Pick = true;
+                        }
+                        Ready_Array = false;
+                        //페이즈 증가.
+                    }
+                    break;
+                case ArrayPhase.SECOND12:
+                    my_turn = false;
+                    break;
+                case ArrayPhase.FIRST23:
+                    my_turn = true;
+                    if(Order[1].tag=="Character"&&Order[2].tag=="Character")
+                    {
+                        Pick = false;
+                        //준비 완료 버튼 활성화
+                        if (Ready_Array == true)
+                        {
+                            Order[1].GetComponent<Character_Script>().character_Attack_Order = 2;
+                            Order[1].GetComponent<Character_Script>().Debuging_Character();
+                            Order[2].GetComponent<Character_Script>().character_Attack_Order = 3;
+                            Order[2].GetComponent<Character_Script>().Debuging_Character();
+                            Arrayed_Character_Data.instance.Pass_Data[1] = Order[1];
+                            Arrayed_Character_Data.instance.Pass_Data[2] = Order[2];
+                            Pick = true;
+                        }
+                        Ready_Array = false;
+                    }
+                    break;
+                case ArrayPhase.SECOND34:
+                    my_turn = false;
+                    break;
+                case ArrayPhase.FIRST45:
+                    my_turn = true;
+                    if (Order[3].tag == "Character" && Order[4].tag == "Character")
+                    {
+                        Pick = false;
+                        //준비 완료 버튼 활성화
+                        if (Ready_Array == true)
+                        {
+                            Order[3].GetComponent<Character_Script>().character_Attack_Order = 4;
+                            Order[3].GetComponent<Character_Script>().Debuging_Character(); 
+                            Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
+                            Order[4].GetComponent<Character_Script>().Debuging_Character();
+                            Arrayed_Character_Data.instance.Pass_Data[3] = Order[3];
+                            Arrayed_Character_Data.instance.Pass_Data[4] = Order[4];
+                            Pick = true;
+                        }
+                        Ready_Array = false;
+                    }
+                    break;
+                case ArrayPhase.SECOND5:
+                    my_turn = false;
+                    break;
+            }
         }
+        else
+        {
+            switch (Phase)
+            {
+                case ArrayPhase.FIRST1:
+                    my_turn = false;
+                    break;
+                case ArrayPhase.SECOND12:
+                    my_turn = true;
+                    if (Order[0].tag == "Character" && Order[1].tag == "Character")
+                    {
+                        Pick = false;
+                        //준비 완료 버튼 활성화
+                        if (Ready_Array == true)
+                        {
+                            Order[0].GetComponent<Character_Script>().character_Attack_Order = 1;
+                            Order[0].GetComponent<Character_Script>().Debuging_Character();
+                            Order[1].GetComponent<Character_Script>().character_Attack_Order = 2;
+                            Order[1].GetComponent<Character_Script>().Debuging_Character();
+                            Arrayed_Character_Data.instance.Pass_Data[0] = Order[0];
+                            Arrayed_Character_Data.instance.Pass_Data[1] = Order[1];
+                            Pick = true;
+                        }
+                        Ready_Array = false;
+                    }
+                    break;
+                case ArrayPhase.FIRST23:
+                    my_turn = false;
+                    break;
+                case ArrayPhase.SECOND34:
+                    my_turn = true;
+                    if (Order[2].tag == "Character" && Order[3].tag == "Character")
+                    {
+                        Pick = false;
+                        //준비 완료 버튼 활성화
+                        if (Ready_Array == true)
+                        {
+                            Order[2].GetComponent<Character_Script>().character_Attack_Order = 3;
+                            Order[2].GetComponent<Character_Script>().Debuging_Character();
+                            Order[3].GetComponent<Character_Script>().character_Attack_Order = 4;
+                            Order[3].GetComponent<Character_Script>().Debuging_Character();
+                            Arrayed_Character_Data.instance.Pass_Data[2] = Order[2];
+                            Arrayed_Character_Data.instance.Pass_Data[3] = Order[3];
+                            Pick = true;
+                        }
+                        Ready_Array = false;
+                    }
+                    break;
+                case ArrayPhase.FIRST45:
+                    my_turn = false;
+                    break;
+                case ArrayPhase.SECOND5:
+                    my_turn = true;
+                    if (Order[4].tag == "Character")
+                    {
+                        Pick = false;
+                        //준비 완료 버튼 활성화
+                        if (Ready_Array == true)
+                        {
+                            Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
+                            Order[4].GetComponent<Character_Script>().Debuging_Character();
+                            Arrayed_Character_Data.instance.Pass_Data[4] = Order[4];
+                            Pick = true;
+                        }
+                        Ready_Array = false;
+                    }
+                    break;
+            }
+        }
+    
+    }
+    public void BanPick_Ready()
+    {
         Ready_Array = true;
     }
     public void Get_Button(int num)// 인벤토리 클릭시 발생
