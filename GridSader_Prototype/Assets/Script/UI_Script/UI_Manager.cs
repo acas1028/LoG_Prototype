@@ -52,11 +52,13 @@ public class UI_Manager : MonoBehaviour
     private orders ui_order; //각각의 순서를 명시하는 변수
     private GameObject arraymanager; //오브젝트 arraymanager
     private GameObject[] null_Character; //오브젝트 nullcharacter
+    private GameObject popup;
 
     private int arraybutton_On = 0;
-
     private void Start()
     {
+        popup = GameObject.FindGameObjectWithTag("Popup"); // tag를 이용한 popup창 가져오기
+        popup.SetActive(false);
         ui_order = orders.character_placement;
         arraymanager = GameObject.FindWithTag("ArrayManager"); // find를 이용할 시 오류가 일어날 수가 있으니 버그가 발생했을 경우 이곳을 주시(unity communication  피셜) 
         arraymanager.SetActive(false);

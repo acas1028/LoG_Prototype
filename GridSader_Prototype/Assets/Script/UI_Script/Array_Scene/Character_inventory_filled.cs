@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class Character_inventory_filled : MonoBehaviour
 {
-    public Sprite[] Character_sprite;
-    private GameObject character_inventory;
-    private int character_Id;
+    public Sprite[] Character_sprite; //캐릭터 내에 들어갈 이미지
+    private GameObject character_inventory; // 캐릭터칸
+    private int character_Id; // 캐릭터 각자의 아이디
 
-    private void Start()
+    private void Start() 
     {
         Character_sprite = GameObject.FindGameObjectWithTag("Sprite_Data").gameObject.GetComponent<Sprite_Data>().Character_Sprite;
         character_inventory = this.gameObject.transform.parent.gameObject;

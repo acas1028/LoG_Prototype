@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class ShowingCharacterStats : MonoBehaviour
 {
-    public GameObject prefabCharacter;
-    public GameObject[] attack_Grid_Tile;
-    public GameObject Pop_up_Character_image;
+    public GameObject prefabCharacter;// 팝업창에 띄울 캐릭터
+    public GameObject[] attack_Grid_Tile; //팝업창에 띄울 공격 범위
+    public GameObject Pop_up_Character_image; // 캐릭터 이미지
   
-    public Text attack_Damage;
-    public Text health_Point;
+    public Text attack_Damage;// 팝업창에 띄울 캐릭터 공격력
+    public Text health_Point;// 팝업창에 띄울 캐릭터 hp
 
     private GameObject sprite_Data;
     
