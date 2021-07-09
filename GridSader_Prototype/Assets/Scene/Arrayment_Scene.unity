@@ -745,19 +745,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 151319184}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2014153244}
-        m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
-        m_MethodName: Attack_Order
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DemoWorker
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &151319184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7807,6 +7795,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ready_Array: 0
+  my_turn: 1
+  Pick: 1
   Prefeb_Character: {fileID: 1029127565}
   Order: []
   Grids:
@@ -7853,6 +7843,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2016060955}
   - component: {fileID: 2016060956}
+  - component: {fileID: 2016060957}
   m_Layer: 0
   m_Name: ArrRoomManager
   m_TagString: Untagged
@@ -7893,6 +7884,28 @@ MonoBehaviour:
   isEnemyReadyText: {fileID: 706613319}
   readyButton: {fileID: 151319183}
   arrCompleteButton: {fileID: 2048288310}
+--- !u!114 &2016060957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016060954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2023034167
 GameObject:
   m_ObjectHideFlags: 0

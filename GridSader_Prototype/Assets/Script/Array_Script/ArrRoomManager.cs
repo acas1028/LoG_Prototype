@@ -8,6 +8,7 @@ using Photon.Pun;
 
 public enum ArrayPhase
 {
+    STANDBY = -1,
     FIRST1,
     SECOND12,
     FIRST23,
@@ -20,8 +21,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private int arrayPhase;
-
-    private bool isArrCompleteButtonClicked;
 
     public Text playerName;
     public Text roomStatusText;
@@ -40,9 +39,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         else
             roomStatusText.text = " ";
         isEnemyReadyText.text = " ";
-        isArrCompleteButtonClicked = false;
 
-        arrCompleteButton.onClick.AddListener(() => isArrCompleteButtonClicked = true);
+        arrayPhase = (int)ArrayPhase.STANDBY;
+
+        arrCompleteButton.onClick.AddListener(StartArrayPhase);
 
         StartArrayPhase();
         RenewPlayerList();
@@ -50,54 +50,49 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     public void StartArrayPhase()
     {
-        StartCoroutine(SetArrayPhase());
+        if (arrayPhase < (int)ArrayPhase.SECOND5)
+            photonView.RPC("NextArrayPhase", RpcTarget.All);
     }
 
-    IEnumerator SetArrayPhase()
+    [PunRPC]
+    private void NextArrayPhase()
     {
-        Player secondPlayer = PhotonNetwork.LocalPlayer; // 초기화
+        Player firstPlayer = PhotonNetwork.MasterClient;
+        Player secondPlayer = PhotonNetwork.LocalPlayer;
 
-        foreach (var player in PhotonNetwork.PlayerListOthers)
+        if (PhotonNetwork.LocalPlayer == PhotonNetwork.MasterClient)
+            foreach (var player in PhotonNetwork.PlayerListOthers)
+                secondPlayer = player;
+
+        if (readyButton.gameObject.activeSelf)
+            readyButton.gameObject.SetActive(false);
+
+        arrayPhase++;
+
+        if (arrayPhase % 2 == 0)
         {
-            secondPlayer = player; // LocalPlayer 는 방장이므로 방장을 제외한 플레이어가 secondPlayer 가 된다.
+            roomStatusText.text = "#" + (arrayPhase + 1) + " 선공 " + firstPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            if (PhotonNetwork.LocalPlayer == firstPlayer)
+                arrCompleteButton.gameObject.SetActive(true);
+            else if (PhotonNetwork.LocalPlayer == secondPlayer)
+                arrCompleteButton.gameObject.SetActive(false);
+        }
+        else if (arrayPhase % 2 == 1)
+        {
+            roomStatusText.text = "#" + (arrayPhase + 1) + " 후공 " + secondPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            if (PhotonNetwork.LocalPlayer == firstPlayer)
+                arrCompleteButton.gameObject.SetActive(false);
+            else if (PhotonNetwork.LocalPlayer == secondPlayer)
+                arrCompleteButton.gameObject.SetActive(true);
         }
 
-        arrayPhase = (int)ArrayPhase.FIRST1;
-        roomStatusText.text = "#1 선공 " + PhotonNetwork.MasterClient.NickName + " 1개의 캐릭터를 배치하십시오.";
-        
-        yield return new WaitUntil(() => isArrCompleteButtonClicked);
+        var ap = (ArrayPhase)arrayPhase;
+        Debug.Log("<color=yellow>RPC Success with ArrayPhase: </color><color=lightblue>" + ap + "</color>");
+    }
 
-        isArrCompleteButtonClicked = false;
-        arrayPhase = (int)ArrayPhase.SECOND12;
-        roomStatusText.text = "#2 후공 " + secondPlayer.NickName + " 2개의 캐릭터를 배치하십시오.";
-
-        yield return new WaitUntil(() => isArrCompleteButtonClicked);
-
-        isArrCompleteButtonClicked = false;
-        arrayPhase = (int)ArrayPhase.FIRST23;
-        roomStatusText.text = "#3 선공 " + PhotonNetwork.MasterClient.NickName + " 2개의 캐릭터를 배치하십시오.";
-
-        yield return new WaitUntil(() => isArrCompleteButtonClicked);
-
-        isArrCompleteButtonClicked = false;
-        arrayPhase = (int)ArrayPhase.SECOND34;
-        roomStatusText.text = "#4 후공 " + secondPlayer.NickName + " 2개의 캐릭터를 배치하십시오.";
-
-        yield return new WaitUntil(() => isArrCompleteButtonClicked);
-
-        isArrCompleteButtonClicked = false;
-        arrayPhase = (int)ArrayPhase.FIRST45;
-        roomStatusText.text = "#5 선공 " + PhotonNetwork.MasterClient.NickName + " 2개의 캐릭터를 배치하십시오.";
-
-        yield return new WaitUntil(() => isArrCompleteButtonClicked);
-
-        isArrCompleteButtonClicked = false;
-        arrayPhase = (int)ArrayPhase.SECOND5;
-        roomStatusText.text = "#6 후공 " + secondPlayer.NickName + " 2개의 캐릭터를 배치하십시오.";
-
-        yield return new WaitUntil(() => isArrCompleteButtonClicked);
-
-        isArrCompleteButtonClicked = false;
+    public int GetArrayPhase()
+    {
+        return arrayPhase;
     }
 
     private void RenewPlayerList()
@@ -127,11 +122,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             isEnemyReadyText.text = "상대 준비 완료";
         else
             isEnemyReadyText.text = "상대 준비 미완료";
-    }
-
-    public int GetArrayPhase()
-    {
-        return arrayPhase;
     }
 
     public void LeaveRoom()

@@ -16,12 +16,14 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     private bool isReady;
     private bool isEnemyReady;
+    private bool isEnemyArrayed;
     private bool isGetEnemyData;
 
     private void Start()
     {
         isReady = false;
         isEnemyReady = false;
+        isEnemyArrayed = false;
         isGetEnemyData = false;
 
         if (PhotonNetwork.OfflineMode)
@@ -63,6 +65,9 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     // https://doc.photonengine.com/ko-kr/pun/current/reference/serialization-in-photon : 전송할 수 있는 데이터 타입
     public void DataSync(GameObject[] passData)
     {
+        // 임시
+        return;
+
         bool result = false;
         Character_Script cs;
         isReady = !isReady;
@@ -197,7 +202,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 continue;
             }
 
-            if (isEnemyReady)
+            if (isEnemyArrayed)
             {
                 for (int i = 0; i < arrayed_Data.team2.Length; i++)
                 {
@@ -252,8 +257,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         Debug.LogFormat("Player Properties Updated due to <color=green>{0}</color>", changedProps.ToString());
 
         // 두 플레이어 준비 완료 후 배치 시작
-        if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
+        if (isAllPlayerReady)
+        {
             roomManager.StartArrayPhase();
+        }
 
         // 방장이 게임을 시작한다.
         //if (PhotonNetwork.IsMasterClient && isAllPlayerReady && isGetEnemyData)
