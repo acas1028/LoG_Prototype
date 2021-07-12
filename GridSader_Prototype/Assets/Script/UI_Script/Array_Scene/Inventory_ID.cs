@@ -16,7 +16,7 @@ public class Inventory_ID : MonoBehaviour
     {
         if(is_Arrayed==true)
         {
-            Block_Inventory.SetActive(true);
+            Block_Inventory.SetActive(true); 
         }
         else
         {
