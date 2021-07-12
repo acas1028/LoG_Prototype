@@ -26,6 +26,7 @@ public class Arrayment_Manager: MonoBehaviour
     public GameObject PopUp_UI;
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
+    public GameObject PassData_;
     private GameObject Cancle_Character;
     public ArrRoomManager arrRoomManager;
 
@@ -161,7 +162,7 @@ public class Arrayment_Manager: MonoBehaviour
                         {
                             Order[0].GetComponent<Character_Script>().character_Attack_Order = 1;
                             Order[0].GetComponent<Character_Script>().Debuging_Character();
-                            Arrayed_Character_Data.instance.Pass_Data[0] = Order[0];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0] = Order[0];
                             Ready_Array = false;
                         }
                     }
@@ -182,8 +183,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[1].GetComponent<Character_Script>().Debuging_Character();
                             Order[2].GetComponent<Character_Script>().character_Attack_Order = 3;
                             Order[2].GetComponent<Character_Script>().Debuging_Character();
-                            Arrayed_Character_Data.instance.Pass_Data[1] = Order[1];
-                            Arrayed_Character_Data.instance.Pass_Data[2] = Order[2];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1] = Order[1];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2] = Order[2];
                             Ready_Array = false;
                         }
                     }
@@ -203,8 +204,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[3].GetComponent<Character_Script>().Debuging_Character(); 
                             Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
                             Order[4].GetComponent<Character_Script>().Debuging_Character();
-                            Arrayed_Character_Data.instance.Pass_Data[3] = Order[3];
-                            Arrayed_Character_Data.instance.Pass_Data[4] = Order[4];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3] = Order[3];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4] = Order[4];
                             Ready_Array = false;
                         }
                     }
@@ -234,8 +235,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[0].GetComponent<Character_Script>().Debuging_Character();
                             Order[1].GetComponent<Character_Script>().character_Attack_Order = 2;
                             Order[1].GetComponent<Character_Script>().Debuging_Character();
-                            Arrayed_Character_Data.instance.Pass_Data[0] = Order[0];
-                            Arrayed_Character_Data.instance.Pass_Data[1] = Order[1];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0] = Order[0];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1] = Order[1];
                             Ready_Array = false;
                         }
                     }
@@ -256,8 +257,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[2].GetComponent<Character_Script>().Debuging_Character();
                             Order[3].GetComponent<Character_Script>().character_Attack_Order = 4;
                             Order[3].GetComponent<Character_Script>().Debuging_Character();
-                            Arrayed_Character_Data.instance.Pass_Data[2] = Order[2];
-                            Arrayed_Character_Data.instance.Pass_Data[3] = Order[3];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2] = Order[2];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3] = Order[3];
                             Ready_Array = false;
                         }
                     }
@@ -276,7 +277,7 @@ public class Arrayment_Manager: MonoBehaviour
                         {
                             Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
                             Order[4].GetComponent<Character_Script>().Debuging_Character();
-                            Arrayed_Character_Data.instance.Pass_Data[4] = Order[4];
+                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4] = Order[4];
                             Ready_Array = false;
                         }
                     }
