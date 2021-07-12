@@ -22,6 +22,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private int arrayPhase;
 
+    static public ArrRoomManager instance;
+
     public Text playerName;
     public Text roomStatusText;
     public Text joinedPlayerList;

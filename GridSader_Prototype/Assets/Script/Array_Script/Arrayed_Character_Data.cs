@@ -22,14 +22,12 @@ public class Arrayed_Character_Data : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Arrayment_Manager.Array_instance.Ready_Array == true)
-        {
-            initial_Ready();
-        }
+
     }
 
     public void initial_Ready()//Ready버튼을 눌렀을시.
     {
         arrdata_sync.DataSync(Pass_Data);
     }
+
 }

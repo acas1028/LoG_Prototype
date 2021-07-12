@@ -7795,8 +7795,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ready_Array: 0
-  my_turn: 1
-  Pick: 1
   Prefeb_Character: {fileID: 1029127565}
   Order: []
   Grids:
@@ -7818,7 +7816,6 @@ MonoBehaviour:
   PopUp_UI: {fileID: 541138512}
   Array_Cancle_Button: {fileID: 573824802}
   PopUp_Manager: {fileID: 2108374302}
-  Phase: 0
 --- !u!4 &2014153245
 Transform:
   m_ObjectHideFlags: 0
@@ -8131,6 +8128,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2014153244}
         m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
         m_MethodName: BanPick_Ready
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6166957668306849001}
+        m_TargetAssemblyTypeName: Arrayed_Character_Data, Assembly-CSharp
+        m_MethodName: initial_Ready
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

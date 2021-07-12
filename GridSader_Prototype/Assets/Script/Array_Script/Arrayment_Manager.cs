@@ -11,8 +11,9 @@ public class Arrayment_Manager: MonoBehaviour
    
     private bool Character_instance = true;
     public bool Ready_Array = false;
-    public bool my_turn = true;
-    public bool Pick = true;
+    private bool my_turn = true;
+    private bool Pick = true;
+    private int Phase = ArrRoomManager.instance.GetArrayPhase();
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
@@ -25,9 +26,6 @@ public class Arrayment_Manager: MonoBehaviour
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     private GameObject Cancle_Character;
-
-    public ArrayPhase Phase = ArrayPhase.FIRST1;
-
 
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
@@ -143,17 +141,11 @@ public class Arrayment_Manager: MonoBehaviour
     }
     public void Array_Order()
     {
-         /* 선공일 경우
-         * 1페이즈 -> myturn -> Order[0]이 차면 !=null -> 준비 완료 버튼 활성화 -> 인벤토리 클릭 금지 -> 준비 완료 버튼 누르면 -> 데이터 넘기고 -> 캐릭터 비 활성화 -> 다음 페이즈.
-         * 2페이즈 -> myturn = false;
-         * 3페이즈 -> myturn -> Order[1],[2] "
-         * 4페이즈 -> myturn = false;*/
-         
         if(PhotonNetwork.IsMasterClient)
         {
             switch (Phase)
             {
-                case ArrayPhase.FIRST1:
+                case (int)ArrayPhase.FIRST1:
                     my_turn = true;
                     Pick = true;
                     if (Order[0].tag=="Character")
@@ -169,10 +161,10 @@ public class Arrayment_Manager: MonoBehaviour
                         }
                     }
                     break;
-                case ArrayPhase.SECOND12:
+                case (int)ArrayPhase.SECOND12:
                     my_turn = false;
                     break;
-                case ArrayPhase.FIRST23:
+                case (int)ArrayPhase.FIRST23:
                     my_turn = true;
                     Pick = true;
                     if(Order[1].tag=="Character"&&Order[2].tag=="Character")
@@ -191,16 +183,15 @@ public class Arrayment_Manager: MonoBehaviour
                         }
                     }
                     break;
-                case ArrayPhase.SECOND34:
+                case (int)ArrayPhase.SECOND34:
                     my_turn = false;
                     break;
-                case ArrayPhase.FIRST45:
+                case (int)ArrayPhase.FIRST45:
                     my_turn = true;
                     Pick = true;
                     if (Order[3].tag == "Character" && Order[4].tag == "Character")
                     {
                         Pick = false;
-                        //준비 완료 버튼 활성화
                         if (Ready_Array == true)
                         {
                             Order[3].GetComponent<Character_Script>().character_Attack_Order = 4;
@@ -213,7 +204,7 @@ public class Arrayment_Manager: MonoBehaviour
                         }
                     }
                     break;
-                case ArrayPhase.SECOND5:
+                case (int)ArrayPhase.SECOND5:
                     my_turn = false;
                     break;
             }
@@ -222,10 +213,10 @@ public class Arrayment_Manager: MonoBehaviour
         {
             switch (Phase)
             {
-                case ArrayPhase.FIRST1:
+                case (int)ArrayPhase.FIRST1:
                     my_turn = false;
                     break;
-                case ArrayPhase.SECOND12:
+                case (int)ArrayPhase.SECOND12:
                     my_turn = true;
                     Pick = true;
                     if (Order[0].tag == "Character" && Order[1].tag == "Character")
@@ -244,10 +235,10 @@ public class Arrayment_Manager: MonoBehaviour
                         }
                     }
                     break;
-                case ArrayPhase.FIRST23:
+                case (int)ArrayPhase.FIRST23:
                     my_turn = false;
                     break;
-                case ArrayPhase.SECOND34:
+                case (int)ArrayPhase.SECOND34:
                     my_turn = true;
                     Pick = true;
                     if (Order[2].tag == "Character" && Order[3].tag == "Character")
@@ -266,10 +257,10 @@ public class Arrayment_Manager: MonoBehaviour
                         }
                     }
                     break;
-                case ArrayPhase.FIRST45:
+                case (int)ArrayPhase.FIRST45:
                     my_turn = false;
                     break;
-                case ArrayPhase.SECOND5:
+                case (int)ArrayPhase.SECOND5:
                     my_turn = true;
                     Pick = true;
                     if (Order[4].tag == "Character")
