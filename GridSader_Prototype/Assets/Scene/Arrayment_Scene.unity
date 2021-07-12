@@ -746,7 +746,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 151319184}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 158899196}
+        m_TargetAssemblyTypeName: ArrData_Sync, Assembly-CSharp
+        m_MethodName: SetReady
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &151319184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7940,6 +7952,7 @@ MonoBehaviour:
   PopUp_UI: {fileID: 541138512}
   Array_Cancle_Button: {fileID: 573824802}
   PopUp_Manager: {fileID: 2108374302}
+  arrRoomManager: {fileID: 2016060956}
 --- !u!4 &2014153245
 Transform:
   m_ObjectHideFlags: 0
@@ -8184,7 +8197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2048288309
 RectTransform:
   m_ObjectHideFlags: 0

@@ -13,7 +13,8 @@ public class Arrayment_Manager: MonoBehaviour
     public bool Ready_Array = false;
     private bool my_turn = true;
     private bool Pick = true;
-    private int Phase = ArrRoomManager.instance.GetArrayPhase();
+    private int Phase = (int)ArrayPhase.STANDBY;
+
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
@@ -26,6 +27,7 @@ public class Arrayment_Manager: MonoBehaviour
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     private GameObject Cancle_Character;
+    public ArrRoomManager arrRoomManager;
 
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
@@ -58,6 +60,7 @@ public class Arrayment_Manager: MonoBehaviour
     void Start()
     {
         Inventory = GameObject.FindGameObjectsWithTag("Character_inventory_Button");
+        Phase = arrRoomManager.GetArrayPhase();
     }
     void Update()
     {
@@ -141,7 +144,9 @@ public class Arrayment_Manager: MonoBehaviour
     }
     public void Array_Order()
     {
-        if(PhotonNetwork.IsMasterClient)
+        Phase = arrRoomManager.GetArrayPhase();
+
+        if (PhotonNetwork.IsMasterClient)
         {
             switch (Phase)
             {
@@ -283,7 +288,6 @@ public class Arrayment_Manager: MonoBehaviour
     public void BanPick_Ready()
     {
         Ready_Array = true;
-        Phase++;
     }
     public void Get_Button(int num)// 인벤토리 클릭시 발생
     {

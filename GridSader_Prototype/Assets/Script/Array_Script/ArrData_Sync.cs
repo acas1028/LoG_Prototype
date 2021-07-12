@@ -70,10 +70,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         bool result = false;
         Character_Script cs;
-        isReady = !isReady;
         arrayed_Data.team1 = passData;
-
-        roomManager.SetReadyButtonStatus(isReady);
 
         // 오프라인모드인 경우 아래 데이터 동기화 과정을 건너뛰고, team2에는 임의의 데이터를 집어넣는다.
         if (PhotonNetwork.OfflineMode)
@@ -81,16 +78,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             OfflineModeStart();
             return;
         }
-
-        isReady_table["PlayerIsReady"] = isReady;
-
-        result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
-        if (!result)
-            Debug.Log("IsReady Custom Property 설정 실패");
-
-        // 준비를 취소한 경우 서버에 내 데이터를 전달하는 과정을 건너뛴다.
-        if (!isReady)
-            return;
 
         for (int i = 0; i < passData.Length; i++)
         {
@@ -114,6 +101,19 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
         if (!result)
             Debug.Log("Team1 Custom Property 설정 실패");
+    }
+
+    public void SetReady()
+    {
+        bool result = false;
+        isReady = !isReady;
+        roomManager.SetReadyButtonStatus(isReady);
+
+        isReady_table["PlayerIsReady"] = isReady;
+
+        result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
+        if (!result)
+            Debug.Log("IsReady Custom Property 설정 실패");
     }
 
     private void OfflineModeStart()
@@ -257,7 +257,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         Debug.LogFormat("Player Properties Updated due to <color=green>{0}</color>", changedProps.ToString());
 
         // 두 플레이어 준비 완료 후 배치 시작
-        if (isAllPlayerReady)
+        if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
         {
             roomManager.StartArrayPhase();
         }
