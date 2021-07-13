@@ -1160,18 +1160,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6166957668306849001}
-        m_TargetAssemblyTypeName: Arrayed_Character_Data, Assembly-CSharp
-        m_MethodName: initial_Ready
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &198904802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10234,7 +10222,6 @@ GameObject:
   - component: {fileID: 2048288312}
   - component: {fileID: 2048288311}
   - component: {fileID: 2048288310}
-  - component: {fileID: 2048288313}
   m_Layer: 5
   m_Name: ArrComplete_Button
   m_TagString: Untagged
@@ -10356,19 +10343,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048288308}
   m_CullTransparentMesh: 1
---- !u!114 &2048288313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048288308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43ce93412f5e7af46b04413f8379ccf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  get_Ready: 0
 --- !u!1 &2051647930
 GameObject:
   m_ObjectHideFlags: 0
@@ -11403,7 +11377,7 @@ MonoBehaviour:
   - {fileID: 6166957667714514033}
   - {fileID: 6166957667385271818}
   arrdata_sync: {fileID: 158899196}
-  Arr_Button: {fileID: 2048288310}
+  roomManager: {fileID: 2016060956}
 --- !u!4 &6166957668306849002
 Transform:
   m_ObjectHideFlags: 0

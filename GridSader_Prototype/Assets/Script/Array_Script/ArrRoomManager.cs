@@ -46,9 +46,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         arrayPhase = (int)ArrayPhase.STANDBY;
 
-        arrCompleteButton.onClick.AddListener(StartArrayPhase);
-        debugButton.onClick.AddListener(StartArrayPhase);
-
         RenewPlayerList();
     }
 
