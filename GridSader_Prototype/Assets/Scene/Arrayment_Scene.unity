@@ -2996,6 +2996,7 @@ GameObject:
   - component: {fileID: 602262258}
   - component: {fileID: 602262257}
   - component: {fileID: 602262256}
+  - component: {fileID: 602262259}
   m_Layer: 5
   m_Name: Emoticon_4
   m_TagString: Untagged
@@ -3065,7 +3066,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 602262257}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 602262259}
+        m_TargetAssemblyTypeName: Emoticon_Click, Assembly-CSharp
+        m_MethodName: Emoticon_click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &602262257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3086,8 +3099,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300128, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3104,6 +3117,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602262254}
   m_CullTransparentMesh: 1
+--- !u!114 &602262259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602262254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &616343324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 616343325}
+  - component: {fileID: 616343326}
+  m_Layer: 0
+  m_Name: Emoticon_Time_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &616343325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616343324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 627352770}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &616343326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616343324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7b30792d15e644e8d11b046d515342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0
+  repeat_limit_list: []
 --- !u!1 &621836834
 GameObject:
   m_ObjectHideFlags: 0
@@ -3116,7 +3186,6 @@ GameObject:
   - component: {fileID: 621836838}
   - component: {fileID: 621836837}
   - component: {fileID: 621836836}
-  - component: {fileID: 621836839}
   m_Layer: 5
   m_Name: Emoticon_Button
   m_TagString: Untagged
@@ -3187,7 +3256,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621836839}
+      - m_Target: {fileID: 627352769}
         m_TargetAssemblyTypeName: Emoticon_scirpt, Assembly-CSharp
         m_MethodName: Emoticon_Popup_On
         m_Mode: 1
@@ -3237,18 +3306,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621836834}
   m_CullTransparentMesh: 1
---- !u!114 &621836839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621836834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef87652b125daf44bd60908e0dda24b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &626499343
 GameObject:
   m_ObjectHideFlags: 0
@@ -3296,6 +3353,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 151400783}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &627352767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 627352770}
+  - component: {fileID: 627352769}
+  m_Layer: 0
+  m_Name: Emoticon_Manager
+  m_TagString: Emoticon_Manager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &627352769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627352767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef87652b125daf44bd60908e0dda24b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &627352770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627352767}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 931.0693, y: 485.72675, z: -716.83093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 616343325}
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639963948
 GameObject:
@@ -4197,56 +4298,6 @@ MonoBehaviour:
   - {fileID: 21300008, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300010, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   Character_ID: 0
---- !u!1 &802879254
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 802879256}
-  - component: {fileID: 802879255}
-  m_Layer: 0
-  m_Name: Timeline
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!320 &802879255
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802879254}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: b4c52f2382fa8264d86fe87df8b6c8b8, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 5128996194703537215, guid: b4c52f2382fa8264d86fe87df8b6c8b8, type: 2}
-    value: {fileID: 1257562723}
-  m_ExposedReferences:
-    m_References: []
---- !u!4 &802879256
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802879254}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1169.15, y: 660.819, z: -51.09855}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &840285645
 GameObject:
   m_ObjectHideFlags: 0
@@ -4509,6 +4560,7 @@ GameObject:
   - component: {fileID: 870869081}
   - component: {fileID: 870869080}
   - component: {fileID: 870869079}
+  - component: {fileID: 870869082}
   m_Layer: 5
   m_Name: Emoticon_8
   m_TagString: Untagged
@@ -4617,6 +4669,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870869077}
   m_CullTransparentMesh: 1
+--- !u!114 &870869082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870869077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &885342930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4707,7 +4771,7 @@ GameObject:
   - component: {fileID: 895611679}
   - component: {fileID: 895611678}
   m_Layer: 0
-  m_Name: Time_Manager
+  m_Name: Time_Text_Flow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4920,7 +4984,7 @@ GameObject:
   - component: {fileID: 933813228}
   - component: {fileID: 933813227}
   - component: {fileID: 933813226}
-  - component: {fileID: 933813230}
+  - component: {fileID: 933813229}
   m_Layer: 5
   m_Name: Emoticon_9
   m_TagString: Untagged
@@ -5029,41 +5093,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933813224}
   m_CullTransparentMesh: 1
---- !u!320 &933813230
-PlayableDirector:
+--- !u!114 &933813229
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933813224}
   m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 4626228193996832079, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 7012097086943640057, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 1018993138610948822, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 9120932449756952182, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: -347715033058840662, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 7493311432236507245, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 2335823461698411880, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: -7061463012037748414, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: -218969429327586178, guid: b2d6c80760e1d8044a97a43c7c038955, type: 2}
-    value: {fileID: 0}
-  m_ExposedReferences:
-    m_References: []
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &964109391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5076,6 +5117,7 @@ GameObject:
   - component: {fileID: 964109395}
   - component: {fileID: 964109394}
   - component: {fileID: 964109393}
+  - component: {fileID: 964109396}
   m_Layer: 5
   m_Name: Emoticon_5
   m_TagString: Untagged
@@ -5145,7 +5187,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 964109394}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 964109396}
+        m_TargetAssemblyTypeName: Emoticon_Click, Assembly-CSharp
+        m_MethodName: Emoticon_click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &964109394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5166,8 +5220,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300172, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5184,6 +5238,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964109391}
   m_CullTransparentMesh: 1
+--- !u!114 &964109396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964109391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &970888576
 GameObject:
   m_ObjectHideFlags: 0
@@ -5732,6 +5798,7 @@ GameObject:
   - component: {fileID: 1070979114}
   - component: {fileID: 1070979113}
   - component: {fileID: 1070979112}
+  - component: {fileID: 1070979115}
   m_Layer: 5
   m_Name: Emoticon_3
   m_TagString: Untagged
@@ -5801,7 +5868,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1070979113}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1070979115}
+        m_TargetAssemblyTypeName: Emoticon_Click, Assembly-CSharp
+        m_MethodName: Emoticon_click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1070979113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5822,8 +5901,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300148, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5840,6 +5919,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070979110}
   m_CullTransparentMesh: 1
+--- !u!114 &1070979115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070979110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1097609913
 GameObject:
   m_ObjectHideFlags: 0
@@ -7579,6 +7670,7 @@ GameObject:
   - component: {fileID: 1522583111}
   - component: {fileID: 1522583110}
   - component: {fileID: 1522583109}
+  - component: {fileID: 1522583112}
   m_Layer: 5
   m_Name: Emoticon_6
   m_TagString: Untagged
@@ -7687,6 +7779,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522583107}
   m_CullTransparentMesh: 1
+--- !u!114 &1522583112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522583107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1525605008
 GameObject:
   m_ObjectHideFlags: 0
@@ -8396,7 +8500,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1700618025}
         m_TargetAssemblyTypeName: Emoticon_Click, Assembly-CSharp
-        m_MethodName: Emoticon_Button_Click
+        m_MethodName: Emoticon_click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8456,7 +8560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
 --- !u!1 &1731970275
 GameObject:
   m_ObjectHideFlags: 0
@@ -9415,6 +9518,7 @@ GameObject:
   - component: {fileID: 1937837105}
   - component: {fileID: 1937837104}
   - component: {fileID: 1937837103}
+  - component: {fileID: 1937837106}
   m_Layer: 5
   m_Name: Emoticon_2
   m_TagString: Untagged
@@ -9484,7 +9588,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1937837104}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1937837106}
+        m_TargetAssemblyTypeName: Emoticon_Click, Assembly-CSharp
+        m_MethodName: Emoticon_click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1937837104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9505,8 +9621,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9523,6 +9639,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937837101}
   m_CullTransparentMesh: 1
+--- !u!114 &1937837106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937837101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1971590618
 GameObject:
   m_ObjectHideFlags: 0
@@ -9973,6 +10101,7 @@ GameObject:
   - component: {fileID: 2031089825}
   - component: {fileID: 2031089824}
   - component: {fileID: 2031089823}
+  - component: {fileID: 2031089826}
   m_Layer: 5
   m_Name: Emoticon_7
   m_TagString: Untagged
@@ -10081,6 +10210,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031089821}
   m_CullTransparentMesh: 1
+--- !u!114 &2031089826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031089821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21db68fb51e11b740a1860bacac1384c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2048288308
 GameObject:
   m_ObjectHideFlags: 0

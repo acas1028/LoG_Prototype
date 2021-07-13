@@ -12,15 +12,17 @@ public class Emoticon_scirpt : MonoBehaviour
 
     private void Start()
     {
+        
         is_Open = false;
         emoticon_popup = GameObject.FindGameObjectWithTag("Emoticon_Popup");
-        emoticon_popup.SetActive(false);
+        emoticon_popup.SetActive(false);        
     }
 
     private void Update()
     {
         Emoticon_Animation();
     }
+
 
     public void Emoticon_Popup_On()
     {
@@ -55,6 +57,7 @@ public class Emoticon_scirpt : MonoBehaviour
 
         
     }
+
 
 
 
