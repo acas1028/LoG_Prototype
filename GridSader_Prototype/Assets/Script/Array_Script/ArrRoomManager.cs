@@ -31,6 +31,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     public Text isEnemyReadyText;
     public Button readyButton;
     public Button arrCompleteButton;
+    public Button debugButton;
 
     private void Start()
     {
@@ -46,6 +47,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         arrayPhase = (int)ArrayPhase.STANDBY;
 
         arrCompleteButton.onClick.AddListener(StartArrayPhase);
+        debugButton.onClick.AddListener(StartArrayPhase);
 
         RenewPlayerList();
     }
@@ -61,9 +63,15 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         Player firstPlayer = PhotonNetwork.MasterClient;
         Player secondPlayer = PhotonNetwork.LocalPlayer;
 
-        if (PhotonNetwork.LocalPlayer == PhotonNetwork.MasterClient)
+        if (PhotonNetwork.IsMasterClient)
             foreach (var player in PhotonNetwork.PlayerListOthers)
                 secondPlayer = player;
+
+        //if (secondPlayer == PhotonNetwork.MasterClient)
+        //{
+        //    Debug.Log("<color=red>상대가 나가서 배치를 진행할 수 없습니다.</color>");
+        //    return;
+        //}
 
         if (readyButton.gameObject.activeSelf)
             readyButton.gameObject.SetActive(false);
@@ -75,6 +83,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         {
             roomStatusText.text = "모든 배치가 완료되었습니다.";
             arrCompleteButton.gameObject.SetActive(false);
+            debugButton.gameObject.SetActive(false);
+            PhotonNetwork.LoadLevel("BattleScene");
         }
         else if (arrayPhase % 2 == 0)
         {

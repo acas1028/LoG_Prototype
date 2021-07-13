@@ -16,15 +16,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     private bool isReady;
     private bool isEnemyReady;
-    private bool isEnemyArrayed;
-    private bool isGetEnemyData;
 
     private void Start()
     {
         isReady = false;
         isEnemyReady = false;
-        isEnemyArrayed = false;
-        isGetEnemyData = false;
 
         if (PhotonNetwork.OfflineMode)
             return;
@@ -65,21 +61,13 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     // https://doc.photonengine.com/ko-kr/pun/current/reference/serialization-in-photon : 전송할 수 있는 데이터 타입
     public void DataSync(GameObject[] passData)
     {
-        // 임시
-        return;
+        Debug.Log("<color=yellow>DataSync 호출</color>");
 
         bool result = false;
         Character_Script cs;
         arrayed_Data.team1 = passData;
 
-        // 오프라인모드인 경우 아래 데이터 동기화 과정을 건너뛰고, team2에는 임의의 데이터를 집어넣는다.
-        if (PhotonNetwork.OfflineMode)
-        {
-            OfflineModeStart();
-            return;
-        }
-
-        for (int i = 0; i < passData.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
             cs = arrayed_Data.team1[i].GetComponent<Character_Script>();
             team1_table[(i + 1) + "_ID"] = cs.character_ID;
@@ -105,6 +93,9 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     public void SetReady()
     {
+        if (PhotonNetwork.OfflineMode)
+            roomManager.StartArrayPhase();
+
         bool result = false;
         isReady = !isReady;
         roomManager.SetReadyButtonStatus(isReady);
@@ -127,18 +118,53 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         ShuffleList<int>(gridNumSet);
 
-        for (int i = 0; i < arrayed_Data.team2.Length; i++)
+        Character_Script cs;
+        switch (roomManager.GetArrayPhase())
         {
-            Character_Script cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
+            case (int)ArrayPhase.SECOND12:
+                cs = arrayed_Data.team2[0].GetComponent<Character_Script>();
 
-            cs.Character_Setting(i + 1);
-            cs.character_Num_Of_Grid = gridNumSet[i];
-            cs.character_Attack_Order = i + 1;
-            cs.Debuging_Character();
+                cs.Character_Setting(1);
+                cs.character_Num_Of_Grid = gridNumSet[0];
+                cs.character_Attack_Order = 1;
+                cs.Debuging_Character();
+
+                cs = arrayed_Data.team2[1].GetComponent<Character_Script>();
+
+                cs.Character_Setting(2);
+                cs.character_Num_Of_Grid = gridNumSet[1];
+                cs.character_Attack_Order = 2;
+                cs.Debuging_Character();
+                break;
+            case (int)ArrayPhase.SECOND34:
+                cs = arrayed_Data.team2[2].GetComponent<Character_Script>();
+
+                cs.Character_Setting(3);
+                cs.character_Num_Of_Grid = gridNumSet[2];
+                cs.character_Attack_Order = 3;
+                cs.Debuging_Character();
+
+                cs = arrayed_Data.team2[3].GetComponent<Character_Script>();
+
+                cs.Character_Setting(4);
+                cs.character_Num_Of_Grid = gridNumSet[3];
+                cs.character_Attack_Order = 4;
+                cs.Debuging_Character();
+                break;
+            case (int)ArrayPhase.SECOND5:
+                cs = arrayed_Data.team2[4].GetComponent<Character_Script>();
+
+                cs.Character_Setting(5);
+                cs.character_Num_Of_Grid = gridNumSet[4];
+                cs.character_Attack_Order = 5;
+                cs.Debuging_Character();
+                break;
+            case (int)ArrayPhase.END:
+                PhotonNetwork.LoadLevel("BattleScene");
+                break;
+            default:
+                break;
         }
-
-        isEnemyReady = true;
-        PhotonNetwork.LoadLevel("BattleScene");
     }
 
     private List<T> ShuffleList<T>(List<T> list)
@@ -202,55 +228,50 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 continue;
             }
 
-            if (isEnemyArrayed)
+            for (int i = 0; i < 5; i++)
             {
-                for (int i = 0; i < arrayed_Data.team2.Length; i++)
-                {
-                    // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
+                // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
 
-                    // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
-                    cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
-                    if (!cs)
-                        return;
+                // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
+                cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
+                if (!cs)
+                    return;
 
-                    player.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
-                    player.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
-                    player.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
-                    player.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
-                    player.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
-                    player.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
-                    player.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
-                    player.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
-                    player.CustomProperties.TryGetValue((i + 1) + "_AttackCount", out o_attackCount);
-                    player.CustomProperties.TryGetValue((i + 1) + "_Damaged", out o_damaged);
-                    player.CustomProperties.TryGetValue((i + 1) + "_BuffedAttack", out o_buffedAttack);
-                    player.CustomProperties.TryGetValue((i + 1) + "_BuffedDamaged", out o_buffedDamaged);
-                    player.CustomProperties.TryGetValue((i + 1) + "_DivineShield", out o_divineShield);
-                    player.CustomProperties.TryGetValue((i + 1) + "_Revivial", out o_revivial);
+                player.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
+                player.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
+                player.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
+                player.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
+                player.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
+                player.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
+                player.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
+                player.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
+                player.CustomProperties.TryGetValue((i + 1) + "_AttackCount", out o_attackCount);
+                player.CustomProperties.TryGetValue((i + 1) + "_Damaged", out o_damaged);
+                player.CustomProperties.TryGetValue((i + 1) + "_BuffedAttack", out o_buffedAttack);
+                player.CustomProperties.TryGetValue((i + 1) + "_BuffedDamaged", out o_buffedDamaged);
+                player.CustomProperties.TryGetValue((i + 1) + "_DivineShield", out o_divineShield);
+                player.CustomProperties.TryGetValue((i + 1) + "_Revivial", out o_revivial);
 
-                    cs.character_ID = (int)o_id;
-                    cs.character_Is_Allive = (bool)o_isAlive;
-                    cs.character_HP = (int)o_hp;
-                    cs.character_AP = (int)o_ap;
-                    cs.character_Attack_Damage = (int)o_attackDamage;
-                    cs.character_Attack_Range = (bool[])o_attackRange;
-                    cs.character_Num_Of_Grid = (int)o_gridNumber;
-                    cs.character_Attack_Order = (int)o_attackOrder;
-                    cs.character_Attack_Count = (int)o_attackCount;
-                    cs.character_Damaged = (int)o_damaged;
-                    cs.character_Buffed_Attack = (int)o_buffedAttack;
-                    cs.character_Buffed_Damaged = (int)o_buffedDamaged;
-                    cs.character_Divine_Shield = (bool)o_divineShield;
-                    cs.character_Revivial = (bool)o_revivial;
+                cs.character_ID = (int)o_id;
+                cs.character_Is_Allive = (bool)o_isAlive;
+                cs.character_HP = (int)o_hp;
+                cs.character_AP = (int)o_ap;
+                cs.character_Attack_Damage = (int)o_attackDamage;
+                cs.character_Attack_Range = (bool[])o_attackRange;
+                cs.character_Num_Of_Grid = (int)o_gridNumber;
+                cs.character_Attack_Order = (int)o_attackOrder;
+                cs.character_Attack_Count = (int)o_attackCount;
+                cs.character_Damaged = (int)o_damaged;
+                cs.character_Buffed_Attack = (int)o_buffedAttack;
+                cs.character_Buffed_Damaged = (int)o_buffedDamaged;
+                cs.character_Divine_Shield = (bool)o_divineShield;
+                cs.character_Revivial = (bool)o_revivial;
 
-                    cs.Debuging_Character();
-                }
-
-                isGetEnemyData = true;
-
-                Debug.Log("Team2 데이터 불러옴");
+                cs.Debuging_Character();
             }
-        }
+
+            Debug.Log("Team2 데이터 불러옴");
+            }
 
         isAllPlayerReady = isReady && isEnemyReady;
 
@@ -261,10 +282,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         {
             roomManager.StartArrayPhase();
         }
-
-        // 방장이 게임을 시작한다.
-        //if (PhotonNetwork.IsMasterClient && isAllPlayerReady && isGetEnemyData)
-        //    PhotonNetwork.LoadLevel("BattleScene");
     }
     #endregion
 }
