@@ -15,6 +15,7 @@ public enum ArrayPhase
     SECOND34,
     FIRST45,
     SECOND5,
+    END
 }
 
 public class ArrRoomManager : MonoBehaviourPunCallbacks
@@ -47,12 +48,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     public void StartArrayPhase()
     {
-        if (arrayPhase == (int)ArrayPhase.SECOND5)
-        {
-            roomStatusText.text = "모든 배치가 완료되었습니다.";
-            arrCompleteButton.gameObject.SetActive(false);
-            PhotonNetwork.LoadLevel("BattleScene");
-        }
         photonView.RPC("NextArrayPhase", RpcTarget.All);
     }
 
@@ -72,7 +67,13 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             isEnemyReadyText.gameObject.SetActive(false);
 
         arrayPhase++;
-        if (arrayPhase % 2 == 0)
+        if (arrayPhase == (int)ArrayPhase.END)
+        {
+            roomStatusText.text = "모든 배치가 완료되었습니다.";
+            arrCompleteButton.gameObject.SetActive(false);
+            PhotonNetwork.LoadLevel("BattleScene");
+        }
+        else if (arrayPhase % 2 == 0)
         {
             roomStatusText.text = "#" + (arrayPhase + 1) + " 선공 " + firstPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
             if (PhotonNetwork.LocalPlayer == firstPlayer)
