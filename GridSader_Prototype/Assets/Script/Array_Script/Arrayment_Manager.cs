@@ -14,12 +14,14 @@ public class Arrayment_Manager: MonoBehaviour
     private bool my_turn = true;
     private bool Pick = true;
     private int Phase = (int)ArrayPhase.STANDBY;
+    private int Time_Out_Inventory;
 
     GameObject Character_Instantiate;
     [Tooltip("프리펩된 캐릭터")]
     public GameObject Prefeb_Character;
     public List<GameObject> Order = new List<GameObject>();
 
+    public GameObject Array_Time;
     public GameObject[] Grids;
     private GameObject[] Inventory;
     public GameObject[] Block_Inventory;
@@ -65,10 +67,9 @@ public class Arrayment_Manager: MonoBehaviour
     }
     void Update()
     {
-        if(my_turn==true&&Pick==true)
-        {
-            Arrayment_Raycast();
-        }
+
+        Arrayment_Raycast();
+
         Array_Order();
     }
     public void Arrayment_Raycast()
@@ -85,7 +86,10 @@ public class Arrayment_Manager: MonoBehaviour
             {
                 PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character_Script>().character_ID);
                 Cancle_Character = hit.transform.gameObject;
-                Array_Cancle_Button.SetActive(true);
+                if(my_turn==true)
+                {
+                    Array_Cancle_Button.SetActive(true);
+                }
                 PopUp_UI.SetActive(true);                   
             }
             else
@@ -154,9 +158,13 @@ public class Arrayment_Manager: MonoBehaviour
                 case (int)ArrayPhase.FIRST1:
                     my_turn = true;
                     Pick = true;
+                    if(Array_Time.GetComponent<Time_FlowScript>().Time_Over==true)
+                    {
+                        Time_Out();
+                        Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                    }
                     if (Order[0].tag=="Character")
                     {
-                        //준비 완료 버튼 활성화
                         Pick = false;
                         if(Ready_Array == true)
                         {
@@ -175,10 +183,15 @@ public class Arrayment_Manager: MonoBehaviour
                 case (int)ArrayPhase.FIRST23:
                     my_turn = true;
                     Pick = true;
-                    if(Order[1].tag=="Character"&&Order[2].tag=="Character")
+                    if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
+                    {
+                        Time_Out();
+                        Time_Out();
+                        Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                    }
+                    if (Order[1].tag=="Character"&&Order[2].tag=="Character")
                     {
                         Pick = false;
-                        //준비 완료 버튼 활성화
                         if (Ready_Array == true)
                         {
                             Order[1].GetComponent<Character_Script>().character_Attack_Order = 2;
@@ -199,6 +212,12 @@ public class Arrayment_Manager: MonoBehaviour
                 case (int)ArrayPhase.FIRST45:
                     my_turn = true;
                     Pick = true;
+                    if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
+                    {
+                        Time_Out();
+                        Time_Out();
+                        Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                    }
                     if (Order[3].tag == "Character" && Order[4].tag == "Character")
                     {
                         Pick = false;
@@ -231,6 +250,12 @@ public class Arrayment_Manager: MonoBehaviour
                 case (int)ArrayPhase.SECOND12:
                     my_turn = true;
                     Pick = true;
+                    if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
+                    {
+                        Time_Out();
+                        Time_Out();
+                        Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                    }
                     if (Order[0].tag == "Character" && Order[1].tag == "Character")
                     {
                         Pick = false;
@@ -255,6 +280,12 @@ public class Arrayment_Manager: MonoBehaviour
                 case (int)ArrayPhase.SECOND34:
                     my_turn = true;
                     Pick = true;
+                    if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
+                    {
+                        Time_Out();
+                        Time_Out();
+                        Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                    }
                     if (Order[2].tag == "Character" && Order[3].tag == "Character")
                     {
                         Pick = false;
@@ -279,10 +310,14 @@ public class Arrayment_Manager: MonoBehaviour
                 case (int)ArrayPhase.SECOND5:
                     my_turn = true;
                     Pick = true;
+                    if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
+                    {
+                        Time_Out();
+                        Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                    }
                     if (Order[4].tag == "Character")
                     {
                         Pick = false;
-                        //준비 완료 버튼 활성화
                         if (Ready_Array == true)
                         {
                             Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
@@ -296,7 +331,29 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
             }
         }
-    
+    }
+    public void Time_Out()
+    {
+        bool Inventory_ID_Time_Out = true;
+        int i;
+        while(Inventory_ID_Time_Out)
+        {
+            for(i=0;i<Inventory.Length;i++)
+            {
+                if(Inventory[i].GetComponent<Inventory_ID>().is_Arrayed==false)
+                {
+                    Time_Out_Inventory = i;
+                    Inventory_ID_Time_Out = false;
+                }
+            }
+        }
+        int random = Random.Range(0, 10);
+
+            Grids[random].GetComponent<Character_Script>().character_ID = Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID;
+            Grids[random].GetComponent<Character_Script>().Character_Setting(Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID);
+            Grids[random].GetComponent<Character_Script>().Debuging_Character();
+            Grids[random].tag = "Character";
+            Order.Add(Grids[random]);
     }
     public void BanPick_Ready()
     {
@@ -304,7 +361,8 @@ public class Arrayment_Manager: MonoBehaviour
     }
     public void Get_Button(int num)// 인벤토리 클릭시 발생
     {
-        Character_instance = true;
+        if (my_turn == true && Pick == true)
+            Character_instance = true;
         Prefeb_Character.GetComponent<Character_Script>().Character_Setting(num);
     }
 }

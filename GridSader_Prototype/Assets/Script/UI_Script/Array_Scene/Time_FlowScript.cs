@@ -11,6 +11,7 @@ public class Time_FlowScript : MonoBehaviour
     int text_in_time; //현재 텍스트에 출력된 시간
     int max_time; // 최대시간 =ex) 30초
     float time;  // 1초마다 1씩 줄이기 위해 만든, time.deltatime을 더하기 위해 만든 시간 변수
+    public bool Time_Over=false;
     //float blink_time;
     //bool is_Blink;
     //bool is_fast_Blink;
@@ -29,7 +30,11 @@ public class Time_FlowScript : MonoBehaviour
     {
         Time_on();
         TimeFlow();
-        Time_over();
+
+        if (Time_Over == false)
+        {
+            Time_over();
+        }
 
         //if(text_in_time<10)
         //{
@@ -106,7 +111,7 @@ public class Time_FlowScript : MonoBehaviour
     {
         if (text_in_time < 0)
         {
-            Debug.Log("타임 오버");
+            Time_Over = true;
         }
     }
 }

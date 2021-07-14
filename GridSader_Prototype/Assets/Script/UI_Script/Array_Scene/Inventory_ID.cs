@@ -23,7 +23,6 @@ public class Inventory_ID : MonoBehaviour
             Block_Inventory.SetActive(false);
         }
 
-       
     }
     public void Setting_Character_Stat()
     {
