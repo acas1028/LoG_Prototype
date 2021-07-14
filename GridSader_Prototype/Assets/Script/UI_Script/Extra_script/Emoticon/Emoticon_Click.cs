@@ -16,28 +16,64 @@ public class Emoticon_Click : MonoBehaviourPun
     [SerializeField]
     Image[] emoticon_Images;
 
+    bool isReady;
+    Queue<float> timeQueue;
+
     GameObject emoticon_Block_Mine; //내 이모티콘이 나타나는 위치
     GameObject emoticon_Block_Enemy; //적 모티콘이 나타나는 위치
 
-    public void Emoticon_click(int emoticonNum) //이모티콘 클릭시 구현되는 함수
+    private void Start()
     {
+        isReady = true;
+        timeQueue = new Queue<float>();
+    }
+
+    public void OnClick(int emoticonNum) //이모티콘 클릭시 구현되는 함수
+    {
+        if (!isReady)
+            return;
+
+        float time;
+
+        time = Time.time;
+        timeQueue.Enqueue(time);
+
+        if (timeQueue.Count >= 5)
+        {
+            if (time - timeQueue.Dequeue() <= 6)
+            {
+                Debug.Log("이모티콘 쿨타임 발생! 10초간 이모티콘을 사용할 수 없다.");
+                isReady = false;
+                Invoke("SetReady", 10.0f);
+                return;
+            }
+        }
+
         emoticonNum--;
 
         if (emoticon_Block_Mine)
             Destroy(emoticon_Block_Mine);
 
         emoticon_Block_Mine = Instantiate(prefab_Block_Mine, GameObject.Find("Canvas").transform);
+        emoticon_Block_Mine.GetComponent<RectTransform>().anchoredPosition = new Vector2(-450.0f, 450.0f);
         emoticon_Block_Mine.GetComponent<Image>().sprite = emoticon_Images[emoticonNum].sprite;
-        photonView.RPC("Show_Enemy_Emoticon", RpcTarget.Others, emoticonNum);
+
+        photonView.RPC("ShowEnemyEmoticon", RpcTarget.Others, emoticonNum);
     }
 
     [PunRPC]
-    public void Show_Enemy_Emoticon(int emoticonNum)
+    private void ShowEnemyEmoticon(int emoticonNum)
     {
         if (emoticon_Block_Enemy)
             Destroy(emoticon_Block_Enemy);
 
-        emoticon_Block_Enemy = Instantiate(prefab_Block_Enemy, new Vector3(450.0f, 450.0f, 0.0f), Quaternion.identity, GameObject.Find("Canvas").transform);
+        emoticon_Block_Enemy = Instantiate(prefab_Block_Enemy, GameObject.Find("Canvas").transform);
+        emoticon_Block_Enemy.GetComponent<RectTransform>().anchoredPosition = new Vector2(450.0f, 450.0f);
         emoticon_Block_Enemy.GetComponent<Image>().sprite = emoticon_Images[emoticonNum].sprite;
+    }
+
+    private void SetReady()
+    {
+        isReady = true;
     }
 }
