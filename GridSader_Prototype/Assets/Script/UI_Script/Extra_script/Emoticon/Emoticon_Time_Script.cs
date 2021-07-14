@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Emoticon_Time_Script : MonoBehaviour
 {
-    GameObject emoticonBlock;
-    public float time;
-    float animation_play_maxtime;
-    float Not_use_Time;
-    float max_Not_use_Time;
+    GameObject emoticonBlock; //이모티콘이 나타나는 위치
+    float time; //이모티콘이 화면에 노출되는 시간
+    float animation_play_maxtime; // 이모티콘이 화면에 노출될수 있는 최대 시간을 가리키는 변수
+    float Not_use_Time; //이모티콘을 사용할수 없는 시간
+    float max_Not_use_Time; //이모티콘을 사용할수 없는 최대 시간을 가리키는 변수
     int emoticon_open_Count; // count를 재어 present카운트와 다른 경우 애니메이션 작동
     int present_emoticon_open_Count; //현재의 카운트를 저장하는 용도
-    bool is_emoticon_block_on;
-    bool is_stop_emoticon;
+    bool is_emoticon_block_on; //emoticonblock이 켜져있는가를 구별하는 bool 변수
+    bool is_stop_emoticon; // 이모티콘 사용을 중단시킬 것인지를 구별하는 bool 변수
 
-    public List<float> repeat_limit_list = new List<float>();
+    List<float> repeat_limit_list = new List<float>(); //6초내 이모티콘 다수 사용을 방지하기 위한 list
 
     private void Awake()
     {
@@ -53,7 +53,7 @@ public class Emoticon_Time_Script : MonoBehaviour
 
     }
 
-    void Is_Animation_on()
+    void Is_Animation_on() //이모티콘 on off 애니메이션 함수
     {
         if(present_emoticon_open_Count != emoticon_open_Count)
         {
@@ -75,7 +75,7 @@ public class Emoticon_Time_Script : MonoBehaviour
 
     }
 
-    void Animation_Time_Flow()
+    void Animation_Time_Flow() //애니메이션 time 변수를 현재 시간에 알맞춰 흐르게 만드는 함수
     {
         if(is_emoticon_block_on==true)
         {
@@ -83,7 +83,7 @@ public class Emoticon_Time_Script : MonoBehaviour
         }
     }
 
-    void Animation_Off()
+    void Animation_Off() //이모티콘이 3초 화면이상 비춰지자 이를 꺼트리는 함수
     {
         if(time>=animation_play_maxtime)
         {
@@ -100,7 +100,7 @@ public class Emoticon_Time_Script : MonoBehaviour
         }
     }
 
-    void List_Time_Flow()
+    void List_Time_Flow() //list 내부의 time flow 함수
     {
         for(int i=repeat_limit_list.Count-1; i>=0;i--) //remone에 관한 버그가 일어나지 않도록 for 내용을 이런식으로 변경
         {
@@ -108,7 +108,7 @@ public class Emoticon_Time_Script : MonoBehaviour
         }
     }
 
-    void Vanish_List_Element()
+    void Vanish_List_Element() //list 내의 time의 한 요소가 6초 지났을 때 사라지게 만드는 함수
     {
         for (int i = repeat_limit_list.Count - 1; i >= 0; i--)
         {
@@ -119,7 +119,7 @@ public class Emoticon_Time_Script : MonoBehaviour
         }
     }
 
-    void Full_List()
+    void Full_List() //리스트가 5개 꽉촤있는지를 확인하는 함수
     {
         if(repeat_limit_list.Count==5)
         {
@@ -127,7 +127,7 @@ public class Emoticon_Time_Script : MonoBehaviour
         }
     }
 
-    void Flow_not_use_emoticon_time()
+    void Flow_not_use_emoticon_time() //이모티콘 사용하지 못하는 시간 flow 함수
     {
         if(is_stop_emoticon==true)
         {
@@ -135,7 +135,7 @@ public class Emoticon_Time_Script : MonoBehaviour
         }
     }
 
-    void Release_restrictions_Emoticon()
+    void Release_restrictions_Emoticon() //이모티콘 제한을 푸는 함수
     {
         if(is_stop_emoticon==true && Not_use_Time>=max_Not_use_Time)
         {

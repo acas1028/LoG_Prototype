@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Emoticon_scirpt : MonoBehaviour
 {
-    GameObject emoticon_popup;
-    bool is_Open;
+    GameObject emoticon_popup; //이모티콘 내용이 담긴 popup
+    bool is_Open; //pop이 켜져있는가를 구별하는 bool 변수
 
 
     private void Start()
@@ -24,7 +24,7 @@ public class Emoticon_scirpt : MonoBehaviour
     }
 
 
-    public void Emoticon_Popup_On()
+    public void Emoticon_Popup_On() //이모티콘의 on off 함수
     {
         if (emoticon_popup.activeSelf == false)
         {
@@ -39,7 +39,7 @@ public class Emoticon_scirpt : MonoBehaviour
 
     }
 
-    void Emoticon_Animation()
+    void Emoticon_Animation() //이모티콘 popup창 애니메이션 관리 함수
     {
         if(is_Open==false)
         {

@@ -17,7 +17,7 @@ public class Starting_scene_script : MonoBehaviour
         
     }
 
-    public void Scene_Load()
+    public void Scene_Load() // ¾À ·Îµå 
     {
         SceneManager.LoadScene(0);
     }

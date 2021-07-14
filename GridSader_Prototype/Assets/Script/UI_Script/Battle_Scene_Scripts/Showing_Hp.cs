@@ -6,25 +6,28 @@ using UnityEngine.UI;
 public class Showing_Hp : MonoBehaviour
 {
 
-    private float hp;
-    private float original_hp;
-    private int is_this_original_hp_counting=0;
-    private GameObject hp_bar;
-    private GameObject canvas;
+    private float hp; //캐릭터 현재 hp
+    private float original_hp; //캐릭터의 기본 hp
+    private int is_this_original_hp_counting=0; // original_hp를 채웠는가를 묻는 변수
+    private int hp_bar_y_position; // 캐릭터의 hp 바와 캐릭터과의 거리.
+    private GameObject hp_bar; //hp 바
+    private GameObject canvas; 
 
-    public int character_count;
-    public int Team_count;
+    // 아래의 변수는 inspector창에 변수를 설정해놓았다.
+    public int character_count; // 같은 팀내의 캐릭터 구별 변수
+    public int Team_count; //팀 구별 변수
 
 
     private void Start()
     {
-        canvas = this.gameObject.transform.parent.gameObject;
         original_hp = 1;
+        hp_bar_y_position = -70;
+        canvas = this.gameObject.transform.parent.gameObject;
         hp_bar = this.gameObject;
-        
+
     }
 
-    void showing_Hp_point()
+    void showing_Hp_point() //현재 hp를 hp bar로 표현
     {
         if (Team_count == 1)
         {
@@ -39,7 +42,7 @@ public class Showing_Hp : MonoBehaviour
         }
     }
 
-    void original_Hp()
+    void original_Hp() // 캐릭터 기본 hp를 original_hp에 기입하기 위한 함수
     {
         if(hp>0&& is_this_original_hp_counting==0)
         {
@@ -50,7 +53,7 @@ public class Showing_Hp : MonoBehaviour
         }
     }
 
-    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos)
+    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos) //캔버스의 포지션과 월드의 포지션의 통로 역할을 해주는 함수
     {
         //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function
         Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
@@ -62,18 +65,18 @@ public class Showing_Hp : MonoBehaviour
         return parentCanvas.transform.TransformPoint(movePos);
     }
 
-    void Hp_bar_position_translate()
+    void Hp_bar_position_translate() //hp bar들의 위치 이동시키는 함수
     {
         if (Team_count == 1)
         {
             hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position);
-            hp_bar.transform.Translate(0, -70, 0);
+            hp_bar.transform.Translate(0, hp_bar_y_position, 0);
         }
 
         else
         {
             hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team2[character_count].transform.position);
-            hp_bar.transform.Translate(0, -70, 0);
+            hp_bar.transform.Translate(0, hp_bar_y_position, 0);
         }
     }
 

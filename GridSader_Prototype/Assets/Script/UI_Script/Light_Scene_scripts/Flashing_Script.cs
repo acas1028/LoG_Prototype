@@ -27,7 +27,7 @@ public class Flashing_Script : MonoBehaviour
     }
 
 
-    void Flash_Text()
+    void Flash_Text() // starting화면 텍스트를 flashing하게 만드는 함수
     {
         _timeChecker += Time.deltaTime;
         if (_timeChecker < BlinkFadeInTime)

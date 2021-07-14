@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class Time_FlowScript : MonoBehaviour
 {
-    public Text time_text;
-    int text_in_time;
-    int max_time;
-    float time;
+    //밑에 주석처리 되어있는 변수나 함수는 현재 아직 보류중인 내용들이기에 남겨둔 것입니다.
+
+    public Text time_text; //시간을 띄어주는 텍스트
+    int text_in_time; //현재 텍스트에 출력된 시간
+    int max_time; // 최대시간 =ex) 30초
+    float time;  // 1초마다 1씩 줄이기 위해 만든, time.deltatime을 더하기 위해 만든 시간 변수
     //float blink_time;
     //bool is_Blink;
     //bool is_fast_Blink;
@@ -36,14 +38,14 @@ public class Time_FlowScript : MonoBehaviour
         //    Blink();
         //}
 
-        if(Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.W)) // 임시
         {
             Time_reset();
         }
 
     }
 
-    void Time_on()
+    void Time_on() //1초마다 시간이 줄어든다.(텍스트 출력까지)
     {
         if(time>=1)
         {
@@ -55,7 +57,7 @@ public class Time_FlowScript : MonoBehaviour
         
     }
 
-    void TimeFlow()
+    void TimeFlow() //1초라는 시간을 재기 위한 time의 현실 시간 흐름을 위한 함수
     {
         time += Time.deltaTime;
     }
@@ -94,13 +96,13 @@ public class Time_FlowScript : MonoBehaviour
     //    }
     //}
 
-    void Time_reset()
+    void Time_reset() //시간 max_Time으로 리셋
     {
         text_in_time = max_time;
         time = 0;
     }
 
-    void Time_over()
+    void Time_over() //시간이 0초 이하가 되었을 때의 함수
     {
         if (text_in_time < 0)
         {
