@@ -17,10 +17,12 @@ public class Emoticon_Click : MonoBehaviour
 
     public void Emoticon_click()
     {
-        
+        if (emoticon_Time_Manager.GetComponent<Emoticon_Time_Script>().Get_Is_Stop_Emoticon() == false)
+        {
             emoticon_Block.GetComponent<Image>().sprite = this.GetComponent<Image>().sprite;
             emoticon_Time_Manager.GetComponent<Emoticon_Time_Script>().Plus_Emoticon_open_Count(1);
             emoticon_Time_Manager.GetComponent<Emoticon_Time_Script>().Set_Time(0);
+        }
         
         
     }
