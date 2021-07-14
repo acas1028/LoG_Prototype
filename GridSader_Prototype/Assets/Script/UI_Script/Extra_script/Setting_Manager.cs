@@ -19,7 +19,7 @@ public class Setting_Manager : MonoBehaviour
         Setting_Popup_Animaition();
     }
 
-    public void Setting_Popup_On()
+    public void Setting_Popup_On() //환경 설정 on off 함수
     {
         if(Setting_Popup.activeSelf==false)
         {
@@ -33,7 +33,7 @@ public class Setting_Manager : MonoBehaviour
         }
     }
 
-    void Setting_Popup_Animaition()
+    void Setting_Popup_Animaition()//환경설정 popup창 애니메이션 관리 함수
     {
         if(is_Open==false)
         {

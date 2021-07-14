@@ -119,7 +119,7 @@ public class Emoticon_Time_Script : MonoBehaviour
         }
     }
 
-    void Full_List() //리스트가 5개 꽉촤있는지를 확인하는 함수
+    void Full_List() //리스트가 5개 꽉차있는지를 확인하는 함수
     {
         if(repeat_limit_list.Count==5)
         {
