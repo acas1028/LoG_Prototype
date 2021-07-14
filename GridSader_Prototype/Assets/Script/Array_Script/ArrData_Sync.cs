@@ -17,10 +17,20 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     private bool isReady;
     private bool isEnemyReady;
 
+    List<int> gridNumSet;
+
     private void Start()
     {
         isReady = false;
         isEnemyReady = false;
+
+        gridNumSet = new List<int>();
+        for (int i = 0; i < 9; i++)
+        {
+            gridNumSet.Add(i + 1);
+        }
+
+        ShuffleList<int>(gridNumSet);
 
         if (PhotonNetwork.OfflineMode)
             return;
@@ -61,6 +71,12 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     // https://doc.photonengine.com/ko-kr/pun/current/reference/serialization-in-photon : 전송할 수 있는 데이터 타입
     public void DataSync(GameObject[] passData)
     {
+        if (PhotonNetwork.OfflineMode)
+        {
+            SetArrayPhaseInOffline();
+            return;
+        }
+
         Debug.Log("<color=yellow>DataSync 호출</color>");
 
         bool result = false;
@@ -94,7 +110,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     public void SetReady()
     {
         if (PhotonNetwork.OfflineMode)
+        {
             roomManager.StartArrayPhase();
+            return;
+        }
 
         bool result = false;
         isReady = !isReady;
@@ -107,16 +126,9 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             Debug.Log("IsReady Custom Property 설정 실패");
     }
 
-    private void OfflineModeStart()
+    private void SetArrayPhaseInOffline()
     {
-        List<int> gridNumSet = new List<int>();
-
-        for (int i = 0; i < 9; i++)
-        {
-            gridNumSet.Add(i + 1);
-        }
-
-        ShuffleList<int>(gridNumSet);
+        roomManager.StartArrayPhase();
 
         Character_Script cs;
         switch (roomManager.GetArrayPhase())
@@ -158,9 +170,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 cs.character_Num_Of_Grid = gridNumSet[4];
                 cs.character_Attack_Order = 5;
                 cs.Debuging_Character();
-                break;
-            case (int)ArrayPhase.END:
-                PhotonNetwork.LoadLevel("BattleScene");
                 break;
             default:
                 break;
