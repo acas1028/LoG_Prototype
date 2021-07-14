@@ -31,7 +31,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     public Text isEnemyReadyText;
     public Button readyButton;
     public Button arrCompleteButton;
-    public Button debugButton;
 
     private void Start()
     {
@@ -80,7 +79,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         {
             roomStatusText.text = "모든 배치가 완료되었습니다.";
             arrCompleteButton.gameObject.SetActive(false);
-            debugButton.gameObject.SetActive(false);
             PhotonNetwork.LoadLevel("BattleScene");
         }
         else if (arrayPhase % 2 == 0)

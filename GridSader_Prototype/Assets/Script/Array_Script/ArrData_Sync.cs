@@ -269,9 +269,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                 cs.Debuging_Character();
             }
-
-            Debug.Log("Team2 데이터 불러옴");
-            }
+        }
 
         isAllPlayerReady = isReady && isEnemyReady;
 
@@ -281,6 +279,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
         {
             roomManager.StartArrayPhase();
+            isReady = false;
         }
     }
     #endregion

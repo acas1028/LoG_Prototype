@@ -163,8 +163,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[0].GetComponent<Character_Script>().character_Attack_Order = 1;
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0].GetComponent<Character_Script>().Copy_Character_Stat(Order[0]);
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Ready_Array = false;
                         }
                     }
@@ -187,8 +187,8 @@ public class Arrayment_Manager: MonoBehaviour
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1].GetComponent<Character_Script>().Debuging_Character();
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2].GetComponent<Character_Script>().Copy_Character_Stat(Order[2]);
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Ready_Array = false;
                         }
                     }
@@ -210,8 +210,8 @@ public class Arrayment_Manager: MonoBehaviour
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3].GetComponent<Character_Script>().Debuging_Character();
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Copy_Character_Stat(Order[4]);
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Ready_Array = false;
                         }
                     }
@@ -243,8 +243,8 @@ public class Arrayment_Manager: MonoBehaviour
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0].GetComponent<Character_Script>().Debuging_Character();
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1].GetComponent<Character_Script>().Copy_Character_Stat(Order[1]);
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Ready_Array = false;
                         }
                     }
@@ -267,8 +267,8 @@ public class Arrayment_Manager: MonoBehaviour
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2].GetComponent<Character_Script>().Debuging_Character();
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3].GetComponent<Character_Script>().Copy_Character_Stat(Order[3]);
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Ready_Array = false;
                         }
                     }
@@ -288,8 +288,8 @@ public class Arrayment_Manager: MonoBehaviour
                             Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Copy_Character_Stat(Order[4]);
                             PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
                             Ready_Array = false;
                         }
                     }
