@@ -9,13 +9,16 @@ public class Emoticon_scirpt : MonoBehaviour
     GameObject emoticon_popup; //이모티콘 내용이 담긴 popup
     bool is_Open; //pop이 켜져있는가를 구별하는 bool 변수
 
+    private void Awake()
+    {
+        emoticon_popup = GameObject.FindGameObjectWithTag("Emoticon_Popup");
+    }
 
     private void Start()
     {
         
         is_Open = false;
-        emoticon_popup = GameObject.FindGameObjectWithTag("Emoticon_Popup");
-        emoticon_popup.SetActive(false);        
+        emoticon_popup.SetActive(false);
     }
 
     private void Update()
