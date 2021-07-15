@@ -92,7 +92,7 @@ public class Arrayment_Manager: MonoBehaviour
             }
             else
             {
-                Array_Cancle_Button.SetActive(false);
+                //Array_Cancle_Button.SetActive(false);
             }
             if (hit.transform.CompareTag("Null_Character")&&Character_instance == true)//Null_Character로 태그 되어 있는 물체에게 raycast가 닿으면.
             {

@@ -7,7 +7,6 @@ public class ShowingCharacterStats : MonoBehaviour
 {
     public GameObject prefabCharacter;// 팝업창에 띄울 캐릭터
     public GameObject[] attack_Grid_Tile; //팝업창에 띄울 공격 범위
-    public GameObject Pop_up_Character_image; // 캐릭터 이미지
   
     public Text attack_Damage;// 팝업창에 띄울 캐릭터 공격력
     public Text health_Point;// 팝업창에 띄울 캐릭터 hp
@@ -61,9 +60,7 @@ public class ShowingCharacterStats : MonoBehaviour
         }
 
 
-        Pop_up_Character_image.GetComponent<Image>().sprite = sprite_Data.GetComponent<Sprite_Data>().Character_Sprite[num - 1];
-        Pop_up_Character_image.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, sprite_Data.GetComponent<Sprite_Data>().Character_Sprite[num - 1].rect.height);
-        Pop_up_Character_image.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, sprite_Data.GetComponent<Sprite_Data>().Character_Sprite[num - 1].rect.width);
+      
         
     }
 

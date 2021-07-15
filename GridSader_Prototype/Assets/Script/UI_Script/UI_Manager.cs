@@ -38,7 +38,11 @@ public class UI_Manager : MonoBehaviour
             Destroy(gameObject);
         }
 
-
+        arraymanager = GameObject.FindGameObjectWithTag("ArrayManager"); // find를 이용할 시 오류가 일어날 수가 있으니 버그가 발생했을 경우 이곳을 주시(unity communication  피셜) 
+        arraymanager.SetActive(false);
+        null_Character = GameObject.FindGameObjectsWithTag("Null_Character"); // tag를 이용한 nullcharacter 가져오기
+        popup = GameObject.FindGameObjectWithTag("Popup"); // tag를 이용한 popup창 가져오기
+        popup.SetActive(false);
 
     }
 
@@ -57,12 +61,7 @@ public class UI_Manager : MonoBehaviour
     private int arraybutton_On = 0;
     private void Start()
     {
-        popup = GameObject.FindGameObjectWithTag("Popup"); // tag를 이용한 popup창 가져오기
-        popup.SetActive(false);
         ui_order = orders.character_placement;
-        arraymanager = GameObject.FindWithTag("ArrayManager"); // find를 이용할 시 오류가 일어날 수가 있으니 버그가 발생했을 경우 이곳을 주시(unity communication  피셜) 
-        arraymanager.SetActive(false);
-        null_Character = GameObject.FindGameObjectsWithTag("Null_Character"); // tag를 이용한 nullcharacter 가져오기
     }
 
     private void Update()
@@ -77,9 +76,9 @@ public class UI_Manager : MonoBehaviour
     {
         if(ui_order==orders.character_placement)
         {
-            
+
             arraymanager.SetActive(true);
-            for(int i=0; i<null_Character.Length;i++) //배치에 직접적으로 관련있는 nullCharacter를 다시 on시킨다.
+            for (int i=0; i<null_Character.Length;i++) //배치에 직접적으로 관련있는 nullCharacter를 다시 on시킨다.
             {
                 null_Character[i].SetActive(true);
             }
