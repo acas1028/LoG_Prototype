@@ -27,6 +27,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     public Text roomStatusText;
     public Text joinedPlayerList;
     public Text isEnemyReadyText;
+    public Text timeText;
     public Button readyButton;
     public Button arrCompleteButton;
 
@@ -65,6 +66,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             readyButton.gameObject.SetActive(false);
         if (isEnemyReadyText.gameObject.activeSelf)
             isEnemyReadyText.gameObject.SetActive(false);
+        if (timeText.gameObject.activeSelf)
+            timeText.gameObject.SetActive(false);
+
+        timeText.gameObject.SetActive(true);
 
         arrayPhase++;
         if (arrayPhase == (int)ArrayPhase.END)
