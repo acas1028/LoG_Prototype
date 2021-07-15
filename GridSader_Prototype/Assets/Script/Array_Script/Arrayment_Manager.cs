@@ -67,9 +67,7 @@ public class Arrayment_Manager: MonoBehaviour
     }
     void Update()
     {
-
         Arrayment_Raycast();
-
         Array_Order();
     }
     public void Arrayment_Raycast()
@@ -160,7 +158,8 @@ public class Arrayment_Manager: MonoBehaviour
                     Pick = true;
                     if(Array_Time.GetComponent<Time_FlowScript>().Time_Over==true)
                     {
-                        Time_Out();
+                        StartCoroutine(Time_Out());
+                        Ready_Array = true;
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
                     }
                     if (Order[0].tag=="Character")
@@ -185,9 +184,10 @@ public class Arrayment_Manager: MonoBehaviour
                     Pick = true;
                     if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
                     {
-                        Time_Out();
-                        Time_Out();
+                        StartCoroutine(Time_Out());
+                        StartCoroutine(Time_Out());
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                        Ready_Array = true;
                     }
                     if (Order[1].tag=="Character"&&Order[2].tag=="Character")
                     {
@@ -214,9 +214,10 @@ public class Arrayment_Manager: MonoBehaviour
                     Pick = true;
                     if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
                     {
-                        Time_Out();
-                        Time_Out();
+                        StartCoroutine(Time_Out());
+                        StartCoroutine(Time_Out());
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                        Ready_Array = true;
                     }
                     if (Order[3].tag == "Character" && Order[4].tag == "Character")
                     {
@@ -252,9 +253,10 @@ public class Arrayment_Manager: MonoBehaviour
                     Pick = true;
                     if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
                     {
-                        Time_Out();
-                        Time_Out();
+                        StartCoroutine(Time_Out());
+                        StartCoroutine(Time_Out());
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                        Ready_Array = true;
                     }
                     if (Order[0].tag == "Character" && Order[1].tag == "Character")
                     {
@@ -282,9 +284,10 @@ public class Arrayment_Manager: MonoBehaviour
                     Pick = true;
                     if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
                     {
-                        Time_Out();
-                        Time_Out();
+                        StartCoroutine(Time_Out());
+                        StartCoroutine(Time_Out());
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                        Ready_Array = true;
                     }
                     if (Order[2].tag == "Character" && Order[3].tag == "Character")
                     {
@@ -312,8 +315,9 @@ public class Arrayment_Manager: MonoBehaviour
                     Pick = true;
                     if (Array_Time.GetComponent<Time_FlowScript>().Time_Over == true)
                     {
-                        Time_Out();
+                        StartCoroutine(Time_Out());
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
+                        Ready_Array = true;
                     }
                     if (Order[4].tag == "Character")
                     {
@@ -332,13 +336,12 @@ public class Arrayment_Manager: MonoBehaviour
             }
         }
     }
-    public void Time_Out()
+    IEnumerator Time_Out()
     {
         bool Inventory_ID_Time_Out = true;
-        int i;
         while(Inventory_ID_Time_Out)
         {
-            for(i=0;i<Inventory.Length;i++)
+            for(int i=0;i<Inventory.Length;i++)
             {
                 if(Inventory[i].GetComponent<Inventory_ID>().is_Arrayed==false)
                 {
@@ -347,13 +350,21 @@ public class Arrayment_Manager: MonoBehaviour
                 }
             }
         }
-        int random = Random.Range(0, 10);
+        Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().is_Arrayed = true;
+        int random = Random.Range(0, 9);
+        while(Grids[random].tag == "Character")
+        {
+            random = Random.Range(0, 9);
+        }
 
-            Grids[random].GetComponent<Character_Script>().character_ID = Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID;
-            Grids[random].GetComponent<Character_Script>().Character_Setting(Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID);
-            Grids[random].GetComponent<Character_Script>().Debuging_Character();
-            Grids[random].tag = "Character";
-            Order.Add(Grids[random]);
+        Grids[random].GetComponent<Character_Script>().character_ID = Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID;
+        Grids[random].GetComponent<Character_Script>().Character_Setting(Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID);
+        Grids[random].GetComponent<Character_Script>().character_Num_Of_Grid = random + 1;
+        Grids[random].GetComponent<Character_Script>().Debuging_Character();
+        Grids[random].tag = "Character";
+        Order.Add(Grids[random]);
+
+        yield return null;
     }
     public void BanPick_Ready()
     {
