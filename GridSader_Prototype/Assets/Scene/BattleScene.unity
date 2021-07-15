@@ -5372,6 +5372,7 @@ GameObject:
   - component: {fileID: 1353572931}
   - component: {fileID: 1353572930}
   - component: {fileID: 1353572929}
+  - component: {fileID: 1353572934}
   m_Layer: 0
   m_Name: Emoticon_Popup
   m_TagString: Emoticon_Popup
@@ -5499,6 +5500,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353572927}
   m_CullTransparentMesh: 1
+--- !u!114 &1353572934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353572927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8ab8fb936d68241893a006d4b3b99c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1353572929}
 --- !u!1 &1368004857
 GameObject:
   m_ObjectHideFlags: 0
@@ -7983,6 +7997,7 @@ GameObject:
   - component: {fileID: 2042071414}
   - component: {fileID: 2042071413}
   - component: {fileID: 2042071412}
+  - component: {fileID: 2042071415}
   m_Layer: 5
   m_Name: Emoticon_Button
   m_TagString: Untagged
@@ -8053,9 +8068,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 721478476}
-        m_TargetAssemblyTypeName: Emoticon_scirpt, Assembly-CSharp
-        m_MethodName: Emoticon_Popup_On
+      - m_Target: {fileID: 2042071415}
+        m_TargetAssemblyTypeName: Popup_Onoff, Assembly-CSharp
+        m_MethodName: PopupOnOff
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8103,6 +8118,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042071410}
   m_CullTransparentMesh: 1
+--- !u!114 &2042071415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042071410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4d8bb0802107e4d9891ba309c93ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popup: {fileID: 1353572927}
 --- !u!1 &2092199050
 GameObject:
   m_ObjectHideFlags: 0
