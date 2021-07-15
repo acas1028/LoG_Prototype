@@ -287,6 +287,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         // 두 플레이어 준비 완료 후 배치 시작
         if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
         {
+            // roomManager.SetPreemptivePlayer();
             roomManager.StartArrayPhase();
             isReady = false;
         }

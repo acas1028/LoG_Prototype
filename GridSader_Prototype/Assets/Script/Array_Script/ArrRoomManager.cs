@@ -1,10 +1,10 @@
-using System.Collections;
 
 using UnityEngine;
 using UnityEngine.UI;
 
 using Photon.Realtime;
 using Photon.Pun;
+using ExitGames.Client.Photon;
 
 public enum ArrayPhase
 {
@@ -23,6 +23,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private int arrayPhase;
 
+    public Text preemptiveCheck;
     public Text playerName;
     public Text roomStatusText;
     public Text joinedPlayerList;
@@ -31,9 +32,14 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     public Button readyButton;
     public Button arrCompleteButton;
 
+    Player firstPlayer;
+    Player secondPlayer;
+
     private void Start()
     {
+        photonView.RPC("SetPreemptive", RpcTarget.All);
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
+
         if (PhotonNetwork.OfflineMode)
             roomStatusText.text = "<오프라인 모드>";
         else if (!PhotonNetwork.IsConnected)
@@ -47,6 +53,39 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         RenewPlayerList();
     }
 
+    public void SetPreemptivePlayer()
+    {
+        int pNum = Random.Range(0, 2);
+
+        foreach (var player in PhotonNetwork.PlayerListOthers)
+        {
+            secondPlayer = player;
+        }
+
+        if (pNum == 0)
+        {
+            PhotonNetwork.SetMasterClient(secondPlayer);
+        }
+    }
+
+    [PunRPC]
+    private void SetPreemptive()
+    {
+        firstPlayer = PhotonNetwork.MasterClient;
+        secondPlayer = PhotonNetwork.LocalPlayer;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (var player in PhotonNetwork.PlayerListOthers)
+            {
+                secondPlayer = player;
+            }
+            preemptiveCheck.text = "선공";
+        }
+        else
+            preemptiveCheck.text = "후공";
+    }
+
     public void StartArrayPhase()
     {
         photonView.RPC("NextArrayPhase", RpcTarget.All);
@@ -55,13 +94,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void NextArrayPhase()
     {
-        Player firstPlayer = PhotonNetwork.MasterClient;
-        Player secondPlayer = PhotonNetwork.LocalPlayer;
-
-        if (PhotonNetwork.IsMasterClient)
-            foreach (var player in PhotonNetwork.PlayerListOthers)
-                secondPlayer = player;
-
         if (readyButton.gameObject.activeSelf)
             readyButton.gameObject.SetActive(false);
         if (isEnemyReadyText.gameObject.activeSelf)

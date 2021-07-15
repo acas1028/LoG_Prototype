@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Photon.Pun;
+
 public class Time_FlowScript : MonoBehaviour
 {
     public bool Time_Over;
