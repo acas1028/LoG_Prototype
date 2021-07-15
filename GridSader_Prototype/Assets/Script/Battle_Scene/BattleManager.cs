@@ -99,18 +99,23 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (bM_Character_Setting_Finish == true && bM_Character_Battle_Start == false)
             StartCoroutine(Running_Phase());
-    }
 
  
+    }
 
     IEnumerator Running_Phase()
     {
         bM_Character_Battle_Start = true;
         while (bM_Phase < 6)
         {
+            if(bM_Phase == 0)
+            {
+                
+            }
             Battle(bM_Phase, bM_Team1_Is_Preemitive);
 
-            yield return new WaitUntil(() => Check_Round_Finish());
+            yield return new WaitUntil(() => Check_Counter_Finish());
+            Round_Finish();
             yield return new WaitForSeconds(2.0f);
         }
 
@@ -129,6 +134,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Team1CS.Copy_Character_Stat(Team1Sync);
             Team1CS.character_Team_Number = 1;
             Team1CS.Debuging_Character();
+
+            Debug.Log("Team1" + Team1CS.character_Skill);
       
             if (Team1CS.character_HP != 0)
                 dummy++;
@@ -137,20 +144,35 @@ public class BattleManager : MonoBehaviourPunCallbacks
             GameObject Team2Sync = DataSync.GetComponent<Arrayed_Data>().team2[i];
             Team2CS.Copy_Character_Stat(Team2Sync);
             Team2CS.character_Num_Of_Grid = Reverse_Enemy(Team2CS.character_Num_Of_Grid);
+            Team2CS.character_Attack_Range = Enemy_AttackRange_Change(Team2CS);
             Team2CS.character_Team_Number = 2;
             Team2CS.Debuging_Character();
       
             if (Team2CS.character_HP != 0)
                 dummy++;
-
-            if (dummy == 10)
-            {
-                bM_Character_Setting_Finish = true;
-            }
         }
+
+        if (dummy == 10)
+        {
+            bM_Character_Setting_Finish = true;
+        }
+
+
     }
 
-    bool Check_Round_Finish()
+    bool[] Enemy_AttackRange_Change(Character_Script Team2CS)
+    {
+        bool[] dummy = new bool[9];
+
+        for(int i = 0; i < 9; i++)
+        {
+            dummy[i] = false;
+            dummy[i] = Team2CS.character_Attack_Range[Reverse_Enemy(i+1) - 1];
+        }
+        return dummy;
+    }
+
+    bool Check_Counter_Finish()
     {
         foreach(GameObject team1 in bM_Character_Team1)
         {
@@ -166,47 +188,69 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         return true;
     }
-    void Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
+
+    bool Check_Skill_Finish()
+    {
+        foreach(GameObject team1 in bM_Character_Team1)
+        {
+            if (team1.GetComponent<Character_Script>().character_Activate_Skill == true)
+                return false;
+        }
+        foreach (GameObject team2 in bM_Character_Team2)
+        {
+            if (team2.GetComponent<Character_Script>().character_Activate_Skill == true)
+                return false;
+        }
+
+        return true;
+    }
+
+    void Round_Finish()
+    {
+        foreach(var team1 in bM_Character_Team1)
+        {
+            Character_Script Team1 = team1.GetComponent<Character_Script>();
+            Team1.character_Activate_Skill = false;
+            Team1.character_Counter = false;
+            Team1.character_is_Kill = 0;
+        }
+    }
+    IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
         // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
         // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
-        for (int j = 0; j < 9; j++)
+        while (attacker.GetComponent<Character_Script>().character_Attack_Count > 0)
         {
-            if (attacker.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
+            for (int j = 0; j < 9; j++)
             {
-                foreach (GameObject enemy_Character in enemy_Characters)
+                if (attacker.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
                 {
-                    if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == j + 1
-                    && enemy_Character.GetComponent<Character_Script>().character_Is_Allive)
+                    foreach (GameObject enemy_Character in enemy_Characters)
                     {
-                        Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
-                            " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
-                        attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
+                        if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == j + 1
+                        && enemy_Character.GetComponent<Character_Script>().character_Is_Allive)
+                        {
+                            attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
+                        }
                     }
+                    if (attacker.GetComponent<Character_Script>().character_Team_Number == 1)
+                        GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(j + 1);
+                    else
+                        GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(j + 1);
                 }
-                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(j + 1);
             }
-        }
-    }
+            AlertMessage.SetActive(true);
+            AlertMessage.GetComponent<AlertMessage>().Attack(attacker.GetComponent<Character_Script>().character_Team_Number, attacker.GetComponent<Character_Script>().character_Attack_Order);
+            attacker.GetComponent<Character_Script>().character_Attack_Count--;
+            SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
 
-    void Enemy_Character_Attack(GameObject attacker, GameObject[] enemy_Characters)
-    {
-        for (int j = 0; j < 9; j++)
-        {
-            if (attacker.GetComponent<Character_Script>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
-            {
-                foreach (GameObject enemy_Character in enemy_Characters)
-                {
-                    if (enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid == Reverse_Enemy(j + 1)
-                    && enemy_Character.GetComponent<Character_Script>().character_Is_Allive)
-                    {
-                        Debug.Log(attacker.GetComponent<Character_Script>().character_Num_Of_Grid + " attack " + enemy_Character.GetComponent<Character_Script>().character_Num_Of_Grid +
-                            " by " + attacker.GetComponent<Character_Script>().character_Attack_Damage);
-                        attacker.GetComponent<Character_Script>().Character_Attack(enemy_Character);
-                    }
-                }
-                GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(Reverse_Enemy(j + 1));
-            }
+            yield return new WaitUntil(() => Check_Skill_Finish());
+
+            StartCoroutine(Counter(attacker, enemy_Characters));
+
+            yield return new WaitUntil(() => Check_Counter_Finish());
+
+            yield return new WaitForSeconds(2.0f);
         }
     }
 
@@ -236,10 +280,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     if (team1_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀1의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                     {
-                        Character_Attack(team1_Character, bM_Character_Team2);
-                        AlertMessage.SetActive(true);
-                        AlertMessage.GetComponent<AlertMessage>().Attack(1, phase);
-                        StartCoroutine(Counter(team1_Character, bM_Character_Team2));
+                        StartCoroutine(Character_Attack(team1_Character, bM_Character_Team2));
                     }
                     else
                     {
@@ -258,10 +299,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     if (team2_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀2의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                     {
-                        Enemy_Character_Attack(team2_Character, bM_Character_Team1);
-                        AlertMessage.SetActive(true);
-                        AlertMessage.GetComponent<AlertMessage>().Attack(2, phase);
-                        StartCoroutine(Counter(team2_Character, bM_Character_Team1));
+                        StartCoroutine(Character_Attack(team2_Character, bM_Character_Team1));
                     }
                     else
                     {

@@ -2,9 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Character_Script : MonoBehaviour
-{ 
+{
+    public enum Type
+    {
+        Attacker = 1,
+        Defender,
+        Balance
+    };
+
+    public enum Skill
+    {
+        Balance_Union = 1,
+        Defense_Disarm,
+        Attack_Confidence,
+        Attack_Executioner,
+        Balance_GbGH
+    };
+
+
     public int character_ID { get; set; } // 캐릭터 ID
+    public Type character_Type { get; set; }
+    public Skill character_Skill { get; set; }
     public bool character_Is_Allive { get; set; } // 캐릭터 생존 유무
     public int character_HP { get; set; } // 체력
     public int character_AP { get; set; } // AP
@@ -17,7 +38,9 @@ public class Character_Script : MonoBehaviour
     public int character_Damaged { get; set; } // 받을 데미지
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
-    public bool character_Counter { get; set; }
+    public bool character_Counter { get; set; } //해당 턴에 피격당하여, 카운터를 치는지 판단하는 변수
+    public bool character_Activate_Skill { get; set; }
+    public int character_is_Kill { get; set; } // 해당 턴에 적을 죽였는지를 판단하는 변수
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
 
@@ -25,6 +48,8 @@ public class Character_Script : MonoBehaviour
 
     // Debug
 
+    public Type Debug_Type;
+    public Skill Debug_Skill;
     public bool[] Debug_character_Attack_Range;
     public int Debug_character_Grid_Number;
     public int Debug_Character_Damage;
@@ -49,6 +74,8 @@ public class Character_Script : MonoBehaviour
     {
 
         character_ID = 0;
+        character_Type = Type.Attacker;
+        character_Skill = Skill.Attack_Confidence;
         character_Is_Allive = false;
         character_HP = 0;
         character_AP = 0;
@@ -60,13 +87,15 @@ public class Character_Script : MonoBehaviour
             { false, false, false,
               false, false, false,
               false, false, false };
-        character_Attack_Count = 0;
+        character_Attack_Count = 1;
         character_Damaged = 0;
         character_Buffed_Attack = 0;
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
+        character_Activate_Skill = false;
         character_Revivial = false;
         character_Counter = false;
+        character_is_Kill = 0;
     }
 
     IEnumerator SetCharacterRed()
@@ -84,15 +113,16 @@ public class Character_Script : MonoBehaviour
     {
         // 적 캐릭터를 받아와서, 그 캐릭터의 정보에 접근하여 받을 데미지에 공격력 만큼을 저장시킴.
         StartCoroutine(SetCharacterRed());
-        
+
         Character_Script enemy_Character_Script;
         enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
 
         enemy_Character_Script.character_Damaged = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
-        enemy_Character_Script.Character_Damaged(); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+        enemy_Character_Script.Character_Damaged(this.gameObject); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+        character_Buffed_Attack = 0;
     }
 
-    public void Character_Damaged() // 피격 함수
+    public void Character_Damaged(GameObject attacker) // 피격 함수
     {
         // 받을 데미지를 다시 계산.
 
@@ -100,19 +130,15 @@ public class Character_Script : MonoBehaviour
 
         character_Damaged = (character_Damaged * (100 + character_Buffed_Damaged)) / 100;
 
-        if(character_Divine_Shield) // 나중에 들어가겠지만 간단해서 넣어뒀음. 천상의보호막임.
-        {
-            character_Divine_Shield = false;
-        }
-        else // 천보없으면 체력닳아야죠?
-            character_HP -= character_Damaged;
+        character_HP -= character_Damaged;
 
         if(character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         {
             character_HP = 0;
-            Character_Dead();
+            Character_Dead(attacker);
         }
         character_Damaged = 0;
+        character_Buffed_Damaged = 0;
     }
 
     public void Character_Counter_Attack(GameObject enemy_Character) //카운터 발동
@@ -123,26 +149,21 @@ public class Character_Script : MonoBehaviour
         enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
 
         enemy_Character_Script.character_Damaged = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
-        enemy_Character_Script.Character_Counter_Damaged(); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+        enemy_Character_Script.Character_Counter_Damaged(this.gameObject); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
 
         character_Counter = false;
     }
 
-    public void Character_Counter_Damaged() // 카운터 발동
+    public void Character_Counter_Damaged(GameObject attacker) // 카운터 발동
     {
         character_Damaged = (character_Damaged * (100 + character_Buffed_Damaged)) / 100;
 
-        if (character_Divine_Shield) // 나중에 들어가겠지만 간단해서 넣어뒀음. 천상의보호막임.
-        {
-            character_Divine_Shield = false;
-        }
-        else // 천보없으면 체력닳아야죠?
-            character_HP -= character_Damaged;
+        character_HP -= character_Damaged;
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         {
             character_HP = 0;
-            Character_Dead();
+            Character_Dead(attacker);
         }
         character_Damaged = 0;
     }
@@ -152,9 +173,10 @@ public class Character_Script : MonoBehaviour
         character_Counter = true;
     }
 
-    public void Character_Dead() // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
+    public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
     {
         Debug.Log(character_Num_Of_Grid + " is Dead");
+        attacker.GetComponent<Character_Script>().character_is_Kill++;
         this.gameObject.GetComponent<SpriteRenderer>().sprite = null;
         character_Is_Allive = false;
         character_Counter = false;
@@ -172,31 +194,66 @@ public class Character_Script : MonoBehaviour
 
         character_data = CSVReader.Read("Character_DB");
 
+        Character_Reset();
+
+
+        character_Is_Allive = true;
         character_ID = (int)character_data[num]["ID"];
-        if ((int)character_data[num]["Is_Alive"] == 0)
-            character_Is_Allive = false;
-        else
-            character_Is_Allive = true;
+        setting_type(num);
+        setting_skill(num);
         character_HP = (int)character_data[num]["HP"];
         character_AP = (int)character_data[num]["AP"];
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
-        character_Num_Of_Grid = (int)character_data[num]["Num_Of_Grid"];
-        character_Attack_Order = (int)character_data[num]["Attack_Order"];
         character_Attack_Range = new bool[9];
         setting_Attack_Range(num);
-        character_Attack_Count = (int)character_data[num]["Attack_Count"];
-        character_Damaged = (int)character_data[num]["Damaged"];
-        character_Buffed_Attack = (int)character_data[num]["Buffed_Attack"];
-        character_Buffed_Damaged = (int)character_data[num]["Buffed_Damaged"];
-        if ((int)character_data[num]["Divine_Shield"] == 0)
-            character_Divine_Shield = false;
-        else
-            character_Divine_Shield = true;
+    }
 
-        if ((int)character_data[num]["Revivial"] == 0)
-            character_Revivial = false;
-        else
-            character_Revivial = true;
+    void setting_type(int num)
+    {
+        if((string)character_data[num]["Type"] == "공격형")
+        {
+            character_Type = Type.Attacker;
+        }
+
+        if ((string)character_data[num]["Type"] == "밸런스형")
+        {
+            character_Type = Type.Balance;
+        }
+
+        if ((string)character_data[num]["Type"] == "방어형")
+        {
+            character_Type = Type.Defender;
+        }
+        Debug.Log(character_data[num]["Type"]);
+        Debug.Log(character_Type);
+    }
+    
+    void setting_skill(int num)
+    {
+        if((string)character_data[num]["Skill"] == "결속")
+        {
+            character_Skill = Skill.Balance_Union;
+        }
+
+        if ((string)character_data[num]["Skill"] == "무장해제")
+        {
+            character_Skill = Skill.Defense_Disarm;
+        }
+
+        if ((string)character_data[num]["Skill"] == "자신감")
+        {
+            character_Skill = Skill.Attack_Confidence;
+        }
+
+        if ((string)character_data[num]["Skill"] == "처형자")
+        {
+            character_Skill = Skill.Attack_Executioner;
+        }
+
+        if ((string)character_data[num]["Skill"] == "모아니면도")
+        {
+            character_Skill = Skill.Balance_GbGH;
+        }
     }
 
     void setting_Attack_Range(int num)
@@ -217,6 +274,8 @@ public class Character_Script : MonoBehaviour
 
     public void Debuging_Character()
     {
+        Debug_Skill = character_Skill;
+        Debug_Type = character_Type;
         Debug_Character_HP = character_HP;
         Debug_character_Attack_Range = character_Attack_Range;
         Debug_character_Grid_Number = character_Num_Of_Grid;
@@ -227,6 +286,8 @@ public class Character_Script : MonoBehaviour
     public void Copy_Character_Stat(GameObject copyObject) // 캐릭터스크립트 내의 변수들을 복사하는 함수
     {
         Character_Script copy = copyObject.GetComponent<Character_Script>();
+        character_Skill = copy.character_Skill;
+        character_Type = copy.character_Type;
         character_ID = copy.character_ID;
         character_Is_Allive = copy.character_Is_Allive;
         character_HP = copy.character_HP;
