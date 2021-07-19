@@ -46,36 +46,26 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         else
             roomStatusText.text = " ";
         isEnemyReadyText.text = " ";
+        preemptiveCheck.text = " ";
+
+        firstPlayer = PhotonNetwork.MasterClient;
+        secondPlayer = PhotonNetwork.MasterClient;
 
         arrayPhase = (int)ArrayPhase.STANDBY;
 
-        SetPreemptive();
         RenewPlayerList();
     }
 
     public void SetPreemptivePlayer()
     {
-        bool is_preemptive = Random.Range(0, 2) == 0 ? false : true;
-        Hashtable preemption_table = new Hashtable() { { "isPreemptive", is_preemptive } };
+        Debug.Log("SetPreemptivePlayer() 호출");
 
-        PhotonNetwork.SetPlayerCustomProperties(preemption_table);
-    }
+        bool result = false;
+        Hashtable table = new Hashtable() { { "MasterIsPreemptive", Random.Range(0, 2) == 0 ? false : true } };
 
-    private void SetPreemptive()
-    {
-        firstPlayer = PhotonNetwork.MasterClient;
-        secondPlayer = PhotonNetwork.LocalPlayer;
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            foreach (var player in PhotonNetwork.PlayerListOthers)
-            {
-                secondPlayer = player;
-            }
-            preemptiveCheck.text = "선공";
-        }
-        else
-            preemptiveCheck.text = "후공";
+        result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+        if (!result)
+            Debug.LogWarning("마스터의 선공여부 동기화 실패");
     }
 
     public void StartArrayPhase()
@@ -183,6 +173,36 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         Debug.Log("<color=yellow>OnLeftRoom() 호출\n룸을 나갑니다. 로비로 이동합니다.</color>");
 
         PhotonNetwork.LoadLevel("LobbyScene");
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (!propertiesThatChanged.ContainsKey("MasterIsPreemptive"))
+            return;
+
+        object o_master_is_preemptive;
+        bool master_is_preemptive;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("MasterIsPreemptive", out o_master_is_preemptive);
+        master_is_preemptive = (bool)o_master_is_preemptive;
+
+        if ((master_is_preemptive && PhotonNetwork.IsMasterClient) || (!master_is_preemptive && !PhotonNetwork.IsMasterClient))
+        {
+            foreach (var player in PhotonNetwork.PlayerListOthers)
+            {
+                secondPlayer = player;
+            }
+            preemptiveCheck.text = "선공";
+        }
+        else
+        {
+            foreach (var player in PhotonNetwork.PlayerListOthers)
+            {
+                firstPlayer = player;
+            }
+            preemptiveCheck.text = "후공";
+        }
+
+        Debug.LogFormat("Room Properties Updated due to <color=green>{0}</color>", propertiesThatChanged.ToString());
     }
     #endregion
 }

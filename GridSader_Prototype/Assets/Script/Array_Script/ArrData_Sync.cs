@@ -204,10 +204,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
-        // isPreemptive 를 받아온 경우에는 이 곳 관할이 아니므로 리턴
-        if (changedProps.ContainsKey("isPreemptive"))
-            return;
-
         object o_isEnemyReady;
         bool isAllPlayerReady;
 
@@ -286,12 +282,12 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         isAllPlayerReady = isReady && isEnemyReady;
 
-        Debug.LogFormat("Player Properties Updated due to <color=green>{0}</color>", changedProps.ToString());
+        Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 
         // 두 플레이어 준비 완료 후 배치 시작
         if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
         {
-            // roomManager.SetPreemptivePlayer();
+            roomManager.SetPreemptivePlayer();
             roomManager.StartArrayPhase();
             isReady = false;
         }
