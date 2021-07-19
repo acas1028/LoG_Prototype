@@ -24,9 +24,9 @@ public class Inventory_ID : MonoBehaviour
         }
 
     }
-    public void Setting_Character_Stat()
+    public void Setting_Character_Stat(GameObject Popup)
     {
-        ShowingCharacterStats.PopUp_instance.Character_Showing_Stats(m_Character_ID);
+        Popup.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(m_Character_ID);
     }
     public void Save_Character_ID()
     {

@@ -11,21 +11,24 @@ public class animation_On_off : MonoBehaviour
         animator = this.gameObject.GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        
+    }
+
 
 
 
     public void AnimationOn()
     {
         this.gameObject.SetActive(true);
-       
+        
     }
 
     public void AnimationOff()
     {
         animator.SetInteger("PopUp", 1);
         StartCoroutine(WaitForAnimation(animator));
-
-
     }
 
     private IEnumerator WaitForAnimation(Animator animator)

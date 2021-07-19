@@ -4,63 +4,105 @@ using UnityEngine;
 
 public class Limit_Popup : MonoBehaviour
 {
-    GameObject[] Popup;
+    public GameObject popup;
+    public GameObject limit_Popup_button;
+    public GameObject present_Popup;
 
-    GameObject canvas;
+    public List<GameObject> popup_List = new List<GameObject>();
 
-    int Popup_count;
+
+    GameObject is_button;
+
+    private static Limit_Popup Limit_Popup_Manager;
+
+    public static Limit_Popup Limit_Poup_instance
+    {
+        get
+        {
+            if(!Limit_Popup_Manager)
+            {
+                Limit_Popup_Manager = FindObjectOfType(typeof(Limit_Popup)) as Limit_Popup;
+
+                if (Limit_Popup_Manager == null)
+                    Debug.Log("no Singleton obj");
+
+            }
+
+            return Limit_Popup_Manager;
+        }
+    }
+
+    private void Awake()
+    {
+        if(Limit_Popup_Manager ==null)
+        {
+            Limit_Popup_Manager = this;
+        }
+        else if (!Limit_Popup_Manager!= this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
-        canvas = GameObject.Find("Canvas");
-        Popup_count = 0;
+        limit_Popup_button.SetActive(false);
     }
 
-    void Popup_off_in_multi()
+    private void Update()
     {
-        if(Input.GetMouseButtonUp(0))
+        Popup_limit_Only_One();
+    }
+
+    public void Popup_OutsideClick()
+    {
+        if(popup.activeSelf==true)
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000);
-            if (!hit)
-                return;
-
-            if(hit.transform.tag != Popup[Popup_count].tag)
-            {
-                //Popup[Popup_count].
-            }
-
-
-
-
-
+            popup.GetComponent<animation_On_off>().AnimationOff();
+            limit_Popup_button.SetActive(false);
         }
     }
 
-    
-
-    void Present_popup_setActive_true()
+    void Popup_limit_Only_One()
     {
-        for (int i = 0; i < Popup.Length; i++)
+        if (!popup)
+            return;
+
+        if(present_Popup!= popup)
         {
-            if (Popup[i].activeSelf == true)
+            for(int i=0; i<popup_List.Count;i++)
             {
-                Popup_count = i;
+                if(popup_List[i].activeSelf==true && popup_List[i]!= popup)
+                {
+                   popup_List[i].GetComponent<animation_On_off>().AnimationOff(); 
+                }
             }
+
+            present_Popup = popup;
         }
     }
 
 
-    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos) //캔버스의 포지션과 월드의 포지션의 통로 역할을 해주는 함수
-    {
-        //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-        Vector2 movePos;
 
-        //Convert the screenpoint to ui rectangle local point
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentCanvas.transform as RectTransform, screenPos, parentCanvas.worldCamera, out movePos);
-        //Convert the local point to world point
-        return parentCanvas.transform.TransformPoint(movePos);
+
+
+    public GameObject GetPopup()
+    {
+        return popup;
+    }
+
+    public GameObject GetisButton()
+    {
+        return is_button;
+    }
+
+    public void SetPopup(GameObject The_PoPup)
+    {
+        popup = The_PoPup;
+    }
+
+    public void SetIsbutton(GameObject button)
+    {
+        is_button = button;
     }
 }

@@ -7,38 +7,39 @@ public class ShowingCharacterStats : MonoBehaviour
 {
     public GameObject prefabCharacter;// 팝업창에 띄울 캐릭터
     public GameObject[] attack_Grid_Tile; //팝업창에 띄울 공격 범위
+    
   
     public Text attack_Damage;// 팝업창에 띄울 캐릭터 공격력
     public Text health_Point;// 팝업창에 띄울 캐릭터 hp
 
     private GameObject sprite_Data;
     
-    private static ShowingCharacterStats PopUp_Manager;
-    public static ShowingCharacterStats PopUp_instance
-    {
-        get
-        {
-            if (!PopUp_Manager)
-            {
-                PopUp_Manager = FindObjectOfType(typeof(ShowingCharacterStats)) as ShowingCharacterStats;
+    //private static ShowingCharacterStats PopUp_Manager;
+    //public static ShowingCharacterStats PopUp_instance
+    //{
+    //    get
+    //    {
+    //        if (!PopUp_Manager)
+    //        {
+    //            PopUp_Manager = FindObjectOfType(typeof(ShowingCharacterStats)) as ShowingCharacterStats;
 
-                if (PopUp_Manager == null)
-                    Debug.Log("no Singleton obj");
-            }
-            return PopUp_Manager;
-        }
-    }
+    //            if (PopUp_Manager == null)
+    //                Debug.Log("no Singleton obj");
+    //        }
+    //        return PopUp_Manager;
+    //    }
+    //}
 
     public void Awake()
     {
-       
-        
+  
     }
 
     private void Start()
     {
         sprite_Data = GameObject.FindGameObjectWithTag("Sprite_Data");
     }
+
 
 
     public void Character_Showing_Stats(int num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
