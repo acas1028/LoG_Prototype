@@ -149,7 +149,7 @@ public class Arrayment_Manager: MonoBehaviour
     {
         Phase = arrRoomManager.GetArrayPhase();
 
-        if (PhotonNetwork.IsMasterClient)
+        if (arrRoomManager.IsPlayerPreemptive())
         {
             switch (Phase)
             {

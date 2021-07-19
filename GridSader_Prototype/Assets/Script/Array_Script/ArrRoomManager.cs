@@ -34,6 +34,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     Player firstPlayer;
     Player secondPlayer;
+    bool isPreemptivePlayerSet;
 
     private void Start()
     {
@@ -48,69 +49,19 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         isEnemyReadyText.text = " ";
         preemptiveCheck.text = " ";
 
-        firstPlayer = PhotonNetwork.MasterClient;
-        secondPlayer = PhotonNetwork.MasterClient;
+        firstPlayer = PhotonNetwork.LocalPlayer;
+        secondPlayer = PhotonNetwork.LocalPlayer;
+        isPreemptivePlayerSet = false;
 
         arrayPhase = (int)ArrayPhase.STANDBY;
 
         RenewPlayerList();
     }
 
-    public void SetPreemptivePlayer()
+    #region 외부에서 호출되는 public 함수
+    public bool IsPlayerPreemptive()
     {
-        Debug.Log("SetPreemptivePlayer() 호출");
-
-        bool result = false;
-        Hashtable table = new Hashtable() { { "MasterIsPreemptive", Random.Range(0, 2) == 0 ? false : true } };
-
-        result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-        if (!result)
-            Debug.LogWarning("마스터의 선공여부 동기화 실패");
-    }
-
-    public void StartArrayPhase()
-    {
-        photonView.RPC("NextArrayPhase", RpcTarget.All);
-    }
-
-    [PunRPC]
-    private void NextArrayPhase()
-    {
-        if (readyButton.gameObject.activeSelf)
-            readyButton.gameObject.SetActive(false);
-        if (isEnemyReadyText.gameObject.activeSelf)
-            isEnemyReadyText.gameObject.SetActive(false);
-        if (timeText.gameObject.activeSelf)
-            timeText.gameObject.SetActive(false);
-
-        timeText.gameObject.SetActive(true);
-
-        arrayPhase++;
-        if (arrayPhase == (int)ArrayPhase.END)
-        {
-            roomStatusText.text = "모든 배치가 완료되었습니다.";
-            arrCompleteButton.gameObject.SetActive(false);
-            PhotonNetwork.LoadLevel("BattleScene");
-        }
-        else if (arrayPhase % 2 == 0)
-        {
-            roomStatusText.text = "#" + (arrayPhase + 1) + " 선공 " + firstPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
-            if (PhotonNetwork.LocalPlayer == firstPlayer)
-                arrCompleteButton.gameObject.SetActive(true);
-            else if (PhotonNetwork.LocalPlayer == secondPlayer)
-                arrCompleteButton.gameObject.SetActive(false);
-        }
-        else if (arrayPhase % 2 == 1)
-        {
-            roomStatusText.text = "#" + (arrayPhase + 1) + " 후공 " + secondPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
-            if (PhotonNetwork.LocalPlayer == firstPlayer)
-                arrCompleteButton.gameObject.SetActive(false);
-            else if (PhotonNetwork.LocalPlayer == secondPlayer)
-                arrCompleteButton.gameObject.SetActive(true);
-        }
-
-        var ap = (ArrayPhase)arrayPhase;
-        Debug.Log("<color=yellow>RPC Success with ArrayPhase: </color><color=lightblue>" + ap + "</color>");
+        return firstPlayer == PhotonNetwork.LocalPlayer;
     }
 
     public int GetArrayPhase()
@@ -118,16 +69,9 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         return arrayPhase;
     }
 
-    private void RenewPlayerList()
+    public bool IsAllPlayersJoined()
     {
-        string playerList = string.Empty;
-
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            playerList += System.Environment.NewLine + player.NickName;
-        }
-
-        joinedPlayerList.text = "룸에 있는 플레이어 <color=#912900>" + playerList + "</color>";
+        return PhotonNetwork.CurrentRoom.PlayerCount >= 2;
     }
 
     public void SetReadyButtonStatus(bool isReady)
@@ -152,6 +96,93 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    public void SetPreemptivePlayer()
+    {
+        Debug.Log("SetPreemptivePlayer() 호출");
+
+        bool result = false;
+        result = IsAllPlayersJoined();
+        if (!result)
+        {
+            Debug.LogError("플레이어 한 명이 나간 상태입니다. 선/후공 결정을 취소합니다. 게임을 진행할 수 없습니다.");
+            return;
+        }
+
+        bool isPreemptive = Random.Range(0, 2) == 0 ? false : true;
+        Hashtable player_1_table = new Hashtable() { { "IsPreemptive", isPreemptive } };
+        Hashtable player_2_table = new Hashtable() { { "IsPreemptive", !isPreemptive } };
+
+        result = PhotonNetwork.PlayerList[0].SetCustomProperties(player_1_table);
+        if (!result)
+            Debug.LogWarning("플레이어 1 선공여부 동기화 실패");
+        result = PhotonNetwork.PlayerList[1].SetCustomProperties(player_2_table);
+        if (!result)
+            Debug.LogWarning("플레이어 2 선공여부 동기화 실패");
+    }
+
+    public void StartArrayPhase()
+    {
+        bool result = IsAllPlayersJoined();
+        if (!result && !PhotonNetwork.OfflineMode)
+        {
+            Debug.LogError("플레이어 한 명이 나간 상태입니다. 교차 선택을 취소합니다. 게임을 진행할 수 없습니다.");
+            return;
+        }
+
+        photonView.RPC("NextArrayPhase", RpcTarget.All);
+    }
+    #endregion
+
+    [PunRPC]
+    private void NextArrayPhase()
+    {
+        if (readyButton.gameObject.activeSelf)
+            readyButton.gameObject.SetActive(false);
+        if (isEnemyReadyText.gameObject.activeSelf)
+            isEnemyReadyText.gameObject.SetActive(false);
+        if (timeText.gameObject.activeSelf)
+            timeText.gameObject.SetActive(false);
+
+        timeText.gameObject.SetActive(true);
+
+        arrayPhase++;
+        if (arrayPhase == (int)ArrayPhase.END)
+        {
+            roomStatusText.text = "모든 배치가 완료되었습니다.";
+            arrCompleteButton.gameObject.SetActive(false);
+            PhotonNetwork.LoadLevel("BattleScene");
+        }
+        else if (arrayPhase % 2 == 0)
+        {
+            roomStatusText.text = "#" + (arrayPhase + 1) + " 선공 " + firstPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            if (IsPlayerPreemptive())
+                arrCompleteButton.gameObject.SetActive(true);
+            else
+                arrCompleteButton.gameObject.SetActive(false);
+        }
+        else if (arrayPhase % 2 == 1)
+        {
+            roomStatusText.text = "#" + (arrayPhase + 1) + " 후공 " + secondPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            if (IsPlayerPreemptive())
+                arrCompleteButton.gameObject.SetActive(false);
+            else
+                arrCompleteButton.gameObject.SetActive(true);
+        }
+
+        Debug.Log("<color=yellow>RPC Success with ArrayPhase: </color><color=lightblue>" + (ArrayPhase)arrayPhase + "</color>");
+    }
+
+    private void RenewPlayerList()
+    {
+        string playerList = string.Empty;
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            playerList += System.Environment.NewLine + player.NickName;
+        }
+
+        joinedPlayerList.text = "룸에 있는 플레이어 <color=#912900>" + playerList + "</color>";
+    }
 
     #region 포톤 콜백 함수
     public override void OnPlayerEnteredRoom(Player other)
@@ -175,34 +206,40 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("LobbyScene");
     }
 
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if (!propertiesThatChanged.ContainsKey("MasterIsPreemptive"))
-            return;
-
-        object o_master_is_preemptive;
-        bool master_is_preemptive;
-        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("MasterIsPreemptive", out o_master_is_preemptive);
-        master_is_preemptive = (bool)o_master_is_preemptive;
-
-        if ((master_is_preemptive && PhotonNetwork.IsMasterClient) || (!master_is_preemptive && !PhotonNetwork.IsMasterClient))
+        // 선, 후공 결정에 관한 데이터이면서 '나'의 선, 후공 데이터인 경우에만 아래 과정을 거친다.
+        if (changedProps.ContainsKey("IsPreemptive") && targetPlayer == PhotonNetwork.LocalPlayer && !isPreemptivePlayerSet)
         {
-            foreach (var player in PhotonNetwork.PlayerListOthers)
-            {
-                secondPlayer = player;
-            }
-            preemptiveCheck.text = "선공";
-        }
-        else
-        {
-            foreach (var player in PhotonNetwork.PlayerListOthers)
-            {
-                firstPlayer = player;
-            }
-            preemptiveCheck.text = "후공";
-        }
+            Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 
-        Debug.LogFormat("Room Properties Updated due to <color=green>{0}</color>", propertiesThatChanged.ToString());
+            object o_is_preemptive;
+            bool is_preemptive;
+            targetPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_is_preemptive);
+            is_preemptive = (bool)o_is_preemptive;
+
+            if (is_preemptive)
+            {
+                foreach (var player in PhotonNetwork.PlayerListOthers)
+                {
+                    secondPlayer = player;
+                }
+                preemptiveCheck.text = "선공";
+            }
+            else
+            {
+                foreach (var player in PhotonNetwork.PlayerListOthers)
+                {
+                    firstPlayer = player;
+                }
+                preemptiveCheck.text = "후공";
+            }
+
+            isPreemptivePlayerSet = true;
+
+            if (PhotonNetwork.IsMasterClient)
+                StartArrayPhase();
+        }
     }
     #endregion
 }

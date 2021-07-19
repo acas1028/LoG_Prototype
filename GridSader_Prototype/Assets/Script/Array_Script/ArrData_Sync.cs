@@ -104,7 +104,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
         if (!result)
-            Debug.Log("Team1 Custom Property 설정 실패");
+            Debug.LogWarning("Team1 Custom Property 설정 실패");
     }
 
     public void SetReady()
@@ -123,7 +123,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
         if (!result)
-            Debug.Log("IsReady Custom Property 설정 실패");
+            Debug.LogWarning("IsReady Custom Property 설정 실패");
     }
 
     private void SetArrayPhaseInOffline()
@@ -204,6 +204,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
+        if (changedProps.ContainsKey("IsPreemptive"))
+            return;
+
+        Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
+
         object o_isEnemyReady;
         bool isAllPlayerReady;
 
@@ -282,13 +287,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         isAllPlayerReady = isReady && isEnemyReady;
 
-        Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
-
         // 두 플레이어 준비 완료 후 배치 시작
         if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
         {
             roomManager.SetPreemptivePlayer();
-            roomManager.StartArrayPhase();
             isReady = false;
         }
     }
