@@ -37,7 +37,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        photonView.RPC("SetPreemptive", RpcTarget.All);
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
 
         if (PhotonNetwork.OfflineMode)
@@ -50,25 +49,18 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         arrayPhase = (int)ArrayPhase.STANDBY;
 
+        SetPreemptive();
         RenewPlayerList();
     }
 
     public void SetPreemptivePlayer()
     {
-        int pNum = Random.Range(0, 2);
+        bool is_preemptive = Random.Range(0, 2) == 0 ? false : true;
+        Hashtable preemption_table = new Hashtable() { { "isPreemptive", is_preemptive } };
 
-        foreach (var player in PhotonNetwork.PlayerListOthers)
-        {
-            secondPlayer = player;
-        }
-
-        if (pNum == 0)
-        {
-            PhotonNetwork.SetMasterClient(secondPlayer);
-        }
+        PhotonNetwork.SetPlayerCustomProperties(preemption_table);
     }
 
-    [PunRPC]
     private void SetPreemptive()
     {
         firstPlayer = PhotonNetwork.MasterClient;

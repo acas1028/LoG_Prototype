@@ -204,6 +204,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
+        // isPreemptive 를 받아온 경우에는 이 곳 관할이 아니므로 리턴
+        if (changedProps.ContainsKey("isPreemptive"))
+            return;
+
         object o_isEnemyReady;
         bool isAllPlayerReady;
 
