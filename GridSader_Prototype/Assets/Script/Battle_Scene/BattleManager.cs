@@ -154,9 +154,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 dummy++;
 
             if (bM_Team1_Is_Preemitive)
-                Team2CS.character_Attack_Order *= 2;
+            {
+                Team1CS.character_Attack_Order = Team1CS.character_Attack_Order * 2 - 1;
+                Team2CS.character_Attack_Order = Team2CS.character_Attack_Order * 2;
+            }
             else
-                Team1CS.character_Attack_Order *= 2;
+            {
+                Team1CS.character_Attack_Order = Team1CS.character_Attack_Order * 2;
+                Team2CS.character_Attack_Order = Team2CS.character_Attack_Order * 2 - 1;
+            }
         }
 
         if (dummy == 10)
