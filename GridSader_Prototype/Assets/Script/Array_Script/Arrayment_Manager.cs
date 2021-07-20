@@ -86,7 +86,7 @@ public class Arrayment_Manager: MonoBehaviour
 
             if (hit.transform.CompareTag("Character")&&Character_instance==false)
             {
-                PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character_Script>().character_ID);
+                //PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character_Script>().character_ID);
                 Cancle_Character = hit.transform.gameObject;
                 if(my_turn==true)
                 {
@@ -96,7 +96,7 @@ public class Arrayment_Manager: MonoBehaviour
             }
             else
             {
-                //Array_Cancle_Button.SetActive(false);
+                Array_Cancle_Button.SetActive(false);
             }
             if (hit.transform.CompareTag("Null_Character")&&Character_instance == true)//Null_Character로 태그 되어 있는 물체에게 raycast가 닿으면.
             {
