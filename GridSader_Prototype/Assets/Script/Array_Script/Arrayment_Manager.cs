@@ -9,10 +9,11 @@ using UnityEngine.UI;
 public class Arrayment_Manager: MonoBehaviour
 {
    
-    private bool Character_instance = true;
+    private bool Character_instance = false;
     public bool Ready_Array = false;
     private bool my_turn = true;
     private bool Pick = true;
+    private bool On_Raycast = false;
     private int Phase = (int)ArrayPhase.STANDBY;
     private int Time_Out_Inventory;
 
@@ -23,14 +24,17 @@ public class Arrayment_Manager: MonoBehaviour
 
     public GameObject Array_Time;
     public GameObject[] Grids;
+    public GameObject[] Enemy_Grids;
     private GameObject[] Inventory;
     public GameObject[] Block_Inventory;
+    public GameObject Enemy_Data;
     public GameObject PopUp_UI;
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     public GameObject PassData_;
     private GameObject Cancle_Character;
     public ArrRoomManager arrRoomManager;
+    public ArrData_Sync arrData_Sync;
 
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
@@ -118,6 +122,7 @@ public class Arrayment_Manager: MonoBehaviour
                 }
                 Character_Instantiate.GetComponent<Character_Script>().Debuging_Character();
                 Order.Add(Character_Instantiate);
+                StartCoroutine(Sync_Character());
                 PopUp_UI.SetActive(false);
                 Character_instance = false;
             }
@@ -148,7 +153,9 @@ public class Arrayment_Manager: MonoBehaviour
     public void Array_Order()
     {
         Phase = arrRoomManager.GetArrayPhase();
-
+        Arrayed_Character_Data cs = PassData_.GetComponent<Arrayed_Character_Data>();
+        Arrayed_Data Enemy_cs = Enemy_Data.GetComponent<Arrayed_Data>();
+        int Enemy_Grid_Num;
         if (arrRoomManager.IsPlayerPreemptive())
         {
             switch (Phase)
@@ -162,22 +169,41 @@ public class Arrayment_Manager: MonoBehaviour
                         Ready_Array = true;
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
                     }
-                    if (Order[0].tag=="Character")
+                    if (Order[0].tag == "Character")
                     {
+                        On_Raycast = true;
                         Pick = false;
-                        if(Ready_Array == true)
+
+                        if (Ready_Array == true)
                         {
                             Order[0].GetComponent<Character_Script>().character_Attack_Order = 1;
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0].GetComponent<Character_Script>().Copy_Character_Stat(Order[0]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[0].GetComponent<Character_Script>().Copy_Character_Stat(Order[0]);
+                            cs.Pass_Data[0].GetComponent<Character_Script>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
+                            cs.initial_Ready();
+                            Order[0].tag = "Arrayed_Character";
                             Ready_Array = false;
+                            On_Raycast = false;
+
                         }
                     }
                     break;
                 case (int)ArrayPhase.SECOND12:
                     my_turn = false;
+                    if(Enemy_cs.team2[0].GetComponent<Character_Script>().character_Num_Of_Grid!=0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[0].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[0].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
+                    if (Enemy_cs.team2[1].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[1].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[1].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
                     break;
                 case (int)ArrayPhase.FIRST23:
                     my_turn = true;
@@ -189,25 +215,45 @@ public class Arrayment_Manager: MonoBehaviour
                         Array_Time.GetComponent<Time_FlowScript>().Time_Over = false;
                         Ready_Array = true;
                     }
-                    if (Order[1].tag=="Character"&&Order[2].tag=="Character")
+
+                    if (Order[1].tag == "Character" && Order[2].tag == "Character")
                     {
+                        On_Raycast = true;
                         Pick = false;
                         if (Ready_Array == true)
                         {
                             Order[1].GetComponent<Character_Script>().character_Attack_Order = 2;
                             Order[2].GetComponent<Character_Script>().character_Attack_Order = 3;
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1].GetComponent<Character_Script>().Copy_Character_Stat(Order[1]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2].GetComponent<Character_Script>().Copy_Character_Stat(Order[2]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[1].GetComponent<Character_Script>().Copy_Character_Stat(Order[1]);
+                            cs.Pass_Data[1].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[2].GetComponent<Character_Script>().Copy_Character_Stat(Order[2]);
+                            cs.Pass_Data[2].GetComponent<Character_Script>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
+                            Order[1].tag = "Arrayed_Character";
+                            Order[2].tag = "Arrayed_Character";
                             Ready_Array = false;
+                            On_Raycast = false;
                         }
                     }
+                    
                     break;
                 case (int)ArrayPhase.SECOND34:
                     my_turn = false;
+                    if (Enemy_cs.team2[2].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[2].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[2].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
+                    if (Enemy_cs.team2[3].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[3].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[3].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
                     break;
                 case (int)ArrayPhase.FIRST45:
                     my_turn = true;
@@ -221,23 +267,35 @@ public class Arrayment_Manager: MonoBehaviour
                     }
                     if (Order[3].tag == "Character" && Order[4].tag == "Character")
                     {
+                        On_Raycast = true;
                         Pick = false;
                         if (Ready_Array == true)
                         {
                             Order[3].GetComponent<Character_Script>().character_Attack_Order = 4;
                             Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3].GetComponent<Character_Script>().Copy_Character_Stat(Order[3]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Copy_Character_Stat(Order[4]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[3].GetComponent<Character_Script>().Copy_Character_Stat(Order[3]);
+                            cs.Pass_Data[3].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[4].GetComponent<Character_Script>().Copy_Character_Stat(Order[4]);
+                            cs.Pass_Data[4].GetComponent<Character_Script>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
+                            cs.initial_Ready();
+                            Order[3].tag = "Arrayed_Character";
+                            Order[4].tag = "Arrayed_Character";
                             Ready_Array = false;
+                            On_Raycast = false;
+                            }
                         }
-                    }
+                    
                     break;
                 case (int)ArrayPhase.SECOND5:
                     my_turn = false;
+                    if (Enemy_cs.team2[4].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[4].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[4].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
                     break;
             }
         }
@@ -247,6 +305,13 @@ public class Arrayment_Manager: MonoBehaviour
             {
                 case (int)ArrayPhase.FIRST1:
                     my_turn = false;
+                    if (Enemy_cs.team2[0].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[0].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[0].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
                     break;
                 case (int)ArrayPhase.SECOND12:
                     my_turn = true;
@@ -260,24 +325,41 @@ public class Arrayment_Manager: MonoBehaviour
                     }
                     if (Order[0].tag == "Character" && Order[1].tag == "Character")
                     {
+                        On_Raycast = true;
                         Pick = false;
-                        //준비 완료 버튼 활성화
                         if (Ready_Array == true)
                         {
                             Order[0].GetComponent<Character_Script>().character_Attack_Order = 1;
                             Order[1].GetComponent<Character_Script>().character_Attack_Order = 2;
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0].GetComponent<Character_Script>().Copy_Character_Stat(Order[0]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[0].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1].GetComponent<Character_Script>().Copy_Character_Stat(Order[1]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[1].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[0].GetComponent<Character_Script>().Copy_Character_Stat(Order[0]);
+                            cs.Pass_Data[0].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[1].GetComponent<Character_Script>().Copy_Character_Stat(Order[1]);
+                            cs.Pass_Data[1].GetComponent<Character_Script>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
+                            cs.initial_Ready();
+                            Order[0].tag = "Arrayed_Character";
+                            Order[1].tag = "Arrayed_Character";
                             Ready_Array = false;
+                            On_Raycast = false;
                         }
                     }
                     break;
                 case (int)ArrayPhase.FIRST23:
                     my_turn = false;
+                    if (Enemy_cs.team2[1].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[1].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[1].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
+                    if (Enemy_cs.team2[2].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[2].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[2].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
                     break;
                 case (int)ArrayPhase.SECOND34:
                     my_turn = true;
@@ -291,24 +373,41 @@ public class Arrayment_Manager: MonoBehaviour
                     }
                     if (Order[2].tag == "Character" && Order[3].tag == "Character")
                     {
+                        On_Raycast = true;
                         Pick = false;
-                        //준비 완료 버튼 활성화
                         if (Ready_Array == true)
                         {
                             Order[2].GetComponent<Character_Script>().character_Attack_Order = 3;
                             Order[3].GetComponent<Character_Script>().character_Attack_Order = 4;
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2].GetComponent<Character_Script>().Copy_Character_Stat(Order[2]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[2].GetComponent<Character_Script>().Debuging_Character();
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3].GetComponent<Character_Script>().Copy_Character_Stat(Order[3]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[3].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[2].GetComponent<Character_Script>().Copy_Character_Stat(Order[2]);
+                            cs.Pass_Data[2].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[3].GetComponent<Character_Script>().Copy_Character_Stat(Order[3]);
+                            cs.Pass_Data[3].GetComponent<Character_Script>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
+                            cs.initial_Ready();
+                            Order[2].tag = "Arrayed_Character";
+                            Order[3].tag = "Arrayed_Character";
                             Ready_Array = false;
+                            On_Raycast = false;
                         }
                     }
                     break;
                 case (int)ArrayPhase.FIRST45:
                     my_turn = false;
+                    if (Enemy_cs.team2[3].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[3].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[3].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
+                    if (Enemy_cs.team2[4].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
+                    {
+                        Enemy_Grid_Num = Enemy_cs.team2[4].GetComponent<Character_Script>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Character_Setting(Enemy_cs.team2[4].GetComponent<Character_Script>().character_ID);
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character_Script>().Debuging_Character();
+                        Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                    }
                     break;
                 case (int)ArrayPhase.SECOND5:
                     my_turn = true;
@@ -321,25 +420,40 @@ public class Arrayment_Manager: MonoBehaviour
                     }
                     if (Order[4].tag == "Character")
                     {
+                        On_Raycast = true;
                         Pick = false;
                         if (Ready_Array == true)
                         {
                             Order[4].GetComponent<Character_Script>().character_Attack_Order = 5;
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Copy_Character_Stat(Order[4]);
-                            PassData_.GetComponent<Arrayed_Character_Data>().Pass_Data[4].GetComponent<Character_Script>().Debuging_Character();
+                            cs.Pass_Data[4].GetComponent<Character_Script>().Copy_Character_Stat(Order[4]);
+                            cs.Pass_Data[4].GetComponent<Character_Script>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
-                            PassData_.GetComponent<Arrayed_Character_Data>().initial_Ready();
+                            cs.initial_Ready();
+                            Order[4].tag = "Arrayed_Character";
                             Ready_Array = false;
+                            On_Raycast = false;
                         }
                     }
                     break;
             }
         }
     }
+    IEnumerator Sync_Character()
+    {
+        int Count = Order.Count - 1;
+        Arrayed_Character_Data cs = PassData_.GetComponent<Arrayed_Character_Data>();
+        cs.Pass_Data[Count].GetComponent<Character_Script>().Copy_Character_Stat(Order[Count]);
+        cs.Pass_Data[Count].GetComponent<Character_Script>().Debuging_Character();
+        arrData_Sync.DataSync(cs.Pass_Data);
+
+        yield return null;
+    }
     IEnumerator Time_Out()
     {
         bool Inventory_ID_Time_Out = true;
-        while(Inventory_ID_Time_Out)
+        int Count = Order.Count - 1;
+        Arrayed_Character_Data cs = PassData_.GetComponent<Arrayed_Character_Data>();
+        while (Inventory_ID_Time_Out)
         {
             for(int i=0;i<Inventory.Length;i++)
             {
@@ -363,12 +477,18 @@ public class Arrayment_Manager: MonoBehaviour
         Grids[random].GetComponent<Character_Script>().Debuging_Character();
         Grids[random].tag = "Character";
         Order.Add(Grids[random]);
-
+        cs.Pass_Data[Count].GetComponent<Character_Script>().Copy_Character_Stat(Order[Count]);
+        cs.Pass_Data[Count].GetComponent<Character_Script>().Debuging_Character();
+        arrData_Sync.DataSync(cs.Pass_Data);
         yield return null;
     }
     public void BanPick_Ready()
     {
         Ready_Array = true;
+        if(On_Raycast==false)
+        {
+            Ready_Array = false;
+        }
     }
     public void Get_Button(int num)// 인벤토리 클릭시 발생
     {
