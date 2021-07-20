@@ -22,7 +22,8 @@ public class Character_Script : MonoBehaviour
         Balance_GbGH
     };
 
-
+    // 전투 전 캐릭터가 기본으로 가지고 있는 변수
+    // Original Variables
     public int character_ID { get; set; } // 캐릭터 ID
     public Type character_Type { get; set; }
     public Skill character_Skill { get; set; }
@@ -31,11 +32,13 @@ public class Character_Script : MonoBehaviour
     public int character_AP { get; set; } // AP
     public int character_Attack_Damage { get; set; } // 공격력
     public int character_Num_Of_Grid { get; set; } // 그리드 넘버
-    public int character_Team_Number { get; set; } // 팀 넘버(나중에 이름으로 바꾸기!)
     public int character_Attack_Order { get; set; } // 공격 순서
     public bool[] character_Attack_Range { get; set; } // 공격 범위
-    public int character_Attack_Count { get; set; } // 공격 횟수
-    public int character_Damaged { get; set; } // 받을 데미지
+
+    // 전투 중 활성화되는 변수
+    // Battle-Oriented Variables
+    public int character_Attack_Count { get; set; } // 공격 횟수(공격 범위)
+    public int character_Team_Number { get; set; } // 팀 구분
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
     public bool character_Counter { get; set; } //해당 턴에 피격당하여, 카운터를 치는지 판단하는 변수
@@ -62,6 +65,7 @@ public class Character_Script : MonoBehaviour
     {
         Debug_character_Attack_Range = new bool[9];
         Character_Reset();
+        Set_Character_Attack_Count();
     }
 
     // Update is called once per frame
@@ -81,14 +85,13 @@ public class Character_Script : MonoBehaviour
         character_AP = 0;
         character_Attack_Damage = 0;
         character_Num_Of_Grid = 0;
-        character_Team_Number = 0;
         character_Attack_Order = 0;
         character_Attack_Range = new bool[9]
             { false, false, false,
               false, false, false,
               false, false, false };
-        character_Attack_Count = 1;
-        character_Damaged = 0;
+
+        character_Attack_Count = 0;
         character_Buffed_Attack = 0;
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
@@ -109,6 +112,14 @@ public class Character_Script : MonoBehaviour
         yield break;
     }
 
+    private void Set_Character_Attack_Count()
+    {
+        foreach (var item in character_Attack_Range)
+        {
+            if (item) character_Attack_Count++;
+        }
+    }
+
     public void Character_Attack(GameObject enemy_Character) // 캐릭터 스크립트 내에 있는 공격 함수.
     {
         // 적 캐릭터를 받아와서, 그 캐릭터의 정보에 접근하여 받을 데미지에 공격력 만큼을 저장시킴.
@@ -117,27 +128,26 @@ public class Character_Script : MonoBehaviour
         Character_Script enemy_Character_Script;
         enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
 
-        enemy_Character_Script.character_Damaged = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
-        enemy_Character_Script.Character_Damaged(this.gameObject); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+        int damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
+        enemy_Character_Script.Character_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
         character_Buffed_Attack = 0;
     }
 
-    public void Character_Damaged(GameObject attacker) // 피격 함수
+    public void Character_Damaged(GameObject attacker, int damage) // 피격 함수
     {
         // 받을 데미지를 다시 계산.
 
         Character_Counter();
 
-        character_Damaged = (character_Damaged * (100 + character_Buffed_Damaged)) / 100;
+        int final_damage = (damage * (100 + character_Buffed_Damaged)) / 100;
 
-        character_HP -= character_Damaged;
+        character_HP -= final_damage;
 
         if(character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         {
             character_HP = 0;
             Character_Dead(attacker);
         }
-        character_Damaged = 0;
         character_Buffed_Damaged = 0;
     }
 
@@ -148,24 +158,23 @@ public class Character_Script : MonoBehaviour
         Character_Script enemy_Character_Script;
         enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
 
-        enemy_Character_Script.character_Damaged = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
-        enemy_Character_Script.Character_Counter_Damaged(this.gameObject); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+        int damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
+        enemy_Character_Script.Character_Counter_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
 
         character_Counter = false;
     }
 
-    public void Character_Counter_Damaged(GameObject attacker) // 카운터 발동
+    public void Character_Counter_Damaged(GameObject attacker, int damage) // 카운터 발동
     {
-        character_Damaged = (character_Damaged * (100 + character_Buffed_Damaged)) / 100;
+        int final_damage = (damage * (100 + character_Buffed_Damaged)) / 100;
 
-        character_HP -= character_Damaged;
+        character_HP -= final_damage;
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         {
             character_HP = 0;
             Character_Dead(attacker);
         }
-        character_Damaged = 0;
     }
 
     public void Character_Counter()
@@ -300,8 +309,7 @@ public class Character_Script : MonoBehaviour
         character_Num_Of_Grid = copy.character_Num_Of_Grid;
         character_Attack_Order = copy.character_Attack_Order;
         character_Attack_Range = copy.character_Attack_Range;
-        character_Attack_Count = copy.character_Attack_Count;
-        character_Damaged = copy.character_Damaged;
+
         character_Buffed_Attack = copy.character_Buffed_Attack;
         character_Buffed_Damaged = copy.character_Buffed_Damaged;
         character_Divine_Shield = copy.character_Divine_Shield;

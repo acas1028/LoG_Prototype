@@ -67,7 +67,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Phase = 0;
 
         // 내가 방장일 때만 나는 선공이다.
-        if (PhotonNetwork.IsMasterClient)
+        if (Is_Preemptive())
             bM_Team1_Is_Preemitive = true;
         else
             bM_Team1_Is_Preemitive = false;
@@ -101,6 +101,16 @@ public class BattleManager : MonoBehaviourPunCallbacks
             StartCoroutine(Running_Phase());
 
 
+    }
+
+    public bool Is_Preemptive()
+    {
+        object o_is_preemptive;
+        bool is_preemptive;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_is_preemptive);
+        is_preemptive = (bool)o_is_preemptive;
+
+        return is_preemptive;
     }
 
     IEnumerator Running_Phase()
@@ -232,7 +242,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
         // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
-        while (attacker.GetComponent<Character_Script>().character_Attack_Count > 0)
+        int attack_Count = attacker.GetComponent<Character_Script>().character_Attack_Count;
+
+        while (attack_Count > 0)
         {
             for (int j = 0; j < 9; j++)
             {
@@ -254,7 +266,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
             AlertMessage.SetActive(true);
             AlertMessage.GetComponent<AlertMessage>().Attack(attacker.GetComponent<Character_Script>().character_Team_Number, attacker.GetComponent<Character_Script>().character_Attack_Order);
-            attacker.GetComponent<Character_Script>().character_Attack_Count--;
+            attack_Count--;
 
             SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
 

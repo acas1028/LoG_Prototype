@@ -24,16 +24,18 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         isReady = false;
         isEnemyReady = false;
 
-        gridNumSet = new List<int>();
-        for (int i = 0; i < 9; i++)
-        {
-            gridNumSet.Add(i + 1);
-        }
-
-        ShuffleList<int>(gridNumSet);
-
         if (PhotonNetwork.OfflineMode)
+        {
+            gridNumSet = new List<int>();
+            for (int i = 0; i < 9; i++)
+            {
+                gridNumSet.Add(i + 1);
+            }
+
+            ShuffleList<int>(gridNumSet);
+
             return;
+        }
 
         // 키 타입은 string형, 값 타입은 int, bool 등 다양한 형으로 저장하는 해시테이블
         // 해시테이블은 딕셔너리와 다르게 제네릭 타입이 정해져 있지 않아 들어가는 데이터 타입에 제한이 없다. (object 타입으로 인식) 하지만 박싱과 언박싱 과정이 필요하다.
@@ -54,12 +56,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             team1_table.Add((i + 1) + "_AttackRange", null);
             team1_table.Add((i + 1) + "_GridNumber", null);
             team1_table.Add((i + 1) + "_AttackOrder", null);
-            team1_table.Add((i + 1) + "_AttackCount", null);
-            team1_table.Add((i + 1) + "_Damaged", null);
-            team1_table.Add((i + 1) + "_BuffedAttack", null);
-            team1_table.Add((i + 1) + "_BuffedDamaged", null);
-            team1_table.Add((i + 1) + "_DivineShield", null);
-            team1_table.Add((i + 1) + "_Revivial", null);
         }
     }
 
@@ -94,12 +90,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             team1_table[(i + 1) + "_AttackRange"] = cs.character_Attack_Range;
             team1_table[(i + 1) + "_GridNumber"] = cs.character_Num_Of_Grid;
             team1_table[(i + 1) + "_AttackOrder"] = cs.character_Attack_Order;
-            team1_table[(i + 1) + "_AttackCount"] = cs.character_Attack_Count;
-            team1_table[(i + 1) + "_Damaged"] = cs.character_Damaged;
-            team1_table[(i + 1) + "_BuffedAttack"] = cs.character_Buffed_Attack;
-            team1_table[(i + 1) + "_BuffedDamaged"] = cs.character_Buffed_Damaged;
-            team1_table[(i + 1) + "_DivineShield"] = cs.character_Divine_Shield;
-            team1_table[(i + 1) + "_Revivial"] = cs.character_Revivial;
         }
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
@@ -220,12 +210,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_attackRange;
         object o_gridNumber;
         object o_attackOrder;
-        object o_attackCount;
-        object o_damaged;
-        object o_buffedAttack;
-        object o_buffedDamaged;
-        object o_divineShield;
-        object o_revivial;
         Character_Script cs;
 
         foreach (Player player in PhotonNetwork.PlayerListOthers)
@@ -259,12 +243,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 player.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
                 player.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
                 player.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
-                player.CustomProperties.TryGetValue((i + 1) + "_AttackCount", out o_attackCount);
-                player.CustomProperties.TryGetValue((i + 1) + "_Damaged", out o_damaged);
-                player.CustomProperties.TryGetValue((i + 1) + "_BuffedAttack", out o_buffedAttack);
-                player.CustomProperties.TryGetValue((i + 1) + "_BuffedDamaged", out o_buffedDamaged);
-                player.CustomProperties.TryGetValue((i + 1) + "_DivineShield", out o_divineShield);
-                player.CustomProperties.TryGetValue((i + 1) + "_Revivial", out o_revivial);
 
                 cs.character_ID = (int)o_id;
                 cs.character_Is_Allive = (bool)o_isAlive;
@@ -274,12 +252,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 cs.character_Attack_Range = (bool[])o_attackRange;
                 cs.character_Num_Of_Grid = (int)o_gridNumber;
                 cs.character_Attack_Order = (int)o_attackOrder;
-                cs.character_Attack_Count = (int)o_attackCount;
-                cs.character_Damaged = (int)o_damaged;
-                cs.character_Buffed_Attack = (int)o_buffedAttack;
-                cs.character_Buffed_Damaged = (int)o_buffedDamaged;
-                cs.character_Divine_Shield = (bool)o_divineShield;
-                cs.character_Revivial = (bool)o_revivial;
 
                 cs.Debuging_Character();
             }
