@@ -20,10 +20,10 @@ public class Arrayed_Character_Data : MonoBehaviour
     {
 
     }
-
     public void initial_Ready()//Ready버튼을 눌렀을시.
     {
         arrdata_sync.DataSync(Pass_Data);
         roomManager.StartArrayPhase();
     }
+
 }
