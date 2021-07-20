@@ -37,7 +37,7 @@ public class Character_Script : MonoBehaviour
 
     // 전투 중 활성화되는 변수
     // Battle-Oriented Variables
-    public int character_Attack_Count { get; set; } // 공격 횟수(공격 범위)
+    public int character_Attack_Count { get; set; } // 공격 횟수(공격 범위 동일)
     public int character_Team_Number { get; set; } // 팀 구분
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
@@ -65,7 +65,6 @@ public class Character_Script : MonoBehaviour
     {
         Debug_character_Attack_Range = new bool[9];
         Character_Reset();
-        Set_Character_Attack_Count();
     }
 
     // Update is called once per frame
@@ -110,14 +109,6 @@ public class Character_Script : MonoBehaviour
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
         yield break;
-    }
-
-    private void Set_Character_Attack_Count()
-    {
-        foreach (var item in character_Attack_Range)
-        {
-            if (item) character_Attack_Count++;
-        }
     }
 
     public void Character_Attack(GameObject enemy_Character) // 캐릭터 스크립트 내에 있는 공격 함수.
