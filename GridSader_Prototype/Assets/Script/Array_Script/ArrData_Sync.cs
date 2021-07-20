@@ -11,19 +11,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     public ArrRoomManager roomManager;
     public Arrayed_Data arrayed_Data;
 
-    private Hashtable team1_table;
-    private Hashtable isReady_table;
-
-    private bool isReady;
-    private bool isEnemyReady;
-
     List<int> gridNumSet;
 
     private void Start()
     {
-        isReady = false;
-        isEnemyReady = false;
-
         if (PhotonNetwork.OfflineMode)
         {
             gridNumSet = new List<int>();
@@ -36,35 +27,27 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
             return;
         }
-
-        // 키 타입은 string형, 값 타입은 int, bool 등 다양한 형으로 저장하는 해시테이블
-        // 해시테이블은 딕셔너리와 다르게 제네릭 타입이 정해져 있지 않아 들어가는 데이터 타입에 제한이 없다. (object 타입으로 인식) 하지만 박싱과 언박싱 과정이 필요하다.
-        // C# 해시테이블은 기본적으로 이중 해싱 방법을 사용하여 데이터를 저장한다.
-        // 해시테이블을 사용하는 이유는 Photon의 Custom Properties를 사용하려면 Hashtable을 사용해야하기 때문
-        team1_table = new Hashtable();
-        isReady_table = new Hashtable();
-        isReady_table.Add("PlayerIsReady", false);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
-
-        for (int i = 0; i < 5; i++)
-        {
-            team1_table.Add((i + 1) + "_ID", null);
-            team1_table.Add((i + 1) + "_IsAlive", null);
-            team1_table.Add((i + 1) + "_HP", null);
-            team1_table.Add((i + 1) + "_AP", null);
-            team1_table.Add((i + 1) + "_AttackDamage", null);
-            team1_table.Add((i + 1) + "_AttackRange", null);
-            team1_table.Add((i + 1) + "_GridNumber", null);
-            team1_table.Add((i + 1) + "_AttackOrder", null);
-        }
     }
 
-    // Start is called before the first frame update
+    private List<T> ShuffleList<T>(List<T> list)
+    {
+        int random1, random2;
+        T temp;
 
-    // Arrayment_Scene에서 Ready 버튼을 누른 즉시 호출함
-    // Custom Properties 를 이용하여 서버에 Team1의 Character_Script를 전송
-    // https://doc.photonengine.com/ko-kr/pun/current/gameplay/synchronization-and-state : 동기화하는 방법 1.PhotonView 2.RPC 3.Custom Properties
-    // https://doc.photonengine.com/ko-kr/pun/current/reference/serialization-in-photon : 전송할 수 있는 데이터 타입
+        for (int i = 0; i < list.Count; ++i)
+        {
+            random1 = Random.Range(0, list.Count);
+            random2 = Random.Range(0, list.Count);
+
+            temp = list[random1];
+            list[random1] = list[random2];
+            list[random2] = temp;
+        }
+
+        return list;
+    }
+
+    #region 외부에서 호출되는 public 함수
     public void DataSync(GameObject[] passData)
     {
         if (PhotonNetwork.OfflineMode)
@@ -76,41 +59,24 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         Character_Script cs;
         arrayed_Data.team1 = passData;
 
+        Hashtable team1_table = new Hashtable();
+
         for (int i = 0; i < 5; i++)
         {
             cs = arrayed_Data.team1[i].GetComponent<Character_Script>();
-            team1_table[(i + 1) + "_ID"] = cs.character_ID;
-            team1_table[(i + 1) + "_IsAlive"] = cs.character_Is_Allive;
-            team1_table[(i + 1) + "_HP"] = cs.character_HP;
-            team1_table[(i + 1) + "_AP"] = cs.character_AP;
-            team1_table[(i + 1) + "_AttackDamage"] = cs.character_Attack_Damage;
-            team1_table[(i + 1) + "_AttackRange"] = cs.character_Attack_Range;
-            team1_table[(i + 1) + "_GridNumber"] = cs.character_Num_Of_Grid;
-            team1_table[(i + 1) + "_AttackOrder"] = cs.character_Attack_Order;
+            team1_table.Add((i + 1) + "_ID", cs.character_ID);
+            team1_table.Add((i + 1) + "_IsAlive", cs.character_Is_Allive);
+            team1_table.Add((i + 1) + "_HP", cs.character_HP);
+            team1_table.Add((i + 1) + "_AP", cs.character_AP);
+            team1_table.Add((i + 1) + "_AttackDamage", cs.character_Attack_Damage);
+            team1_table.Add((i + 1) + "_AttackRange", cs.character_Attack_Range);
+            team1_table.Add((i + 1) + "_GridNumber", cs.character_Num_Of_Grid);
+            team1_table.Add((i + 1) + "_AttackOrder", cs.character_Attack_Order);
         }
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
         if (!result)
             Debug.LogWarning("Team1 Custom Property 설정 실패");
-    }
-
-    public void SetReady()
-    {
-        if (PhotonNetwork.OfflineMode)
-        {
-            roomManager.StartArrayPhase();
-            return;
-        }
-
-        bool result = false;
-        isReady = !isReady;
-        roomManager.SetReadyButtonStatus(isReady);
-
-        isReady_table["PlayerIsReady"] = isReady;
-
-        result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
-        if (!result)
-            Debug.LogWarning("IsReady Custom Property 설정 실패");
     }
 
     public void SetArrayPhaseInOffline()
@@ -162,24 +128,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         roomManager.StartArrayPhase();
     }
-
-    private List<T> ShuffleList<T>(List<T> list)
-    {
-        int random1, random2;
-        T temp;
-
-        for (int i = 0; i < list.Count; ++i)
-        {
-            random1 = Random.Range(0, list.Count);
-            random2 = Random.Range(0, list.Count);
-
-            temp = list[random1];
-            list[random1] = list[random2];
-            list[random2] = temp;
-        }
-
-        return list;
-    }
+    #endregion
 
     #region 포톤 콜백 함수 : MonoBehaviourPunCallbacks 클래스의 상속을 받는 함수
 
@@ -191,13 +140,13 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
-        if (changedProps.ContainsKey("IsPreemptive"))
+        if (changedProps.ContainsKey("IsPreemptive") || changedProps.ContainsKey("PlayerIsReady"))
+            return;
+
+        if (targetPlayer == PhotonNetwork.LocalPlayer)
             return;
 
         Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
-
-        object o_isEnemyReady;
-        bool isAllPlayerReady;
 
         object o_id;
         object o_isAlive;
@@ -209,58 +158,34 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_attackOrder;
         Character_Script cs;
 
-        foreach (Player player in PhotonNetwork.PlayerListOthers)
+        for (int i = 0; i < 5; i++)
         {
-            // isReady_table 을 받아온 경우에만
-            if (changedProps.ContainsKey("PlayerIsReady"))
-            {
-                player.CustomProperties.TryGetValue("PlayerIsReady", out o_isEnemyReady);
-                isEnemyReady = (bool)o_isEnemyReady;
+            // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
 
-                roomManager.SetIsEnemyReadyText(isEnemyReady);
+            // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
+            cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
+            if (!cs)
+                return;
 
-                // 캐릭터 정보 Property가 아닌 준비 여부 Property를 받아온 경우 아래 과정을 스킵한다.
-                continue;
-            }
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
+            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
 
-            for (int i = 0; i < 5; i++)
-            {
-                // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
+            cs.character_ID = (int)o_id;
+            cs.character_Is_Allive = (bool)o_isAlive;
+            cs.character_HP = (int)o_hp;
+            cs.character_AP = (int)o_ap;
+            cs.character_Attack_Damage = (int)o_attackDamage;
+            cs.character_Attack_Range = (bool[])o_attackRange;
+            cs.character_Num_Of_Grid = (int)o_gridNumber;
+            cs.character_Attack_Order = (int)o_attackOrder;
 
-                // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
-                cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
-                if (!cs)
-                    return;
-
-                player.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
-                player.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
-                player.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
-                player.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
-                player.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
-                player.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
-                player.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
-                player.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
-
-                cs.character_ID = (int)o_id;
-                cs.character_Is_Allive = (bool)o_isAlive;
-                cs.character_HP = (int)o_hp;
-                cs.character_AP = (int)o_ap;
-                cs.character_Attack_Damage = (int)o_attackDamage;
-                cs.character_Attack_Range = (bool[])o_attackRange;
-                cs.character_Num_Of_Grid = (int)o_gridNumber;
-                cs.character_Attack_Order = (int)o_attackOrder;
-
-                cs.Debuging_Character();
-            }
-        }
-
-        isAllPlayerReady = isReady && isEnemyReady;
-
-        // 두 플레이어 준비 완료 후 배치 시작
-        if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
-        {
-            roomManager.SetPreemptivePlayer();
-            isReady = false;
+            cs.Debuging_Character();
         }
     }
     #endregion

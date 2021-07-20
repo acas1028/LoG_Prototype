@@ -36,6 +36,9 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     Player secondPlayer;
     bool isPreemptivePlayerSet;
 
+    private bool isReady;
+    private bool isEnemyReady;
+
     private void Start()
     {
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
@@ -57,6 +60,13 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         secondPlayer = PhotonNetwork.LocalPlayer;
         isPreemptivePlayerSet = false;
 
+        isReady = false;
+        isEnemyReady = false;
+
+        Hashtable isReady_table = new Hashtable();
+        isReady_table.Add("PlayerIsReady", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
+
         arrayPhase = (int)ArrayPhase.STANDBY;
 
         RenewPlayerList();
@@ -76,6 +86,26 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     public bool IsAllPlayersJoined()
     {
         return PhotonNetwork.CurrentRoom.PlayerCount >= 2;
+    }
+
+    public void SetReady()
+    {
+        if (PhotonNetwork.OfflineMode)
+        {
+            StartArrayPhase();
+            return;
+        }
+
+        bool result = false;
+        isReady = !isReady;
+        SetReadyButtonStatus(isReady);
+
+        Hashtable isReady_table = new Hashtable();
+        isReady_table.Add("PlayerIsReady", isReady);
+
+        result = PhotonNetwork.LocalPlayer.SetCustomProperties(isReady_table);
+        if (!result)
+            Debug.LogWarning("IsReady Custom Property 설정 실패");
     }
 
     public void SetReadyButtonStatus(bool isReady)
@@ -215,8 +245,32 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
+        // isReady_table 을 받아온 경우에만
+        if (changedProps.ContainsKey("PlayerIsReady"))
+        {
+            Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
+
+            // 상대가 먼저 방에 들어와서 준비버튼을 누른 경우에도 상대의 준비 여부를 받아올 수 있도록 한다.
+            foreach (var player in PhotonNetwork.PlayerListOthers)
+            {
+                object o_isEnemyReady;
+                player.CustomProperties.TryGetValue("PlayerIsReady", out o_isEnemyReady);
+                isEnemyReady = (bool)o_isEnemyReady;
+            }
+
+            SetIsEnemyReadyText(isEnemyReady);
+
+            bool isAllPlayerReady = isReady && isEnemyReady;
+
+            // 두 플레이어 준비 완료 후 배치 시작
+            if (PhotonNetwork.IsMasterClient && isAllPlayerReady)
+            {
+                SetPreemptivePlayer();
+                isReady = false;
+            }
+        }
         // 선, 후공 결정에 관한 데이터이면서 '나'의 선, 후공 데이터인 경우에만 아래 과정을 거친다.
-        if (changedProps.ContainsKey("IsPreemptive") && targetPlayer == PhotonNetwork.LocalPlayer && !isPreemptivePlayerSet)
+        else if (changedProps.ContainsKey("IsPreemptive") && targetPlayer == PhotonNetwork.LocalPlayer && !isPreemptivePlayerSet)
         {
             Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 
