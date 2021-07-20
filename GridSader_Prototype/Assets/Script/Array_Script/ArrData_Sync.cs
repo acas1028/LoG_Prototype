@@ -68,10 +68,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     public void DataSync(GameObject[] passData)
     {
         if (PhotonNetwork.OfflineMode)
-        {
-            SetArrayPhaseInOffline();
             return;
-        }
 
         Debug.Log("<color=yellow>DataSync 호출</color>");
 
@@ -116,10 +113,8 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             Debug.LogWarning("IsReady Custom Property 설정 실패");
     }
 
-    private void SetArrayPhaseInOffline()
+    public void SetArrayPhaseInOffline()
     {
-        roomManager.StartArrayPhase();
-
         Character_Script cs;
         switch (roomManager.GetArrayPhase())
         {
@@ -164,6 +159,8 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             default:
                 break;
         }
+
+        roomManager.StartArrayPhase();
     }
 
     private List<T> ShuffleList<T>(List<T> list)

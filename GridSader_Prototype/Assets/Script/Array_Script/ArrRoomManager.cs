@@ -41,7 +41,11 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
 
         if (PhotonNetwork.OfflineMode)
+        {
             roomStatusText.text = "<오프라인 모드>";
+            Hashtable player_1_table = new Hashtable() { { "IsPreemptive", true } };
+            PhotonNetwork.SetPlayerCustomProperties(player_1_table);
+        }
         else if (!PhotonNetwork.IsConnected)
             roomStatusText.text = "로그인이 필요합니다";
         else
@@ -208,6 +212,9 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        if (PhotonNetwork.OfflineMode)
+            return;
+
         // 선, 후공 결정에 관한 데이터이면서 '나'의 선, 후공 데이터인 경우에만 아래 과정을 거친다.
         if (changedProps.ContainsKey("IsPreemptive") && targetPlayer == PhotonNetwork.LocalPlayer && !isPreemptivePlayerSet)
         {

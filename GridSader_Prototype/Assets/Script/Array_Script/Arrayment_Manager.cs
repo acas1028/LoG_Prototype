@@ -156,6 +156,7 @@ public class Arrayment_Manager: MonoBehaviour
         Arrayed_Character_Data cs = PassData_.GetComponent<Arrayed_Character_Data>();
         Arrayed_Data Enemy_cs = Enemy_Data.GetComponent<Arrayed_Data>();
         int Enemy_Grid_Num;
+
         if (arrRoomManager.IsPlayerPreemptive())
         {
             switch (Phase)
@@ -189,6 +190,8 @@ public class Arrayment_Manager: MonoBehaviour
                     }
                     break;
                 case (int)ArrayPhase.SECOND12:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
                     my_turn = false;
                     if(Enemy_cs.team2[0].GetComponent<Character_Script>().character_Num_Of_Grid!=0)
                     {
@@ -239,6 +242,8 @@ public class Arrayment_Manager: MonoBehaviour
                     
                     break;
                 case (int)ArrayPhase.SECOND34:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
                     my_turn = false;
                     if (Enemy_cs.team2[2].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
                     {
@@ -288,6 +293,8 @@ public class Arrayment_Manager: MonoBehaviour
                     
                     break;
                 case (int)ArrayPhase.SECOND5:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
                     my_turn = false;
                     if (Enemy_cs.team2[4].GetComponent<Character_Script>().character_Num_Of_Grid != 0)
                     {
