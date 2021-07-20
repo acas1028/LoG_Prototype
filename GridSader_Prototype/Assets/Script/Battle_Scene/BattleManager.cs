@@ -100,7 +100,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (bM_Character_Setting_Finish == true && bM_Character_Battle_Start == false)
             StartCoroutine(Running_Phase());
 
- 
+
     }
 
     IEnumerator Running_Phase()
@@ -108,12 +108,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Character_Battle_Start = true;
         while (bM_Phase < 6)
         {
-            if(bM_Phase == 0)
-            {
-                
-            }
             Battle(bM_Phase, bM_Team1_Is_Preemitive);
 
+            yield return new WaitUntil(() => Check_Skill_Finish());
             yield return new WaitUntil(() => Check_Counter_Finish());
             Round_Finish();
             yield return new WaitForSeconds(2.0f);
@@ -214,6 +211,22 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Team1.character_Counter = false;
             Team1.character_is_Kill = 0;
         }
+
+        foreach (var team1 in bM_Character_Team2)
+        {
+            Character_Script Team1 = team1.GetComponent<Character_Script>();
+            Team1.character_Activate_Skill = false;
+            Team1.character_Counter = false;
+            Team1.character_is_Kill = 0;
+        }
+
+        bM_Round++;
+        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
+        if (bM_Round == 2)
+        {
+            bM_Phase++;
+            bM_Round = 0;
+        }
     }
     IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
@@ -242,6 +255,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             AlertMessage.SetActive(true);
             AlertMessage.GetComponent<AlertMessage>().Attack(attacker.GetComponent<Character_Script>().character_Team_Number, attacker.GetComponent<Character_Script>().character_Attack_Order);
             attacker.GetComponent<Character_Script>().character_Attack_Count--;
+
             SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
 
             yield return new WaitUntil(() => Check_Skill_Finish());
@@ -317,14 +331,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         Debug.Log("Phase " + bM_Phase + " Team1 남은체력 = " + bM_Remain_HP_Team1);
         Debug.Log("Phase " + bM_Phase + " Team2 남은체력 = " + bM_Remain_HP_Team2);
-
-        bM_Round++;
-        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
-        if (bM_Round == 2)
-        {
-            bM_Phase++;
-            bM_Round = 0;
-        }
     }
 
     void Calculate_Remain_HP() //남은 체력 계산

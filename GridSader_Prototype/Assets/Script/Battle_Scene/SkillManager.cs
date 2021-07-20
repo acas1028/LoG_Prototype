@@ -50,14 +50,16 @@ public class SkillManager : MonoBehaviour
         
     }
 
-    public void BeforeAttack(GameObject attacker,GameObject Damaged)
+    public void BeforeAttack(GameObject attacker,GameObject[] Damaged)
     {
-        if(attacker.GetComponent<Character_Script>().character_Skill == Character_Script.Skill.Attack_Confidence)
+        Character_Script ACS = attacker.GetComponent<Character_Script>();
+
+        if(ACS.character_Skill == Character_Script.Skill.Attack_Confidence)
         {
            StartCoroutine(Skill_Attack_Confidence(attacker));
         }
 
-        else if(attacker.GetComponent<Character_Script>().character_Skill == Character_Script.Skill.Balance_GbGH)
+        if(ACS.character_Skill == Character_Script.Skill.Balance_GbGH)
         {
             StartCoroutine(Skill_Balanced_GbGH(attacker));
         }
@@ -65,9 +67,16 @@ public class SkillManager : MonoBehaviour
 
     public void AfterAttack(GameObject attacker,GameObject[] Damaged)
     {
-        if(attacker.GetComponent<Character_Script>().character_Skill == Character_Script.Skill.Defense_Disarm)
+        Character_Script ACS = attacker.GetComponent<Character_Script>();
+
+        if(ACS.character_Skill == Character_Script.Skill.Defense_Disarm)
         {
-            StartCoroutine(Skill_Disarm(attacker, Damaged));
+            StartCoroutine(Skill_Defender_Disarm(attacker, Damaged));
+        }
+
+        if(ACS.character_Skill == Character_Script.Skill.Attack_Executioner)
+        {
+            StartCoroutine(Skill_Attack_Executioner(attacker));
         }
     }
 
@@ -102,7 +111,28 @@ public class SkillManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
     }
 
-    IEnumerator Skill_Disarm(GameObject attacker,GameObject[] Damaged)
+    IEnumerator Skill_Attack_Executioner(GameObject attacker)
+    {
+        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        ACS.character_Activate_Skill = true;
+
+        if (ACS.character_is_Kill == 0)
+        {
+            ACS.character_Activate_Skill = false;
+            yield break;
+        }
+            
+        yield return new WaitForSeconds(2.0f);
+
+        ACS.character_Attack_Count++;
+        ACS.character_is_Kill = 0;
+        ACS.character_Activate_Skill = false;
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Executioner(attacker);
+    }
+
+    IEnumerator Skill_Defender_Disarm(GameObject attacker,GameObject[] Damaged)
     {
         Character_Script ACS = attacker.GetComponent<Character_Script>();
         ACS.character_Activate_Skill = true;

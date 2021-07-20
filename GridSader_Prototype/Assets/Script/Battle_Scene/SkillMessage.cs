@@ -17,6 +17,19 @@ public class SkillMessage : MonoBehaviour
         
     }
 
+    public void Executioner(GameObject attacker)
+    {
+        StartCoroutine(CExecutioner(attacker));
+    }
+
+    IEnumerator CExecutioner(GameObject attacker)
+    {
+        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Attack_Order + "번 캐릭터 처형자 스킬 발동!";
+
+        yield return new WaitForSeconds(2.0f);
+        this.gameObject.SetActive(false);
+    }
     public void Disarm(GameObject attacker)
     {
         StartCoroutine(CDisarm(attacker));
