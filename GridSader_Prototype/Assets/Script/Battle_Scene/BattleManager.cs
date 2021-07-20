@@ -13,8 +13,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject AlertMessage;
     public GameObject DataSync;
 
-
-    public int bM_Phase { get; set; }
     public bool bM_Team1_Is_Preemitive { get; set; }
     public int bM_Remain_Character_Team1 { get; set; }
     public int bM_Remain_Character_Team2 { get; set; }
@@ -63,9 +61,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-
-        bM_Phase = 0;
-
         // 내가 방장일 때만 나는 선공이다.
         if (Is_Preemptive())
             bM_Team1_Is_Preemitive = true;
@@ -116,9 +111,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
     IEnumerator Running_Phase()
     {
         bM_Character_Battle_Start = true;
-        while (bM_Phase < 6)
+        while (bM_Round < 11)
         {
-            Battle(bM_Phase, bM_Team1_Is_Preemitive);
+            Battle(bM_Round);
 
             yield return new WaitUntil(() => Check_Skill_Finish());
             yield return new WaitUntil(() => Check_Counter_Finish());
@@ -157,6 +152,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
       
             if (Team2CS.character_HP != 0)
                 dummy++;
+
+            if (bM_Team1_Is_Preemitive)
+                Team2CS.character_Attack_Order++;
+            else
+                Team1CS.character_Attack_Order++;
         }
 
         if (dummy == 10)
@@ -231,12 +231,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         bM_Round++;
-        bM_Team1_Is_Preemitive = !bM_Team1_Is_Preemitive;
-        if (bM_Round == 2)
-        {
-            bM_Phase++;
-            bM_Round = 0;
-        }
     }
     IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
@@ -296,53 +290,48 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void Battle(int phase,bool team1_Is_Preemitive) // 선공,후공에 따라 배틀을 진행한다.
+    void Battle(int Round) // 선공,후공에 따라 배틀을 진행한다.
     {
-        if (team1_Is_Preemitive) // 선공 판별  bM_Round = 0;
+        
+        foreach(GameObject team1_Character in bM_Character_Team1)
         {
-            foreach(GameObject team1_Character in bM_Character_Team1)
+            if (team1_Character.GetComponent<Character_Script>().character_Attack_Order == Round)
             {
-                if (team1_Character.GetComponent<Character_Script>().character_Attack_Order == phase)
+                if (team1_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀1의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                 {
-                    if (team1_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀1의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
-                    {
-                        StartCoroutine(Character_Attack(team1_Character, bM_Character_Team2));
-                    }
-                    else
-                    {
-                        AlertMessage.SetActive(true);
-                        AlertMessage.GetComponent<AlertMessage>().CantAttack(1, phase);
-                    }
+                    StartCoroutine(Character_Attack(team1_Character, bM_Character_Team2));
                 }
-                team1_Character.GetComponent<Character_Script>().Debuging_Character();
+                else
+                {
+                    AlertMessage.SetActive(true);
+                    AlertMessage.GetComponent<AlertMessage>().CantAttack(1, Round);
+                }
             }
+            team1_Character.GetComponent<Character_Script>().Debuging_Character();
         }
-        else  // bM_Round = 1;
+        
+        foreach (GameObject team2_Character in bM_Character_Team2)
         {
-            foreach (GameObject team2_Character in bM_Character_Team2)
+            if (team2_Character.GetComponent<Character_Script>().character_Attack_Order == Round)
             {
-                if (team2_Character.GetComponent<Character_Script>().character_Attack_Order == phase)
+                if (team2_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀2의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                 {
-                    if (team2_Character.GetComponent<Character_Script>().character_Is_Allive) // 팀2의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
-                    {
-                        StartCoroutine(Character_Attack(team2_Character, bM_Character_Team1));
-                    }
-                    else
-                    {
-                        AlertMessage.SetActive(true);
-                        AlertMessage.GetComponent<AlertMessage>().CantAttack(2, phase);
-                    }
+                    StartCoroutine(Character_Attack(team2_Character, bM_Character_Team1));
                 }
-                team2_Character.GetComponent<Character_Script>().Debuging_Character();
+                else
+                {
+                    AlertMessage.SetActive(true);
+                    AlertMessage.GetComponent<AlertMessage>().CantAttack(2, Round);
+                }
             }
+            team2_Character.GetComponent<Character_Script>().Debuging_Character();
         }
+ 
 
         Calculate_Remain_HP();
         Calculate_Remain_Character();
         Destory_Red_Grid();
 
-        Debug.Log("Phase " + bM_Phase + " Team1 남은체력 = " + bM_Remain_HP_Team1);
-        Debug.Log("Phase " + bM_Phase + " Team2 남은체력 = " + bM_Remain_HP_Team2);
     }
 
     void Calculate_Remain_HP() //남은 체력 계산

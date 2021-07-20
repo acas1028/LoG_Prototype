@@ -20,11 +20,11 @@ C:/Users/acas1/Desktop/Team_LoG/LoG_Prototype/GridSader_Prototype
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-52657
+52181
 Successfully changed project path to: C:/Users/acas1/Desktop/Team_LoG/LoG_Prototype/GridSader_Prototype
 C:/Users/acas1/Desktop/Team_LoG/LoG_Prototype/GridSader_Prototype
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 52.90 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 67.54 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.7f1 (dd97f2c94397)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Resources/UnitySubsystems
@@ -56,50 +56,63 @@ Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Managed
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/etc'
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56860
+=======
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56196
+>>>>>>> Stashed changes
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003139 seconds.
+Registered in 0.003898 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 51.69 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 68.27 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.546 seconds
+- Completed reload, in  1.861 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.005291 seconds.
+Registered in 0.005079 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 57.25 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 95.57 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.344 seconds
+- Completed reload, in  1.706 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.08 seconds
-Refreshing native plugins compatible for Editor in 0.66 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.72 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2123 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.9 MB.
-System memory in use after: 96.8 MB.
+System memory in use before: 96.7 MB.
+System memory in use after: 96.6 MB.
 
 Unloading 30 unused Assets to reduce memory usage. Loaded Objects now: 2564.
-Total: 2.478000 ms (FindLiveObjects: 0.225700 ms CreateObjectMapping: 0.178700 ms MarkObjects: 1.935700 ms  DeleteObjects: 0.134600 ms)
+Total: 2.449400 ms (FindLiveObjects: 0.288400 ms CreateObjectMapping: 0.110000 ms MarkObjects: 1.915600 ms  DeleteObjects: 0.134100 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Scene/BattleScene.unity
-  artifactKey: Guid(5b0f02642d9e63244adeaa6ea7c5d87f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scene/BattleScene.unity using Guid(5b0f02642d9e63244adeaa6ea7c5d87f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd6e2e2a8296c40cee75cd7dab2e9043f') in 0.029146 seconds
-  Import took 0.034563 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.578595 seconds.
   path: Assets/Script/Battle_Scene/BattleManager.cs
   artifactKey: Guid(0c44ea7f71b08cd42bb1a5b5e82ab440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/Battle_Scene/BattleManager.cs using Guid(0c44ea7f71b08cd42bb1a5b5e82ab440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8797b83699050b351150f31812bd9a96') in 0.077881 seconds
+  Import took 0.083601 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 414.322766 seconds.
+  path: Assets/Script/Battle_Scene/BattleManager.cs
+  artifactKey: Guid(0c44ea7f71b08cd42bb1a5b5e82ab440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/Battle_Scene/BattleManager.cs using Guid(0c44ea7f71b08cd42bb1a5b5e82ab440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8a2f62476beff15d95de898b873af97') in 0.010979 seconds
+  Import took 0.018238 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.004102 seconds.
+  path: Assets/Script/Battle_Scene/BattleManager.cs
+  artifactKey: Guid(0c44ea7f71b08cd42bb1a5b5e82ab440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+<<<<<<< Updated upstream
 Start importing Assets/Script/Battle_Scene/BattleManager.cs using Guid(0c44ea7f71b08cd42bb1a5b5e82ab440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b05a6636a5ccb2fcf4bb5185ee08294') in 0.066526 seconds
   Import took 0.077392 seconds .
 =======
@@ -421,6 +434,10 @@ System memory in use after: 97.5 MB.
 
 Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2619.
 Total: 1.749500 ms (FindLiveObjects: 0.216200 ms CreateObjectMapping: 0.106100 ms MarkObjects: 1.413500 ms  DeleteObjects: 0.012900 ms)
+>>>>>>> Stashed changes
+=======
+Start importing Assets/Script/Battle_Scene/BattleManager.cs using Guid(0c44ea7f71b08cd42bb1a5b5e82ab440) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8a2f62476beff15d95de898b873af97') in 0.004464 seconds
+  Import took 0.011334 seconds .
 >>>>>>> Stashed changes
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

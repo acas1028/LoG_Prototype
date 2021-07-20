@@ -85,8 +85,8 @@ public class Showing_Hp : MonoBehaviour
         Debug.Log(BattleManager.Instance.bM_Character_Team1[0]);
         Debug.Log(BattleManager.Instance.bM_Character_Team1[1]);
 
-        Debug.Log(BattleManager.Instance.bM_Phase);
-        if (BattleManager.Instance.bM_Phase >= 1)
+        Debug.Log(BattleManager.Instance.bM_Round);
+        if (BattleManager.Instance.bM_Round >= 1)
         {
             original_Hp();
 
