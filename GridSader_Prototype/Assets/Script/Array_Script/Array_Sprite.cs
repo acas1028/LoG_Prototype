@@ -23,7 +23,7 @@ public class Array_Sprite : MonoBehaviour
 
     public void Character_Sprite_Setting()
     {
-        Character_ID = this.gameObject.GetComponent<Character_Script>().character_ID;
+        Character_ID = this.gameObject.GetComponent<Character>().character_ID;
         this.gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID - 1];
     }
 }

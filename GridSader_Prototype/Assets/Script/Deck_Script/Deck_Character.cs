@@ -19,8 +19,8 @@ public class Deck_Character : MonoBehaviour
 
     public void Get_Deck_Character(int num)
     {
-        this.gameObject.GetComponent<Character_Script>().Character_Setting(num);
-        this.gameObject.GetComponent<Character_Script>().Debuging_Character();
+        this.gameObject.GetComponent<Character>().Character_Setting(num);
+        this.gameObject.GetComponent<Character>().Debuging_Character();
     }
     
 }

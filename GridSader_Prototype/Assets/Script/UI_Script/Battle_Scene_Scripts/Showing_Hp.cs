@@ -31,13 +31,13 @@ public class Showing_Hp : MonoBehaviour
     {
         if (Team_count == 1)
         {
-            hp = BattleManager.Instance.bM_Character_Team1[character_count].GetComponent<Character_Script>().character_HP;
+            hp = BattleManager.Instance.bM_Character_Team1[character_count].GetComponent<Character>().character_HP;
             hp_bar.GetComponent<Slider>().value = hp;
         }
 
         else
         {
-            hp = BattleManager.Instance.bM_Character_Team2[character_count].GetComponent<Character_Script>().character_HP;
+            hp = BattleManager.Instance.bM_Character_Team2[character_count].GetComponent<Character>().character_HP;
             hp_bar.GetComponent<Slider>().value = hp;
         }
     }

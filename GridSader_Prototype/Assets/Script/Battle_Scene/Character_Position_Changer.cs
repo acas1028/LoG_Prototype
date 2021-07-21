@@ -28,10 +28,10 @@ public class Character_Position_Changer : MonoBehaviour
         {
             for (int j = 0; j < 9; j++) // character_Num_Of_Grid의 1번부터 9번까지, 즉 1번 그리드~ 9번 그리드까지
             {
-                if (BattleManager.Instance.bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid == (j+1)) // 배틀매니저의 캐릭터 그리드 값이 배열과 일치하면
+                if (BattleManager.Instance.bM_Character_Team1[i].GetComponent<Character>().character_Num_Of_Grid == (j+1)) // 배틀매니저의 캐릭터 그리드 값이 배열과 일치하면
                 {
                     BattleManager.Instance.bM_Character_Team1[i].transform.position = Team1Map[j].transform.position; // 캐릭터의 위치를 위치배열로 이동
-                    //Debug.Log("Grid_Position"+ BattleManager.Instance.bM_Character_Team1[i].GetComponent<Character_Script>().character_Num_Of_Grid);
+                    //Debug.Log("Grid_Position"+ BattleManager.Instance.bM_Character_Team1[i].GetComponent<Character_Action>().character_Num_Of_Grid);
                 }
             }
         }
@@ -39,7 +39,7 @@ public class Character_Position_Changer : MonoBehaviour
         {
             for (int j = 0; j < 9; j++)
             {
-                if (BattleManager.Instance.bM_Character_Team2[i].GetComponent<Character_Script>().character_Num_Of_Grid == (j+1))
+                if (BattleManager.Instance.bM_Character_Team2[i].GetComponent<Character>().character_Num_Of_Grid == (j+1))
                 {
                     BattleManager.Instance.bM_Character_Team2[i].transform.position = Team2Map[j].transform.position;
                 }

@@ -188,7 +188,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
         else if (arrayPhase % 2 == 0)
         {
-            roomStatusText.text = "#" + (arrayPhase + 1) + " 선공 " + firstPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            roomStatusText.text = "#" + (arrayPhase + 1) + " 선공 <color=#FF3200>" + firstPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
             if (IsPlayerPreemptive())
                 arrCompleteButton.gameObject.SetActive(true);
             else
@@ -196,7 +196,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
         else if (arrayPhase % 2 == 1)
         {
-            roomStatusText.text = "#" + (arrayPhase + 1) + " 후공 " + secondPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            roomStatusText.text = "#" + (arrayPhase + 1) + " 후공 <color=blue>" + secondPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
             if (IsPlayerPreemptive())
                 arrCompleteButton.gameObject.SetActive(false);
             else

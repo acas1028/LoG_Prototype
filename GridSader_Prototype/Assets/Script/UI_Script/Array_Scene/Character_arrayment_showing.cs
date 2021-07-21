@@ -49,9 +49,9 @@ public class Character_arrayment_showing : MonoBehaviour
 
         if (Character_List.Count == 1)
         {
-            for (int i = 0; i < Character_List[0].GetComponent<Character_Script>().character_Attack_Range.Length; i++)
+            for (int i = 0; i < Character_List[0].GetComponent<Character>().character_Attack_Range.Length; i++)
             {
-                if (Character_List[0].GetComponent<Character_Script>().character_Attack_Range[i] == true)
+                if (Character_List[0].GetComponent<Character>().character_Attack_Range[i] == true)
                 {
                     Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().color = red_color;
                 }
@@ -60,9 +60,9 @@ public class Character_arrayment_showing : MonoBehaviour
 
         else if (Character_List.Count == 2)
         {
-            for (int i = 0; i < Character_List[1].GetComponent<Character_Script>().character_Attack_Range.Length; i++)
+            for (int i = 0; i < Character_List[1].GetComponent<Character>().character_Attack_Range.Length; i++)
             {
-                if (Character_List[1].GetComponent<Character_Script>().character_Attack_Range[i] == true)
+                if (Character_List[1].GetComponent<Character>().character_Attack_Range[i] == true)
                 {
                     if (Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().color == red_color)
                     {

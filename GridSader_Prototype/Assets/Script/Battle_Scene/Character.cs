@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class Character_Script : MonoBehaviour
+// 캐릭터의 스탯을 가지고 있는 클래스
+public class Character : MonoBehaviour
 {
     public enum Type
     {
@@ -47,10 +46,9 @@ public class Character_Script : MonoBehaviour
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
 
-    List<Dictionary<string, object>> character_data; // 데이터 저장소
+    protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
     // Debug
-
     public Type Debug_Type;
     public Skill Debug_Skill;
     public bool[] Debug_character_Attack_Range;
@@ -59,23 +57,21 @@ public class Character_Script : MonoBehaviour
     public int Debug_Character_HP;
     public int Debug_Character_Attack_order;
 
-    // Debug
     // Start is called before the first frame update
     void Start()
     {
-        Debug_character_Attack_Range = new bool[9];
         Character_Reset();
+        Debug_character_Attack_Range = new bool[9];
     }
 
     // Update is called once per frame
     void Update()
     {
- 
+        
     }
 
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.
     {
-
         character_ID = 0;
         character_Type = Type.Attacker;
         character_Skill = Skill.Attack_Confidence;
@@ -100,117 +96,20 @@ public class Character_Script : MonoBehaviour
         character_is_Kill = 0;
     }
 
-    IEnumerator SetCharacterRed()
+    public void Debuging_Character()
     {
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-
-        yield return new WaitForSeconds(2.0f);
-
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-
-        yield break;
-    }
-
-    public void Character_Attack(GameObject enemy_Character) // 캐릭터 스크립트 내에 있는 공격 함수.
-    {
-        // 적 캐릭터를 받아와서, 그 캐릭터의 정보에 접근하여 받을 데미지에 공격력 만큼을 저장시킴.
-        StartCoroutine(SetCharacterRed());
-
-        Character_Script enemy_Character_Script;
-        enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
-
-        int damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
-        enemy_Character_Script.Character_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
-        character_Buffed_Attack = 0;
-    }
-
-    public void Character_Damaged(GameObject attacker, int damage) // 피격 함수
-    {
-        // 받을 데미지를 다시 계산.
-
-        Character_Counter();
-
-        int final_damage = (damage * (100 + character_Buffed_Damaged)) / 100;
-
-        character_HP -= final_damage;
-
-        if(character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
-        {
-            character_HP = 0;
-            Character_Dead(attacker);
-        }
-        character_Buffed_Damaged = 0;
-    }
-
-    public void Character_Counter_Attack(GameObject enemy_Character) //카운터 발동
-    {
-        StartCoroutine(SetCharacterRed());
-
-        Character_Script enemy_Character_Script;
-        enemy_Character_Script = enemy_Character.GetComponent<Character_Script>();
-
-        int damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
-        enemy_Character_Script.Character_Counter_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
-
-        character_Counter = false;
-    }
-
-    public void Character_Counter_Damaged(GameObject attacker, int damage) // 카운터 발동
-    {
-        int final_damage = (damage * (100 + character_Buffed_Damaged)) / 100;
-
-        character_HP -= final_damage;
-
-        if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
-        {
-            character_HP = 0;
-            Character_Dead(attacker);
-        }
-    }
-
-    public void Character_Counter()
-    {
-        character_Counter = true;
-    }
-
-    public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
-    {
-        Debug.Log(character_Num_Of_Grid + " is Dead");
-        attacker.GetComponent<Character_Script>().character_is_Kill++;
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = null;
-        character_Is_Allive = false;
-        character_Counter = false;
-    }
-
-    public void Character_Setting(int num) // 데이터 세팅
-    {
-        //데이터 세팅.
-
-        // 혹시나 사용법 궁금할까봐 남기는 주석
-        // character_data 에 모든 데이터들이 저장되고,
-        // 그 데이터의 사용법은 이러하다
-        // character_data[원하는 행(가로줄)]["원하는 변수"]
-        // 쓸일없기를 바람. 어차피 초기화용도임.
-
-        character_data = CSVReader.Read("Character_DB");
-
-        Character_Reset();
-
-
-        character_Is_Allive = true;
-        character_ID = (int)character_data[num]["ID"];
-        setting_type(num);
-        setting_skill(num);
-        character_HP = (int)character_data[num]["HP"];
-        character_AP = (int)character_data[num]["AP"];
-        character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
-        character_Attack_Range = new bool[9];
-        setting_Attack_Range(num);
+        Debug_Skill = character_Skill;
+        Debug_Type = character_Type;
+        Debug_Character_HP = character_HP;
+        Debug_character_Attack_Range = character_Attack_Range;
+        Debug_character_Grid_Number = character_Num_Of_Grid;
+        Debug_Character_Damage = character_Attack_Damage;
+        Debug_Character_Attack_order = character_Attack_Order;
     }
 
     void setting_type(int num)
     {
-        if((string)character_data[num]["Type"] == "공격형")
+        if ((string)character_data[num]["Type"] == "공격형")
         {
             character_Type = Type.Attacker;
         }
@@ -227,10 +126,10 @@ public class Character_Script : MonoBehaviour
         Debug.Log(character_data[num]["Type"]);
         Debug.Log(character_Type);
     }
-    
+
     void setting_skill(int num)
     {
-        if((string)character_data[num]["Skill"] == "결속")
+        if ((string)character_data[num]["Skill"] == "결속")
         {
             character_Skill = Skill.Balance_Union;
         }
@@ -261,7 +160,7 @@ public class Character_Script : MonoBehaviour
         int number = (int)character_data[num]["Attack_Range"];
         int arrayNumber = 0;
 
-        while(number != 0)
+        while (number != 0)
         {
             if (number % 10 == 1)
                 character_Attack_Range[arrayNumber] = false;
@@ -272,20 +171,35 @@ public class Character_Script : MonoBehaviour
         }
     }
 
-    public void Debuging_Character()
+    public void Character_Setting(int num) // 데이터 세팅
     {
-        Debug_Skill = character_Skill;
-        Debug_Type = character_Type;
-        Debug_Character_HP = character_HP;
-        Debug_character_Attack_Range = character_Attack_Range;
-        Debug_character_Grid_Number = character_Num_Of_Grid;
-        Debug_Character_Damage = character_Attack_Damage;
-        Debug_Character_Attack_order = character_Attack_Order;
+        //데이터 세팅.
+
+        // 혹시나 사용법 궁금할까봐 남기는 주석
+        // character_data 에 모든 데이터들이 저장되고,
+        // 그 데이터의 사용법은 이러하다
+        // character_data[원하는 행(가로줄)]["원하는 변수"]
+        // 쓸일없기를 바람. 어차피 초기화용도임.
+
+        character_data = CSVReader.Read("Character_DB");
+
+        Character_Reset();
+
+
+        character_Is_Allive = true;
+        character_ID = (int)character_data[num]["ID"];
+        setting_type(num);
+        setting_skill(num);
+        character_HP = (int)character_data[num]["HP"];
+        character_AP = (int)character_data[num]["AP"];
+        character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
+        character_Attack_Range = new bool[9];
+        setting_Attack_Range(num);
     }
 
     public void Copy_Character_Stat(GameObject copyObject) // 캐릭터스크립트 내의 변수들을 복사하는 함수
     {
-        Character_Script copy = copyObject.GetComponent<Character_Script>();
+        Character copy = copyObject.GetComponent<Character>();
         character_Skill = copy.character_Skill;
         character_Type = copy.character_Type;
         character_ID = copy.character_ID;
@@ -293,7 +207,7 @@ public class Character_Script : MonoBehaviour
         character_HP = copy.character_HP;
         character_AP = copy.character_AP;
         character_Attack_Damage = copy.character_Attack_Damage;
-        for(int i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++)
         {
             character_Attack_Range[i] = copy.character_Attack_Range[i];
         }

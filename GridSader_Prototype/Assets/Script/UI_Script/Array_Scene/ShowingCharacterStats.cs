@@ -44,13 +44,13 @@ public class ShowingCharacterStats : MonoBehaviour
 
     public void Character_Showing_Stats(int num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
     {
-        prefabCharacter.GetComponent<Character_Script>().Character_Setting(num);
-        attack_Damage.text = prefabCharacter.GetComponent<Character_Script>().character_Attack_Damage.ToString();
-        health_Point.text = prefabCharacter.GetComponent<Character_Script>().character_HP.ToString();
+        prefabCharacter.GetComponent<Character_Action>().Character_Setting(num);
+        attack_Damage.text = prefabCharacter.GetComponent<Character>().character_Attack_Damage.ToString();
+        health_Point.text = prefabCharacter.GetComponent<Character>().character_HP.ToString();
 
-        for(int i=0; i<prefabCharacter.GetComponent<Character_Script>().character_Attack_Range.Length; i++)
+        for(int i=0; i<prefabCharacter.GetComponent<Character>().character_Attack_Range.Length; i++)
         {
-            if(prefabCharacter.GetComponent<Character_Script>().character_Attack_Range[i]== true)
+            if(prefabCharacter.GetComponent<Character>().character_Attack_Range[i]== true)
             {
                 attack_Grid_Tile[i].GetComponent<Image>().color = Color.red;
             }

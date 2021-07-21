@@ -14,7 +14,7 @@ public class Deck_Manager : MonoBehaviour
     {
         for (int i = 0; i < D_Inventory.Count; i++)
         {
-            D_Inventory[i].GetComponent<Character_Script>().character_ID = 0;
+            D_Inventory[i].GetComponent<Character>().character_ID = 0;
         }
     }
 

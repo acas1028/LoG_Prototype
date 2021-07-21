@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Remain_Character_Script : MonoBehaviour
+public class Remain_Character_Action : MonoBehaviour
 {
 
     public int TeamNumber;

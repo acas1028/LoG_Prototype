@@ -52,14 +52,14 @@ public class SkillManager : MonoBehaviour
 
     public void BeforeAttack(GameObject attacker,GameObject[] Damaged)
     {
-        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        Character ACS = attacker.GetComponent<Character>();
 
-        if(ACS.character_Skill == Character_Script.Skill.Attack_Confidence)
+        if(ACS.character_Skill == Character.Skill.Attack_Confidence)
         {
            StartCoroutine(Skill_Attack_Confidence(attacker));
         }
 
-        if(ACS.character_Skill == Character_Script.Skill.Balance_GbGH)
+        if(ACS.character_Skill == Character.Skill.Balance_GbGH)
         {
             StartCoroutine(Skill_Balanced_GbGH(attacker));
         }
@@ -67,14 +67,14 @@ public class SkillManager : MonoBehaviour
 
     public void AfterAttack(GameObject attacker,GameObject[] Damaged)
     {
-        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        Character ACS = attacker.GetComponent<Character>();
 
-        if(ACS.character_Skill == Character_Script.Skill.Defense_Disarm)
+        if(ACS.character_Skill == Character.Skill.Defense_Disarm)
         {
             StartCoroutine(Skill_Defender_Disarm(attacker, Damaged));
         }
 
-        if(ACS.character_Skill == Character_Script.Skill.Attack_Executioner)
+        if(ACS.character_Skill == Character.Skill.Attack_Executioner)
         {
             StartCoroutine(Skill_Attack_Executioner(attacker));
         }
@@ -113,7 +113,7 @@ public class SkillManager : MonoBehaviour
 
     IEnumerator Skill_Attack_Executioner(GameObject attacker)
     {
-        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        Character ACS = attacker.GetComponent<Character>();
         ACS.character_Activate_Skill = true;
 
         if (ACS.character_is_Kill == 0)
@@ -134,7 +134,7 @@ public class SkillManager : MonoBehaviour
 
     IEnumerator Skill_Defender_Disarm(GameObject attacker,GameObject[] Damaged)
     {
-        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        Character ACS = attacker.GetComponent<Character>();
         ACS.character_Activate_Skill = true;
 
         int dum = 0;
@@ -144,7 +144,7 @@ public class SkillManager : MonoBehaviour
             {
                 foreach (var damaged in Damaged)
                 {
-                    if (damaged.GetComponent<Character_Script>().character_Num_Of_Grid == i + 1)
+                    if (damaged.GetComponent<Character>().character_Num_Of_Grid == i + 1)
                     { 
                         dum++;
                     }
@@ -167,9 +167,9 @@ public class SkillManager : MonoBehaviour
             {
                 foreach (var damaged in Damaged)
                 {
-                    if (damaged.GetComponent<Character_Script>().character_Num_Of_Grid == i + 1)
+                    if (damaged.GetComponent<Character>().character_Num_Of_Grid == i + 1)
                     {
-                        damaged.GetComponent<Character_Script>().character_Attack_Damage -= 40;
+                        damaged.GetComponent<Character>().character_Attack_Damage -= 40;
                     }
                 }
             }

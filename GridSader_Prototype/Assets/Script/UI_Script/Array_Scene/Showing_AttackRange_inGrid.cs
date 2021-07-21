@@ -24,7 +24,7 @@ public class Showing_AttackRange_inGrid : MonoBehaviour
         {
             if (null_Character[i].tag != "Null_Character")
             {
-                null_Character[i].GetComponent<Character_Script>().Copy_Character_Stat(Temp_Character);
+                null_Character[i].GetComponent<Character>().Copy_Character_Stat(Temp_Character);
             }
 
         }
@@ -34,9 +34,9 @@ public class Showing_AttackRange_inGrid : MonoBehaviour
     {
         if (Temp_Character!=null)
         {
-            for (int i = 0; i < Temp_Character.GetComponent<Character_Script>().character_Attack_Range.Length; i++)
+            for (int i = 0; i < Temp_Character.GetComponent<Character>().character_Attack_Range.Length; i++)
             {
-                if (Temp_Character.GetComponent<Character_Script>().character_Attack_Range[i] == true)
+                if (Temp_Character.GetComponent<Character>().character_Attack_Range[i] == true)
                 {
                     Character_Attack_range[i]++;
                 }

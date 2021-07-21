@@ -56,22 +56,22 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         Debug.Log("<color=yellow>DataSync 호출</color>");
 
         bool result = false;
-        Character_Script cs;
+        Character c;
         arrayed_Data.team1 = passData;
 
         Hashtable team1_table = new Hashtable();
 
         for (int i = 0; i < 5; i++)
         {
-            cs = arrayed_Data.team1[i].GetComponent<Character_Script>();
-            team1_table.Add((i + 1) + "_ID", cs.character_ID);
-            team1_table.Add((i + 1) + "_IsAlive", cs.character_Is_Allive);
-            team1_table.Add((i + 1) + "_HP", cs.character_HP);
-            team1_table.Add((i + 1) + "_AP", cs.character_AP);
-            team1_table.Add((i + 1) + "_AttackDamage", cs.character_Attack_Damage);
-            team1_table.Add((i + 1) + "_AttackRange", cs.character_Attack_Range);
-            team1_table.Add((i + 1) + "_GridNumber", cs.character_Num_Of_Grid);
-            team1_table.Add((i + 1) + "_AttackOrder", cs.character_Attack_Order);
+            c = arrayed_Data.team1[i].GetComponent<Character>();
+            team1_table.Add((i + 1) + "_ID", c.character_ID);
+            team1_table.Add((i + 1) + "_IsAlive", c.character_Is_Allive);
+            team1_table.Add((i + 1) + "_HP", c.character_HP);
+            team1_table.Add((i + 1) + "_AP", c.character_AP);
+            team1_table.Add((i + 1) + "_AttackDamage", c.character_Attack_Damage);
+            team1_table.Add((i + 1) + "_AttackRange", c.character_Attack_Range);
+            team1_table.Add((i + 1) + "_GridNumber", c.character_Num_Of_Grid);
+            team1_table.Add((i + 1) + "_AttackOrder", c.character_Attack_Order);
         }
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
@@ -81,46 +81,46 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
     public void SetArrayPhaseInOffline()
     {
-        Character_Script cs;
+        Character c;
         switch (roomManager.GetArrayPhase())
         {
             case (int)ArrayPhase.SECOND12:
-                cs = arrayed_Data.team2[0].GetComponent<Character_Script>();
+                c = arrayed_Data.team2[0].GetComponent<Character>();
 
-                cs.Character_Setting(1);
-                cs.character_Num_Of_Grid = gridNumSet[0];
-                cs.character_Attack_Order = 1;
-                cs.Debuging_Character();
+                c.Character_Setting(1);
+                c.character_Num_Of_Grid = gridNumSet[0];
+                c.character_Attack_Order = 1;
+                c.Debuging_Character();
 
-                cs = arrayed_Data.team2[1].GetComponent<Character_Script>();
+                c = arrayed_Data.team2[1].GetComponent<Character>();
 
-                cs.Character_Setting(2);
-                cs.character_Num_Of_Grid = gridNumSet[1];
-                cs.character_Attack_Order = 2;
-                cs.Debuging_Character();
+                c.Character_Setting(2);
+                c.character_Num_Of_Grid = gridNumSet[1];
+                c.character_Attack_Order = 2;
+                c.Debuging_Character();
                 break;
             case (int)ArrayPhase.SECOND34:
-                cs = arrayed_Data.team2[2].GetComponent<Character_Script>();
+                c = arrayed_Data.team2[2].GetComponent<Character>();
 
-                cs.Character_Setting(3);
-                cs.character_Num_Of_Grid = gridNumSet[2];
-                cs.character_Attack_Order = 3;
-                cs.Debuging_Character();
+                c.Character_Setting(3);
+                c.character_Num_Of_Grid = gridNumSet[2];
+                c.character_Attack_Order = 3;
+                c.Debuging_Character();
 
-                cs = arrayed_Data.team2[3].GetComponent<Character_Script>();
+                c = arrayed_Data.team2[3].GetComponent<Character>();
 
-                cs.Character_Setting(4);
-                cs.character_Num_Of_Grid = gridNumSet[3];
-                cs.character_Attack_Order = 4;
-                cs.Debuging_Character();
+                c.Character_Setting(4);
+                c.character_Num_Of_Grid = gridNumSet[3];
+                c.character_Attack_Order = 4;
+                c.Debuging_Character();
                 break;
             case (int)ArrayPhase.SECOND5:
-                cs = arrayed_Data.team2[4].GetComponent<Character_Script>();
+                c = arrayed_Data.team2[4].GetComponent<Character>();
 
-                cs.Character_Setting(5);
-                cs.character_Num_Of_Grid = gridNumSet[4];
-                cs.character_Attack_Order = 5;
-                cs.Debuging_Character();
+                c.Character_Setting(5);
+                c.character_Num_Of_Grid = gridNumSet[4];
+                c.character_Attack_Order = 5;
+                c.Debuging_Character();
                 break;
             default:
                 break;
@@ -156,15 +156,15 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_attackRange;
         object o_gridNumber;
         object o_attackOrder;
-        Character_Script cs;
+        Character c;
 
         for (int i = 0; i < 5; i++)
         {
-            // 서버에 있는 Team2의 Character_Script 정보를 여기 team2에 저장하는 과정
+            // 서버에 있는 Team2의 Character_Action 정보를 여기 team2에 저장하는 과정
 
             // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
-            cs = arrayed_Data.team2[i].GetComponent<Character_Script>();
-            if (!cs)
+            c = arrayed_Data.team2[i].GetComponent<Character>();
+            if (!c)
                 return;
 
             targetPlayer.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
@@ -176,16 +176,16 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             targetPlayer.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
             targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
 
-            cs.character_ID = (int)o_id;
-            cs.character_Is_Allive = (bool)o_isAlive;
-            cs.character_HP = (int)o_hp;
-            cs.character_AP = (int)o_ap;
-            cs.character_Attack_Damage = (int)o_attackDamage;
-            cs.character_Attack_Range = (bool[])o_attackRange;
-            cs.character_Num_Of_Grid = (int)o_gridNumber;
-            cs.character_Attack_Order = (int)o_attackOrder;
+            c.character_ID = (int)o_id;
+            c.character_Is_Allive = (bool)o_isAlive;
+            c.character_HP = (int)o_hp;
+            c.character_AP = (int)o_ap;
+            c.character_Attack_Damage = (int)o_attackDamage;
+            c.character_Attack_Range = (bool[])o_attackRange;
+            c.character_Num_Of_Grid = (int)o_gridNumber;
+            c.character_Attack_Order = (int)o_attackOrder;
 
-            cs.Debuging_Character();
+            c.Debuging_Character();
         }
     }
     #endregion

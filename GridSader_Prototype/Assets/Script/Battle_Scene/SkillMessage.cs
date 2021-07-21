@@ -24,7 +24,7 @@ public class SkillMessage : MonoBehaviour
 
     IEnumerator CExecutioner(GameObject attacker)
     {
-        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        Character ACS = attacker.GetComponent<Character>();
         this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Attack_Order + "번 캐릭터 처형자 스킬 발동!";
 
         yield return new WaitForSeconds(2.0f);
@@ -37,7 +37,7 @@ public class SkillMessage : MonoBehaviour
 
     IEnumerator CDisarm(GameObject attacker)
     {
-        Character_Script ACS = attacker.GetComponent<Character_Script>();
+        Character ACS = attacker.GetComponent<Character>();
         this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Attack_Order + "번 캐릭터 무장해제 스킬 발동!";
 
         yield return new WaitForSeconds(2.0f);

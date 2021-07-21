@@ -20,12 +20,12 @@ public class Arrayed_Data : MonoBehaviour
 
         for (int i = 0; i < team1.Length; i++)
         {
-            team1[i].GetComponent<Character_Script>().Character_Reset();
+            team1[i].GetComponent<Character>().Character_Reset();
         }
 
         for (int i = 0; i < team2.Length; i++)
         {
-            team2[i].GetComponent<Character_Script>().Character_Reset();
+            team2[i].GetComponent<Character>().Character_Reset();
         }
     }
 }
