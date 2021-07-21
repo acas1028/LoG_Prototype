@@ -107,7 +107,7 @@ public class Character : MonoBehaviour
         Debug_Character_Attack_order = character_Attack_Order;
     }
 
-    void setting_type(int num)
+    protected void setting_type(int num)
     {
         if ((string)character_data[num]["Type"] == "공격형")
         {
@@ -127,7 +127,7 @@ public class Character : MonoBehaviour
         Debug.Log(character_Type);
     }
 
-    void setting_skill(int num)
+    protected void setting_skill(int num)
     {
         if ((string)character_data[num]["Skill"] == "결속")
         {
@@ -155,7 +155,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    void setting_Attack_Range(int num)
+    protected void setting_Attack_Range(int num)
     {
         int number = (int)character_data[num]["Attack_Range"];
         int arrayNumber = 0;

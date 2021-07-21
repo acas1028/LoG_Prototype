@@ -11,7 +11,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject[] bM_Character_Team2;
     public GameObject Character_Prefab;
     public GameObject AlertMessage;
-    public GameObject DataSync;
 
     public bool bM_Team1_Is_Preemitive { get; set; }
     public int bM_Remain_Character_Team1 { get; set; }
@@ -126,12 +125,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
     void BM_Character_Setting()
     {
         int dummy = 0;
-        DataSync = GameObject.FindGameObjectWithTag("Character_Sync");
+        Arrayed_Data DataSync = Arrayed_Data.instance;
+        if (DataSync == null)
+            Debug.LogError("Arrayed_Data 인스턴스가 없습니다.");
 
         for (int i = 0; i < 5; i++)
         {
             Character Team1CS = bM_Character_Team1[i].GetComponent<Character>();
-            GameObject Team1Sync = DataSync.GetComponent<Arrayed_Data>().team1[i];
+            GameObject Team1Sync = DataSync.team1[i];
             Team1CS.Copy_Character_Stat(Team1Sync);
             Team1CS.character_Team_Number = 1;
             Team1CS.Debuging_Character();
@@ -142,7 +143,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 dummy++;
       
             Character Team2CS = bM_Character_Team2[i].GetComponent<Character>();
-            GameObject Team2Sync = DataSync.GetComponent<Arrayed_Data>().team2[i];
+            GameObject Team2Sync = DataSync.team2[i];
             Team2CS.Copy_Character_Stat(Team2Sync);
             Team2CS.character_Num_Of_Grid = Reverse_Enemy(Team2CS.character_Num_Of_Grid);
             Team2CS.character_Attack_Range = Enemy_AttackRange_Change(Team2CS);

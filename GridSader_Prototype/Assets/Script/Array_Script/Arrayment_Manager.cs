@@ -33,7 +33,6 @@ public class Arrayment_Manager: MonoBehaviour
     private GameObject Cancle_Character;
     public ArrRoomManager arrRoomManager;
     public ArrData_Sync arrData_Sync;
-    public Arrayed_Data arrayed_Data;
 
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
@@ -175,8 +174,8 @@ public class Arrayment_Manager: MonoBehaviour
                         if (Ready_Array == true)
                         {
                             Order[0].GetComponent<Character>().character_Attack_Order = 1;
-                            arrayed_Data.team1[0].GetComponent<Character>().Copy_Character_Stat(Order[0]);
-                            arrayed_Data.team1[0].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[0].GetComponent<Character>().Copy_Character_Stat(Order[0]);
+                            Arrayed_Data.instance.team1[0].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -189,17 +188,17 @@ public class Arrayment_Manager: MonoBehaviour
                     if (PhotonNetwork.OfflineMode)
                         arrData_Sync.SetArrayPhaseInOffline();
                     my_turn = false;
-                    if(arrayed_Data.team2[0].GetComponent<Character>().character_Num_Of_Grid!=0)
+                    if(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid!=0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[0].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[0].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
-                    if (arrayed_Data.team2[1].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[1].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[1].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
@@ -223,10 +222,10 @@ public class Arrayment_Manager: MonoBehaviour
                         {
                             Order[1].GetComponent<Character>().character_Attack_Order = 2;
                             Order[2].GetComponent<Character>().character_Attack_Order = 3;
-                            arrayed_Data.team1[1].GetComponent<Character>().Copy_Character_Stat(Order[1]);
-                            arrayed_Data.team1[1].GetComponent<Character>().Debuging_Character();
-                            arrayed_Data.team1[2].GetComponent<Character>().Copy_Character_Stat(Order[2]);
-                            arrayed_Data.team1[2].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[1].GetComponent<Character>().Copy_Character_Stat(Order[1]);
+                            Arrayed_Data.instance.team1[1].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[2].GetComponent<Character>().Copy_Character_Stat(Order[2]);
+                            Arrayed_Data.instance.team1[2].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -239,17 +238,17 @@ public class Arrayment_Manager: MonoBehaviour
                     if (PhotonNetwork.OfflineMode)
                         arrData_Sync.SetArrayPhaseInOffline();
                     my_turn = false;
-                    if (arrayed_Data.team2[2].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[2].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[2].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
-                    if (arrayed_Data.team2[3].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[3].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[3].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
@@ -272,10 +271,10 @@ public class Arrayment_Manager: MonoBehaviour
                         {
                             Order[3].GetComponent<Character>().character_Attack_Order = 4;
                             Order[4].GetComponent<Character>().character_Attack_Order = 5;
-                            arrayed_Data.team1[3].GetComponent<Character>().Copy_Character_Stat(Order[3]);
-                            arrayed_Data.team1[3].GetComponent<Character>().Debuging_Character();
-                            arrayed_Data.team1[4].GetComponent<Character>().Copy_Character_Stat(Order[4]);
-                            arrayed_Data.team1[4].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[3].GetComponent<Character>().Copy_Character_Stat(Order[3]);
+                            Arrayed_Data.instance.team1[3].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[4].GetComponent<Character>().Copy_Character_Stat(Order[4]);
+                            Arrayed_Data.instance.team1[4].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -288,10 +287,10 @@ public class Arrayment_Manager: MonoBehaviour
                     if (PhotonNetwork.OfflineMode)
                         arrData_Sync.SetArrayPhaseInOffline();
                     my_turn = false;
-                    if (arrayed_Data.team2[4].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[4].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[4].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
@@ -304,10 +303,10 @@ public class Arrayment_Manager: MonoBehaviour
             {
                 case (int)ArrayPhase.FIRST1:
                     my_turn = false;
-                    if (arrayed_Data.team2[0].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[0].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[0].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
@@ -330,10 +329,10 @@ public class Arrayment_Manager: MonoBehaviour
                         {
                             Order[0].GetComponent<Character>().character_Attack_Order = 1;
                             Order[1].GetComponent<Character>().character_Attack_Order = 2;
-                            arrayed_Data.team1[0].GetComponent<Character>().Copy_Character_Stat(Order[0]);
-                            arrayed_Data.team1[0].GetComponent<Character>().Debuging_Character();
-                            arrayed_Data.team1[1].GetComponent<Character>().Copy_Character_Stat(Order[1]);
-                            arrayed_Data.team1[1].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[0].GetComponent<Character>().Copy_Character_Stat(Order[0]);
+                            Arrayed_Data.instance.team1[0].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[1].GetComponent<Character>().Copy_Character_Stat(Order[1]);
+                            Arrayed_Data.instance.team1[1].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -343,17 +342,17 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
                 case (int)ArrayPhase.FIRST23:
                     my_turn = false;
-                    if (arrayed_Data.team2[1].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[1].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[1].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
-                    if (arrayed_Data.team2[2].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[2].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[2].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
@@ -376,10 +375,10 @@ public class Arrayment_Manager: MonoBehaviour
                         {
                             Order[2].GetComponent<Character>().character_Attack_Order = 3;
                             Order[3].GetComponent<Character>().character_Attack_Order = 4;
-                            arrayed_Data.team1[2].GetComponent<Character>().Copy_Character_Stat(Order[2]);
-                            arrayed_Data.team1[2].GetComponent<Character>().Debuging_Character();
-                            arrayed_Data.team1[3].GetComponent<Character>().Copy_Character_Stat(Order[3]);
-                            arrayed_Data.team1[3].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[2].GetComponent<Character>().Copy_Character_Stat(Order[2]);
+                            Arrayed_Data.instance.team1[2].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[3].GetComponent<Character>().Copy_Character_Stat(Order[3]);
+                            Arrayed_Data.instance.team1[3].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -389,17 +388,17 @@ public class Arrayment_Manager: MonoBehaviour
                     break;
                 case (int)ArrayPhase.FIRST45:
                     my_turn = false;
-                    if (arrayed_Data.team2[3].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[3].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[3].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
-                    if (arrayed_Data.team2[4].GetComponent<Character>().character_Num_Of_Grid != 0)
+                    if (Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid != 0)
                     {
-                        Enemy_Grid_Num = arrayed_Data.team2[4].GetComponent<Character>().character_Num_Of_Grid;
-                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(arrayed_Data.team2[4].GetComponent<Character>().character_ID);
+                        Enemy_Grid_Num = Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid;
+                        Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID);
                         Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                         Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                     }
@@ -420,8 +419,8 @@ public class Arrayment_Manager: MonoBehaviour
                         if (Ready_Array == true)
                         {
                             Order[4].GetComponent<Character>().character_Attack_Order = 5;
-                            arrayed_Data.team1[4].GetComponent<Character>().Copy_Character_Stat(Order[4]);
-                            arrayed_Data.team1[4].GetComponent<Character>().Debuging_Character();
+                            Arrayed_Data.instance.team1[4].GetComponent<Character>().Copy_Character_Stat(Order[4]);
+                            Arrayed_Data.instance.team1[4].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -435,8 +434,8 @@ public class Arrayment_Manager: MonoBehaviour
     IEnumerator Sync_Character()
     {
         int Count = Order.Count - 1;
-        arrayed_Data.team1[Count].GetComponent<Character>().Copy_Character_Stat(Order[Count]);
-        arrayed_Data.team1[Count].GetComponent<Character>().Debuging_Character();
+        Arrayed_Data.instance.team1[Count].GetComponent<Character>().Copy_Character_Stat(Order[Count]);
+        Arrayed_Data.instance.team1[Count].GetComponent<Character>().Debuging_Character();
         arrData_Sync.DataSync();
 
         yield return null;
@@ -470,8 +469,8 @@ public class Arrayment_Manager: MonoBehaviour
         Grids[random].GetComponent<Character>().Debuging_Character();
         Grids[random].tag = "Character";
         Order.Add(Grids[random]);
-        arrayed_Data.team1[Count].GetComponent<Character>().Copy_Character_Stat(Order[Count]);
-        arrayed_Data.team1[Count].GetComponent<Character>().Debuging_Character();
+        Arrayed_Data.instance.team1[Count].GetComponent<Character>().Copy_Character_Stat(Order[Count]);
+        Arrayed_Data.instance.team1[Count].GetComponent<Character>().Debuging_Character();
         arrData_Sync.DataSync();
         yield return null;
     }
