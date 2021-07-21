@@ -50,14 +50,19 @@ public class SkillManager : MonoBehaviour
         
     }
 
+    public void AfterSetting(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        if(CCS.character_Skill == Character.Skill.Attack_Confidence)
+        {
+            StartCoroutine(Skill_Attack_Confidence(character));
+        }
+    }
+
     public void BeforeAttack(GameObject attacker,GameObject[] Damaged)
     {
         Character ACS = attacker.GetComponent<Character>();
-
-        if(ACS.character_Skill == Character.Skill.Attack_Confidence)
-        {
-           StartCoroutine(Skill_Attack_Confidence(attacker));
-        }
 
         if(ACS.character_Skill == Character.Skill.Balance_GbGH)
         {
@@ -100,10 +105,152 @@ public class SkillManager : MonoBehaviour
 
     }
 
-    IEnumerator Skill_Attack_Confidence(GameObject attacker)
+    IEnumerator Skill_Attack_Confidence(GameObject character)
     {
+        Character ACS = character.GetComponent<Character>();
+        ACS.character_Activate_Skill = true;
+
+        bool check = false;
+        switch (ACS.character_Num_Of_Grid)
+        {
+            case 1:
+                check = Check_Arround(ACS, 2, 4);
+                break;
+            case 2:
+                check = Check_Arround(ACS, 1, 3, 5);
+                break;
+            case 3:
+                check = Check_Arround(ACS, 2, 6);
+                break;
+            case 4:
+                check = Check_Arround(ACS, 1, 5, 7);
+                break;
+            case 5:
+                check = Check_Arround(ACS, 2, 4, 6, 8);
+                break;
+            case 6:
+                check = Check_Arround(ACS, 3, 5, 9);
+                break;
+            case 7:
+                check = Check_Arround(ACS, 4, 8);
+                break;
+            case 8:
+                check = Check_Arround(ACS, 5, 7, 9);
+                break;
+            case 9:
+                check = Check_Arround(ACS, 6, 8);
+                break;
+        }
+
+        if(!check)
+        {
+            ACS.character_Activate_Skill = false;
+            yield break;
+        }
+
+        //스킬 발동 체크
 
         yield return new WaitForSeconds(2.0f);
+
+        ACS.character_Attack_Damage += 40;
+        ACS.character_Activate_Skill = false;
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Confidence(character);
+    }
+
+    bool Check_Arround(Character ACS,int num1,int num2,int num3,int num4)
+    {
+        int dum = 0;
+
+        if(ACS.character_Team_Number == 1)
+        {
+            foreach(var team1 in BattleManager.Instance.bM_Character_Team1)
+            {
+                Debug.Log("체크 어라운드 : " + dum);
+                Character CCS = team1.GetComponent<Character>();
+                if (CCS.character_Num_Of_Grid == num1) dum++;
+                if (CCS.character_Num_Of_Grid == num2) dum++;
+                if (CCS.character_Num_Of_Grid == num3) dum++;
+                if (CCS.character_Num_Of_Grid == num4) dum++;
+            }
+        }
+        
+        if(ACS.character_Team_Number == 2)
+        {
+            foreach (var team1 in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character CCS = team1.GetComponent<Character>();
+                if (CCS.character_Num_Of_Grid == num1) dum++;
+                if (CCS.character_Num_Of_Grid == num2) dum++;
+                if (CCS.character_Num_Of_Grid == num3) dum++;
+                if (CCS.character_Num_Of_Grid == num4) dum++;
+            }
+        }
+
+        if (dum >= 2)
+            return true;
+        return false;
+    }
+
+    bool Check_Arround(Character ACS,int num1, int num2, int num3)
+    {
+        int dum = 0;
+
+        if (ACS.character_Team_Number == 1)
+        {
+            foreach (var team1 in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character CCS = team1.GetComponent<Character>();
+                if (CCS.character_Num_Of_Grid == num1) dum++;
+                if (CCS.character_Num_Of_Grid == num2) dum++;
+                if (CCS.character_Num_Of_Grid == num3) dum++;
+            }
+        }
+
+        if (ACS.character_Team_Number == 2)
+        {
+            foreach (var team1 in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character CCS = team1.GetComponent<Character>();
+                if (CCS.character_Num_Of_Grid == num1) dum++;
+                if (CCS.character_Num_Of_Grid == num2) dum++;
+                if (CCS.character_Num_Of_Grid == num3) dum++;
+            }
+        }
+
+        if (dum >= 2)
+            return true;
+        return false;
+    }
+
+    bool Check_Arround(Character ACS,int num1, int num2)
+    {
+        int dum = 0;
+
+        if (ACS.character_Team_Number == 1)
+        {
+            foreach (var team1 in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character CCS = team1.GetComponent<Character>();
+                if (CCS.character_Num_Of_Grid == num1) dum++;
+                if (CCS.character_Num_Of_Grid == num2) dum++;
+            }
+        }
+
+        if (ACS.character_Team_Number == 2)
+        {
+            foreach (var team1 in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character CCS = team1.GetComponent<Character>();
+                if (CCS.character_Num_Of_Grid == num1) dum++;
+                if (CCS.character_Num_Of_Grid == num2) dum++;
+            }
+        }
+
+        if (dum >= 2)
+            return true;
+        return false;
     }
 
     IEnumerator Skill_Balanced_GbGH(GameObject attacker)
@@ -121,10 +268,11 @@ public class SkillManager : MonoBehaviour
             ACS.character_Activate_Skill = false;
             yield break;
         }
-            
+        //스킬 발동 체크
+
         yield return new WaitForSeconds(2.0f);
 
-        ACS.character_Attack_Count++;
+        BattleManager.Instance.bM_Round--;
         ACS.character_is_Kill = 0;
         ACS.character_Activate_Skill = false;
 

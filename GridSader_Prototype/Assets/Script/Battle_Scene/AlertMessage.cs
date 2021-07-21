@@ -17,28 +17,30 @@ public class AlertMessage : MonoBehaviour
         
     }
     
-    public void CantAttack(int team,int character)
+    public void CantAttack(GameObject attacker)
     {
-        StartCoroutine(CCantAttack(team,character));
+        StartCoroutine(CCantAttack(attacker));
     }
 
-    IEnumerator CCantAttack(int team, int character)
+    IEnumerator CCantAttack(GameObject attacker)
     {
-        this.GetComponent<Text>().text = team + "팀 " + character + "번 캐릭터가 사망하여 공격 할 수 없습니다!";
+        Character ACS = attacker.GetComponent<Character>();
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터가 사망하여 공격 할 수 없습니다!";
 
         yield return new WaitForSeconds(2.0f);
 
         this.gameObject.SetActive(false);
     }
 
-    public void Attack(int team, int character)
+    public void Attack(GameObject attacker)
     {
-        StartCoroutine(CAttack(team,character));
+        StartCoroutine(CAttack(attacker));
     }
 
-    IEnumerator CAttack(int team, int character)
+    IEnumerator CAttack(GameObject attacker)
     {
-        this.GetComponent<Text>().text = team + "팀 " + character + "번 캐릭터 공격!";
+        Character ACS = attacker.GetComponent<Character>();
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 공격!";
 
         yield return new WaitForSeconds(2.0f);
 
@@ -69,14 +71,16 @@ public class AlertMessage : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
     }
 
-    public void Counter(int team,int character)
+    public void Counter(GameObject Counter)
     {
-        StartCoroutine(CCounter(team,character));
+        Character CCS = Counter.GetComponent<Character>();
+        StartCoroutine(CCounter(Counter));
     }
     
-    IEnumerator CCounter(int team,int character)
+    IEnumerator CCounter(GameObject Counter)
     {
-        this.GetComponent<Text>().text = team + "팀 " + character + "번 캐릭터 반격!";
+        Character CCS = Counter.GetComponent<Character>();
+        this.GetComponent<Text>().text = CCS.character_Team_Number + "팀 " + CCS.character_Number + "번 캐릭터 반격!";
 
         yield return new WaitForSeconds(2.0f);
 

@@ -36,7 +36,7 @@ public class Character : MonoBehaviour
 
     // 전투 중 활성화되는 변수
     // Battle-Oriented Variables
-    public int character_Attack_Count { get; set; } // 공격 횟수(공격 범위 동일)
+    public int character_Number { get; set; }  // ~~번 캐릭터 공격!할때 쓰는 변수
     public int character_Team_Number { get; set; } // 팀 구분
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
@@ -86,7 +86,6 @@ public class Character : MonoBehaviour
               false, false, false,
               false, false, false };
 
-        character_Attack_Count = 0;
         character_Buffed_Attack = 0;
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
@@ -94,6 +93,7 @@ public class Character : MonoBehaviour
         character_Revivial = false;
         character_Counter = false;
         character_is_Kill = 0;
+        character_Number = 0;
     }
 
     public void Debuging_Character()

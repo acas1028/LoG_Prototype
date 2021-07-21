@@ -17,6 +17,20 @@ public class SkillMessage : MonoBehaviour
         
     }
 
+    public void Confidence(GameObject character)
+    {
+        StartCoroutine(CConfidence(character));
+    }
+
+    IEnumerator CConfidence(GameObject character)
+    {
+        Character ACS = character.GetComponent<Character>();
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 자신감 스킬 발동!";
+
+        yield return new WaitForSeconds(2.0f);
+        this.gameObject.SetActive(false);
+    }
+
     public void Executioner(GameObject attacker)
     {
         StartCoroutine(CExecutioner(attacker));
@@ -25,7 +39,7 @@ public class SkillMessage : MonoBehaviour
     IEnumerator CExecutioner(GameObject attacker)
     {
         Character ACS = attacker.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Attack_Order + "번 캐릭터 처형자 스킬 발동!";
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 처형자 스킬 발동!";
 
         yield return new WaitForSeconds(2.0f);
         this.gameObject.SetActive(false);
@@ -38,7 +52,7 @@ public class SkillMessage : MonoBehaviour
     IEnumerator CDisarm(GameObject attacker)
     {
         Character ACS = attacker.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Attack_Order + "번 캐릭터 무장해제 스킬 발동!";
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 무장해제 스킬 발동!";
 
         yield return new WaitForSeconds(2.0f);
         this.gameObject.SetActive(false);
