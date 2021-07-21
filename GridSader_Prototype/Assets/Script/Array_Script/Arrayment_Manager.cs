@@ -90,7 +90,7 @@ public class Arrayment_Manager: MonoBehaviour
                 {
                     Array_Cancle_Button.SetActive(true);
                 }
-                PopUp_UI.SetActive(true);                   
+                //PopUp_UI.SetActive(true);                   
             }
             else
             {
@@ -121,7 +121,7 @@ public class Arrayment_Manager: MonoBehaviour
                 Character_Instantiate.GetComponent<Character>().Debuging_Character();
                 Order.Add(Character_Instantiate);
                 StartCoroutine(Sync_Character());
-                PopUp_UI.SetActive(false);
+                //PopUp_UI.SetActive(false);
                 Character_instance = false;
             }
         }

@@ -77,6 +77,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             Debug.LogWarning("Team1 Custom Property 설정 실패");
     }
 
+    public void Arrayment_showing_Datasync()
+    {
+        Character_arrayment_showing.Showing_arrayment_instance.Set_AttackRange_Ui(true);
+    }
+
     public void SetArrayPhaseInOffline()
     {
         Character c;
