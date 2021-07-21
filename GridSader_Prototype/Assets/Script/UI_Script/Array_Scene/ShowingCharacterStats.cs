@@ -44,7 +44,7 @@ public class ShowingCharacterStats : MonoBehaviour
 
     public void Character_Showing_Stats(int num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
     {
-        prefabCharacter.GetComponent<Character_Action>().Character_Setting(num);
+        prefabCharacter.GetComponent<Character>().Character_Setting(num);
         attack_Damage.text = prefabCharacter.GetComponent<Character>().character_Attack_Damage.ToString();
         health_Point.text = prefabCharacter.GetComponent<Character>().character_HP.ToString();
 

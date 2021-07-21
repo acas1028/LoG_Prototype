@@ -16,16 +16,12 @@ public class Time_FlowScript : MonoBehaviour
 
     private void Start()
     {
-        max_Time = 30;
-        time = max_Time;
-        Time_Over = false;
+        Time_initialize();
     }
 
     private void OnEnable()
     {
-        max_Time = 30;
-        time = max_Time;
-        Time_Over = false;
+        Time_initialize();
     }
 
     private void Update()
@@ -40,6 +36,13 @@ public class Time_FlowScript : MonoBehaviour
         {
             Time_reset();
         }
+    }
+
+    void Time_initialize() // 시간 초기화
+    {
+        max_Time = 30;
+        time = max_Time;
+        Time_Over = false;
     }
 
     void Time_reset() //시간 max_Time으로 리셋

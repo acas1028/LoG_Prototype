@@ -48,7 +48,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     }
 
     #region 외부에서 호출되는 public 함수
-    public void DataSync(GameObject[] passData)
+    public void DataSync()
     {
         if (PhotonNetwork.OfflineMode)
             return;
@@ -57,7 +57,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         bool result = false;
         Character c;
-        arrayed_Data.team1 = passData;
 
         Hashtable team1_table = new Hashtable();
 
