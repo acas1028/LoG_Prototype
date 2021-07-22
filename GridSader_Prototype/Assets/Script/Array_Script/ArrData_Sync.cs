@@ -173,35 +173,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_attackOrder;
         Character c;
 
-        for (int i = 0; i < 5; i++)
-        {
-            // 서버에 있는 Team2의 Character_Action 정보를 여기 team2에 저장하는 과정
-
-            // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
-            c = Arrayed_Data.instance.team2[i].GetComponent<Character>();
-            if (!c)
-                return;
-
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_ID", out o_id);
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_IsAlive", out o_isAlive);
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_HP", out o_hp);
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AP", out o_ap);
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackDamage", out o_attackDamage);
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackRange", out o_attackRange);
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_GridNumber", out o_gridNumber);
-            targetPlayer.CustomProperties.TryGetValue((i + 1) + "_AttackOrder", out o_attackOrder);
-
-            c.character_ID = (int)o_id;
-            c.character_Is_Allive = (bool)o_isAlive;
-            c.character_HP = (int)o_hp; 
-            c.character_AP = (int)o_ap;
-            c.character_Attack_Damage = (int)o_attackDamage;
-            c.character_Attack_Range = (bool[])o_attackRange;
-            c.character_Num_Of_Grid = (int)o_gridNumber;
-            c.character_Attack_Order = (int)o_attackOrder;
-            c.Debuging_Character();
-        }
-
         // 서버에 있는 Team2의 Character_Action 정보를 여기 team2에 저장하는 과정
 
         targetPlayer.CustomProperties.TryGetValue("Character_Index", out o_index);
