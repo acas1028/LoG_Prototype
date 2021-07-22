@@ -129,17 +129,19 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
             bM_Round++;
 
+            yield return new WaitForSeconds(2.0f);
+
             // 캐릭터 세팅 이후 스킬체크 과정
         }
         while (bM_Round > 0 && bM_Round < 11)
         {
-            yield return new WaitForSeconds(2.0f);
-
             Battle(bM_Round);
 
             yield return new WaitUntil(() => Check_Skill_Finish());
             yield return new WaitUntil(() => Check_Counter_Finish());
             Round_Finish();
+
+            yield return new WaitForSeconds(2.0f);
         }
 
         Finish_Game();
