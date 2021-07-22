@@ -193,33 +193,22 @@ public class Arrayment_Manager: MonoBehaviour
                     if (PhotonNetwork.OfflineMode)
                         arrData_Sync.SetArrayPhaseInOffline();
                     my_turn = false;
-                    if (arrData_Sync.is_datasync == true)
-                    {
+                    
                         if (Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
-                            arrData_Sync.is_datasync = false;
-                        }
-                        else
-                        {
-                            Debug.Log(arrData_Sync.test);
                         }
                         if (Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
-                            arrData_Sync.is_datasync = false;
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character"; 
                         }
-                        else
-                        {
-                            Debug.Log(arrData_Sync.test);
-                        }
-                    }
+
                     break;
                 case (int)ArrayPhase.FIRST23:
                     my_turn = true;
