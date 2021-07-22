@@ -173,7 +173,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_attackOrder;
         Character c;
 
-<<<<<<< Updated upstream
         for (int i = 0; i < 5; i++)
         {
             // 서버에 있는 Team2의 Character_Action 정보를 여기 team2에 저장하는 과정
@@ -203,7 +202,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             c.Debuging_Character();
         }
 
-=======
         // 서버에 있는 Team2의 Character_Action 정보를 여기 team2에 저장하는 과정
 
         targetPlayer.CustomProperties.TryGetValue("Character_Index", out o_index);
@@ -237,7 +235,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         c.character_Attack_Order = (int)o_attackOrder;
 
         c.Debuging_Character();
->>>>>>> Stashed changes
     }
     #endregion
 }
