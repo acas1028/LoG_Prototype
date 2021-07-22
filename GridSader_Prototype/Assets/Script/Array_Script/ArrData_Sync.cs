@@ -48,10 +48,16 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     }
 
     #region 외부에서 호출되는 public 함수
-    public void DataSync()
+    public void DataSync(int index)
     {
         if (PhotonNetwork.OfflineMode)
             return;
+
+        if (index < 0 || index > 4)
+        {
+            Debug.LogError("DataSync 실패: 캐릭터 인덱스는 0이상 4이하여야 합니다.");
+            return;
+        }    
 
         Debug.Log("<color=yellow>DataSync 호출</color>");
 
@@ -60,18 +66,19 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         Hashtable team1_table = new Hashtable();
 
-        for (int i = 0; i < 5; i++)
-        {
-            c = Arrayed_Data.instance.team1[i].GetComponent<Character>();
-            team1_table.Add((i + 1) + "_ID", c.character_ID);
-            team1_table.Add((i + 1) + "_IsAlive", c.character_Is_Allive);
-            team1_table.Add((i + 1) + "_HP", c.character_HP);
-            team1_table.Add((i + 1) + "_AP", c.character_AP);
-            team1_table.Add((i + 1) + "_AttackDamage", c.character_Attack_Damage);
-            team1_table.Add((i + 1) + "_AttackRange", c.character_Attack_Range);
-            team1_table.Add((i + 1) + "_GridNumber", c.character_Num_Of_Grid);
-            team1_table.Add((i + 1) + "_AttackOrder", c.character_Attack_Order);
-        }
+        c = Arrayed_Data.instance.team1[index].GetComponent<Character>();
+        team1_table.Add("Character_Index", index);
+
+        team1_table.Add(index + "_ID", c.character_ID);
+        team1_table.Add(index + "_Type", c.character_Type);
+        team1_table.Add(index + "_Skill", c.character_Skill);
+        team1_table.Add(index + "_IsAlive", c.character_Is_Allive);
+        team1_table.Add(index + "_HP", c.character_HP);
+        team1_table.Add(index + "_AP", c.character_AP);
+        team1_table.Add(index + "_AttackDamage", c.character_Attack_Damage);
+        team1_table.Add(index + "_AttackRange", c.character_Attack_Range);
+        team1_table.Add(index + "_GridNumber", c.character_Num_Of_Grid);
+        team1_table.Add(index + "_AttackOrder", c.character_Attack_Order);
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
         if (!result)
@@ -152,7 +159,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 
+        object o_index;
+
         object o_id;
+        object o_type;
+        object o_skill;
         object o_isAlive;
         object o_hp;
         object o_ap;
@@ -162,6 +173,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_attackOrder;
         Character c;
 
+<<<<<<< Updated upstream
         for (int i = 0; i < 5; i++)
         {
             // 서버에 있는 Team2의 Character_Action 정보를 여기 team2에 저장하는 과정
@@ -191,6 +203,41 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             c.Debuging_Character();
         }
 
+=======
+        // 서버에 있는 Team2의 Character_Action 정보를 여기 team2에 저장하는 과정
+
+        targetPlayer.CustomProperties.TryGetValue("Character_Index", out o_index);
+        int index = (int)o_index;
+
+        // 상대가 접속하지 않았거나, Ready 버튼을 누르지 않은 상태에서는 컴포넌트를 가져올 수 없으므로 return 처리
+        c = Arrayed_Data.instance.team2[index].GetComponent<Character>();
+        if (!c)
+            return;
+
+        targetPlayer.CustomProperties.TryGetValue(index + "_ID", out o_id);
+        targetPlayer.CustomProperties.TryGetValue(index + "_Type", out o_type);
+        targetPlayer.CustomProperties.TryGetValue(index + "_Skill", out o_skill);
+        targetPlayer.CustomProperties.TryGetValue(index + "_IsAlive", out o_isAlive);
+        targetPlayer.CustomProperties.TryGetValue(index + "_HP", out o_hp);
+        targetPlayer.CustomProperties.TryGetValue(index + "_AP", out o_ap);
+        targetPlayer.CustomProperties.TryGetValue(index + "_AttackDamage", out o_attackDamage);
+        targetPlayer.CustomProperties.TryGetValue(index + "_AttackRange", out o_attackRange);
+        targetPlayer.CustomProperties.TryGetValue(index + "_GridNumber", out o_gridNumber);
+        targetPlayer.CustomProperties.TryGetValue(index + "_AttackOrder", out o_attackOrder);
+
+        c.character_ID = (int)o_id;
+        c.character_Type = (Character.Type)o_type;
+        c.character_Skill = (Character.Skill)o_skill;
+        c.character_Is_Allive = (bool)o_isAlive;
+        c.character_HP = (int)o_hp;
+        c.character_AP = (int)o_ap;
+        c.character_Attack_Damage = (int)o_attackDamage;
+        c.character_Attack_Range = (bool[])o_attackRange;
+        c.character_Num_Of_Grid = (int)o_gridNumber;
+        c.character_Attack_Order = (int)o_attackOrder;
+
+        c.Debuging_Character();
+>>>>>>> Stashed changes
     }
     #endregion
 }

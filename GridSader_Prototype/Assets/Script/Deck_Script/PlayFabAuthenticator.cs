@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,10 +14,13 @@ public class PlayFabAuthenticator : MonoBehaviour
 {
     private string _playFabPlayerIdCache;
 
+    public Button button;
+
     private void Awake()
     {
         PlayFabSettings.TitleId = "7CCDF";
         AuthenticateWithPlayFab();
+        button.onClick.AddListener(() => OnClick());
     }
 
     // 임시 ID(장치에 기반한 ID)로 PlayFab에 연결
@@ -38,7 +44,7 @@ public class PlayFabAuthenticator : MonoBehaviour
 
         PlayFabClientAPI.GetPhotonAuthenticationToken(new GetPhotonAuthenticationTokenRequest()
         {
-            PhotonApplicationId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime
+            PhotonApplicationId = "996cb4a8-225b-4185-8f5e-80396335746f" // Photon Realtime AppID
         }, AuthenticateWithPhoton, OnPlayFabError);
     }
 
@@ -51,6 +57,16 @@ public class PlayFabAuthenticator : MonoBehaviour
         customAuth.AddAuthParameter("username", _playFabPlayerIdCache);
         customAuth.AddAuthParameter("token", obj.PhotonCustomAuthenticationToken);
         PhotonNetwork.AuthValues = customAuth;
+    }
+
+    private void OnClick()
+    {
+        var data = new Dictionary<string, object>() { { "Hello", "World" } };
+        var result = PhotonNetwork.RaiseEvent(15, data, new RaiseEventOptions()
+        {
+            Flags = new WebFlags(WebFlags.HttpForwardConst)
+        }, new ExitGames.Client.Photon.SendOptions());
+        LogMessage("Data(Dictionary Type) Transmition: " + result);
     }
 
     // 에러 발생시 콜백되는 함수
