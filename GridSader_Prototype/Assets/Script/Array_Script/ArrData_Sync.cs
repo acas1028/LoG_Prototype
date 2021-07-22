@@ -11,6 +11,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     public ArrRoomManager roomManager;
     public int test;
     public bool is_datasync = false;
+    public Character_arrayment_showing character_Arrayment_Showing;
     List<int> gridNumSet;
 
     private void Start()
@@ -85,11 +86,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             Debug.LogWarning("Team1 Custom Property 설정 실패");
     }
 
-    public void Arrayment_showing_Datasync()
-    {
-        Character_arrayment_showing.Showing_arrayment_instance.Set_AttackRange_Ui(true);
-    }
-
     public void SetArrayPhaseInOffline()
     {
         Character c;
@@ -155,7 +151,28 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
             return;
 
         if (targetPlayer == PhotonNetwork.LocalPlayer)
+        {
+            if (Arrayed_Data.instance.team1[character_Arrayment_Showing.my_Count].GetComponent<Character>().character_ID != 0)
+            {
+                Debug.Log("mine");
+                character_Arrayment_Showing.Character_List.Add(Arrayed_Data.instance.team1[character_Arrayment_Showing.my_Count]);
+                character_Arrayment_Showing.is_Sprite_Change = true;
+                character_Arrayment_Showing.is_Mine = true;
+                character_Arrayment_Showing.Set_AttackRange_Ui(true);
+                character_Arrayment_Showing.my_Count++;
+            }
+
+            if(character_Arrayment_Showing.my_Count!= 0 && Arrayed_Data.instance.team1[character_Arrayment_Showing.my_Count-1].GetComponent<Character>().character_ID == 0)
+            {
+                Debug.Log("mine");
+                character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team1[character_Arrayment_Showing.my_Count - 1];
+                character_Arrayment_Showing.is_Mine = true;
+                character_Arrayment_Showing.Set_AttackRange_Ui(false);
+                character_Arrayment_Showing.my_Count--;
+            }
+
             return;
+        }
 
         Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 
@@ -206,6 +223,26 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         c.character_Attack_Order = (int)o_attackOrder;
 
         c.Debuging_Character();
+
+
+        if (Arrayed_Data.instance.team2[character_Arrayment_Showing.Oppenent_Count].GetComponent<Character>().character_ID != 0)
+        {
+            Debug.Log("Not mine");
+            character_Arrayment_Showing.Character_List.Add(Arrayed_Data.instance.team2[character_Arrayment_Showing.Oppenent_Count]);
+            character_Arrayment_Showing.is_Sprite_Change = true;
+            character_Arrayment_Showing.is_Mine = false;
+            character_Arrayment_Showing.Set_AttackRange_Ui(true);
+            character_Arrayment_Showing.Oppenent_Count++;
+        }
+        if (character_Arrayment_Showing.my_Count != 0 && Arrayed_Data.instance.team2[character_Arrayment_Showing.Oppenent_Count - 1].GetComponent<Character>().character_ID == 0)
+        {
+            Debug.Log("Not mine");
+            character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team2[character_Arrayment_Showing.Oppenent_Count - 1];
+            character_Arrayment_Showing.is_Mine = false;
+            character_Arrayment_Showing.Set_AttackRange_Ui(false);
+            character_Arrayment_Showing.Oppenent_Count--;
+        }
     }
     #endregion
 }
+
