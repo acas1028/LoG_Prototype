@@ -453,7 +453,7 @@ public class Arrayment_Manager: MonoBehaviour
             Arrayed_Data.instance.team1[Count].GetComponent<Character>().Character_Reset();
             Arrayed_Data.instance.team1[Count].GetComponent<Character>().Debuging_Character();
         }
-        arrData_Sync.DataSync();
+        arrData_Sync.DataSync(Count);
         Debug.Log(arrData_Sync.test);
     }
     IEnumerator Sync_Character()
@@ -461,8 +461,9 @@ public class Arrayment_Manager: MonoBehaviour
         int Count = Order.Count - 1;
         Arrayed_Data.instance.team1[Count].GetComponent<Character>().Copy_Character_Stat(Order[Count]);
         Arrayed_Data.instance.team1[Count].GetComponent<Character>().Debuging_Character();
-        arrData_Sync.DataSync();
         Debug.Log(arrData_Sync.test);
+        arrData_Sync.DataSync(Count);
+
         yield return null;
     }
     IEnumerator Time_Out()
@@ -496,7 +497,7 @@ public class Arrayment_Manager: MonoBehaviour
         Order.Add(Grids[random]);
         Arrayed_Data.instance.team1[Count].GetComponent<Character>().Copy_Character_Stat(Order[Count]);
         Arrayed_Data.instance.team1[Count].GetComponent<Character>().Debuging_Character();
-        arrData_Sync.DataSync();
+        arrData_Sync.DataSync(Count);
         yield return null;
     }
     public void BanPick_Ready()
