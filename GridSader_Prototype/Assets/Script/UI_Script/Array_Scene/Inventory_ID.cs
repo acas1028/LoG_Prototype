@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-
-public class Inventory_ID : MonoBehaviour
+public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandler,IEndDragHandler,IDragHandler
 {
     public int m_Inventory_ID;
     public int m_Character_ID;
@@ -33,6 +33,9 @@ public class Inventory_ID : MonoBehaviour
         Arrayment_Manager.Array_instance.Get_Button(m_Character_ID);
     }
 
-    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log(gameObject.name);
+    }
 
 }

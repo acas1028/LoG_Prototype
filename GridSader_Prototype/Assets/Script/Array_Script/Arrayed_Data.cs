@@ -5,8 +5,8 @@ using UnityEngine;
 public class Arrayed_Data : MonoBehaviour
 {
     public static Arrayed_Data instance;
-    public GameObject[] team1;
-    public GameObject[] team2;
+    public List<GameObject> team1 = new List<GameObject>();
+    public List<GameObject> team2 = new List<GameObject>();
 
     private void Awake()
     {

@@ -9,7 +9,8 @@ using Photon.Pun;
 public class ArrData_Sync : MonoBehaviourPunCallbacks
 {
     public ArrRoomManager roomManager;
-
+    public int test;
+    public bool is_datasync = false;
     List<int> gridNumSet;
 
     private void Start()
@@ -181,15 +182,15 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
             c.character_ID = (int)o_id;
             c.character_Is_Allive = (bool)o_isAlive;
-            c.character_HP = (int)o_hp;
+            c.character_HP = (int)o_hp; 
             c.character_AP = (int)o_ap;
             c.character_Attack_Damage = (int)o_attackDamage;
             c.character_Attack_Range = (bool[])o_attackRange;
             c.character_Num_Of_Grid = (int)o_gridNumber;
             c.character_Attack_Order = (int)o_attackOrder;
-
             c.Debuging_Character();
         }
+
     }
     #endregion
 }

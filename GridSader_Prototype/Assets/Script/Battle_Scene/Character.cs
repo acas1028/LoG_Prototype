@@ -123,8 +123,8 @@ public class Character : MonoBehaviour
         {
             character_Type = Type.Defender;
         }
-        Debug.Log(character_data[num]["Type"]);
-        Debug.Log(character_Type);
+        //Debug.Log(character_data[num]["Type"]);
+        //Debug.Log(character_Type);
     }
 
     protected void setting_skill(int num)

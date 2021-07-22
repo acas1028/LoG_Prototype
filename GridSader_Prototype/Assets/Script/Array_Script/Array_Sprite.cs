@@ -19,6 +19,10 @@ public class Array_Sprite : MonoBehaviour
         {
             Character_Sprite_Setting();
         }
+        if(this.gameObject.CompareTag("Null_Character"))
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = null;
+        }
     }
 
     public void Character_Sprite_Setting()
