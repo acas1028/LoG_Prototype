@@ -86,6 +86,13 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+		// 캐릭터 배치 데이터 지우기
+		if (Arrayed_Data.instance)
+		{
+			Destroy(Arrayed_Data.instance.gameObject);
+			Arrayed_Data.instance = null;
+		}
+
 		// 룸에서 퇴장한 경우 로그인이 아닌 선택 패널이 바로 나오도록 한다.
 		if (PhotonNetwork.OfflineMode)
 		{

@@ -14,13 +14,10 @@ public class PlayFabAuthenticator : MonoBehaviour
 {
     private string _playFabPlayerIdCache;
 
-    public Button button;
-
     private void Awake()
     {
         PlayFabSettings.TitleId = "7CCDF";
         AuthenticateWithPlayFab();
-        button.onClick.AddListener(() => OnClick());
     }
 
     // 임시 ID(장치에 기반한 ID)로 PlayFab에 연결
@@ -59,10 +56,10 @@ public class PlayFabAuthenticator : MonoBehaviour
         PhotonNetwork.AuthValues = customAuth;
     }
 
-    private void OnClick()
+    public void DataSend()
     {
         var data = new Dictionary<string, object>() { { "Hello", "World" } };
-        var result = PhotonNetwork.RaiseEvent(15, data, new RaiseEventOptions()
+        var result = PhotonNetwork.RaiseEvent(0, data, new RaiseEventOptions()
         {
             Flags = new WebFlags(WebFlags.HttpForwardConst)
         }, new ExitGames.Client.Photon.SendOptions());
