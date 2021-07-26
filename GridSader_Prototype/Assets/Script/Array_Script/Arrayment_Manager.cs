@@ -1,19 +1,14 @@
 using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Arrayment_Manager : MonoBehaviour
 {
 
     private bool is_click_inventory = false;
     public bool Ready_Array = false; // 레디 버튼을 눌렀다.
-    private bool my_turn = false; // 나의 턴이다.
-    private bool Pick = false;// true라면 배치. false라면 정보를 읽을수만있다.
+    private bool my_turn = true; // 나의 턴이다.
+    private bool Pick = true;// true라면 배치. false라면 정보를 읽을수만있다. 추가 배치를 막는다.
     private bool On_Raycast = false;//배치를 다했다.
     private int Phase = (int)ArrayPhase.STANDBY;
     private int Time_Out_Inventory;
@@ -74,12 +69,13 @@ public class Arrayment_Manager : MonoBehaviour
         {
             Arrayment_Raycast();
         }
+        Array_Order();
     }
 
     public void Arrayment_Raycast()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+        Arrayed_Data T = Arrayed_Data.instance;
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000);
 
         if (!hit)
@@ -123,11 +119,11 @@ public class Arrayment_Manager : MonoBehaviour
             int j = 0;
             while(j<5)
             {
-                if (Order[j].GetComponent<Character>().character_ID == 0)
+                if (T.team1[j].GetComponent<Character>().character_ID == 0)
                 {
-                    Order[j].GetComponent<Character>().Copy_Character_Stat(Grid_Character);
-                    Order[j].GetComponent<Character>().Debuging_Character();
-                    Order[j].tag = "Character";
+                    T.team1[j].GetComponent<Character>().Copy_Character_Stat(Grid_Character);
+                    T.team1[j].GetComponent<Character>().Debuging_Character();
+                    T.team1[j].tag = "Character";
                     break;
                 }
                 j++;
@@ -148,15 +144,306 @@ public class Arrayment_Manager : MonoBehaviour
     {
         Phase = arrRoomManager.GetArrayPhase();
         int Enemy_Grid_Num;
-
+        Arrayed_Data cs = Arrayed_Data.instance;
         if (arrRoomManager.IsPlayerPreemptive())
         {
             switch (Phase)
             {
                 case (int)ArrayPhase.FIRST1:
-                    if(Order[0].GetComponent<Character>().character_ID!=0)
+                    my_turn = true;
+                    Pick = true;
+                    if (cs.team1[0].GetComponent<Character>().character_ID != 0)
                     {
+                        On_Raycast = true;
+                        Pick = false;
+                        if (Ready_Array == true)
+                        {
+                            cs.team1[0].GetComponent<Character>().character_Attack_Order = 1;
+                            Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            arrRoomManager.StartArrayPhase();
+                            Ready_Array = false;
+                            On_Raycast = false;
+                        }
+                    }
+                    break;
+                case (int)ArrayPhase.SECOND12:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
+                    my_turn = false;
+                    if(arrData_Sync.is_datasync==true)
+                    {
+                        if (Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        if (Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        arrData_Sync.is_datasync = false;
+                    }
+                    break;
+                case (int)ArrayPhase.FIRST23:
+                    my_turn = true;
+                    Pick = true;
+                    if (cs.team1[1].GetComponent<Character>().character_ID != 0 && cs.team1[2].GetComponent<Character>().character_ID != 0)
+                    {
+                        On_Raycast = true;
+                        Pick = false;
+                        if (Ready_Array == true)
+                        {
+                            cs.team1[1].GetComponent<Character>().character_Attack_Order = 2;
+                            cs.team1[2].GetComponent<Character>().character_Attack_Order = 3;
+                            Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            arrRoomManager.StartArrayPhase();
+                            Ready_Array = false;
+                            On_Raycast = false;
+                        }
+                    }
+                    break;
+                case (int)ArrayPhase.SECOND34:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
+                    my_turn = false;
+                    if (arrData_Sync.is_datasync == true)
+                    {
+                        if (Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        if (Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        arrData_Sync.is_datasync = false;
+                    }
+                    break;
+                case (int)ArrayPhase.FIRST45:
+                    my_turn = true;
+                    Pick = true;
+                    if (cs.team1[3].GetComponent<Character>().character_ID != 0 && cs.team1[4].GetComponent<Character>().character_ID != 0)
+                    {
+                        On_Raycast = true;
+                        Pick = false;
+                        if (Ready_Array == true)
+                        {
+                            cs.team1[3].GetComponent<Character>().character_Attack_Order = 3;
+                            cs.team1[4].GetComponent<Character>().character_Attack_Order = 4;
+                            Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            arrRoomManager.StartArrayPhase();
+                            Ready_Array = false;
+                            On_Raycast = false;
+                        }
+                    }
+                    break;
+                case (int)ArrayPhase.SECOND5:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
+                    my_turn = false;
+                    if (arrData_Sync.is_datasync == true)
+                    {
+                        if (Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        arrData_Sync.is_datasync = false;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            switch (Phase)
+            {
 
+                case (int)ArrayPhase.FIRST1:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
+                    my_turn = false;
+                    if (arrData_Sync.is_datasync == true)
+                    {
+                        if (Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        arrData_Sync.is_datasync = false;
+                    }
+                    break;
+                case (int)ArrayPhase.SECOND12:
+                    my_turn = true;
+                    Pick = true;
+                    if (cs.team1[0].GetComponent<Character>().character_ID != 0 && cs.team1[1].GetComponent<Character>().character_ID != 0)
+                    {
+                        On_Raycast = true;
+                        Pick = false;
+                        if (Ready_Array == true)
+                        {
+                            cs.team1[0].GetComponent<Character>().character_Attack_Order = 1;
+                            cs.team1[1].GetComponent<Character>().character_Attack_Order = 2;
+                            Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            arrRoomManager.StartArrayPhase();
+                            Ready_Array = false;
+                            On_Raycast = false;
+                        }
+                    }
+                    break;
+                case (int)ArrayPhase.FIRST23:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
+                    my_turn = false;
+                    if (arrData_Sync.is_datasync == true)
+                    {
+                        if (Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        if (Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        arrData_Sync.is_datasync = false;
+                    }
+                    break;
+                case (int)ArrayPhase.SECOND34:
+                    my_turn = true;
+                    Pick = true;
+                    if (cs.team1[2].GetComponent<Character>().character_ID != 0 && cs.team1[3].GetComponent<Character>().character_ID != 0)
+                    {
+                        On_Raycast = true;
+                        Pick = false;
+                        if (Ready_Array == true)
+                        {
+                            cs.team1[2].GetComponent<Character>().character_Attack_Order = 3;
+                            cs.team1[3].GetComponent<Character>().character_Attack_Order = 4;
+                            Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            arrRoomManager.StartArrayPhase();
+                            Ready_Array = false;
+                            On_Raycast = false;
+                        }
+                    }
+                    break;
+                case (int)ArrayPhase.FIRST45:
+                    if (PhotonNetwork.OfflineMode)
+                        arrData_Sync.SetArrayPhaseInOffline();
+                    my_turn = false;
+                    if (arrData_Sync.is_datasync == true)
+                    {
+                        if (Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        if (Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID != 0)
+                        {
+                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                        }
+                        else
+                        {
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].tag = "Null_Character";
+                        }
+                        arrData_Sync.is_datasync = false;
+                    }
+                    break;
+                case (int)ArrayPhase.SECOND5:
+                    my_turn = true;
+                    Pick = true;
+                    if (cs.team1[4].GetComponent<Character>().character_ID != 0)
+                    {
+                        On_Raycast = true;
+                        Pick = false;
+                        if (Ready_Array == true)
+                        {
+                            cs.team1[4].GetComponent<Character>().character_Attack_Order = 5;
+                            Debug.Log((ArrayPhase)Phase + "배치 완료");
+                            arrRoomManager.StartArrayPhase();
+                            Ready_Array = false;
+                            On_Raycast = false;
+                        }
                     }
                     break;
             }
@@ -165,9 +452,10 @@ public class Arrayment_Manager : MonoBehaviour
     public void Cancle_Array()
     {
         Character cs = Cancle_Character.GetComponent<Character>();
+        Arrayed_Data T = Arrayed_Data.instance;
         for(int i=0;i<5;i++)
         {
-            if(cs.character_ID==Order[i].GetComponent<Character>().character_ID)
+            if(cs.character_ID==T.team1[i].GetComponent<Character>().character_ID)
             {
                 Order_Rearrange(i);
                 PV.RPC("Cancle_Sync",RpcTarget.All,i);
@@ -177,20 +465,22 @@ public class Arrayment_Manager : MonoBehaviour
         cs.Character_Reset();
         cs.Debuging_Character();
     }
-    IEnumerator Cancle_Sync(int i)
+
+    [PunRPC]
+    private void Cancle_Sync(int i)
     {
-        Arrayed_Data cs = Arrayed_Data.instance;
-        cs.team1[i].GetComponent<Character>().Character_Reset();
-        cs.team1[i].GetComponent<Character>().Debuging_Character();
+        cancle_num = Reverse_Array(Arrayed_Data.instance.team1[i].GetComponent<Character>().character_Num_Of_Grid);
+        //Arrayed_Data.instance.team1[i].GetComponent<Character>().Character_Reset();
+        //Arrayed_Data.instance.team1[i].GetComponent<Character>().Debuging_Character();
         arrData_Sync.DataSync(i);
-        yield return null;
     }
     public void Sync_Character()
     {
+        Arrayed_Data T = Arrayed_Data.instance;
         int Return_num = 0;
         while(Return_num<4)
         {
-            if (Order[Return_num + 1].GetComponent<Character>().character_ID == 0)
+            if (T.team1[Return_num + 1].GetComponent<Character>().character_ID == 0)
             {
                 break;
             }
@@ -200,38 +490,39 @@ public class Arrayment_Manager : MonoBehaviour
     }
     private void Order_Rearrange(int num)
     {
+        Arrayed_Data cs = Arrayed_Data.instance;
         for (int i = 0; i < Inventory.Length; i++)
         {
             Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
-            if (inven.m_Character_ID == Order[num].GetComponent<Character>().character_ID)
+            if (inven.m_Character_ID == cs.team1[num].GetComponent<Character>().character_ID)
             {
                 inven.is_Arrayed = false;
             }
         }
-        Order[num].GetComponent<Character>().Character_Reset();
-        Order[num].GetComponent<Character>().Debuging_Character();
+        cs.team1[num].GetComponent<Character>().Character_Reset();
+        cs.team1[num].GetComponent<Character>().Debuging_Character();
         for (int i = num; i < 4; i++)
         {
-            if (Order[i + 1].GetComponent<Character>().character_ID != 0)
+            if (cs.team1[i + 1].GetComponent<Character>().character_ID != 0)
             {
-                Order[i].GetComponent<Character>().Copy_Character_Stat(Order[i + 1]);
-                Order[i].GetComponent<Character>().Debuging_Character();
+                cs.team1[i].GetComponent<Character>().Copy_Character_Stat(cs.team1[i + 1]);
+                cs.team1[i].GetComponent<Character>().Debuging_Character();
             }
             else
             {
-                Order[i + 1].GetComponent<Character>().Character_Reset();
-                Order[i + 1].GetComponent<Character>().Debuging_Character();
+                cs.team1[i].GetComponent<Character>().Character_Reset();
+                cs.team1[i].GetComponent<Character>().Debuging_Character();
             }
         }
-        if (Order[4].GetComponent<Character>().character_ID != 0)
+        if (cs.team1[4].GetComponent<Character>().character_ID != 0)
         {
-            Order[4].GetComponent<Character>().Character_Reset();
-            Order[4].GetComponent<Character>().Debuging_Character();
+            cs.team1[4].GetComponent<Character>().Character_Reset();
+            cs.team1[4].GetComponent<Character>().Debuging_Character();
         }
     }
     public void Click_Inventory(int num)
     {
-        if (my_turn == true)
+        if (my_turn == true&&Pick==true)
             is_click_inventory = true;
         click_id = num;
     }

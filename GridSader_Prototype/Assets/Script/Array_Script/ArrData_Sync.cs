@@ -9,7 +9,6 @@ using Photon.Pun;
 public class ArrData_Sync : MonoBehaviourPunCallbacks
 {
     public ArrRoomManager roomManager;
-    public int test;
     public bool is_datasync = false;
     public Character_arrayment_showing character_Arrayment_Showing;
     List<int> gridNumSet;
@@ -221,7 +220,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         c.character_Attack_Range = (bool[])o_attackRange;
         c.character_Num_Of_Grid = (int)o_gridNumber;
         c.character_Attack_Order = (int)o_attackOrder;
-
+        is_datasync = true;
         c.Debuging_Character();
 
 
