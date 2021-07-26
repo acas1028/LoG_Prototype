@@ -28,9 +28,10 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
     {
         Popup.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(m_Character_ID);
     }
-    public void Save_Character_ID()
+    public int Return_Character_ID()
     {
-        Arrayment_Manager.Array_instance.Get_Button(m_Character_ID);
+        return this.gameObject.GetComponent<Inventory_ID>().m_Character_ID;
+        
     }
 
     public void OnPointerDown(PointerEventData eventData)

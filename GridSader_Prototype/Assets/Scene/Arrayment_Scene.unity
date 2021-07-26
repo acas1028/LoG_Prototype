@@ -3083,18 +3083,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 355931436}
         m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
-        m_MethodName: Save_Character_ID
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 355931436}
-        m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
         m_MethodName: Setting_Character_Stat
         m_Mode: 2
         m_Arguments:
@@ -3113,6 +3101,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2014153244}
+        m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
+        m_MethodName: Click_Inventory
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -5719,18 +5719,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 646410700}
         m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
-        m_MethodName: Save_Character_ID
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 646410700}
-        m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
         m_MethodName: Setting_Character_Stat
         m_Mode: 2
         m_Arguments:
@@ -5749,6 +5737,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2014153244}
+        m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
+        m_MethodName: Click_Inventory
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -7272,18 +7272,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 840285650}
         m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
-        m_MethodName: Save_Character_ID
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 840285650}
-        m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
         m_MethodName: Setting_Character_Stat
         m_Mode: 2
         m_Arguments:
@@ -7302,6 +7290,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2014153244}
+        m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
+        m_MethodName: Click_Inventory
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -10841,6 +10841,56 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+--- !u!1 &1070915014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1070915015}
+  - component: {fileID: 1070915016}
+  m_Layer: 0
+  m_Name: Arr_Order(5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1070915015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070915014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1555023619}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1070915016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070915014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1070979110
 GameObject:
   m_ObjectHideFlags: 0
@@ -13352,6 +13402,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426354225}
   m_CullTransparentMesh: 1
+--- !u!1 &1438543253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1438543254}
+  - component: {fileID: 1438543255}
+  m_Layer: 0
+  m_Name: Arr_Order(3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1438543254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438543253}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1555023619}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1438543255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438543253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1443718457
 GameObject:
   m_ObjectHideFlags: 0
@@ -13801,9 +13901,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1492328837}
-        m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
-        m_MethodName: Save_Character_ID
+      - m_Target: {fileID: 1492328838}
+        m_TargetAssemblyTypeName: Popup_Position_script, Assembly-CSharp
+        m_MethodName: PopupTranslate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13813,14 +13913,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1492328838}
-        m_TargetAssemblyTypeName: Popup_Position_script, Assembly-CSharp
-        m_MethodName: PopupTranslate
-        m_Mode: 1
+      - m_Target: {fileID: 2014153244}
+        m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
+        m_MethodName: Click_Inventory
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -14076,6 +14176,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506539844}
   m_CullTransparentMesh: 1
+--- !u!1 &1509989430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1509989431}
+  - component: {fileID: 1509989432}
+  m_Layer: 0
+  m_Name: Arr_Order(1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1509989431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509989430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1555023619}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1509989432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509989430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1513283900
 GameObject:
   m_ObjectHideFlags: 0
@@ -14797,6 +14947,91 @@ Transform:
   m_Father: {fileID: 2051011239}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1555023618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1555023619}
+  m_Layer: 0
+  m_Name: Array_Order
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1555023619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555023618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1509989431}
+  - {fileID: 1573994533}
+  - {fileID: 1438543254}
+  - {fileID: 1989141569}
+  - {fileID: 1070915015}
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1573994532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1573994533}
+  - component: {fileID: 1573994534}
+  m_Layer: 0
+  m_Name: Arr_Order(2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1573994533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573994532}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1555023619}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1573994534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573994532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1586447925
 GameObject:
   m_ObjectHideFlags: 0
@@ -16957,18 +17192,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1822452839}
         m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
-        m_MethodName: Save_Character_ID
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1822452839}
-        m_TargetAssemblyTypeName: Inventory_ID, Assembly-CSharp
         m_MethodName: Setting_Character_Stat
         m_Mode: 2
         m_Arguments:
@@ -16987,6 +17210,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2014153244}
+        m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
+        m_MethodName: Click_Inventory
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -18209,6 +18444,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1987783081}
   m_CullTransparentMesh: 1
+--- !u!1 &1989141568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1989141569}
+  - component: {fileID: 1989141570}
+  m_Layer: 0
+  m_Name: Arr_Order(4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1989141569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989141568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1555023619}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1989141570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989141568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1992259538
 GameObject:
   m_ObjectHideFlags: 0
@@ -18458,8 +18743,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ready_Array: 0
-  Prefeb_Character: {fileID: 1029127565}
-  Order: []
+  Order:
+  - {fileID: 1509989430}
+  - {fileID: 1573994532}
+  - {fileID: 1438543253}
+  - {fileID: 1989141568}
+  - {fileID: 1070915014}
   Array_Time: {fileID: 1443718457}
   Grids:
   - {fileID: 1284921950}
@@ -18492,6 +18781,7 @@ MonoBehaviour:
   PopUp_Manager: {fileID: 2108374302}
   arrRoomManager: {fileID: 2016060956}
   arrData_Sync: {fileID: 158899196}
+  PV: {fileID: 0}
 --- !u!4 &2014153245
 Transform:
   m_ObjectHideFlags: 0
