@@ -172,10 +172,10 @@ public class Arrayment_Manager : MonoBehaviour
                     my_turn = false;
                     if(arrData_Sync.is_datasync==true)
                     {
-                        if (Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[0].GetComponent<Character>().character_ID != 0)
                         {
-                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID);
+                            Enemy_Grid_Num = Reverse_Array(cs.team2[0].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[0]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -185,10 +185,10 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
-                        if (Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[1].GetComponent<Character>().character_ID != 0)
                         {
-                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID);
+                            Enemy_Grid_Num = Reverse_Array(cs.team2[1].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[1]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -228,7 +228,7 @@ public class Arrayment_Manager : MonoBehaviour
                         if (Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[2]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -241,7 +241,7 @@ public class Arrayment_Manager : MonoBehaviour
                         if (Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[3]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -278,10 +278,10 @@ public class Arrayment_Manager : MonoBehaviour
                     my_turn = false;
                     if (arrData_Sync.is_datasync == true)
                     {
-                        if (Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[4].GetComponent<Character>().character_ID != 0)
                         {
-                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID);
+                            Enemy_Grid_Num = Reverse_Array(cs.team2[4].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[4]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -307,10 +307,10 @@ public class Arrayment_Manager : MonoBehaviour
                     my_turn = false;
                     if (arrData_Sync.is_datasync == true)
                     {
-                        if (Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[0].GetComponent<Character>().character_ID != 0)
                         {
-                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[0].GetComponent<Character>().character_ID);
+                            Enemy_Grid_Num = Reverse_Array(cs.team2[0].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[0]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -347,10 +347,10 @@ public class Arrayment_Manager : MonoBehaviour
                     my_turn = false;
                     if (arrData_Sync.is_datasync == true)
                     {
-                        if (Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[1].GetComponent<Character>().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[1].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[1]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -360,10 +360,10 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
-                        if (Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[2].GetComponent<Character>().character_ID != 0)
                         {
-                            Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[2].GetComponent<Character>().character_ID);
+                            Enemy_Grid_Num = Reverse_Array(cs.team2[2].GetComponent<Character>().character_Num_Of_Grid);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[2]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -400,10 +400,10 @@ public class Arrayment_Manager : MonoBehaviour
                     my_turn = false;
                     if (arrData_Sync.is_datasync == true)
                     {
-                        if (Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[3].GetComponent<Character>().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[3].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[3]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -413,10 +413,10 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
-                        if (Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID != 0)
+                        if (cs.team2[4].GetComponent<Character>().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_Num_Of_Grid);
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Character_Setting(Arrayed_Data.instance.team2[4].GetComponent<Character>().character_ID);
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[4]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                         }
@@ -457,8 +457,9 @@ public class Arrayment_Manager : MonoBehaviour
         {
             if(cs.character_ID==T.team1[i].GetComponent<Character>().character_ID)
             {
-                Order_Rearrange(i);
                 PV.RPC("Cancle_Sync",RpcTarget.All,i);
+                Order_Rearrange(i);
+                arrData_Sync.DataSync(i);
             }
         }
         cs.tag = "Null_Character";
@@ -469,10 +470,10 @@ public class Arrayment_Manager : MonoBehaviour
     [PunRPC]
     private void Cancle_Sync(int i)
     {
-        cancle_num = Reverse_Array(Arrayed_Data.instance.team1[i].GetComponent<Character>().character_Num_Of_Grid);
-        //Arrayed_Data.instance.team1[i].GetComponent<Character>().Character_Reset();
-        //Arrayed_Data.instance.team1[i].GetComponent<Character>().Debuging_Character();
         arrData_Sync.DataSync(i);
+        Debug.Log("Cancle");
+        cancle_num = Reverse_Array(Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Num_Of_Grid)-1;
+        Debug.Log(cancle_num);
     }
     public void Sync_Character()
     {
