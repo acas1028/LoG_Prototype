@@ -24,9 +24,14 @@ public class Character_Action : Character
         Character_Action enemy_Character_Action;
         enemy_Character_Action = enemy_Character.GetComponent<Character>() as Character_Action;
 
-        int damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
+        int damage = 0;
+
+        if (character_Skill == Skill.Attack_ArmorPiercer)
+            damage = SkillManager.Instance.Skill_Attack_ArmorPiercer(this.gameObject,enemy_Character);
+        else
+            damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
+
         enemy_Character_Action.Character_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
-        character_Buffed_Attack = 0;
     }
 
     public void Character_Damaged(GameObject attacker, int damage) // 피격 함수
@@ -35,16 +40,18 @@ public class Character_Action : Character
 
         Character_Counter();
 
-        int final_damage = (damage * (100 + character_Buffed_Damaged)) / 100;
+        int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
-        character_HP -= final_damage;
+        if (character_Divine_Shield == true && final_damage > 0)
+            character_Divine_Shield = false;
+        else
+            character_HP -= final_damage;
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         {
             character_HP = 0;
             Character_Dead(attacker);
         }
-        character_Buffed_Damaged = 0;
     }
 
     public void Character_Counter_Attack(GameObject enemy_Character) //카운터 발동

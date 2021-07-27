@@ -23,6 +23,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public bool bM_Character_Setting_Finish { get; set; }
 
     public bool bM_Character_Battle_Start { get; set; }
+    public bool bM_Character_isAttack { get; set; }
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -72,6 +73,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Round = 0;
         bM_Character_Setting_Finish = false;
         bM_Character_Battle_Start = false;
+        bM_Character_isAttack = false;
 
         bM_Character_Team1 = new GameObject[5];
         bM_Character_Team2 = new GameObject[5];
@@ -135,6 +137,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
         while (bM_Round > 0 && bM_Round < 11)
         {
+            yield return new WaitUntil(() => !bM_Character_isAttack);
+
             Battle(bM_Round);
 
             yield return new WaitUntil(() => Check_Skill_Finish());
@@ -243,6 +247,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         return true;
     }
 
+ 
     void Round_Finish()
     {
         foreach(var team1 in bM_Character_Team1)
@@ -265,9 +270,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
     IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
-    // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
-    // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
-    
+        // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
+        // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
+        bM_Character_isAttack = true;
+
+        SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
+
+        yield return new WaitUntil(() => Check_Skill_Finish());
+
         for (int j = 0; j < 9; j++)
         {
             if (attacker.GetComponent<Character>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
@@ -298,7 +308,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
         yield return new WaitUntil(() => Check_Counter_Finish());
 
         yield return new WaitForSeconds(2.0f);
-    
+
+        bM_Character_isAttack = false;
+
     }
 
     IEnumerator Counter(GameObject attacker, GameObject[] enemy_Characters)
@@ -306,7 +318,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         for(int i = 0; i < 5; i++)
         {
             Character EnemyScript = enemy_Characters[i].GetComponent<Character>();
-            if (EnemyScript.character_Counter == true)
+            if (EnemyScript.character_Counter == true && EnemyScript.character_Is_Allive == true)
             {
                 yield return new WaitForSeconds(2.0f);
 
@@ -357,21 +369,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         Calculate_Remain_HP();
         Calculate_Remain_Character();
-        Destory_Red_Grid();
 
-    }
-
-    void Check_Setting_SKill()
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            SkillManager.Instance.AfterSetting(bM_Character_Team1[i]);
-        }
-
-        for(int i = 0; i < 5; i++)
-        {
-            SkillManager.Instance.AfterSetting(bM_Character_Team2[i]);
-        }
     }
 
     void Calculate_Remain_HP() //남은 체력 계산
@@ -404,16 +402,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 bM_Remain_Character_Team2--;
             }
-        }
-    }
-
-    void Destory_Red_Grid()
-    {
-        GameObject[] red_Grid = GameObject.FindGameObjectsWithTag("BattleScene_Damaged_Grid");
-
-        foreach(var redGrid in red_Grid)
-        {
-            Destroy(redGrid, 2.0f);
         }
     }
 

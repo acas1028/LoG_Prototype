@@ -14,11 +14,16 @@ public class Character : MonoBehaviour
 
     public enum Skill
     {
-        Balance_Union = 1,
-        Defense_Disarm,
-        Attack_Confidence,
-        Attack_Executioner,
-        Balance_GbGH
+        Attack_Confidence,          // 자신감
+        Attack_Executioner,         // 처형자
+        Attack_Struggle,            // 발악
+        Attack_Ranger,              // 명사수
+        Attack_ArmorPiercer,        // 철갑탄
+        Attack_DivineShield,        // 천상의보호막
+        Attack_Sturdy,              // 옹골참
+        Balance_Union,              // 결속
+        Balance_GBGH,               // 모아니면 도
+        Defense_Disarm,             // 무장해제
     };
 
     // 전투 전 캐릭터가 기본으로 가지고 있는 변수
@@ -27,7 +32,9 @@ public class Character : MonoBehaviour
     public Type character_Type { get; set; }
     public Skill character_Skill { get; set; }
     public bool character_Is_Allive { get; set; } // 캐릭터 생존 유무
-    public int character_HP { get; set; } // 체력
+    public int character_HP { get; set; } // 현재 체력
+
+    public int character_MaxHP { get; set; }
     public int character_AP { get; set; } // AP
     public int character_Attack_Damage { get; set; } // 공격력
     public int character_Num_Of_Grid { get; set; } // 그리드 넘버
@@ -45,6 +52,7 @@ public class Character : MonoBehaviour
     public int character_is_Kill { get; set; } // 해당 턴에 적을 죽였는지를 판단하는 변수
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
+    public int character_Union_Select { get; set; } // Union(결속) 특성으로 선택 한 그리드넘버
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
@@ -76,6 +84,7 @@ public class Character : MonoBehaviour
         character_Type = Type.Attacker;
         character_Skill = Skill.Attack_Confidence;
         character_Is_Allive = false;
+        character_MaxHP = 0;
         character_HP = 0;
         character_AP = 0;
         character_Attack_Damage = 0;
@@ -94,6 +103,8 @@ public class Character : MonoBehaviour
         character_Counter = false;
         character_is_Kill = 0;
         character_Number = 0;
+
+        character_Union_Select = 3;
     }
 
     public void Debuging_Character()
@@ -151,7 +162,40 @@ public class Character : MonoBehaviour
 
         if ((string)character_data[num]["Skill"] == "모아니면도")
         {
-            character_Skill = Skill.Balance_GbGH;
+            character_Skill = Skill.Balance_GBGH;
+        }
+        switch ((string)character_data[num]["Skill"])
+        {
+            case "자신감":
+                character_Skill = Skill.Attack_Confidence;
+                break;
+            case "처형자":
+                character_Skill = Skill.Attack_Executioner;
+                break;
+            case "발악":
+                character_Skill = Skill.Attack_Struggle;
+                break;
+            case "명사수":
+                character_Skill = Skill.Attack_Ranger;
+                break;
+            case "철갑탄":
+                character_Skill = Skill.Attack_ArmorPiercer;
+                break;
+            case "천상의보호막":
+                character_Skill = Skill.Attack_DivineShield;
+                break;
+            case "옹골참":
+                character_Skill = Skill.Attack_Sturdy;
+                break;
+            case "결속":
+                character_Skill = Skill.Balance_Union;
+                break;
+            case "모아니면도":
+                character_Skill = Skill.Balance_GBGH;
+                break;
+            case "무장해제":
+                character_Skill = Skill.Defense_Disarm;
+                break;
         }
     }
 
@@ -191,6 +235,7 @@ public class Character : MonoBehaviour
         setting_type(num);
         setting_skill(num);
         character_HP = (int)character_data[num]["HP"];
+        character_MaxHP = character_HP;
         character_AP = (int)character_data[num]["AP"];
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
         character_Attack_Range = new bool[9];
@@ -219,5 +264,6 @@ public class Character : MonoBehaviour
         character_Buffed_Damaged = copy.character_Buffed_Damaged;
         character_Divine_Shield = copy.character_Divine_Shield;
         character_Revivial = copy.character_Revivial;
+        character_Union_Select = copy.character_Union_Select;
     }
 }

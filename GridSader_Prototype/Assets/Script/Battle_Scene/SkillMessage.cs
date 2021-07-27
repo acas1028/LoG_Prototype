@@ -17,44 +17,18 @@ public class SkillMessage : MonoBehaviour
         
     }
 
-    public void Confidence(GameObject character)
+    public void Message(GameObject character , string skillname)
     {
-        StartCoroutine(CConfidence(character));
+        StartCoroutine(message(character,skillname));
     }
 
-    IEnumerator CConfidence(GameObject character)
+    IEnumerator message(GameObject character,string skillname)
     {
         Character ACS = character.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 자신감 스킬 발동!";
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 " + skillname + " 스킬 발동!";
 
         yield return new WaitForSeconds(2.0f);
         this.gameObject.SetActive(false);
     }
 
-    public void Executioner(GameObject attacker)
-    {
-        StartCoroutine(CExecutioner(attacker));
-    }
-
-    IEnumerator CExecutioner(GameObject attacker)
-    {
-        Character ACS = attacker.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 처형자 스킬 발동!";
-
-        yield return new WaitForSeconds(2.0f);
-        this.gameObject.SetActive(false);
-    }
-    public void Disarm(GameObject attacker)
-    {
-        StartCoroutine(CDisarm(attacker));
-    }
-
-    IEnumerator CDisarm(GameObject attacker)
-    {
-        Character ACS = attacker.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 무장해제 스킬 발동!";
-
-        yield return new WaitForSeconds(2.0f);
-        this.gameObject.SetActive(false);
-    }
 }
