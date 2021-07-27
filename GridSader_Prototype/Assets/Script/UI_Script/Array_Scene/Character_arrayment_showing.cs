@@ -18,7 +18,7 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
     public int Oppenent_Count;
     public bool is_Mine;
     public bool is_array_Ready_Click;
-
+    public bool[] temp;
 
     public bool is_Sprite_Change;
 
@@ -120,9 +120,9 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
                 {
                     if (changes_Attack_Range[i] == true)
                     {
+                        Debug.Log(i);
                         Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
                     }
-                    Debug.Log(Mine_Grid_Color[i]);
                 }
                 
             }
@@ -152,51 +152,58 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void Arrayment_cancle_inGrid()
+    void Arrayment_cancle_inGrid() //현재 고치는 중에 있음. 상대 것은 반응하나, 자신것에 반응을 하지 않는 기이한 현상을 발견, cancel character나 temp를 이용해 고쳐볼 예정
     {
         if (Character_List.Count == 0)
             return;
 
-
+        Debug.Log(temp);
+        Debug.Log(cancel_Character);
         if (is_Mine == true)
         {
-            for (int i = 0; i < Opponent_Grid_Color.Length; i++)
+            for (int i = 0; i < temp.Length; i++)
             {
-                if (Opponent_Grid_Color[i] == true)
+                if (temp[i]==true)
                 {
-                    if (Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == blue_Sprite)
-                    {
-                        Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
-                    }
-                    else
+                    if (Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == red_Sprite)
                     {
                         Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+                    }
+                    else if(Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite==blue_Sprite)
+                    {
+                        Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
                     }
 
                 }
             }
+            my_Count--;
         }
 
         else
         {
-            for (int i = 0; i < Mine_Grid_Color.Length; i++)
+            bool[] changes_Attack_Range = Enemy_AttackRange_Change(temp);
+            for (int i = 0; i < changes_Attack_Range.Length; i++)
             {
-                if (Mine_Grid_Color[i] == true)
+                if (changes_Attack_Range[i] == true)
                 {
-                    if (Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == blue_Sprite)
-                    {
-                        Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
-                    }
-                    else
+                    if (Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == red_Sprite)
                     {
                         Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+                    }
+                    else if (Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == blue_Sprite)
+                    {
+                        Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
                     }
 
                 }
             }
+            Oppenent_Count--;
         }
-
-        Character_List.Remove(cancel_Character);
+        for (int i = 0; i < Character_List.Count; i++)
+        {
+            if (Character_List[i].GetComponent<Character>().character_ID== cancel_Character.GetComponent<Character>().character_ID)
+                Character_List.RemoveAt(i);
+        }
 
         cancel_Character = null;
     }
@@ -259,6 +266,17 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
         {
             dummy[i] = false;
             dummy[i] = Team2CS.character_Attack_Range[Reverse_Enemy(i + 1) - 1];
+        }
+        return dummy;
+    }
+    bool[] Enemy_AttackRange_Change(bool[] temp)
+    {
+        bool[] dummy = new bool[9];
+
+        for (int i = 0; i < 9; i++)
+        {
+            dummy[i] = false;
+            dummy[i] =temp[Reverse_Enemy(i + 1) - 1];
         }
         return dummy;
     }

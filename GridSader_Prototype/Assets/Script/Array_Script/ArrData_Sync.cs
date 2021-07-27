@@ -161,14 +161,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 character_Arrayment_Showing.my_Count++;
             }
 
-            if(character_Arrayment_Showing.my_Count!= 0 && Arrayed_Data.instance.team1[character_Arrayment_Showing.my_Count-1].GetComponent<Character>().character_ID == 0)
+            if (character_Arrayment_Showing.my_Count != 0 && Arrayed_Data.instance.team1[character_Arrayment_Showing.my_Count - 1].GetComponent<Character>().character_ID == 0)
             {
-                Debug.Log("mine");
-                character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team1[character_Arrayment_Showing.my_Count - 1];
                 character_Arrayment_Showing.is_Mine = true;
-                character_Arrayment_Showing.Set_AttackRange_Ui(false);
-                character_Arrayment_Showing.my_Count--;
             }
+
 
             return;
         }
@@ -235,11 +232,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         }
         if (character_Arrayment_Showing.Oppenent_Count != 0 && Arrayed_Data.instance.team2[character_Arrayment_Showing.Oppenent_Count - 1].GetComponent<Character>().character_ID == 0)
         {
-            Debug.Log("Not mine");
-            character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team2[character_Arrayment_Showing.Oppenent_Count - 1];
             character_Arrayment_Showing.is_Mine = false;
-            character_Arrayment_Showing.Set_AttackRange_Ui(false);
-            character_Arrayment_Showing.Oppenent_Count--;
         }
     }
     #endregion

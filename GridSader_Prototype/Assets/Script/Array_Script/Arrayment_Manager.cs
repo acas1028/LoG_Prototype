@@ -27,6 +27,7 @@ public class Arrayment_Manager : MonoBehaviour
     private GameObject Cancle_Character;
     public ArrRoomManager arrRoomManager;
     public ArrData_Sync arrData_Sync;
+    public Character_arrayment_showing character_Arrayment_Showing;
     public PhotonView PV;
 
     private static Arrayment_Manager ArrayManager;
@@ -458,11 +459,12 @@ public class Arrayment_Manager : MonoBehaviour
             }
         }
     }
+
     public void Cancle_Array()
     {
         Character cs = Cancle_Character.GetComponent<Character>();
         Arrayed_Data T = Arrayed_Data.instance;
-        for(int i=0;i<5;i++)
+        for (int i=0;i<5;i++)
         {
             if(cs.character_ID==T.team1[i].GetComponent<Character>().character_ID)
             {
@@ -471,6 +473,7 @@ public class Arrayment_Manager : MonoBehaviour
                 arrData_Sync.DataSync(i);
             }
         }
+        character_Arrayment_Showing.Set_AttackRange_Ui(false);
         cs.tag = "Null_Character";
         cs.Character_Reset();
         cs.Debuging_Character();
@@ -481,6 +484,8 @@ public class Arrayment_Manager : MonoBehaviour
     {
         arrData_Sync.DataSync(i);
         Debug.Log("Cancle");
+        character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team2[i];
+        character_Arrayment_Showing.temp = Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Attack_Range;
         cancle_num = Reverse_Array(Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Num_Of_Grid)-1;
         Debug.Log(cancle_num);
     }
