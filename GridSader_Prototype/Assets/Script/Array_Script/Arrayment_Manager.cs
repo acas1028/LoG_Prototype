@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +15,6 @@ public class Arrayment_Manager : MonoBehaviour
     private int Time_Out_Inventory;
     private int cancle_num;
     private int click_id;
-
-    public List<GameObject> Order = new List<GameObject>();
 
     public GameObject Array_Time;
     public GameObject[] Grids;
@@ -159,6 +158,7 @@ public class Arrayment_Manager : MonoBehaviour
                         if (Ready_Array == true)
                         {
                             cs.team1[0].GetComponent<Character>().character_Attack_Order = 1;
+                            cs.team1[0].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -211,7 +211,9 @@ public class Arrayment_Manager : MonoBehaviour
                         if (Ready_Array == true)
                         {
                             cs.team1[1].GetComponent<Character>().character_Attack_Order = 2;
+                            cs.team1[1].GetComponent<Character>().Debuging_Character();
                             cs.team1[2].GetComponent<Character>().character_Attack_Order = 3;
+                            cs.team1[2].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -263,8 +265,10 @@ public class Arrayment_Manager : MonoBehaviour
                         Pick = false;
                         if (Ready_Array == true)
                         {
-                            cs.team1[3].GetComponent<Character>().character_Attack_Order = 3;
-                            cs.team1[4].GetComponent<Character>().character_Attack_Order = 4;
+                            cs.team1[3].GetComponent<Character>().character_Attack_Order = 4;
+                            cs.team1[3].GetComponent<Character>().Debuging_Character();
+                            cs.team1[4].GetComponent<Character>().character_Attack_Order = 5;
+                            cs.team1[4].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -333,7 +337,9 @@ public class Arrayment_Manager : MonoBehaviour
                         if (Ready_Array == true)
                         {
                             cs.team1[0].GetComponent<Character>().character_Attack_Order = 1;
+                            cs.team1[0].GetComponent<Character>().Debuging_Character();
                             cs.team1[1].GetComponent<Character>().character_Attack_Order = 2;
+                            cs.team1[1].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -386,7 +392,9 @@ public class Arrayment_Manager : MonoBehaviour
                         if (Ready_Array == true)
                         {
                             cs.team1[2].GetComponent<Character>().character_Attack_Order = 3;
+                            cs.team1[2].GetComponent<Character>().Debuging_Character();
                             cs.team1[3].GetComponent<Character>().character_Attack_Order = 4;
+                            cs.team1[3].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -439,6 +447,7 @@ public class Arrayment_Manager : MonoBehaviour
                         if (Ready_Array == true)
                         {
                             cs.team1[4].GetComponent<Character>().character_Attack_Order = 5;
+                            cs.team1[4].GetComponent<Character>().Debuging_Character();
                             Debug.Log((ArrayPhase)Phase + "배치 완료");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
@@ -489,6 +498,46 @@ public class Arrayment_Manager : MonoBehaviour
         }
         arrData_Sync.DataSync(Return_num);
     }
+   IEnumerator Time_OUT()
+   {
+        int inventroy_Leng = 0;
+        Arrayed_Data cs = Arrayed_Data.instance;
+        while (inventroy_Leng<Inventory.Length)
+        {
+            if (Inventory[inventroy_Leng].GetComponent<Inventory_ID>().is_Arrayed == false)
+            {
+                Time_Out_Inventory = inventroy_Leng;
+            }
+        }
+
+        inventroy_Leng++;
+        
+        Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().is_Arrayed = true;
+        int random = Random.Range(0, 9);
+        while(Grids[random].tag == "Character")
+        {
+            random = Random.Range(0, 9);
+        }
+
+        Grids[random].GetComponent<Character>().Character_Setting(Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID);
+        Grids[random].GetComponent<Character>().character_Num_Of_Grid = random + 1;
+        Grids[random].GetComponent<Character>().Debuging_Character();
+
+        int j = 0;
+        while(j<5)
+        {
+            if(cs.team1[j].GetComponent<Character>().character_ID==0)
+            {
+                cs.team1[j].GetComponent<Character>().Copy_Character_Stat(Grids[random]);
+                cs.team1[j].GetComponent<Character>().Debuging_Character();
+                arrData_Sync.DataSync(j);
+                break;
+            }
+        }
+        yield return null;
+    }
+
+
     private void Order_Rearrange(int num)
     {
         Arrayed_Data cs = Arrayed_Data.instance;
