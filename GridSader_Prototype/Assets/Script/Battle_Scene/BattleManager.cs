@@ -53,7 +53,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
-
     }
 
     // Start is called before the first frame update
@@ -233,18 +232,20 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     bool Check_Skill_Finish()
     {
-        foreach(GameObject team1 in bM_Character_Team1)
+        bool dummy = true;
+
+        foreach (GameObject team1 in bM_Character_Team1)
         {
             if (team1.GetComponent<Character>().character_Activate_Skill == true)
-                return false;
+                dummy = false;
         }
         foreach (GameObject team2 in bM_Character_Team2)
         {
             if (team2.GetComponent<Character>().character_Activate_Skill == true)
-                return false;
+                dummy = false;
         }
 
-        return true;
+        return dummy;
     }
 
  
@@ -270,11 +271,16 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
     IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
+        Debug.LogFormat("<color=red>Character_Attack 코루틴 시작, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
         // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
         // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
         bM_Character_isAttack = true;
 
         SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
+
+        Debug.LogFormat("<color=yellow>1_Check_Skill_Finish: 공격자 {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
+        yield return new WaitUntil(() => Check_Skill_Finish());
+        yield return new WaitForSeconds(0.0001f);
 
         for (int j = 0; j < 9; j++)
         {
@@ -299,6 +305,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
 
+        Debug.LogFormat("<color=yellow>2_Check_Skill_Finish: 공격자 {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
         yield return new WaitUntil(() => Check_Skill_Finish());
 
         StartCoroutine(Counter(attacker, enemy_Characters));
@@ -308,7 +315,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2.0f);
 
         bM_Character_isAttack = false;
-
+        Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
     }
 
     IEnumerator Counter(GameObject attacker, GameObject[] enemy_Characters)
@@ -367,7 +374,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         Calculate_Remain_HP();
         Calculate_Remain_Character();
-
     }
 
     void Calculate_Remain_HP() //남은 체력 계산

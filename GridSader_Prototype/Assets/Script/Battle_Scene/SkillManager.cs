@@ -257,18 +257,20 @@ public class SkillManager : MonoBehaviour
         if (ACS.character_is_Kill == 0)
         {
             ACS.character_Activate_Skill = false;
+            Debug.Log("탈출");
             yield break;
         }
         //스킬 발동 체크
 
         yield return new WaitForSeconds(2.0f);
 
+        Debug.Log("처형자 메시지 출력");
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(attacker, "처형자");
+
         BattleManager.Instance.bM_Round--;
         ACS.character_is_Kill = 0;
         ACS.character_Activate_Skill = false;
-
-        skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(attacker,"처형자");
     }                                       
 
     IEnumerator Skill_Attack_Struggle(GameObject character) // 발악
