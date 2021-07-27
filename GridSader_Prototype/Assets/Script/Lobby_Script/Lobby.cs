@@ -54,10 +54,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 	[SerializeField]
 	private LoadingEffect loadingEffect;
 
-	[Tooltip("PlayFab ¿Œ¡ı")]
-	[SerializeField]
-	private PlayFabAuthenticator authenticator;
-
 	private Dictionary<string, RoomInfo> cachedRoomList;
 	private Dictionary<string, GameObject> roomListEntries;
 

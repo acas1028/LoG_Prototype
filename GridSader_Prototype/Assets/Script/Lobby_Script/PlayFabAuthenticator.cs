@@ -13,10 +13,19 @@ using ExitGames.Client.Photon;
 // PlayFab은 웹에 데이터를 저장하기 위해 사용하는 것이며, 이외에 서버의 트래픽 현황이나 요청 횟수, 플레이어 등을 볼 수 있다.
 public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
 {
+    [SerializeField]
+    private InputField nameInput;
+
+    /// <summary>
+    /// 개인의 데이터에 접근하기 위한 ID
+    /// </summary>
+    [Tooltip("개인의 데이터에 접근하기 위한 ID")]
+    [SerializeField]
     private string _playFabPlayerIdCache;
 
     private void Awake()
     {
+        // 접근하고자 하는 PlayFab 서버의 ID
         PlayFabSettings.TitleId = "7CCDF";
         AuthenticateWithPlayFab();
     }
@@ -59,22 +68,25 @@ public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
 
     public void SendData()
     {
-        //var data = new Dictionary<string, object>() { { "Hello", "World" } };
-        //var flags = new WebFlags(WebFlags.HttpForwardConst);
-        //var result = PhotonNetwork.RaiseEvent(0, data, new RaiseEventOptions()
-        //{
-        //    Flags = flags
-        //}, new SendOptions());
-        //LogMessage("Data(Dictionary Type) Transmition: " + result);
+        /*
+        var data = new Dictionary<string, object>() { { "Hello", "World" } };
+        var flags = new WebFlags(WebFlags.HttpForwardConst);
+        var result = PhotonNetwork.RaiseEvent(0, data, new RaiseEventOptions()
+        {
+            Flags = flags
+        }, new SendOptions());
+        LogMessage("Data(Dictionary Type) Transmition: " + result);
 
-        //var properties = new Hashtable() {
-        //    {"CustomProperty", "It's Value"}};
-        //var expectedProperties = new Hashtable();
-        //PhotonNetwork.CurrentRoom.SetCustomProperties(properties, expectedProperties, flags);
-        //LogMessage("New Room Properties Set");
+        var properties = new Hashtable() {
+            {"CustomProperty", "It's Value"}};
+        var expectedProperties = new Hashtable();
+        PhotonNetwork.CurrentRoom.SetCustomProperties(properties, expectedProperties, flags);
+        LogMessage("New Room Properties Set");
+        */
 
+        // Key 값 지우는 방법: value 값을 null 로 해준다.
         var data = new Dictionary<string, string>() { { "name", PhotonNetwork.NickName } };
-        var request = new UpdateUserDataRequest() { Data = data, Permission = UserDataPermission.Public };
+        var request = new UpdateUserDataRequest() { Data = data, Permission = UserDataPermission.Private };
         PlayFabClientAPI.UpdateUserData(request,
             result => {
                 foreach (var item in request.Data)
@@ -92,7 +104,9 @@ public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
             result => {
                 foreach (var item in result.Data)
                 {
-                    Debug.LogFormat("불러온 데이터: {0} / {1}", item.Key, item.Value);
+                    if (item.Key == "name")
+                        nameInput.text = item.Value.Value;
+                    Debug.LogFormat("불러온 데이터: {0} / {1}", item.Key, item.Value.Value);
                 }
             }, error => Debug.LogWarningFormat("데이터 불러오기 실패: {0}", error.ErrorMessage)
         );
