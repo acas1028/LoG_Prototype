@@ -6215,6 +6215,7 @@ GameObject:
   - component: {fileID: 708515697}
   - component: {fileID: 708515696}
   - component: {fileID: 708515695}
+  - component: {fileID: 708515699}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6295,6 +6296,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &708515699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708515694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5baf76c9a824fe3a92fad0380bbd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleKey: 96
+  openOnStart: 0
+  shakeToOpen: 1
+  shakeRequiresTouch: 0
+  shakeAcceleration: 3
+  toggleThresholdSeconds: 0.5
+  restrictLogCount: 0
+  maxLogCount: 1000
+  logFontSize: 12
+  scaleFactor: 1
 --- !u!1 &714330639
 GameObject:
   m_ObjectHideFlags: 0
@@ -13609,12 +13632,12 @@ MonoBehaviour:
   - {fileID: 1547935596}
   Character_List: []
   cancel_Character: {fileID: 0}
-  temp: 
   red_Sprite: {fileID: 21300000, guid: 0cff1cdf9ffc13349bb1fda15ab66d37, type: 3}
   blue_Sprite: {fileID: 21300000, guid: b461c902909c80641a81e61432970479, type: 3}
   my_Count: 0
   Oppenent_Count: 0
   is_Mine: 0
+  is_array_Ready_Click: 0
   is_Sprite_Change: 0
 --- !u!4 &1457821812
 Transform:
@@ -19218,6 +19241,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2014153244}
         m_TargetAssemblyTypeName: Arrayment_Manager, Assembly-CSharp
         m_MethodName: BanPick_Ready
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1457821811}
+        m_TargetAssemblyTypeName: Character_arrayment_showing, Assembly-CSharp
+        m_MethodName: is_array_ready_Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

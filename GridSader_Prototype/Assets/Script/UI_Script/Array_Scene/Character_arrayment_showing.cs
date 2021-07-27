@@ -12,12 +12,12 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
     public GameObject[] Opponent_Grid_Color;
     public List<GameObject> Character_List = new List<GameObject>();
     public GameObject cancel_Character;
-    public bool[] temp; //cancel_character의 공격 범위 bool로 전부 가져오기
     public Sprite red_Sprite;
     public Sprite blue_Sprite;
     public int my_Count;
     public int Oppenent_Count;
     public bool is_Mine;
+    public bool is_array_Ready_Click;
 
 
     public bool is_Sprite_Change;
@@ -59,11 +59,12 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
         my_Count = 0;
         Oppenent_Count = 0;
         is_Sprite_Change = false;
+        is_array_Ready_Click = false;
     }
 
     private void Update()
     {
-
+        Set_Reset_Attack_Range_Ui();
     }
 
     [PunRPC]
@@ -111,23 +112,26 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
 
         else
         {
-            Character_List[0].GetComponent<Character>().character_Attack_Range = Enemy_AttackRange_Change(Character_List[0].GetComponent<Character>());
+            //Character_List[0].GetComponent<Character>().character_Attack_Range = Enemy_AttackRange_Change(Character_List[0].GetComponent<Character>());
             if (Character_List.Count == 1)
             {
-                for (int i = 0; i < Character_List[0].GetComponent<Character>().character_Attack_Range.Length; i++)
+                bool[] changes_Attack_Range = Enemy_AttackRange_Change(Character_List[0].GetComponent<Character>());
+                for (int i = 0; i < changes_Attack_Range.Length; i++)
                 {
-                    if (Character_List[0].GetComponent<Character>().character_Attack_Range[i] == true)
+                    if (changes_Attack_Range[i] == true)
                     {
                         Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
                     }
+                    Debug.Log(Mine_Grid_Color[i]);
                 }
                 
             }
             else if (Character_List.Count == 2)
             {
-                for (int i = 0; i < Character_List[1].GetComponent<Character>().character_Attack_Range.Length; i++)
+                bool[] changes_Attack_Range = Enemy_AttackRange_Change(Character_List[1].GetComponent<Character>());
+                for (int i = 0; i < changes_Attack_Range.Length; i++)
                 {
-                    if (Character_List[1].GetComponent<Character>().character_Attack_Range[i] == true)
+                    if (changes_Attack_Range[i] == true)
                     {
                         if (Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == red_Sprite)
                         {
@@ -259,16 +263,35 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
         return dummy;
     }
 
+
+    [PunRPC]
     void Character_showing_arrayment_Reset()// 판 지날때마다 초기화 시키는 함수
     {
         for(int i=0; i<Opponent_Grid_Color.Length;i++)
         {
             Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
         }
+        for (int i = 0; i < Mine_Grid_Color.Length;i++)
+        {
+            Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+        }
         Character_List.Clear();
 
-        temp = null;
         cancel_Character = null;
+        is_array_Ready_Click = false;
+    }
+
+    public void Set_Reset_Attack_Range_Ui()
+    {
+        if(is_array_Ready_Click==true)
+        {
+            photonView.RPC("Character_showing_arrayment_Reset", RpcTarget.All);
+        }
+    }
+
+   public void is_array_ready_Click()
+    {
+        is_array_Ready_Click = true;
     }
 }
 
