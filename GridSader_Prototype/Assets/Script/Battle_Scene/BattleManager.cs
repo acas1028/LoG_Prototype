@@ -276,8 +276,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
 
-        yield return new WaitUntil(() => Check_Skill_Finish());
-
         for (int j = 0; j < 9; j++)
         {
             if (attacker.GetComponent<Character>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
