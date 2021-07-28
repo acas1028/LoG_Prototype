@@ -20,9 +20,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     public int bM_Round { get; set; }
 
-    public bool bM_Character_Setting_Finish { get; set; }
-
-    public bool bM_Character_Battle_Start { get; set; }
     public bool bM_Character_isAttack { get; set; }
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
@@ -70,8 +67,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
         bM_Round = 0;
-        bM_Character_Setting_Finish = false;
-        bM_Character_Battle_Start = false;
         bM_Character_isAttack = false;
 
         bM_Character_Team1 = new GameObject[5];
@@ -82,19 +77,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
             bM_Character_Team1[i] = Instantiate(Character_Prefab);
             bM_Character_Team2[i] = Instantiate(Character_Prefab);
         }
+
+        BM_Character_Setting();
+        StartCoroutine(Running_Phase());
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if(bM_Character_Setting_Finish == false && bM_Character_Battle_Start == false)
-            BM_Character_Setting();
-
-        if (bM_Character_Setting_Finish == true && bM_Character_Battle_Start == false)
-            StartCoroutine(Running_Phase());
-
-
     }
 
     public bool Is_Preemptive()
@@ -109,8 +100,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     IEnumerator Running_Phase()
     {
-        bM_Character_Battle_Start = true;
-
         if(bM_Round == 0)
         {
             for (int i = 0; i < 5; i++)
@@ -153,27 +142,25 @@ public class BattleManager : MonoBehaviourPunCallbacks
     void BM_Character_Setting()
     {
         int dummy = 0;
-        Arrayed_Data DataSync = Arrayed_Data.instance;
-        if (DataSync == null)
+        Arrayed_Data data = Arrayed_Data.instance;
+        if (data == null)
             Debug.LogError("Arrayed_Data 인스턴스가 없습니다.");
 
         for (int i = 0; i < 5; i++)
         {
             Character Team1CS = bM_Character_Team1[i].GetComponent<Character>();
-            GameObject Team1Sync = DataSync.team1[i];
-            Team1CS.Copy_Character_Stat(Team1Sync);
+            GameObject Team1data = data.team1[i];
+            Team1CS.Copy_Character_Stat(Team1data);
             Team1CS.character_Team_Number = 1;
             Team1CS.character_Number = Team1CS.character_Attack_Order;
             Team1CS.Debuging_Character();
 
-            Debug.Log("Team1" + Team1CS.character_Skill);
-      
             if (Team1CS.character_HP != 0)
                 dummy++;
       
             Character Team2CS = bM_Character_Team2[i].GetComponent<Character>();
-            GameObject Team2Sync = DataSync.team2[i];
-            Team2CS.Copy_Character_Stat(Team2Sync);
+            GameObject Team2data = data.team2[i];
+            Team2CS.Copy_Character_Stat(Team2data);
             Team2CS.character_Num_Of_Grid = Reverse_Enemy(Team2CS.character_Num_Of_Grid);
             Team2CS.character_Attack_Range = Enemy_AttackRange_Change(Team2CS);
             Team2CS.character_Team_Number = 2;
@@ -193,11 +180,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 Team1CS.character_Attack_Order = Team1CS.character_Attack_Order * 2;
                 Team2CS.character_Attack_Order = Team2CS.character_Attack_Order * 2 - 1;
             }
-        }
-
-        if (dummy == 10)
-        {
-            bM_Character_Setting_Finish = true;
         }
     }
 
@@ -232,23 +214,20 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     bool Check_Skill_Finish()
     {
-        bool dummy = true;
-
         foreach (GameObject team1 in bM_Character_Team1)
         {
             if (team1.GetComponent<Character>().character_Activate_Skill == true)
-                dummy = false;
+                return false;
         }
         foreach (GameObject team2 in bM_Character_Team2)
         {
             if (team2.GetComponent<Character>().character_Activate_Skill == true)
-                dummy = false;
+                return false;
         }
 
-        return dummy;
+        return true;
     }
 
- 
     void Round_Finish()
     {
         foreach(var team1 in bM_Character_Team1)
@@ -269,18 +248,18 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         bM_Round++;
     }
+
     IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
+        bool result;
         Debug.LogFormat("<color=red>Character_Attack 코루틴 시작, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
         // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
         // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
         bM_Character_isAttack = true;
 
-        SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
-
-        Debug.LogFormat("<color=yellow>1_Check_Skill_Finish: 공격자 {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
-        yield return new WaitUntil(() => Check_Skill_Finish());
-        yield return new WaitForSeconds(0.0001f);
+        result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
+        if (result)
+            yield return new WaitForSeconds(2.0f);
 
         for (int j = 0; j < 9; j++)
         {
@@ -303,16 +282,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
         AlertMessage.SetActive(true);
         AlertMessage.GetComponent<AlertMessage>().Attack(attacker);
 
-        SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
+        yield return new WaitForSeconds(2.0f);
 
-        Debug.LogFormat("<color=yellow>2_Check_Skill_Finish: 공격자 {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
-        yield return new WaitUntil(() => Check_Skill_Finish());
+        result = SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
+        if (result)
+            yield return new WaitForSeconds(2.0f);
 
         StartCoroutine(Counter(attacker, enemy_Characters));
 
         yield return new WaitUntil(() => Check_Counter_Finish());
-
-        yield return new WaitForSeconds(2.0f);
 
         bM_Character_isAttack = false;
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);

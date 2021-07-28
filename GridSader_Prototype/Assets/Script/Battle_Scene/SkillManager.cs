@@ -70,35 +70,44 @@ public class SkillManager : MonoBehaviour
         }
     }
 
-    public void BeforeAttack(GameObject attacker,GameObject[] Damaged)
+    public bool BeforeAttack(GameObject attacker,GameObject[] Damaged)
     {
+        bool result;
         Character ACS = attacker.GetComponent<Character>();
 
         if(ACS.character_Skill == Character.Skill.Attack_Ranger)
         {
-            StartCoroutine(SKill_Attack_Ranger(attacker,Damaged));
+            result = SKill_Attack_Ranger(attacker,Damaged);
+            if (result) return true;
         }
 
         if(ACS.character_Skill == Character.Skill.Attack_Struggle)
         {
-            StartCoroutine(Skill_Attack_Struggle(attacker));
+            result = Skill_Attack_Struggle(attacker);
+            if (result) return true;
         }
 
+        return false;
     }
 
-    public void AfterAttack(GameObject attacker,GameObject[] Damaged)
+    public bool AfterAttack(GameObject attacker,GameObject[] Damaged)
     {
+        bool result;
         Character ACS = attacker.GetComponent<Character>();
 
         if(ACS.character_Skill == Character.Skill.Defense_Disarm)
         {
-            StartCoroutine(Skill_Defender_Disarm(attacker, Damaged));
+            result = Skill_Defender_Disarm(attacker, Damaged);
+            if (result) return true;
         }
 
         if(ACS.character_Skill == Character.Skill.Attack_Executioner)
         {
-            StartCoroutine(Skill_Attack_Executioner(attacker));
+            result = Skill_Attack_Executioner(attacker);
+            if (result) return true;
         }
+
+        return false;
     }
 
     // 공격형 스킬
@@ -249,7 +258,7 @@ public class SkillManager : MonoBehaviour
             return true;
         return false;
     }
-    IEnumerator Skill_Attack_Executioner(GameObject attacker) // 처형자
+    bool Skill_Attack_Executioner(GameObject attacker) // 처형자
     {
         Character ACS = attacker.GetComponent<Character>();
         ACS.character_Activate_Skill = true;
@@ -257,23 +266,21 @@ public class SkillManager : MonoBehaviour
         if (ACS.character_is_Kill == 0)
         {
             ACS.character_Activate_Skill = false;
-            Debug.Log("탈출");
-            yield break;
+            return false;
         }
         //스킬 발동 체크
 
-        yield return new WaitForSeconds(2.0f);
-
-        Debug.Log("처형자 메시지 출력");
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(attacker, "처형자");
 
         BattleManager.Instance.bM_Round--;
         ACS.character_is_Kill = 0;
         ACS.character_Activate_Skill = false;
+
+        return true;
     }                                       
 
-    IEnumerator Skill_Attack_Struggle(GameObject character) // 발악
+    bool Skill_Attack_Struggle(GameObject character) // 발악
     {
         Character CCS = character.GetComponent<Character>();
         CCS.character_Activate_Skill = true;
@@ -281,10 +288,8 @@ public class SkillManager : MonoBehaviour
         if(CCS.character_HP >= CCS.character_MaxHP / 3)
         {
             CCS.character_Activate_Skill = false;
-            yield break;
+            return false;
         }
-
-        yield return new WaitForSeconds(2.0f);
 
         CCS.character_Attack_Damage += 50;
         CCS.character_Activate_Skill = false;
@@ -292,9 +297,10 @@ public class SkillManager : MonoBehaviour
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"발악");
 
+        return true;
     }
 
-    IEnumerator SKill_Attack_Ranger(GameObject character,GameObject[] enemy) // 명사수 
+    bool SKill_Attack_Ranger(GameObject character,GameObject[] enemy) // 명사수 
     {
         Character CCS = character.GetComponent<Character>();
         CCS.character_Activate_Skill = true;
@@ -310,9 +316,8 @@ public class SkillManager : MonoBehaviour
         if (enemyAllive == false)
         {
             CCS.character_Activate_Skill = false;
-            yield break;
+            return false;
         }
-        yield return new WaitForSeconds(2.0f);
 
         int num = 0;
         int minHP = 0;
@@ -337,6 +342,8 @@ public class SkillManager : MonoBehaviour
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"명사수");
+
+        return true;
     }
 
     public int Skill_Attack_ArmorPiercer(GameObject character,GameObject enemy) // 철갑탄
@@ -467,7 +474,7 @@ public class SkillManager : MonoBehaviour
 
 
     // 방어형 스킬
-    IEnumerator Skill_Defender_Disarm(GameObject attacker,GameObject[] Damaged) // 무장해제 
+    bool Skill_Defender_Disarm(GameObject attacker,GameObject[] Damaged) // 무장해제 
     {
         Character ACS = attacker.GetComponent<Character>();
         ACS.character_Activate_Skill = true;
@@ -491,10 +498,8 @@ public class SkillManager : MonoBehaviour
         if (dum == 0)
         {
             ACS.character_Activate_Skill = false;
-            yield break;
+            return false;
         }
-
-        yield return new WaitForSeconds(2.0f);
 
         for (int i = 0; i < 9; i++)
         {
@@ -514,5 +519,7 @@ public class SkillManager : MonoBehaviour
         skillmessage.GetComponent<SkillMessage>().Message(attacker,"무장해제");
 
         ACS.character_Activate_Skill = false;
+
+        return true;
     }
 }

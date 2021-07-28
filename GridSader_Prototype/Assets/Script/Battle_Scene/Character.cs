@@ -65,8 +65,7 @@ public class Character : MonoBehaviour
     public int Debug_Character_HP;
     public int Debug_Character_Attack_order;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         Character_Reset();
         Debug_character_Attack_Range = new bool[9];
