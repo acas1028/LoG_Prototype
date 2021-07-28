@@ -229,12 +229,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         yield return new WaitForSeconds(bM_Timegap);
 
+        // 아래 코루틴이 끝날 때 까지 대기(반격)
+        yield return StartCoroutine(Counter(attacker, enemy_Characters));
+
         result = SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
             yield return new WaitForSeconds(bM_Timegap);
-
-        // 아래 코루틴이 끝날 때 까지 대기
-        yield return StartCoroutine(Counter(attacker, enemy_Characters));
 
         bM_Character_isAttack = false;
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
