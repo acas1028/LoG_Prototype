@@ -12,6 +12,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject Character_Prefab;
     public GameObject AlertMessage;
 
+    public float bM_Timegap { get { return 2.0f; } }
     public bool bM_Team1_Is_Preemitive { get; set; }
     public int bM_Remain_Character_Team1 { get; set; }
     public int bM_Remain_Character_Team2 { get; set; }
@@ -100,17 +101,20 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     IEnumerator Running_Phase()
     {
+        bool result;
         if(bM_Round == 0)
         {
             for (int i = 0; i < 5; i++)
             {
-                SkillManager.Instance.AfterSetting(bM_Character_Team1[i]);
-                yield return new WaitUntil(() => Check_Skill_Finish());
+                result = SkillManager.Instance.AfterSetting(bM_Character_Team1[i]);
+                if (result)
+                    yield return new WaitForSeconds(bM_Timegap);
             }
             for(int i = 0; i < 5; i++)
             {
-                SkillManager.Instance.AfterSetting(bM_Character_Team2[i]);
-                yield return new WaitUntil(() => Check_Skill_Finish());
+                result = SkillManager.Instance.AfterSetting(bM_Character_Team2[i]);
+                if (result)
+                    yield return new WaitForSeconds(bM_Timegap);
             }
             for (int i = 0; i < 5; i++)
             {
@@ -119,8 +123,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
             bM_Round++;
 
-            yield return new WaitForSeconds(2.0f);
-
             // 캐릭터 세팅 이후 스킬체크 과정
         }
         while (bM_Round > 0 && bM_Round < 11)
@@ -128,12 +130,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
             yield return new WaitUntil(() => !bM_Character_isAttack);
 
             Battle(bM_Round);
+            bM_Round++;
 
-            yield return new WaitUntil(() => Check_Skill_Finish());
-            yield return new WaitUntil(() => Check_Counter_Finish());
-            Round_Finish();
-
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(bM_Timegap);
         }
 
         Finish_Game();
@@ -195,60 +194,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         return dummy;
     }
 
-    bool Check_Counter_Finish()
-    {
-        foreach(GameObject team1 in bM_Character_Team1)
-        {
-            if (team1.GetComponent<Character>().character_Counter == true)
-                return false;
-        }
-
-        foreach(GameObject team2 in bM_Character_Team2)
-        {
-            if (team2.GetComponent<Character>().character_Counter == true)
-                return false;
-        }
-
-        return true;
-    }
-
-    bool Check_Skill_Finish()
-    {
-        foreach (GameObject team1 in bM_Character_Team1)
-        {
-            if (team1.GetComponent<Character>().character_Activate_Skill == true)
-                return false;
-        }
-        foreach (GameObject team2 in bM_Character_Team2)
-        {
-            if (team2.GetComponent<Character>().character_Activate_Skill == true)
-                return false;
-        }
-
-        return true;
-    }
-
-    void Round_Finish()
-    {
-        foreach(var team1 in bM_Character_Team1)
-        {
-            Character Team1 = team1.GetComponent<Character>();
-            Team1.character_Activate_Skill = false;
-            Team1.character_Counter = false;
-            Team1.character_is_Kill = 0;
-        }
-
-        foreach (var team1 in bM_Character_Team2)
-        {
-            Character Team1 = team1.GetComponent<Character>();
-            Team1.character_Activate_Skill = false;
-            Team1.character_Counter = false;
-            Team1.character_is_Kill = 0;
-        }
-
-        bM_Round++;
-    }
-
     IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
     {
         bool result;
@@ -259,7 +204,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(bM_Timegap);
 
         for (int j = 0; j < 9; j++)
         {
@@ -282,15 +227,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
         AlertMessage.SetActive(true);
         AlertMessage.GetComponent<AlertMessage>().Attack(attacker);
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(bM_Timegap);
 
         result = SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(bM_Timegap);
 
-        StartCoroutine(Counter(attacker, enemy_Characters));
-
-        yield return new WaitUntil(() => Check_Counter_Finish());
+        // 아래 코루틴이 끝날 때 까지 대기
+        yield return StartCoroutine(Counter(attacker, enemy_Characters));
 
         bM_Character_isAttack = false;
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
@@ -303,18 +247,18 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Character EnemyScript = enemy_Characters[i].GetComponent<Character>();
             if (EnemyScript.character_Counter == true && EnemyScript.character_Is_Allive == true)
             {
-                yield return new WaitForSeconds(2.0f);
-
                 enemy_Characters[i].GetComponent<Character_Action>().Character_Counter_Attack(attacker);
                 AlertMessage.SetActive(true);
                 AlertMessage.GetComponent<AlertMessage>().Counter(enemy_Characters[i]);
+
+                yield return new WaitForSeconds(Instance.bM_Timegap);
             }
         }
     }
 
     void Battle(int Round) // 선공,후공에 따라 배틀을 진행한다.
     {
-        
+        Debug.LogFormat("<color=#FF69B4> Round: {0}</color>", Round);
         foreach(GameObject team1_Character in bM_Character_Team1)
         {
             if (team1_Character.GetComponent<Character>().character_Attack_Order == Round)
@@ -349,7 +293,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             team2_Character.GetComponent<Character>().Debuging_Character();
         }
  
-
         Calculate_Remain_HP();
         Calculate_Remain_Character();
     }

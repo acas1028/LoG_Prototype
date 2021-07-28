@@ -48,7 +48,6 @@ public class Character : MonoBehaviour
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
     public bool character_Counter { get; set; } //해당 턴에 피격당하여, 카운터를 치는지 판단하는 변수
-    public bool character_Activate_Skill { get; set; }
     public int character_is_Kill { get; set; } // 해당 턴에 적을 죽였는지를 판단하는 변수
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
@@ -97,7 +96,6 @@ public class Character : MonoBehaviour
         character_Buffed_Attack = 0;
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
-        character_Activate_Skill = false;
         character_Revivial = false;
         character_Counter = false;
         character_is_Kill = 0;

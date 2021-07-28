@@ -22,7 +22,7 @@ public class SkillMessage : MonoBehaviour
         Character ACS = character.GetComponent<Character>();
         this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 " + skillname + " 스킬 발동!";
 
-        Invoke("Disable", 2.0f);
+        Invoke("Disable", BattleManager.Instance.bM_Timegap);
     }
 
     private void Disable()

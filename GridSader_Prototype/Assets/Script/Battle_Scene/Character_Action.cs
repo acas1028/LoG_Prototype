@@ -9,7 +9,7 @@ public class Character_Action : Character
     {
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
 
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
