@@ -157,7 +157,6 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
         if (Character_List.Count == 0)
             return;
 
-        Debug.Log(temp);
         Debug.Log(cancel_Character);
         if (is_Mine == true)
         {
@@ -182,6 +181,11 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
         else
         {
             bool[] changes_Attack_Range = Enemy_AttackRange_Change(temp);
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                Debug.Log(changes_Attack_Range[i]);
+            }
             for (int i = 0; i < changes_Attack_Range.Length; i++)
             {
                 if (changes_Attack_Range[i] == true)
@@ -190,7 +194,7 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
                     {
                         Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
                     }
-                    else if (Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == blue_Sprite)
+                    else if (Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == blue_Sprite)
                     {
                         Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
                     }

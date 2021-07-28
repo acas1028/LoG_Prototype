@@ -464,11 +464,11 @@ public class Arrayment_Manager : MonoBehaviour
     {
         Character cs = Cancle_Character.GetComponent<Character>();
         Arrayed_Data T = Arrayed_Data.instance;
-        for (int i=0;i<5;i++)
+        for (int i = 0; i < 5; i++)
         {
-            if(cs.character_ID==T.team1[i].GetComponent<Character>().character_ID)
+            if (cs.character_ID == T.team1[i].GetComponent<Character>().character_ID)
             {
-                PV.RPC("Cancle_Sync",RpcTarget.All,i);
+                PV.RPC("Cancle_Sync", RpcTarget.All, i);
                 Order_Rearrange(i);
                 arrData_Sync.DataSync(i);
             }
@@ -484,8 +484,16 @@ public class Arrayment_Manager : MonoBehaviour
     {
         arrData_Sync.DataSync(i);
         Debug.Log("Cancle");
-        character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team2[i];
-        character_Arrayment_Showing.temp = Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Attack_Range;
+        if(character_Arrayment_Showing.is_Mine==true)
+        {
+            character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team1[i];
+            character_Arrayment_Showing.temp = Arrayed_Data.instance.team1[i].GetComponent<Character>().character_Attack_Range;
+        }
+        else
+        {
+            character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team2[i];
+            character_Arrayment_Showing.temp = Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Attack_Range;
+        }
         cancle_num = Reverse_Array(Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Num_Of_Grid)-1;
         Debug.Log(cancle_num);
     }
