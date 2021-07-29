@@ -210,8 +210,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
         {
-            StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
-            yield return new WaitForSeconds(bM_Timegap);
+            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
         }
 
         for (int j = 0; j < 9; j++)
@@ -225,13 +224,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     {
                         alertMessage.gameObject.SetActive(true);
                         alertMessage.Attack(attacker, enemy_Character);
-
-                        attacker.GetComponent<Character_Action>().Character_Attack(enemy_Character);
+                        
                         if (attacker.GetComponent<Character>().character_Team_Number == 1)
                             gridManager.Create_Damaged_Grid_Team2(j + 1);
                         else
                             gridManager.Create_Damaged_Grid_Team1(j + 1);
-                        yield return new WaitForSeconds(bM_AttackTimegap);
+                        yield return StartCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
                     }
                 }
             }
@@ -243,8 +241,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         result = SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
         {
-            StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
-            yield return new WaitForSeconds(bM_Timegap);
+            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
         }
 
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
@@ -258,7 +255,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             if (EnemyScript.character_Counter == true && EnemyScript.character_Is_Allive == true)
             {
                 Debug.Log("반격");
-                enemy_Characters[i].GetComponent<Character_Action>().Character_Counter_Attack(attacker);
+                StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().Attack(attacker, true));
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Counter(enemy_Characters[i]);
 

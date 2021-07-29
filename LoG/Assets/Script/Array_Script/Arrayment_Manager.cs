@@ -93,7 +93,7 @@ public class Arrayment_Manager : MonoBehaviour
                     if (my_turn == true)//자신의 턴이면 취소가 가능하다
                     {
                         Cancle_Character = hit.transform.gameObject;
-                        Array_Cancle_Button.SetActive(true);
+                        Array_Cancle_Button.SetActive(!Array_Cancle_Button.activeSelf);
                     }
                     else//자신의 턴이 아니면 취소가 불가능 하다.
                     {
