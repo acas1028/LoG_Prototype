@@ -13,6 +13,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject Character_Prefab;
 
     public float bM_Timegap { get { return 2.0f; } }
+    public float bM_AttackTimegap { get { return 1.0f; } }
     public bool bM_Team1_Is_Preemitive { get; set; }
     public int bM_Remain_Character_Team1 { get; set; }
     public int bM_Remain_Character_Team2 { get; set; }
@@ -222,19 +223,19 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     if (enemy_Character.GetComponent<Character>().character_Num_Of_Grid == j + 1
                     && enemy_Character.GetComponent<Character>().character_Is_Allive)
                     {
+                        alertMessage.gameObject.SetActive(true);
+                        alertMessage.Attack(attacker, enemy_Character);
+
                         attacker.GetComponent<Character_Action>().Character_Attack(enemy_Character);
+                        if (attacker.GetComponent<Character>().character_Team_Number == 1)
+                            gridManager.Create_Damaged_Grid_Team2(j + 1);
+                        else
+                            gridManager.Create_Damaged_Grid_Team1(j + 1);
+                        yield return new WaitForSeconds(bM_AttackTimegap);
                     }
                 }
-                if (attacker.GetComponent<Character>().character_Team_Number == 1)
-                    gridManager.Create_Damaged_Grid_Team2(j + 1);
-                else
-                    gridManager.Create_Damaged_Grid_Team1(j + 1);
             }
         }
-        alertMessage.gameObject.SetActive(true);
-        alertMessage.Attack(attacker);
-
-        yield return new WaitForSeconds(bM_Timegap);
 
         // 아래 코루틴이 끝날 때 까지 대기(반격)
         yield return StartCoroutine(Counter(attacker, enemy_Characters));

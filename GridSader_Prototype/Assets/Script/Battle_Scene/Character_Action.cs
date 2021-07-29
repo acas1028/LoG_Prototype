@@ -8,6 +8,7 @@ public class Character_Action : Character
     private Vector3 startPosition;
     private bool isMoveToEnemy;
     private Transform enemyTransform;
+    private Vector3 velocity;
 
     private void Start()
     {
@@ -18,9 +19,11 @@ public class Character_Action : Character
     private void Update()
     {
         if (isMoveToEnemy)
-            transform.position = Vector3.MoveTowards(transform.position, enemyTransform.transform.position, 0.05f);
+            transform.position = Vector3.SmoothDamp(transform.position, enemyTransform.transform.position, ref velocity,
+                (character_Counter ? BattleManager.Instance.bM_Timegap : BattleManager.Instance.bM_AttackTimegap) / 4);
         else
-            transform.position = Vector3.MoveTowards(transform.position, startPosition, 0.05f);
+            transform.position = Vector3.SmoothDamp(transform.position, startPosition, ref velocity,
+                (character_Counter ? BattleManager.Instance.bM_Timegap : BattleManager.Instance.bM_AttackTimegap) / 4);
     }
 
     public IEnumerator SetCharacterColor(string colorName)
@@ -40,7 +43,7 @@ public class Character_Action : Character
                 break;
         }
 
-        yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
+        yield return new WaitForSeconds(colorName == "red" ? BattleManager.Instance.bM_AttackTimegap : BattleManager.Instance.bM_Timegap);
 
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
@@ -49,12 +52,17 @@ public class Character_Action : Character
 
     IEnumerator Set_Attack_Motion(GameObject enemy_Character)
     {
+        gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Damaged_Grid";
         isMoveToEnemy = true;
 
-        yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap / 2);
+        yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
 
         isMoveToEnemy = false;
         enemyTransform = null;
+
+        yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+
+        gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
     }
 
     public void Character_Attack(GameObject enemy_Character) // 캐릭터 스크립트 내에 있는 공격 함수.

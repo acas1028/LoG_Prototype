@@ -24,13 +24,15 @@ public class GridManager : MonoBehaviour
     // 나중에 맵 그래픽을 받을 시 새로 변경 필요
     public void Create_Damaged_Grid_Team1(int Damaged_Grid_Num)
     {
-        Instantiate(Red_Grid, Team1Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
+        GameObject redGrid = Instantiate(Red_Grid, Team1Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
+        Destroy(redGrid, BattleManager.Instance.bM_AttackTimegap);
     }
 
     //전투중에 피격당한 범위에 붉은 그리드 생성 (2팀)
     public void Create_Damaged_Grid_Team2(int Damaged_Grid_Num)
     {
-        Instantiate(Red_Grid, Team2Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
+        GameObject redGrid = Instantiate(Red_Grid, Team2Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
+        Destroy(redGrid, BattleManager.Instance.bM_AttackTimegap);
     }
 }
  

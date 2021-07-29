@@ -26,15 +26,16 @@ public class AlertMessage : MonoBehaviour
         Character ACS = attacker.GetComponent<Character>();
         this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터가 사망하여 공격 할 수 없습니다!";
 
-        Invoke("Disable", BattleManager.Instance.bM_Timegap);
+        Invoke("Disable", BattleManager.Instance.bM_AttackTimegap);
     }
 
-    public void Attack(GameObject attacker)
+    public void Attack(GameObject attacker, GameObject enemy)
     {
         Character ACS = attacker.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 공격!";
+        Character ECS = enemy.GetComponent<Character>();
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터가 " + ECS.character_Number + "번 캐릭터 공격!";
 
-        Invoke("Disable", BattleManager.Instance.bM_Timegap);
+        Invoke("Disable", BattleManager.Instance.bM_AttackTimegap);
     }
 
     public void Win()
