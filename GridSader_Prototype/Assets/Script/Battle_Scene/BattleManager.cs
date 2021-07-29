@@ -21,7 +21,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     public int bM_Round { get; set; }
 
-    public bool bM_Character_isAttack { get; set; }
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -68,7 +67,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
         bM_Round = 0;
-        bM_Character_isAttack = false;
 
         bM_Character_Team1 = new GameObject[5];
         bM_Character_Team2 = new GameObject[5];
@@ -121,20 +119,16 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 bM_Character_Team1[i].GetComponent<Character>().Debuging_Character();
                 bM_Character_Team2[i].GetComponent<Character>().Debuging_Character();
             }
-            bM_Round++;
 
             // 캐릭터 세팅 이후 스킬체크 과정
         }
-        while (bM_Round > 0 && bM_Round < 11)
+        while (bM_Round >= 0 && bM_Round < 10)
         {
-            yield return new WaitUntil(() => !bM_Character_isAttack);
-
-            Battle(bM_Round);
             bM_Round++;
-
-            yield return new WaitForSeconds(bM_Timegap);
+            yield return StartCoroutine(Battle(bM_Round));
         }
 
+        Debug.Log("게임 종료");
         Finish_Game();
     }
 
@@ -200,7 +194,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         Debug.LogFormat("<color=red>Character_Attack 코루틴 시작, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
         // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
         // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
-        bM_Character_isAttack = true;
 
         result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
@@ -236,7 +229,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (result)
             yield return new WaitForSeconds(bM_Timegap);
 
-        bM_Character_isAttack = false;
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
     }
 
@@ -247,6 +239,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Character EnemyScript = enemy_Characters[i].GetComponent<Character>();
             if (EnemyScript.character_Counter == true && EnemyScript.character_Is_Allive == true)
             {
+                Debug.Log("반격");
                 enemy_Characters[i].GetComponent<Character_Action>().Character_Counter_Attack(attacker);
                 AlertMessage.SetActive(true);
                 AlertMessage.GetComponent<AlertMessage>().Counter(enemy_Characters[i]);
@@ -256,7 +249,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void Battle(int Round) // 선공,후공에 따라 배틀을 진행한다.
+    IEnumerator Battle(int Round) // 선공,후공에 따라 배틀을 진행한다.
     {
         Debug.LogFormat("<color=#FF69B4> Round: {0}</color>", Round);
         foreach(GameObject team1_Character in bM_Character_Team1)
@@ -265,12 +258,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 if (team1_Character.GetComponent<Character>().character_Is_Allive) // 팀1의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                 {
-                    StartCoroutine(Character_Attack(team1_Character, bM_Character_Team2));
+                    yield return StartCoroutine(Character_Attack(team1_Character, bM_Character_Team2));
                 }
                 else
                 {
                     AlertMessage.SetActive(true);
                     AlertMessage.GetComponent<AlertMessage>().CantAttack(team1_Character);
+                    yield return new WaitUntil(() => !AlertMessage.gameObject.activeSelf);
                 }
             }
             team1_Character.GetComponent<Character>().Debuging_Character();
@@ -282,19 +276,17 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 if (team2_Character.GetComponent<Character>().character_Is_Allive) // 팀2의 캐릭터 중 공격순서가 페이즈와 똑같고, 살아있는 캐릭터가 공격을 실행한다.
                 {
-                    StartCoroutine(Character_Attack(team2_Character, bM_Character_Team1));
+                    yield return StartCoroutine(Character_Attack(team2_Character, bM_Character_Team1));
                 }
                 else
                 {
                     AlertMessage.SetActive(true);
                     AlertMessage.GetComponent<AlertMessage>().CantAttack(team2_Character);
+                    yield return new WaitUntil(() => !AlertMessage.gameObject.activeSelf);
                 }
             }
             team2_Character.GetComponent<Character>().Debuging_Character();
         }
- 
-        Calculate_Remain_HP();
-        Calculate_Remain_Character();
     }
 
     void Calculate_Remain_HP() //남은 체력 계산
@@ -368,23 +360,24 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Finish_Game()
     {
-        if(bM_Remain_Character_Team1 < bM_Remain_Character_Team2)
+        Calculate_Remain_HP();
+        Calculate_Remain_Character();
+
+        if (bM_Remain_Character_Team1 < bM_Remain_Character_Team2)
         {
             // 패배
 
             AlertMessage.SetActive(true);
             AlertMessage.GetComponent<AlertMessage>().Lose();
         }
-
-        if(bM_Remain_Character_Team2 < bM_Remain_Character_Team1)
+        else if(bM_Remain_Character_Team2 < bM_Remain_Character_Team1)
         {
             // 승리
 
             AlertMessage.SetActive(true);
             AlertMessage.GetComponent<AlertMessage>().Win();
         }
-
-        if(bM_Remain_Character_Team1 == bM_Remain_Character_Team2)
+        else
         {
             // 체력 비교
 
@@ -393,11 +386,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 AlertMessage.SetActive(true);
                 AlertMessage.GetComponent<AlertMessage>().Lose();
             }
-
-            if(bM_Remain_HP_Team2 < bM_Remain_HP_Team1)
+            else if(bM_Remain_HP_Team2 < bM_Remain_HP_Team1)
             {
                 AlertMessage.SetActive(true);
                 AlertMessage.GetComponent<AlertMessage>().Win();
+            }
+            else
+            {
+                AlertMessage.SetActive(true);
+                AlertMessage.GetComponent<AlertMessage>().Message("비겼습니다!");
             }
         }
     }

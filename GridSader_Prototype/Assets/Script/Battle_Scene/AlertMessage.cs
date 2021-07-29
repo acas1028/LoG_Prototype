@@ -14,6 +14,12 @@ public class AlertMessage : MonoBehaviour
     {
         
     }
+
+    public void Message(string message)
+    {
+        this.GetComponent<Text>().text = message;
+        Invoke("Disable", BattleManager.Instance.bM_Timegap);
+    }
     
     public void CantAttack(GameObject attacker)
     {
