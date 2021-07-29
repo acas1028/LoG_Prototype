@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamagedGrid : MonoBehaviour
+public class GridManager : MonoBehaviour
 {
     public GameObject Red_Grid;     // ºÓÀº ±×¸®µå
     public GameObject[] Team1Map;

@@ -5,9 +5,40 @@ using UnityEngine;
 // 캐릭터의 스탯을 기반으로 특정 행동을 취하는 클래스
 public class Character_Action : Character
 {
-    IEnumerator SetCharacterRed()
+    private Vector3 startPosition;
+    private bool isMoveToEnemy;
+    private Transform enemyTransform;
+
+    private void Start()
     {
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        startPosition = transform.position;
+        isMoveToEnemy = false;
+    }
+
+    private void Update()
+    {
+        if (isMoveToEnemy)
+            transform.position = Vector3.MoveTowards(transform.position, enemyTransform.transform.position, 0.05f);
+        else
+            transform.position = Vector3.MoveTowards(transform.position, startPosition, 0.05f);
+    }
+
+    public IEnumerator SetCharacterColor(string colorName)
+    {
+        switch (colorName)
+        {
+            case "red":
+                this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                break;
+            case "green":
+                this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                break;
+            case "blue":
+                this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                break;
+            default:
+                break;
+        }
 
         yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
 
@@ -16,10 +47,22 @@ public class Character_Action : Character
         yield break;
     }
 
+    IEnumerator Set_Attack_Motion(GameObject enemy_Character)
+    {
+        isMoveToEnemy = true;
+
+        yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap / 2);
+
+        isMoveToEnemy = false;
+        enemyTransform = null;
+    }
+
     public void Character_Attack(GameObject enemy_Character) // 캐릭터 스크립트 내에 있는 공격 함수.
     {
+        enemyTransform = enemy_Character.transform;
         // 적 캐릭터를 받아와서, 그 캐릭터의 정보에 접근하여 받을 데미지에 공격력 만큼을 저장시킴.
-        StartCoroutine(SetCharacterRed());
+        StartCoroutine(SetCharacterColor("red"));
+        StartCoroutine(Set_Attack_Motion(enemy_Character));
 
         Character_Action enemy_Character_Action;
         enemy_Character_Action = enemy_Character.GetComponent<Character>() as Character_Action;
@@ -56,7 +99,9 @@ public class Character_Action : Character
 
     public void Character_Counter_Attack(GameObject enemy_Character) //카운터 발동
     {
-        StartCoroutine(SetCharacterRed());
+        enemyTransform = enemy_Character.transform;
+        StartCoroutine(SetCharacterColor("red"));
+        StartCoroutine(Set_Attack_Motion(enemy_Character));
 
         Character_Action enemy_Character_Action;
         enemy_Character_Action = enemy_Character.GetComponent<Character>() as Character_Action;

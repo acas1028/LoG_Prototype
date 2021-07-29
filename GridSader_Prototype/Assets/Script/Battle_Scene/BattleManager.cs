@@ -6,11 +6,11 @@ using Photon.Pun;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
-    public GameObject GridManager;
+    public GridManager gridManager;
+    public AlertMessage alertMessage;
     public GameObject[] bM_Character_Team1;
     public GameObject[] bM_Character_Team2;
     public GameObject Character_Prefab;
-    public GameObject AlertMessage;
 
     public float bM_Timegap { get { return 2.0f; } }
     public bool bM_Team1_Is_Preemitive { get; set; }
@@ -106,13 +106,19 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 result = SkillManager.Instance.AfterSetting(bM_Character_Team1[i]);
                 if (result)
+                {
+                    StartCoroutine(bM_Character_Team1[i].GetComponent<Character_Action>().SetCharacterColor("green"));
                     yield return new WaitForSeconds(bM_Timegap);
+                }
             }
             for(int i = 0; i < 5; i++)
             {
                 result = SkillManager.Instance.AfterSetting(bM_Character_Team2[i]);
                 if (result)
+                {
+                    StartCoroutine(bM_Character_Team2[i].GetComponent<Character_Action>().SetCharacterColor("green"));
                     yield return new WaitForSeconds(bM_Timegap);
+                }
             }
             for (int i = 0; i < 5; i++)
             {
@@ -173,6 +179,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 Team1CS.character_Attack_Order = Team1CS.character_Attack_Order * 2;
                 Team2CS.character_Attack_Order = Team2CS.character_Attack_Order * 2 - 1;
             }
+
+            int gridnum = bM_Character_Team1[i].GetComponent<Character>().character_Num_Of_Grid;
+            bM_Character_Team1[i].transform.position = gridManager.Team1Map[gridnum - 1].transform.position;
+            gridnum = bM_Character_Team2[i].GetComponent<Character>().character_Num_Of_Grid;
+            bM_Character_Team2[i].transform.position = gridManager.Team2Map[gridnum - 1].transform.position;
         }
     }
 
@@ -197,7 +208,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
+        {
+            StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
             yield return new WaitForSeconds(bM_Timegap);
+        }
 
         for (int j = 0; j < 9; j++)
         {
@@ -212,13 +226,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     }
                 }
                 if (attacker.GetComponent<Character>().character_Team_Number == 1)
-                    GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team2(j + 1);
+                    gridManager.Create_Damaged_Grid_Team2(j + 1);
                 else
-                    GridManager.GetComponent<DamagedGrid>().Create_Damaged_Grid_Team1(j + 1);
+                    gridManager.Create_Damaged_Grid_Team1(j + 1);
             }
         }
-        AlertMessage.SetActive(true);
-        AlertMessage.GetComponent<AlertMessage>().Attack(attacker);
+        alertMessage.gameObject.SetActive(true);
+        alertMessage.Attack(attacker);
 
         yield return new WaitForSeconds(bM_Timegap);
 
@@ -227,7 +241,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         result = SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
+        {
+            StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
             yield return new WaitForSeconds(bM_Timegap);
+        }
 
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
     }
@@ -241,8 +258,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 Debug.Log("반격");
                 enemy_Characters[i].GetComponent<Character_Action>().Character_Counter_Attack(attacker);
-                AlertMessage.SetActive(true);
-                AlertMessage.GetComponent<AlertMessage>().Counter(enemy_Characters[i]);
+                alertMessage.gameObject.SetActive(true);
+                alertMessage.Counter(enemy_Characters[i]);
 
                 yield return new WaitForSeconds(Instance.bM_Timegap);
             }
@@ -262,9 +279,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    AlertMessage.SetActive(true);
-                    AlertMessage.GetComponent<AlertMessage>().CantAttack(team1_Character);
-                    yield return new WaitUntil(() => !AlertMessage.gameObject.activeSelf);
+                    alertMessage.gameObject.SetActive(true);
+                    alertMessage.CantAttack(team1_Character);
+                    yield return new WaitUntil(() => !alertMessage.gameObject.activeSelf);
                 }
             }
             team1_Character.GetComponent<Character>().Debuging_Character();
@@ -280,9 +297,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    AlertMessage.SetActive(true);
-                    AlertMessage.GetComponent<AlertMessage>().CantAttack(team2_Character);
-                    yield return new WaitUntil(() => !AlertMessage.gameObject.activeSelf);
+                    alertMessage.gameObject.SetActive(true);
+                    alertMessage.GetComponent<AlertMessage>().CantAttack(team2_Character);
+                    yield return new WaitUntil(() => !alertMessage.gameObject.activeSelf);
                 }
             }
             team2_Character.GetComponent<Character>().Debuging_Character();
@@ -367,15 +384,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             // 패배
 
-            AlertMessage.SetActive(true);
-            AlertMessage.GetComponent<AlertMessage>().Lose();
+            alertMessage.gameObject.SetActive(true);
+            alertMessage.Lose();
         }
         else if(bM_Remain_Character_Team2 < bM_Remain_Character_Team1)
         {
             // 승리
 
-            AlertMessage.SetActive(true);
-            AlertMessage.GetComponent<AlertMessage>().Win();
+            alertMessage.gameObject.SetActive(true);
+            alertMessage.Win();
         }
         else
         {
@@ -383,18 +400,18 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             if (bM_Remain_HP_Team1 < bM_Remain_HP_Team2)
             {
-                AlertMessage.SetActive(true);
-                AlertMessage.GetComponent<AlertMessage>().Lose();
+                alertMessage.gameObject.SetActive(true);
+                alertMessage.Lose();
             }
             else if(bM_Remain_HP_Team2 < bM_Remain_HP_Team1)
             {
-                AlertMessage.SetActive(true);
-                AlertMessage.GetComponent<AlertMessage>().Win();
+                alertMessage.gameObject.SetActive(true);
+                alertMessage.Win();
             }
             else
             {
-                AlertMessage.SetActive(true);
-                AlertMessage.GetComponent<AlertMessage>().Message("비겼습니다!");
+                alertMessage.gameObject.SetActive(true);
+                alertMessage.Message("비겼습니다!");
             }
         }
     }
