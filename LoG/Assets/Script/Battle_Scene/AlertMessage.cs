@@ -18,24 +18,18 @@ public class AlertMessage : MonoBehaviour
     public void Message(string message)
     {
         this.GetComponent<Text>().text = message;
-        Invoke("Disable", BattleManager.Instance.bM_Timegap);
     }
     
     public void CantAttack(GameObject attacker)
     {
         Character ACS = attacker.GetComponent<Character>();
         this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터가 사망하여 공격 할 수 없습니다!";
-
-        Invoke("Disable", BattleManager.Instance.bM_AttackTimegap);
     }
 
-    public void Attack(GameObject attacker, GameObject enemy)
+    public void Attack(GameObject attacker)
     {
         Character ACS = attacker.GetComponent<Character>();
-        Character ECS = enemy.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터가 " + ECS.character_Number + "번 캐릭터 공격!";
-
-        Invoke("Disable", BattleManager.Instance.bM_AttackTimegap);
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터의 공격!";
     }
 
     public void Win()
@@ -53,12 +47,5 @@ public class AlertMessage : MonoBehaviour
     {
         Character CCS = Counter.GetComponent<Character>();
         this.GetComponent<Text>().text = CCS.character_Team_Number + "팀 " + CCS.character_Number + "번 캐릭터 반격!";
-
-        Invoke("Disable", BattleManager.Instance.bM_Timegap);
-    }
-
-    private void Disable()
-    {
-        this.gameObject.SetActive(false);
     }
 }

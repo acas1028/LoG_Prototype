@@ -26,7 +26,7 @@ public class Character_Action : Character
                 (character_Counter ? BattleManager.Instance.bM_Timegap : BattleManager.Instance.bM_AttackTimegap) / 4);
     }
 
-    public IEnumerator SetCharacterColor(string colorName)
+    public IEnumerator SetCharacterColor(string colorName = "default")
     {
         switch (colorName)
         {
@@ -40,14 +40,13 @@ public class Character_Action : Character
                 this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
                 break;
             default:
+                this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
                 break;
         }
 
         yield return new WaitForSeconds(colorName == "red" ? BattleManager.Instance.bM_AttackTimegap : BattleManager.Instance.bM_Timegap);
 
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-
-        yield break;
     }
 
     public IEnumerator Attack(GameObject enemy_Character, bool isCounter)
@@ -88,6 +87,12 @@ public class Character_Action : Character
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
 
         gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+    }
+
+    public IEnumerator SkillAttack()
+    {
+        StopAllCoroutines();
+        yield return StartCoroutine(SetCharacterColor("blue"));
     }
 
     public void Character_Damaged(GameObject attacker, int damage) // 피격 함수

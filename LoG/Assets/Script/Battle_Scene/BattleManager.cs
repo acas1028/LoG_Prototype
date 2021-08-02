@@ -210,30 +210,33 @@ public class BattleManager : MonoBehaviourPunCallbacks
         result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
         {
-            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
+            alertMessage.gameObject.SetActive(false);
+            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SkillAttack());
         }
 
         for (int j = 0; j < 9; j++)
         {
             if (attacker.GetComponent<Character>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
             {
+                if (attacker.GetComponent<Character>().character_Team_Number == 1)
+                    gridManager.Create_Damaged_Grid_Team2(j + 1);
+                else
+                    gridManager.Create_Damaged_Grid_Team1(j + 1);
+
                 foreach (GameObject enemy_Character in enemy_Characters)
                 {
                     if (enemy_Character.GetComponent<Character>().character_Num_Of_Grid == j + 1
                     && enemy_Character.GetComponent<Character>().character_Is_Allive)
                     {
-                        alertMessage.gameObject.SetActive(true);
-                        alertMessage.Attack(attacker, enemy_Character);
-                        
-                        if (attacker.GetComponent<Character>().character_Team_Number == 1)
-                            gridManager.Create_Damaged_Grid_Team2(j + 1);
-                        else
-                            gridManager.Create_Damaged_Grid_Team1(j + 1);
-                        yield return StartCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
+                        StopCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
+                        StartCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
                     }
                 }
             }
         }
+        alertMessage.gameObject.SetActive(true);
+        alertMessage.Attack(attacker);
+        yield return new WaitForSeconds(bM_Timegap);
 
         // 아래 코루틴이 끝날 때 까지 대기(반격)
         yield return StartCoroutine(Counter(attacker, enemy_Characters));
@@ -241,7 +244,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         result = SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
         {
-            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
+            alertMessage.gameObject.SetActive(false);
+            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SkillAttack());
         }
 
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
@@ -254,7 +258,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Character EnemyScript = enemy_Characters[i].GetComponent<Character>();
             if (EnemyScript.character_Counter == true && EnemyScript.character_Is_Allive == true)
             {
-                Debug.Log("반격");
                 StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().Attack(attacker, true));
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Counter(enemy_Characters[i]);
@@ -279,7 +282,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     alertMessage.gameObject.SetActive(true);
                     alertMessage.CantAttack(team1_Character);
-                    yield return new WaitUntil(() => !alertMessage.gameObject.activeSelf);
+                    yield return new WaitForSeconds(bM_Timegap);
                 }
             }
             team1_Character.GetComponent<Character>().Debuging_Character();
@@ -297,7 +300,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     alertMessage.gameObject.SetActive(true);
                     alertMessage.GetComponent<AlertMessage>().CantAttack(team2_Character);
-                    yield return new WaitUntil(() => !alertMessage.gameObject.activeSelf);
+                    yield return new WaitForSeconds(bM_Timegap);
                 }
             }
             team2_Character.GetComponent<Character>().Debuging_Character();
