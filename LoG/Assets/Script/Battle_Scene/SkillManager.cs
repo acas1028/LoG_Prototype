@@ -417,18 +417,18 @@ public class SkillManager : MonoBehaviour
         return true;
     }
 
-    bool Skill_Attack_Sturdy(GameObject character) // ¿Ë°ñÂü 
-    {
-        Character CCS = character.GetComponent<Character>();
-        if (CCS.character_Sturdy == false)
-            return false;
+    //bool Skill_Attack_Sturdy(GameObject character) // ¿Ë°ñÂü 
+    //{
+    //    Character CCS = character.GetComponent<Character>();
+    //    if (CCS.character_Sturdy == false)
+    //        return false;
 
 
-        skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "¿Ë°ñÂü");
+    //    skillmessage.SetActive(true);
+    //    skillmessage.GetComponent<SkillMessage>().Message(character, "¿Ë°ñÂü");
 
-        return true;
-    }
+    //    return true;
+    //}
 
 
     // ¹ë·±½ºÇü ½ºÅ³

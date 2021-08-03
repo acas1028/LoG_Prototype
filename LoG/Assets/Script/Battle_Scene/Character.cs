@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
         Attack_Ranger,              // 명사수
         Attack_ArmorPiercer,        // 철갑탄
         Attack_DivineShield,        // 천상의보호막
-        Attack_Sturdy,              // 옹골참
+     // Attack_Sturdy,              // 옹골참
         Balance_Union,              // 결속
         Balance_GBGH,               // 모아니면 도
         Defense_Disarm,             // 무장해제
@@ -180,9 +180,6 @@ public class Character : MonoBehaviour
                 break;
             case "천상의보호막":
                 character_Skill = Skill.Attack_DivineShield;
-                break;
-            case "옹골참":
-                character_Skill = Skill.Attack_Sturdy;
                 break;
             case "결속":
                 character_Skill = Skill.Balance_Union;
