@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Deck_Character : MonoBehaviour
 {
-    public Sprite[] Character_Sprite;
-    public int Deck_Character_ID;
+    public bool Set_Active_Character = false;
     void Start()
     {
         
@@ -17,10 +16,15 @@ public class Deck_Character : MonoBehaviour
         
     }
 
-    public void Get_Deck_Character(int num)
+    private void OnEnable()
     {
-        this.gameObject.GetComponent<Character>().Character_Setting(num);
-        this.gameObject.GetComponent<Character>().Debuging_Character();
+        Deck_Manager cs = Deck_Manager.instance;
+        for(int i=0;i<cs.Set_Character_.Length;i++)
+        {
+            cs.Set_Character_[i].SetActive(false);
+        }
+        Set_Active_Character = true;
+
+        cs.Current_Character = this.gameObject;
     }
-    
 }
