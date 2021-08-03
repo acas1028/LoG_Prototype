@@ -125,11 +125,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             isEnemyReadyText.text = "상대 준비 미완료";
     }
 
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
-    }
-
     public void SetPreemptivePlayer()
     {
         Debug.Log("SetPreemptivePlayer() 호출");
@@ -231,13 +226,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         roomStatusText.text = "상대 플레이어 " + other.NickName + " 퇴장";
         Debug.Log("<color=yellow>플레이어 " + other.NickName + " 퇴장</color>");
         RenewPlayerList();
-    }
-
-    public override void OnLeftRoom()
-    {
-        Debug.Log("<color=yellow>OnLeftRoom() 호출\n룸을 나갑니다. 로비로 이동합니다.</color>");
-
-        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
