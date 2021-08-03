@@ -50,7 +50,7 @@ public class Character : MonoBehaviour
     public bool character_Counter { get; set; } //해당 턴에 피격당하여, 카운터를 치는지 판단하는 변수
     public int character_is_Kill { get; set; } // 해당 턴에 적을 죽였는지를 판단하는 변수
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
-    public bool character_Revivial { get; set; } // 부활 유/무 true = 있음 false = 없음
+    public bool character_Sturdy { get; set; } // 옹골참 발동
     public int character_Union_Select { get; set; } // Union(결속) 특성으로 선택 한 그리드넘버
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
@@ -96,7 +96,7 @@ public class Character : MonoBehaviour
         character_Buffed_Attack = 0;
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
-        character_Revivial = false;
+        character_Sturdy = false;
         character_Counter = false;
         character_is_Kill = 0;
         character_Number = 0;
@@ -260,7 +260,7 @@ public class Character : MonoBehaviour
         character_Buffed_Attack = copy.character_Buffed_Attack;
         character_Buffed_Damaged = copy.character_Buffed_Damaged;
         character_Divine_Shield = copy.character_Divine_Shield;
-        character_Revivial = copy.character_Revivial;
+        character_Sturdy = copy.character_Sturdy;
         character_Union_Select = copy.character_Union_Select;
     }
 }

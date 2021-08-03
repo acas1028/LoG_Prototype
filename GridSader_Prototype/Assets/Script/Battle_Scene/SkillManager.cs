@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillManager : MonoBehaviour
@@ -48,36 +50,29 @@ public class SkillManager : MonoBehaviour
         
     }
 
-    public bool AfterSetting(GameObject character)
+    public void AfterSetting(GameObject character)
     {
-        bool result;
         Character CCS = character.GetComponent<Character>();
 
         if(CCS.character_Skill == Character.Skill.Attack_Confidence)
         {
-            result = Skill_Attack_Confidence(character);
-            if (result) return true;
+            StartCoroutine(Skill_Attack_Confidence(character));
         }
 
         if(CCS.character_Skill == Character.Skill.Balance_GBGH)
         {
-            result = Skill_Balanced_GBGH(character);
-            if (result) return true;
+            StartCoroutine(Skill_Balanced_GBGH(character));
         }
 
         if(CCS.character_Skill == Character.Skill.Balance_Union)
         {
-            result = Skill_Balanced_Union(character);
-            if (result) return true;
+            StartCoroutine(Skill_Balanced_Union(character));
         }
 
         if(CCS.character_Skill == Character.Skill.Attack_DivineShield)
         {
-            result = Skill_Attack_DivineShield(character);
-            if (result) return true;
+            StartCoroutine(Skill_Attack_DivineShield(character));
         }
-
-        return false;
     }
 
     public bool BeforeAttack(GameObject attacker,GameObject[] Damaged)
@@ -97,19 +92,30 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        if(ACS.character_Skill == Character.Skill.Attack_ArmorPiercer)
-        {
-            result = Skill_Attack_ArmorPiercer(attacker,Damaged);
-            if (result) return true;
-        }
-
+<<<<<<< Updated upstream
         return false;
     }
 
-    public bool AfterCounterAttack(GameObject attacker,GameObject[] Damaged)
+    public bool AfterAttack(GameObject attacker,GameObject[] Damaged)
+=======
+        if(ACS.character_Skill == Character.Skill.Attack_ArmorPiercer)
+        {
+            StartCoroutine(Skill_Attack_ArmorPiercer(attacker, Damaged));
+        }
+    }
+
+
+    public void AfterAttack(GameObject attacker,GameObject[] Damaged)
+>>>>>>> Stashed changes
     {
         bool result;
         Character ACS = attacker.GetComponent<Character>();
+
+        if(ACS.character_Skill == Character.Skill.Defense_Disarm)
+        {
+            result = Skill_Defender_Disarm(attacker, Damaged);
+            if (result) return true;
+        }
 
         if(ACS.character_Skill == Character.Skill.Attack_Executioner)
         {
@@ -120,25 +126,11 @@ public class SkillManager : MonoBehaviour
         return false;
     }
 
-    public bool BeforeCounterAttack(GameObject attacker,GameObject[] Damaged)
-    {
-        bool result;
-        Character ACS = attacker.GetComponent<Character>();
-
-
-        if (ACS.character_Skill == Character.Skill.Defense_Disarm)
-        {
-            result = Skill_Defender_Disarm(attacker, Damaged);
-            if (result) return true;
-        }
-
-        return false;
-    }
-
     // 공격형 스킬
-    bool Skill_Attack_Confidence(GameObject character) // 자신감
+    IEnumerator Skill_Attack_Confidence(GameObject character) // 자신감
     {
         Character ACS = character.GetComponent<Character>();
+        ACS.character_Activate_Skill = true;
 
         bool check = false;
         switch (ACS.character_Num_Of_Grid)
@@ -174,16 +166,19 @@ public class SkillManager : MonoBehaviour
 
         if(!check)
         {
-            return false;
+            ACS.character_Activate_Skill = false;
+            yield break;
         }
 
         //스킬 발동 체크
-        ACS.character_Attack_Damage += 40;
+
+        yield return new WaitForSeconds(2.0f);
+
+        ACS.character_Setting_Buffed_Attack += 30;
+        ACS.character_Activate_Skill = false;
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"자신감");
-
-        return true;
     }
 
     bool Check_Arround(Character ACS,int num1,int num2,int num3,int num4)
@@ -282,9 +277,11 @@ public class SkillManager : MonoBehaviour
     bool Skill_Attack_Executioner(GameObject attacker) // 처형자
     {
         Character ACS = attacker.GetComponent<Character>();
+        ACS.character_Activate_Skill = true;
 
         if (ACS.character_is_Kill == 0)
         {
+            ACS.character_Activate_Skill = false;
             return false;
         }
         //스킬 발동 체크
@@ -294,6 +291,7 @@ public class SkillManager : MonoBehaviour
 
         BattleManager.Instance.bM_Round--;
         ACS.character_is_Kill = 0;
+        ACS.character_Activate_Skill = false;
 
         return true;
     }                                       
@@ -301,18 +299,32 @@ public class SkillManager : MonoBehaviour
     bool Skill_Attack_Struggle(GameObject character) // 발악
     {
         Character CCS = character.GetComponent<Character>();
+        CCS.character_Activate_Skill = true;
 
-        if (CCS.character_HP > (CCS.character_MaxHP / 10) * 9)
+        if(CCS.character_HP > (CCS.character_MaxHP / 5) * 4)
         {
+            CCS.character_Activate_Skill = false;
             return false;
         }
 
+<<<<<<< Updated upstream
+        CCS.character_Attack_Damage += 50;
+        CCS.character_Activate_Skill = false;
+=======
+        yield return new WaitForSeconds(2.0f);
 
-        for(int i  = 9; i > 0; i++)
-        {
-            if (CCS.character_HP <= (CCS.character_MaxHP / 10) * i)
-                CCS.character_Buffed_Attack += 10;
-        }
+        if (CCS.character_HP <= (CCS.character_MaxHP / 5) * 4)
+            CCS.character_Buffed_Attack += 20;
+
+        if (CCS.character_HP <= (CCS.character_MaxHP / 5) * 3)
+            CCS.character_Buffed_Attack += 20;
+
+        if (CCS.character_HP <= (CCS.character_MaxHP / 5) * 2)
+            CCS.character_Buffed_Attack += 20;
+
+        if (CCS.character_HP <= (CCS.character_MaxHP / 5) * 1)
+            CCS.character_Buffed_Attack += 20;
+>>>>>>> Stashed changes
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"발악");
@@ -323,6 +335,7 @@ public class SkillManager : MonoBehaviour
     bool SKill_Attack_Ranger(GameObject character,GameObject[] enemy) // 명사수 
     {
         Character CCS = character.GetComponent<Character>();
+        CCS.character_Activate_Skill = true;
 
         bool enemyAllive = false;
 
@@ -334,6 +347,7 @@ public class SkillManager : MonoBehaviour
 
         if (enemyAllive == false)
         {
+            CCS.character_Activate_Skill = false;
             return false;
         }
 
@@ -355,6 +369,9 @@ public class SkillManager : MonoBehaviour
         }
         Debug.Log(enemy[num].GetComponent<Character>().character_Num_Of_Grid - 1);
         CCS.character_Attack_Range[enemy[num].GetComponent<Character>().character_Num_Of_Grid - 1] = true;
+        CCS.character_Buffed_Attack += (enemy[num].GetComponent<Character>().character_Buffed_Damaged + enemy[num].GetComponent<Character>().character_Setting_Buffed_Damaged);
+
+        CCS.character_Activate_Skill = false;
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"명사수");
@@ -362,6 +379,32 @@ public class SkillManager : MonoBehaviour
         return true;
     }
 
+    IEnumerator Skill_Attack_ArmorPiercer(GameObject character,GameObject[] enemys)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        bool haveDefender = false;
+
+        foreach(var enemy in enemys)
+        { 
+
+            for(int i = 0; i < 9; i++)
+            {
+                if(CCS.character_Attack_Range[i])
+                {
+                    if(enemy.GetComponent<Character>().character_Num_Of_Grid == i + 1 && enemy.GetComponent<Character>().character_Type == Character.Type.Defender)
+                    {
+                        haveDefender = true;
+                    }
+                }
+            }
+        }
+
+        if (!haveDefender)
+            CCS.character_Buffed_Attack += 10;
+
+        yield break;
+    }
     public int ArmorPiercer(GameObject character,GameObject enemy) // 철갑탄
     {
         Character ACS = character.GetComponent<Character>();
@@ -379,116 +422,92 @@ public class SkillManager : MonoBehaviour
         return damage;
     }
 
-    bool Skill_Attack_ArmorPiercer(GameObject character, GameObject[] enemys)
+    IEnumerator Skill_Attack_DivineShield(GameObject character) // 천상의 보호막 
     {
         Character CCS = character.GetComponent<Character>();
+        CCS.character_Activate_Skill = true;
 
-        bool haveDefender = false;
 
-        foreach (var enemy in enemys)
-        {
+        yield return new WaitForSeconds(2.0f);
 
-            for (int i = 0; i < 9; i++)
-            {
-                if (CCS.character_Attack_Range[i])
-                {
-                    if (enemy.GetComponent<Character>().character_Num_Of_Grid == i + 1 && enemy.GetComponent<Character>().character_Type == Character.Type.Defender)
-                    {
-                        haveDefender = true;
-                    }
-                }
-            }
-        }
-
-        if (!haveDefender)
-            CCS.character_Buffed_Attack += 10;
-
-        return false;
-    }
-
-    bool Skill_Attack_DivineShield(GameObject character) // 천상의 보호막 
-    {
-        Character CCS = character.GetComponent<Character>();
         CCS.character_Divine_Shield = true;
+        CCS.character_Activate_Skill = false;
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character, "천상의 보호막");
-
-        return true;
     }
 
-    bool Skill_Attack_Sturdy(GameObject character) // 옹골참 
+    IEnumerator Skill_Attack_Sturdy(GameObject character) // 옹골참 
     {
-        Character CCS = character.GetComponent<Character>();
-        if (CCS.character_Sturdy == false)
-            return false;
-
-
-        skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "옹골참");
-
-        return true;
+        yield return new WaitForSeconds(2.0f);
     }
 
 
     // 밸런스형 스킬
-    bool Skill_Balanced_GBGH(GameObject character) // 모아니면도
+    IEnumerator Skill_Balanced_GBGH(GameObject character) // 모아니면도
     {
         Character CCS = character.GetComponent<Character>();
+        CCS.character_Activate_Skill = true;
 
         if (CCS.character_Attack_Order != 1 && CCS.character_Attack_Order != 2 && CCS.character_Attack_Order != 9 && CCS.character_Attack_Order != 10)
         {
-            return false;
+            CCS.character_Activate_Skill = false;
+            yield break;
         }
+
+        yield return new WaitForSeconds(2.0f);
 
         if (BattleManager.Instance.bM_Team1_Is_Preemitive == true)
         {
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 1)
             {
-                CCS.character_Buffed_Attack += 20;
+                CCS.character_Setting_Buffed_Attack += 20;
             }
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 9)
             {
-                CCS.character_Buffed_Damaged += 20;
+                CCS.character_Setting_Buffed_Damaged += 20;
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 2)
             {
-                CCS.character_Buffed_Attack += 20;
+                CCS.character_Setting_Buffed_Attack += 20;
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 10)
             {
-                CCS.character_Buffed_Damaged += 20;
+                CCS.character_Setting_Buffed_Damaged += 20;
             }
         }
         else
         {
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 2)
             {
-                CCS.character_Buffed_Attack += 20;
+                CCS.character_Setting_Buffed_Attack += 20;
             }
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 10)
             {
-                CCS.character_Buffed_Damaged += 20;
+                CCS.character_Setting_Buffed_Damaged += 20;
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 1)
             {
-                CCS.character_Buffed_Attack += 20;
+                CCS.character_Setting_Buffed_Attack += 20;
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 9)
             {
-                CCS.character_Buffed_Damaged += 20;
+                CCS.character_Setting_Buffed_Damaged += 20;
             }
         }
 
+        CCS.character_Activate_Skill = false;
+
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"모 아니면 도");
-
-        return true;
     }
 
-    bool Skill_Balanced_Union(GameObject character) // 결속
+    IEnumerator Skill_Balanced_Union(GameObject character) // 결속
     {
         Character CCS = character.GetComponent<Character>();
+        CCS.character_Activate_Skill = true;
+
+        yield return new WaitForSeconds(2.0f);
 
         if (CCS.character_Team_Number == 1)
         {
@@ -497,11 +516,8 @@ public class SkillManager : MonoBehaviour
                 Character UCS = union.GetComponent<Character>();
                 if (UCS.character_Num_Of_Grid == CCS.character_Union_Select)
                 {
-                    UCS.character_Buffed_Attack += 20;
-                    UCS.character_Buffed_Damaged += 20;
-                    skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "결속");
-                    return true;
+                    UCS.character_Setting_Buffed_Attack += 20;
+                    UCS.character_Setting_Buffed_Damaged += 20;
                 }
             }
         }
@@ -512,16 +528,17 @@ public class SkillManager : MonoBehaviour
                 Character UCS = union.GetComponent<Character>();
                 if (UCS.character_Num_Of_Grid == CCS.character_Union_Select)
                 {
-                    UCS.character_Buffed_Attack += 20;
-                    UCS.character_Buffed_Damaged += 20;
-                    skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "결속");
-                    return true;
+                    UCS.character_Setting_Buffed_Attack += 20;
+                    UCS.character_Setting_Buffed_Damaged += 20;
                 }
             }
         }
 
-        return false;
+        CCS.character_Activate_Skill = false;
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character,"결속");
+
     }
 
 
@@ -529,6 +546,7 @@ public class SkillManager : MonoBehaviour
     bool Skill_Defender_Disarm(GameObject attacker,GameObject[] Damaged) // 무장해제 
     {
         Character ACS = attacker.GetComponent<Character>();
+        ACS.character_Activate_Skill = true;
 
         int dum = 0;
         for (int i = 0; i < 9; i++)
@@ -548,6 +566,7 @@ public class SkillManager : MonoBehaviour
 
         if (dum == 0)
         {
+            ACS.character_Activate_Skill = false;
             return false;
         }
 
@@ -567,6 +586,8 @@ public class SkillManager : MonoBehaviour
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(attacker,"무장해제");
+
+        ACS.character_Activate_Skill = false;
 
         return true;
     }

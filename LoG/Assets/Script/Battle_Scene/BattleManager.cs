@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Photon.Pun;
 
 public class BattleManager : MonoBehaviourPunCallbacks
@@ -238,10 +237,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
         alertMessage.Attack(attacker);
         yield return new WaitForSeconds(bM_Timegap);
 
+        result = SkillManager.Instance.BeforeCounterAttack(attacker, enemy_Characters);
+        if(result)
+        {
+            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
+        }
         // 아래 코루틴이 끝날 때 까지 대기(반격)
         yield return StartCoroutine(Counter(attacker, enemy_Characters));
 
-        result = SkillManager.Instance.AfterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
+        result = SkillManager.Instance.AfterCounterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
         {
             alertMessage.gameObject.SetActive(false);

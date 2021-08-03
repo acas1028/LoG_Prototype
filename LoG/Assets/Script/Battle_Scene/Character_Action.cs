@@ -74,7 +74,7 @@ public class Character_Action : Character
         else
         {
             if (character_Skill == Skill.Attack_ArmorPiercer)
-                damage = SkillManager.Instance.Skill_Attack_ArmorPiercer(this.gameObject, enemy_Character);
+                damage = SkillManager.Instance.ArmorPiercer(this.gameObject, enemy_Character);
             else
                 damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
 
@@ -104,21 +104,31 @@ public class Character_Action : Character
         int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
         if (character_Divine_Shield == true && final_damage > 0)
+        {
             character_Divine_Shield = false;
-        else
-            character_HP -= final_damage;
+            final_damage = 0;
+        }
+
+        character_HP -= final_damage;
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
-        {
+        { 
             character_HP = 0;
             Character_Dead(attacker);
         }
+
     }
 
     public void Character_Counter_Damaged(GameObject attacker, int damage) // 카운터 발동
     {
         StartCoroutine(SetCharacterColor("red"));
         int final_damage = (damage * (100 + character_Buffed_Damaged)) / 100;
+
+        if (character_Divine_Shield == true && final_damage > 0)
+        {
+            character_Divine_Shield = false;
+            final_damage = 0;
+        }
 
         character_HP -= final_damage;
 
