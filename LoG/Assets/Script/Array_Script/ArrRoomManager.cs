@@ -114,7 +114,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         cb.normalColor = new Color(isReady ? 1.0f : 0.0f, 0.0f, 0.0f);
         cb.selectedColor = new Color(isReady ? 1.0f : 0.0f, 0.0f, 0.0f);
         readyButton.colors = cb;
-        //readyButton.GetComponentInChildren<Text>().text = isReady ? "준비 완료!" : "준비!";
+        readyButton.GetComponentInChildren<Text>().text = isReady ? "준비 완료!" : "준비!";
     }
 
     public void SetIsEnemyReadyText(bool isEnemyReady)
@@ -123,11 +123,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             isEnemyReadyText.text = "상대 준비 완료";
         else
             isEnemyReadyText.text = "상대 준비 미완료";
-    }
-
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
     }
 
     public void SetPreemptivePlayer()
@@ -231,13 +226,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         roomStatusText.text = "상대 플레이어 " + other.NickName + " 퇴장";
         Debug.Log("<color=yellow>플레이어 " + other.NickName + " 퇴장</color>");
         RenewPlayerList();
-    }
-
-    public override void OnLeftRoom()
-    {
-        Debug.Log("<color=yellow>OnLeftRoom() 호출\n룸을 나갑니다. 로비로 이동합니다.</color>");
-
-        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

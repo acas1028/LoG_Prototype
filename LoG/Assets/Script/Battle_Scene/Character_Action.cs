@@ -64,21 +64,24 @@ public class Character_Action : Character
 
         int damage = 0;
 
-        if (isCounter)
+        if (enemy_Character.GetComponent<Character>().character_Is_Allive)
         {
-            damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
-            enemy_Character_Action.Character_Counter_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+            if (isCounter)
+            {
+                damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
+                enemy_Character_Action.Character_Counter_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
 
-            character_Counter = false;
-        }
-        else
-        {
-            if (character_Skill == Skill.Attack_ArmorPiercer)
-                damage = SkillManager.Instance.ArmorPiercer(this.gameObject, enemy_Character);
+                character_Counter = false;
+            }
             else
-                damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
+            {
+                if (character_Skill == Skill.Attack_ArmorPiercer)
+                    damage = SkillManager.Instance.ArmorPiercer(this.gameObject, enemy_Character);
+                else
+                    damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
 
-            enemy_Character_Action.Character_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+                enemy_Character_Action.Character_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
+            }
         }
 
         isMoveToEnemy = false;

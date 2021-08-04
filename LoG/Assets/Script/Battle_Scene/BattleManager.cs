@@ -242,8 +242,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
                 foreach (GameObject enemy_Character in enemy_Characters)
                 {
-                    if (enemy_Character.GetComponent<Character>().character_Num_Of_Grid == j + 1
-                    && enemy_Character.GetComponent<Character>().character_Is_Allive)
+                    if (enemy_Character.GetComponent<Character>().character_Num_Of_Grid == j + 1)
                     {
                         StopCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
                         StartCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
@@ -258,6 +257,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         result = Check_Character_Dead();
         if(result)
         {
+            alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(Dead(enemy_Characters));
         }
         
@@ -265,6 +265,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         result = SkillManager.Instance.BeforeCounterAttack(attacker, enemy_Characters);
         if(result)
         {
+            alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
         }
         // 아래 코루틴이 끝날 때 까지 대기(반격)
@@ -273,6 +274,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         result = Check_Character_Dead();
         if (result)
         {
+            alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(Dead(enemy_Characters));
         }
 
