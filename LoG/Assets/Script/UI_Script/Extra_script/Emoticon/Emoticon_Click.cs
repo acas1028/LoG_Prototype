@@ -68,7 +68,8 @@ public class Emoticon_Click : MonoBehaviourPun
 
         emoticon_Block_Enemy = Instantiate(prefab_Block_Enemy, GameObject.Find("Canvas").transform);
         emoticon_Block_Enemy.GetComponent<RectTransform>().anchoredPosition = new Vector2(450.0f, 600.0f);
-        emoticon_Block_Enemy.GetComponent<Image>().sprite = emoticon_Images[emoticonNum].sprite;
+        emoticon_Block_Enemy.GetComponent<RectTransform>().localScale = new Vector2(-1, 1);
+        emoticon_Block_Enemy.transform.GetChild(0).GetComponent<Image>().sprite = emoticon_Images[emoticonNum].sprite;
     }
 
     private void SetReady()
