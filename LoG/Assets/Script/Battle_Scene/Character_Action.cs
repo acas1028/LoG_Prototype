@@ -148,8 +148,15 @@ public class Character_Action : Character
     {
         Debug.Log(character_Num_Of_Grid + " is Dead");
         attacker.GetComponent<Character>().character_is_Kill++;
+        character_is_Killed = true;
+        character_Counter = false;
+    }
+
+    public IEnumerator Dead()
+    {
         this.gameObject.GetComponent<SpriteRenderer>().sprite = null;
         character_Is_Allive = false;
-        character_Counter = false;
+        character_is_Killed = false;
+        yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
     }
 }

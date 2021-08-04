@@ -138,6 +138,24 @@ public class BattleManager : MonoBehaviourPunCallbacks
         Finish_Game();
     }
 
+    void Round_Finish()
+    {
+        foreach(var team1 in bM_Character_Team1)
+        {
+            Character CCS = team1.GetComponent<Character>();
+
+            CCS.character_is_Kill = 0;
+            CCS.character_is_Killed = false;
+        }
+
+        foreach (var team2 in bM_Character_Team2)
+        {
+            Character CCS = team2.GetComponent<Character>();
+
+            CCS.character_is_Kill = 0;
+            CCS.character_is_Killed = false;
+        }
+    }
     void BM_Character_Setting()
     {
         int dummy = 0;
@@ -237,6 +255,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
         alertMessage.Attack(attacker);
         yield return new WaitForSeconds(bM_Timegap);
 
+        result = Check_Character_Dead();
+        if(result)
+        {
+            yield return StartCoroutine(Dead(enemy_Characters));
+        }
+        
+
         result = SkillManager.Instance.BeforeCounterAttack(attacker, enemy_Characters);
         if(result)
         {
@@ -244,6 +269,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
         // 아래 코루틴이 끝날 때 까지 대기(반격)
         yield return StartCoroutine(Counter(attacker, enemy_Characters));
+
+        result = Check_Character_Dead();
+        if (result)
+        {
+            yield return StartCoroutine(Dead(enemy_Characters));
+        }
 
         result = SkillManager.Instance.AfterCounterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
         if (result)
@@ -253,6 +284,37 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
+    }
+
+    bool Check_Character_Dead()
+    {
+        foreach(var character in bM_Character_Team1)
+        {
+            if (character.GetComponent<Character>().character_is_Killed == true)
+                return true;
+        }
+
+        foreach (var character in bM_Character_Team2)
+        {
+            if (character.GetComponent<Character>().character_is_Killed == true)
+                return true;
+        }
+
+        return false;
+    }
+    IEnumerator Dead(GameObject[] enemy_Characters)
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            Character EnemyScript = enemy_Characters[i].GetComponent<Character>();
+            if(EnemyScript.character_is_Killed == true)
+            {
+                StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().Dead());
+                alertMessage.gameObject.SetActive(true);
+                alertMessage.Dead(enemy_Characters[i]);
+                yield return new WaitForSeconds(Instance.bM_Timegap);
+            }
+        }
     }
 
     IEnumerator Counter(GameObject attacker, GameObject[] enemy_Characters)
@@ -309,6 +371,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
             team2_Character.GetComponent<Character>().Debuging_Character();
         }
+        Round_Finish();
     }
 
     void Calculate_Remain_HP() //남은 체력 계산

@@ -65,10 +65,10 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        if(CCS.character_Skill == Character.Skill.Balance_Union)
+        if(CCS.character_Skill == Character.Skill.Balance_Blessing)
         {
-            result = Skill_Balanced_Union(character);
-            if (result) return true;
+      
+           
         }
 
         if(CCS.character_Skill == Character.Skill.Attack_DivineShield)
@@ -486,43 +486,6 @@ public class SkillManager : MonoBehaviour
         return true;
     }
 
-    bool Skill_Balanced_Union(GameObject character) // 결속
-    {
-        Character CCS = character.GetComponent<Character>();
-
-        if (CCS.character_Team_Number == 1)
-        {
-            foreach (var union in BattleManager.Instance.bM_Character_Team1)
-            {
-                Character UCS = union.GetComponent<Character>();
-                if (UCS.character_Num_Of_Grid == CCS.character_Union_Select)
-                {
-                    UCS.character_Buffed_Attack += 20;
-                    UCS.character_Buffed_Damaged += 20;
-                    skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "결속");
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            foreach (var union in BattleManager.Instance.bM_Character_Team2)
-            {
-                Character UCS = union.GetComponent<Character>();
-                if (UCS.character_Num_Of_Grid == CCS.character_Union_Select)
-                {
-                    UCS.character_Buffed_Attack += 20;
-                    UCS.character_Buffed_Damaged += 20;
-                    skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "결속");
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
 
     // 방어형 스킬

@@ -21,8 +21,13 @@ public class Character : MonoBehaviour
         Attack_ArmorPiercer,        // 철갑탄
         Attack_DivineShield,        // 천상의보호막
      // Attack_Sturdy,              // 옹골참
-        Balance_Union,              // 결속
+        Balance_Blessing,           // 축복
         Balance_GBGH,               // 모아니면 도
+        Balance_Smoke,              // 연막탄
+        Balance_Survivor,           // 생존자
+        Balance_Curse,              // 저주
+        Balance_WideCounter,        // 광역반격
+        Balance_DestinyBond,        // 길동무 
         Defense_Disarm,             // 무장해제
     };
 
@@ -48,10 +53,10 @@ public class Character : MonoBehaviour
     public int character_Buffed_Attack { get; set; } // 가하는 피해 증가량
     public int character_Buffed_Damaged { get; set; } // 받는 피해 증가량
     public bool character_Counter { get; set; } //해당 턴에 피격당하여, 카운터를 치는지 판단하는 변수
+    public bool character_is_Killed { get; set; } //  해당 턴에 사망했는지를 판단하는 변수
     public int character_is_Kill { get; set; } // 해당 턴에 적을 죽였는지를 판단하는 변수
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Sturdy { get; set; } // 옹골참 발동
-    public int character_Union_Select { get; set; } // Union(결속) 특성으로 선택 한 그리드넘버
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
@@ -100,8 +105,7 @@ public class Character : MonoBehaviour
         character_Counter = false;
         character_is_Kill = 0;
         character_Number = 0;
-
-        character_Union_Select = 3;
+        character_is_Killed = false;
     }
 
     public void Debuging_Character()
@@ -137,30 +141,6 @@ public class Character : MonoBehaviour
 
     protected void setting_skill(int num)
     {
-        if ((string)character_data[num]["Skill"] == "결속")
-        {
-            character_Skill = Skill.Balance_Union;
-        }
-
-        if ((string)character_data[num]["Skill"] == "무장해제")
-        {
-            character_Skill = Skill.Defense_Disarm;
-        }
-
-        if ((string)character_data[num]["Skill"] == "자신감")
-        {
-            character_Skill = Skill.Attack_Confidence;
-        }
-
-        if ((string)character_data[num]["Skill"] == "처형자")
-        {
-            character_Skill = Skill.Attack_Executioner;
-        }
-
-        if ((string)character_data[num]["Skill"] == "모아니면도")
-        {
-            character_Skill = Skill.Balance_GBGH;
-        }
         switch ((string)character_data[num]["Skill"])
         {
             case "자신감":
@@ -181,8 +161,8 @@ public class Character : MonoBehaviour
             case "천상의보호막":
                 character_Skill = Skill.Attack_DivineShield;
                 break;
-            case "결속":
-                character_Skill = Skill.Balance_Union;
+            case "축복":
+                character_Skill = Skill.Balance_Blessing;
                 break;
             case "모아니면도":
                 character_Skill = Skill.Balance_GBGH;
@@ -190,6 +170,24 @@ public class Character : MonoBehaviour
             case "무장해제":
                 character_Skill = Skill.Defense_Disarm;
                 break;
+            case "연막탄":
+                character_Skill = Skill.Balance_Smoke;
+                break;
+            case "생존자":
+                character_Skill = Skill.Balance_Survivor;
+                break;
+            case "저주":
+                character_Skill = Skill.Balance_Curse;
+                break;
+            case "광역반격":
+                character_Skill = Skill.Balance_WideCounter;
+                break;
+            case "길동무":
+                character_Skill = Skill.Balance_DestinyBond;
+                break;
+
+
+
         }
     }
 
@@ -258,6 +256,6 @@ public class Character : MonoBehaviour
         character_Buffed_Damaged = copy.character_Buffed_Damaged;
         character_Divine_Shield = copy.character_Divine_Shield;
         character_Sturdy = copy.character_Sturdy;
-        character_Union_Select = copy.character_Union_Select;
+
     }
 }

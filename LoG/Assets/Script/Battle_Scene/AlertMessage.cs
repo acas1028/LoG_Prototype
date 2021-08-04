@@ -32,6 +32,12 @@ public class AlertMessage : MonoBehaviour
         this.GetComponent<Text>().text = ACS.character_Team_Number + "ÆÀ " + ACS.character_Number + "¹ø Ä³¸¯ÅÍÀÇ °ø°Ý!";
     }
 
+    public void Dead(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+        this.GetComponent<Text>().text = CCS.character_Team_Number + "ÆÀ " + CCS.character_Number + "¹ø Ä³¸¯ÅÍ »ç¸Á!";
+    }
+
     public void Win()
     {
         this.GetComponent<Text>().text = "½Â¸®!";
