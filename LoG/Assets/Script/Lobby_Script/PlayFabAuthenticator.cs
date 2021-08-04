@@ -64,26 +64,12 @@ public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
         customAuth.AddAuthParameter("username", _playFabPlayerIdCache);
         customAuth.AddAuthParameter("token", obj.PhotonCustomAuthenticationToken);
         PhotonNetwork.AuthValues = customAuth;
+
+        PlayerPrefs.SetString("PlayFabId", _playFabPlayerIdCache);
     }
 
     public void SendData()
     {
-        /*
-        var data = new Dictionary<string, object>() { { "Hello", "World" } };
-        var flags = new WebFlags(WebFlags.HttpForwardConst);
-        var result = PhotonNetwork.RaiseEvent(0, data, new RaiseEventOptions()
-        {
-            Flags = flags
-        }, new SendOptions());
-        LogMessage("Data(Dictionary Type) Transmition: " + result);
-
-        var properties = new Hashtable() {
-            {"CustomProperty", "It's Value"}};
-        var expectedProperties = new Hashtable();
-        PhotonNetwork.CurrentRoom.SetCustomProperties(properties, expectedProperties, flags);
-        LogMessage("New Room Properties Set");
-        */
-
         // Key 값 지우는 방법: value 값을 null 로 해준다.
         var data = new Dictionary<string, string>() { { "name", PhotonNetwork.NickName } };
         var request = new UpdateUserDataRequest() { Data = data, Permission = UserDataPermission.Private };
