@@ -28,14 +28,17 @@ public class Deck_Type_Slot : MonoBehaviour
 
         switch(cs.Character_Type)
         {
+            case 0:
+                this.gameObject.GetComponent<Image>().sprite = Type_Image[0];
+                break;
             case 1:
-                this.gameObject.GetComponent<Image>().sprite= Type_Image[0];
+                this.gameObject.GetComponent<Image>().sprite= Type_Image[1];
                 break;
             case 2:
-                this.gameObject.GetComponent<Image>().sprite = Type_Image[1];
+                this.gameObject.GetComponent<Image>().sprite = Type_Image[2];
                 break;
             case 3:
-                this.gameObject.GetComponent<Image>().sprite = Type_Image[2];
+                this.gameObject.GetComponent<Image>().sprite = Type_Image[3];
                 break;
         }
     }

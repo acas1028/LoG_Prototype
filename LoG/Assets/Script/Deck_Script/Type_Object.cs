@@ -31,8 +31,7 @@ public class Type_Object : MonoBehaviour,IPointerClickHandler
         int j = 0;
         while (j < 7)
         {
-            if (cs.Character_Slot[j].GetComponent<Deck_Character>().Set_Active_Character==true&&
-                cs.Slot_Type[j].GetComponent<Deck_Type_Slot>().Character_Type==0)
+            if (cs.Current_Character==cs.Character_Slot[j])
             {
                 cs.Slot_Type[j].GetComponent<Deck_Type_Slot>().Change_Type((int)Type);
                 break;

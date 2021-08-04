@@ -27,4 +27,10 @@ public class Deck_Character : MonoBehaviour
 
         cs.Current_Character = this.gameObject;
     }
+
+    public void Check_Stat()
+    {
+        Deck_Manager cs = Deck_Manager.instance;
+        cs.Current_Character = this.gameObject;
+    }
 }

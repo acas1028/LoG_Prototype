@@ -572,6 +572,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: 
@@ -796,6 +808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Type: 0
   Type_Image:
+  - {fileID: 0}
   - {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300072, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300130, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
@@ -1087,6 +1100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Type: 0
   Type_Image:
+  - {fileID: 0}
   - {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300072, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300130, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
@@ -1342,7 +1356,7 @@ GameObject:
   - component: {fileID: 124278686}
   m_Layer: 5
   m_Name: Balance_Union
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1744,6 +1758,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: 
@@ -2030,8 +2056,18 @@ MonoBehaviour:
   - {fileID: 1369138630}
   - {fileID: 900324261}
   - {fileID: 1293650197}
+  Save_Characters:
+  - {fileID: 1360535157}
+  - {fileID: 980764281}
+  - {fileID: 565524175}
+  - {fileID: 818991360}
+  - {fileID: 1184263688}
+  - {fileID: 1809112676}
+  - {fileID: 1911743326}
+  Skill_Button: []
   Current_Character: {fileID: 0}
   Current_Grid: {fileID: 0}
+  Deck_Reset_Button: {fileID: 1516910046}
   Character_Stat:
   - {fileID: 1677031263}
   - {fileID: 1069862327}
@@ -2559,7 +2595,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 250653810}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 250653812}
+        m_TargetAssemblyTypeName: Deck_Character, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &250653810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2681,7 +2753,7 @@ GameObject:
   - component: {fileID: 255954496}
   m_Layer: 5
   m_Name: Defense_Disarm
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2933,17 +3005,29 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 77140956}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 259108324}
+        m_TargetAssemblyTypeName: Deck_Character, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 195619146}
         m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
@@ -2955,7 +3039,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &259108322
 MonoBehaviour:
@@ -3575,7 +3659,7 @@ GameObject:
   - component: {fileID: 341129782}
   m_Layer: 5
   m_Name: Attack_Executioner
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4025,7 +4109,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 394920338}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 394920340}
+        m_TargetAssemblyTypeName: Deck_Character, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &394920338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4180,34 +4300,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 403511148}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: set_isStatic
-        m_Mode: 6
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1427318635}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: set_isStatic
-        m_Mode: 6
+      - m_Target: {fileID: 403511153}
+        m_TargetAssemblyTypeName: Deck_Character, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1735787416}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: set_isStatic
-        m_Mode: 6
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4338,6 +4458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Type: 0
   Type_Image:
+  - {fileID: 0}
   - {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300072, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300130, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
@@ -4543,7 +4664,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 478371418}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 478371420}
+        m_TargetAssemblyTypeName: Deck_Character, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &478371418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4647,6 +4804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Type: 0
   Type_Image:
+  - {fileID: 0}
   - {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300072, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300130, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
@@ -4843,7 +5001,7 @@ GameObject:
   - component: {fileID: 505211466}
   m_Layer: 5
   m_Name: Attack_Sturdy
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5297,6 +5455,93 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!1 &565524175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 565524176}
+  - component: {fileID: 565524177}
+  m_Layer: 0
+  m_Name: Save_character_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &565524176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565524175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 570249266}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &565524177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565524175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
+--- !u!1 &570249265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 570249266}
+  m_Layer: 0
+  m_Name: Deck_Save_Character
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &570249266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570249265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1360535158}
+  - {fileID: 980764282}
+  - {fileID: 565524176}
+  - {fileID: 818991361}
+  - {fileID: 1184263689}
+  - {fileID: 1809112677}
+  - {fileID: 1911743327}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &571121038
 GameObject:
   m_ObjectHideFlags: 0
@@ -5360,7 +5605,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5892,6 +6137,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &639261039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5942,6 +6199,7 @@ GameObject:
   - component: {fileID: 652919205}
   - component: {fileID: 652919204}
   - component: {fileID: 652919203}
+  - component: {fileID: 652919206}
   m_Layer: 5
   m_Name: Saved_Button
   m_TagString: Untagged
@@ -6062,6 +6320,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652919201}
   m_CullTransparentMesh: 1
+--- !u!114 &652919206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652919201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2b8f7f88b2f4c4992fa962a87a6149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Character_Skill: 0
 --- !u!1 &657641135
 GameObject:
   m_ObjectHideFlags: 0
@@ -6125,7 +6396,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -6761,6 +7032,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: 
@@ -6886,6 +7169,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 816930068}
   m_CullTransparentMesh: 1
+--- !u!1 &818991360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 818991361}
+  - component: {fileID: 818991362}
+  m_Layer: 0
+  m_Name: Save_character_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &818991361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818991360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 570249266}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &818991362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818991360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &824040241
 GameObject:
   m_ObjectHideFlags: 0
@@ -7219,7 +7552,7 @@ GameObject:
   - component: {fileID: 877312898}
   m_Layer: 5
   m_Name: Attack_DivineShield
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7751,6 +8084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Type: 0
   Type_Image:
+  - {fileID: 0}
   - {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300072, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300130, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
@@ -8038,6 +8372,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974290037}
   m_CullTransparentMesh: 1
+--- !u!1 &980764281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980764282}
+  - component: {fileID: 980764283}
+  m_Layer: 0
+  m_Name: Save_character_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &980764282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980764281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 570249266}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &980764283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980764281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &988431350
 GameObject:
   m_ObjectHideFlags: 0
@@ -8797,7 +9181,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1073380698}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1073380700}
+        m_TargetAssemblyTypeName: Deck_Character, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1073380698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9280,6 +9700,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: 
@@ -9454,6 +9886,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163051091}
   m_CullTransparentMesh: 1
+--- !u!1 &1184263688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1184263689}
+  - component: {fileID: 1184263690}
+  m_Layer: 0
+  m_Name: Save_character_5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1184263689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184263688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 570249266}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1184263690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184263688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1205320795
 GameObject:
   m_ObjectHideFlags: 0
@@ -10192,6 +10674,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   is_Clicked_Grid: 0
   Grid_Num: 8
+--- !u!1 &1360535157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1360535158}
+  - component: {fileID: 1360535159}
+  m_Layer: 0
+  m_Name: Save_character_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1360535158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360535157}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 570249266}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1360535159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360535157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1369138630
 GameObject:
   m_ObjectHideFlags: 0
@@ -10836,6 +11368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Type: 0
   Type_Image:
+  - {fileID: 0}
   - {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300072, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300130, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
@@ -10892,7 +11425,7 @@ GameObject:
   - component: {fileID: 1427380979}
   m_Layer: 5
   m_Name: Attack_Confidence
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11075,7 +11608,7 @@ GameObject:
   - component: {fileID: 1447566039}
   m_Layer: 5
   m_Name: Attack_Ranger
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11468,7 +12001,7 @@ GameObject:
   - component: {fileID: 1457388546}
   m_Layer: 5
   m_Name: Attack_ArmorPiercer
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11888,6 +12421,7 @@ GameObject:
   - component: {fileID: 1516910050}
   - component: {fileID: 1516910049}
   - component: {fileID: 1516910048}
+  - component: {fileID: 1516910051}
   m_Layer: 5
   m_Name: Return_Button
   m_TagString: Untagged
@@ -11957,7 +12491,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1516910049}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1516910049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11996,6 +12542,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516910046}
   m_CullTransparentMesh: 1
+--- !u!114 &1516910051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516910046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2b8f7f88b2f4c4992fa962a87a6149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Character_Skill: 0
 --- !u!1 &1540390245
 GameObject:
   m_ObjectHideFlags: 0
@@ -12355,6 +12914,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: 
@@ -12698,6 +13269,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: 
@@ -12800,6 +13383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Type: 0
   Type_Image:
+  - {fileID: 0}
   - {fileID: 21300070, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300072, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
   - {fileID: 21300130, guid: f5f1c19ce87450f4b97f8b363746558d, type: 3}
@@ -12918,6 +13502,56 @@ RectTransform:
   m_AnchoredPosition: {x: -240, y: 10}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1809112676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1809112677}
+  - component: {fileID: 1809112678}
+  m_Layer: 0
+  m_Name: Save_character_6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1809112677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809112676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 570249266}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1809112678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809112676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1833697504
 GameObject:
   m_ObjectHideFlags: 0
@@ -13239,7 +13873,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1891593316}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Reset_Grid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1891593318}
+        m_TargetAssemblyTypeName: Deck_Character, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Check_Stat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1891593316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13430,6 +14100,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911257645}
   m_CullTransparentMesh: 1
+--- !u!1 &1911743326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1911743327}
+  - component: {fileID: 1911743328}
+  m_Layer: 0
+  m_Name: Save_character_7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1911743327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911743326}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 570249266}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1911743328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911743326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cae8b6b1df9394f812201202307c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Debug_Type: 0
+  Debug_Skill: 0
+  Debug_character_Attack_Range: 
+  Debug_character_Grid_Number: 0
+  Debug_Character_Damage: 0
+  Debug_Character_HP: 0
+  Debug_Character_Attack_order: 0
 --- !u!1 &1923629789
 GameObject:
   m_ObjectHideFlags: 0
@@ -13956,7 +14676,7 @@ GameObject:
   - component: {fileID: 1975680786}
   m_Layer: 5
   m_Name: Balance_GBGH
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15054,7 +15774,7 @@ GameObject:
   - component: {fileID: 2125783039}
   m_Layer: 5
   m_Name: Attack_Struggle
-  m_TagString: Untagged
+  m_TagString: Skill_Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

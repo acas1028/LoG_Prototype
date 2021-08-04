@@ -12,8 +12,11 @@ public class Deck_Manager : MonoBehaviour
     public GameObject[] Character_Slot;
     public GameObject[] Set_Character_;
     public GameObject[] Grid_Button;
+    public GameObject[] Save_Characters;
+    public List<GameObject> Skill_Button = new List<GameObject>();
     public GameObject Current_Character;
     public GameObject Current_Grid;
+    public GameObject Deck_Reset_Button;
 
     public Text[] Character_Stat;
 
@@ -94,6 +97,53 @@ public class Deck_Manager : MonoBehaviour
         Character_Stat[1].text = current.character_AP.ToString();
         Character_Stat[2].text = current.character_Attack_Damage.ToString();
 
+        for(int i=0;i<7;i++)
+        {
+            if(Save_Characters[i].GetComponent<Character>().character_ID==0)
+            {
+                Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Current_Character);
+                Save_Characters[i].GetComponent<Character>().Debuging_Character();
+                return;
+            }
+        }
+    }
+    public void Reset_Button()
+    {
+        Character current = Current_Character.GetComponent<Character>();
+        Deck_Reset_Button.GetComponent<Deck_Skill>().Cancle_Skill((int)current.character_Skill+1);
+        Reset_Grid();
+        for (int i=0;i<7;i++)
+        {
+            if (current.character_ID == Save_Characters[i].GetComponent<Character>().character_ID)
+            {
+                Save_Characters[i].GetComponent<Character>().Character_Reset();
+                Save_Characters[i].GetComponent<Character>().Debuging_Character();
+            }
+            if (Current_Character==Character_Slot[i])
+            {
+                Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
+            }
+        }
+        for (int i = 0; i < 9; i++)
+        {
+            Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
+        }
+        current.Character_Reset();
+        current.Debuging_Character();
+        Check_Stat();
+    }
+    public void Reset_Grid()
+    {
+        for(int i=0;i<9;i++)
+        {
+            Button Grid = Grid_Button[i].GetComponent<Button>();
+            ColorBlock CB = Grid.colors;
+            Color white_Grid = Color.white;
+            CB.normalColor = white_Grid;
+            CB.pressedColor = white_Grid;
+            CB.selectedColor = white_Grid;
+            Grid.colors = CB;
+        }
     }
     private void Recolor_Grid(int num)
     {
