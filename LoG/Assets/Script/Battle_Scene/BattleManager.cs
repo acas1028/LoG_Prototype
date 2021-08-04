@@ -238,9 +238,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(bM_Timegap);
 
         result = SkillManager.Instance.BeforeCounterAttack(attacker, enemy_Characters);
-        if (result)
+        if(result)
         {
-            alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
         }
         // 아래 코루틴이 끝날 때 까지 대기(반격)

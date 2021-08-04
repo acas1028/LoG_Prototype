@@ -28,7 +28,7 @@ public class Deck_Manager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
     public void Check_Stat()
     {
@@ -37,9 +37,9 @@ public class Deck_Manager : MonoBehaviour
         Character_Stat[0].text = current.character_HP.ToString();
         Character_Stat[1].text = current.character_AP.ToString();
         Character_Stat[2].text = current.character_Attack_Damage.ToString();
-        for(int i=0;i<9;i++)
+        for (int i = 0; i < 9; i++)
         {
-            if(current.character_Attack_Range[i]==true)
+            if (current.character_Attack_Range[i] == true)
             {
                 Color_Grid(i);
             }
@@ -85,7 +85,7 @@ public class Deck_Manager : MonoBehaviour
             Recolor_Grid(i);
             Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
         }
-        while(current.character_AP>1)
+        while (current.character_AP > 1)
         {
             current.character_Attack_Damage += 10; //юсюг
             current.character_AP -= 10;

@@ -13,14 +13,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	#region Private Serializable Fields
 
-	[Header("PlayFab 로그인 관리자")]
-	public GameObject PlayFabAuth;
-
-	[Header("Web Sync Panel")]
-	[Tooltip("웹 동기화 패널")]
-	[SerializeField]
-	private GameObject WebSyncPanel;
-
 	[Header("Login Panel")]
 	[Tooltip("플레이어 이름 입력 패널")]
 	[SerializeField]
@@ -140,9 +132,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 			LogFeedback("연결됨");
 			Debug.Log("<color=lightblue>현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.</color>");
 			// #Critical, we must first and foremost connect to Photon Online Server.
-
-			PlayFabAuth.SetActive(true);
-
 			PhotonNetwork.ConnectUsingSettings();
 			PhotonNetwork.GameVersion = this.gameVersion;
 		}
@@ -249,10 +238,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public void OnLogoutButtonClicked()
     {
 		if (PhotonNetwork.IsConnected)
-		{
 			PhotonNetwork.Disconnect();
-			PlayFabAuth.SetActive(false);
-		}
 	}
 
 	public void OnBackButtonClicked()
@@ -319,7 +305,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 		if (loadingEffect)
 			loadingEffect.StopLoaderAnimation();
 
-		WebSyncPanel.SetActive(true);
 		SetActivePanel(SelectionPanel.name);
 	}
 
@@ -383,8 +368,8 @@ public class Lobby : MonoBehaviourPunCallbacks
 		LogFeedback("연결 해제됨");
 		Debug.LogWarning("<color=yellow>Disconnected\n연결 해제됨</color>");
 
-		WebSyncPanel.SetActive(false);
 		SetActivePanel(LoginPanel.name);
+
 	}
 
 	/// <summary>
