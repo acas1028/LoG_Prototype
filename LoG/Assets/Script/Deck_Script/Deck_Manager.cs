@@ -20,6 +20,7 @@ public class Deck_Manager : MonoBehaviour
 
     public Text[] Character_Stat;
 
+    public bool Save_is_overlap = false;
     private void Awake()
     {
         instance = this;
@@ -76,34 +77,45 @@ public class Deck_Manager : MonoBehaviour
     public void Save_Button()
     {
         Character current = Current_Character.GetComponent<Character>();
-        for (int i = 0; i < Set_Character_.Length; i++)
+        for (int i = 0; i < 7; i++)
         {
-            if (Character_Slot[i].GetComponent<Deck_Character>().Set_Active_Character == false)
+            if (current.character_ID == Save_Characters[i].GetComponent<Character>().character_ID)
             {
-                Set_Character_[i].SetActive(true);
+                Save_is_overlap = true;
+                return;
             }
         }
-        for (int i = 0; i < 9; i++)
+        if (Save_is_overlap == false)
         {
-            Recolor_Grid(i);
-            Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
-        }
-        while (current.character_AP > 1)
-        {
-            current.character_Attack_Damage += 10; //임의
-            current.character_AP -= 10;
-        }
-        current.Debuging_Character();
-        Character_Stat[1].text = current.character_AP.ToString();
-        Character_Stat[2].text = current.character_Attack_Damage.ToString();
-
-        for(int i=0;i<7;i++)
-        {
-            if(Save_Characters[i].GetComponent<Character>().character_ID==0)
+            for (int i = 0; i < Set_Character_.Length; i++)
             {
-                Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Current_Character);
-                Save_Characters[i].GetComponent<Character>().Debuging_Character();
-                return;
+                if (Character_Slot[i].GetComponent<Deck_Character>().Set_Active_Character == false)
+                {
+                    Set_Character_[i].SetActive(true);
+                }
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                Recolor_Grid(i);
+                Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
+            }
+            while (current.character_AP > 1)
+            {
+                current.character_Attack_Damage += 10; //임의
+                current.character_AP -= 10;
+            }
+            current.Debuging_Character();
+            Character_Stat[1].text = current.character_AP.ToString();
+            Character_Stat[2].text = current.character_Attack_Damage.ToString();
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (Save_Characters[i].GetComponent<Character>().character_ID == 0)
+                {
+                    Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Current_Character);
+                    Save_Characters[i].GetComponent<Character>().Debuging_Character();
+                    return;
+                }
             }
         }
     }
@@ -131,7 +143,9 @@ public class Deck_Manager : MonoBehaviour
         current.Character_Reset();
         current.Debuging_Character();
         Check_Stat();
+        Save_is_overlap = false;
     }
+
     public void Reset_Grid()
     {
         for(int i=0;i<9;i++)

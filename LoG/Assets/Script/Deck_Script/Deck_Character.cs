@@ -26,6 +26,7 @@ public class Deck_Character : MonoBehaviour
         Set_Active_Character = true;
 
         cs.Current_Character = this.gameObject;
+        cs.Save_is_overlap = false;
     }
 
     public void Check_Stat()
