@@ -114,7 +114,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         cb.normalColor = new Color(isReady ? 1.0f : 0.0f, 0.0f, 0.0f);
         cb.selectedColor = new Color(isReady ? 1.0f : 0.0f, 0.0f, 0.0f);
         readyButton.colors = cb;
-        readyButton.GetComponentInChildren<Text>().text = isReady ? "준비 완료!" : "준비!";
+        //readyButton.GetComponentInChildren<Text>().text = isReady ? "준비 완료!" : "준비!";
     }
 
     public void SetIsEnemyReadyText(bool isEnemyReady)

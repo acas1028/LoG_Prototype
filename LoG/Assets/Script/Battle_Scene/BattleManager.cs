@@ -199,9 +199,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
 
             int gridnum = bM_Character_Team1[i].GetComponent<Character>().character_Num_Of_Grid;
-            bM_Character_Team1[i].transform.position = gridManager.Team1Map[gridnum - 1].transform.position;
+            bM_Character_Team1[i].transform.position = gridManager.Team1Character_Position[gridnum - 1].transform.position;
             gridnum = bM_Character_Team2[i].GetComponent<Character>().character_Num_Of_Grid;
-            bM_Character_Team2[i].transform.position = gridManager.Team2Map[gridnum - 1].transform.position;
+            bM_Character_Team2[i].transform.position = gridManager.Team2Character_Postion[gridnum - 1].transform.position;
         }
     }
 
