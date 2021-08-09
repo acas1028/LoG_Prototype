@@ -17,10 +17,10 @@ public class Deck_Manager : MonoBehaviour
     public GameObject Current_Character;
     public GameObject Current_Grid;
     public GameObject Deck_Reset_Button;
+    public GameObject Pre_Skill;
 
     public Text[] Character_Stat;
 
-    public bool Save_is_overlap = false;
     private void Awake()
     {
         instance = this;
@@ -54,10 +54,11 @@ public class Deck_Manager : MonoBehaviour
         Character current = Current_Character.GetComponent<Character>();
         Deck_Grid CG = Current_Grid.GetComponent<Deck_Grid>();
 
-        if (CG.is_Clicked_Grid == false)//그리드 취소
+        if (CG.is_Clicked_Grid == true)
         {
             current.character_AP += 10;
             current.character_Attack_Range[CG.Grid_Num] = false;
+            CG.is_Clicked_Grid = false;
             Recolor_Grid(CG.Grid_Num);
             Check_Stat();
         }
@@ -69,6 +70,7 @@ public class Deck_Manager : MonoBehaviour
             {
                 current.character_AP -= 10;
                 current.character_Attack_Range[CG.Grid_Num] = true;
+                CG.is_Clicked_Grid = true;
                 Color_Grid(CG.Grid_Num);
                 Check_Stat();
             }
@@ -77,73 +79,41 @@ public class Deck_Manager : MonoBehaviour
     public void Save_Button()
     {
         Character current = Current_Character.GetComponent<Character>();
+
+        for (int i=0;i<7;i++)
+        {
+            while(Character_Slot[i].GetComponent<Character>().character_AP>0)
+            {
+                Character_Slot[i].GetComponent<Character>().character_Attack_Damage += 10;
+                Character_Slot[i].GetComponent<Character>().character_AP -= 10;//임의
+                Character_Slot[i].GetComponent<Character>().Debuging_Character();
+            }
+        }
+
         for (int i = 0; i < 7; i++)
         {
-            if (current.character_ID == Save_Characters[i].GetComponent<Character>().character_ID)
+            if (Save_Characters[i].GetComponent<Character>().character_ID == 0)
             {
-                Save_is_overlap = true;
-                return;
+                Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
+                Save_Characters[i].GetComponent<Character>().Debuging_Character();
             }
         }
-        if (Save_is_overlap == false)
-        {
-            for (int i = 0; i < Set_Character_.Length; i++)
-            {
-                if (Character_Slot[i].GetComponent<Deck_Character>().Set_Active_Character == false)
-                {
-                    Set_Character_[i].SetActive(true);
-                }
-            }
-            for (int i = 0; i < 9; i++)
-            {
-                Recolor_Grid(i);
-                Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
-            }
-            while (current.character_AP > 1)
-            {
-                current.character_Attack_Damage += 10; //임의
-                current.character_AP -= 10;
-            }
-            current.Debuging_Character();
-            Character_Stat[1].text = current.character_AP.ToString();
-            Character_Stat[2].text = current.character_Attack_Damage.ToString();
-
-            for (int i = 0; i < 7; i++)
-            {
-                if (Save_Characters[i].GetComponent<Character>().character_ID == 0)
-                {
-                    Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Current_Character);
-                    Save_Characters[i].GetComponent<Character>().Debuging_Character();
-                    return;
-                }
-            }
-        }
+        Character_Stat[1].text = current.character_AP.ToString();
+        Character_Stat[2].text = current.character_Attack_Damage.ToString();
     }
     public void Reset_Button()
     {
-        Character current = Current_Character.GetComponent<Character>();
-        Deck_Reset_Button.GetComponent<Deck_Skill>().Cancle_Skill((int)current.character_Skill+1);
         Reset_Grid();
+        Reset_Skill();
         for (int i=0;i<7;i++)
         {
-            if (current.character_ID == Save_Characters[i].GetComponent<Character>().character_ID)
-            {
-                Save_Characters[i].GetComponent<Character>().Character_Reset();
-                Save_Characters[i].GetComponent<Character>().Debuging_Character();
-            }
-            if (Current_Character==Character_Slot[i])
-            {
-                Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
-            }
+            Character_Slot[i].GetComponent<Character>().Character_Reset();
+            Character_Slot[i].GetComponent<Character>().Debuging_Character();
+            Save_Characters[i].GetComponent<Character>().Character_Reset();
+            Save_Characters[i].GetComponent<Character>().Debuging_Character();
+            Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
         }
-        for (int i = 0; i < 9; i++)
-        {
-            Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
-        }
-        current.Character_Reset();
-        current.Debuging_Character();
-        Check_Stat();
-        Save_is_overlap = false;
+        Skill_Button.Clear();
     }
 
     public void Reset_Grid()
@@ -157,11 +127,25 @@ public class Deck_Manager : MonoBehaviour
             CB.pressedColor = white_Grid;
             CB.selectedColor = white_Grid;
             Grid.colors = CB;
+            Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
+        }
+    }
+    private void Reset_Skill()
+    {
+        for(int i=0;i<Skill_Button.Count;i++)
+        {
+            Skill_Button[i].GetComponent<Deck_Skill>().is_selected = false;
+            Button b_Skill = Skill_Button[i].GetComponent<Button>();
+            ColorBlock CB = b_Skill.colors;
+            Color white = Color.white;
+            CB.normalColor = white;
+            CB.pressedColor = white;
+            CB.selectedColor = white;
+            b_Skill.colors = CB;
         }
     }
     private void Recolor_Grid(int num)
     {
-
         Button Grid = Grid_Button[num].GetComponent<Button>();
         ColorBlock CB = Grid.colors;
         Color white_Grid = Color.white;
@@ -169,7 +153,6 @@ public class Deck_Manager : MonoBehaviour
         CB.pressedColor = white_Grid;
         CB.selectedColor = white_Grid;
         Grid.colors = CB;
-
     }
     private void Color_Grid(int num)
     {

@@ -21,12 +21,16 @@ public class Deck_Character : MonoBehaviour
         Deck_Manager cs = Deck_Manager.instance;
         for (int i = 0; i < cs.Set_Character_.Length; i++)
         {
-            cs.Set_Character_[i].SetActive(false);
+            if(this.gameObject==cs.Set_Character_[i])
+            {
+                cs.Set_Character_[i].SetActive(false);
+                return;
+            }
         }
         Set_Active_Character = true;
 
         cs.Current_Character = this.gameObject;
-        cs.Save_is_overlap = false;
+
     }
 
     public void Check_Stat()
