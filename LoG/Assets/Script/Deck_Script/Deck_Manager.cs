@@ -18,6 +18,7 @@ public class Deck_Manager : MonoBehaviour
     public GameObject Current_Grid;
     public GameObject Deck_Reset_Button;
     public GameObject Pre_Skill;
+    public DeckDataSync deckDataSync;
 
     public Text[] Character_Stat;
 
@@ -27,7 +28,11 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
-
+        for (int i = 0; i < 7; i++)
+        {
+            Character ch = Save_Characters[i].GetComponent<Character>();
+            ch = deckDataSync.GetData(0, i);
+        }
     }
 
     void Update()
@@ -96,6 +101,7 @@ public class Deck_Manager : MonoBehaviour
             {
                 Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
                 Save_Characters[i].GetComponent<Character>().Debuging_Character();
+                deckDataSync.SetData(0, i, Save_Characters[i].GetComponent<Character>());
             }
         }
         Character_Stat[1].text = current.character_AP.ToString();

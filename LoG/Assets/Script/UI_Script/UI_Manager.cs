@@ -5,6 +5,11 @@ using Photon.Pun;
 
 public class UI_Manager : MonoBehaviourPunCallbacks
 {
+    public void BackToLobby()
+    {
+        SceneManager.LoadScene("LobbyScene");
+    }
+
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
