@@ -18,7 +18,7 @@ public class DeckDataSync : MonoBehaviour
     private string character_attack_range;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         playfabId = PlayerPrefs.GetString("PlayFabId");
         if (playfabId == string.Empty)
@@ -73,9 +73,10 @@ public class DeckDataSync : MonoBehaviour
         );
     }
 
-    public void GetData(int pageNum, int deckIndex)
+    public Character GetData(int pageNum, int deckIndex)
     {
         var request = new GetUserDataRequest() { PlayFabId = playfabId };
+        Character character = gameObject.AddComponent<Character>();
 
         PlayFabClientAPI.GetUserData(request,
             result =>
@@ -85,48 +86,48 @@ public class DeckDataSync : MonoBehaviour
                     if (item.Key == pageNum + "_" + deckIndex + "_character_id")
                     {
                         character_id = item.Value.Value;
+                        character.character_ID = int.Parse(character_id);
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_id);
                     }
                     else if (item.Key == pageNum + "_" + deckIndex + "_character_type")
                     {
                         character_type = item.Value.Value;
+                        character.character_Type = (Character.Type)Enum.Parse(typeof(Character.Type), character_type);
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_type);
                     }
                     else if (item.Key == pageNum + "_" + deckIndex + "_character_skill")
                     {
                         character_skill = item.Value.Value;
+                        character.character_Skill = (Character.Skill)Enum.Parse(typeof(Character.Skill), character_skill);
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_skill);
                     }
                     else if (item.Key == pageNum + "_" + deckIndex + "_character_hp")
                     {
                         character_hp = item.Value.Value;
+                        character.character_HP = int.Parse(character_hp);
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_hp);
                     }
                     else if (item.Key == pageNum + "_" + deckIndex + "_character_attack_damage")
                     {
                         character_attack_damage = item.Value.Value;
+                        character.character_Attack_Damage = int.Parse(character_attack_damage);
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_attack_damage);
                     }
                     else if (item.Key == pageNum + "_" + deckIndex + "_character_attack_range")
                     {
                         character_attack_range = item.Value.Value;
+                        for (int i = 0; i < 9; i++)
+                        {
+                            character.character_Attack_Range[i] = (character_attack_range[i] != '0');
+                        }
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_attack_range);
                     }
                 }
             }, error => Debug.LogWarningFormat("데이터 불러오기 실패: {0}", error.ErrorMessage)
         );
 
-        //Character character = gameObject.AddComponent<Character>();
-        //character.character_ID = int.Parse(character_id);
-        //character.character_Type = (Character.Type)Enum.Parse(typeof(Character.Type), character_type);
-        //character.character_Skill = (Character.Skill)Enum.Parse(typeof(Character.Skill), character_skill);
-        //character.character_HP = int.Parse(character_hp);
-        //character.character_Attack_Damage = int.Parse(character_attack_damage);
-        //for (int i = 0; i < 9; i++)
-        //{
-        //    character.character_Attack_Range[i] = Convert.ToBoolean(character_attack_range[i]);
-        //}
+        character.Debuging_Character();
 
-        //Debug.LogFormat("ID: {0} / Type: {1} / Skill: {2} / HP: {3} / Attack_Damage: {4} / Attack_Range: {5}", character.character_ID, character.character_Type, character.character_Skill, character.character_HP, character.character_Attack_Damage, character_attack_range);
+        return character;
     }
 }

@@ -28,11 +28,11 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
-        //for (int i = 0; i < 7; i++)
-        //{
-        //    Character ch = Save_Characters[i].GetComponent<Character>();
-        //    ch = deckDataSync.GetData(0, i);
-        //}
+        for (int i = 0; i < 7; i++)
+        {
+            Character ch = Save_Characters[i].GetComponent<Character>();
+            ch = deckDataSync.GetData(0, i);
+        }
     }
 
     void Update()
@@ -97,7 +97,7 @@ public class Deck_Manager : MonoBehaviour
 
         for (int i = 0; i < 7; i++)
         {
-            if (Save_Characters[i].GetComponent<Character>().character_ID == 0)
+            if (Character_Slot[i].activeSelf && Save_Characters[i].GetComponent<Character>().character_ID == 0)
             {
                 Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
                 Save_Characters[i].GetComponent<Character>().Debuging_Character();
