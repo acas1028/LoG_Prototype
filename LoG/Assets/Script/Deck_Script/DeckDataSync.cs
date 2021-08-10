@@ -73,7 +73,7 @@ public class DeckDataSync : MonoBehaviour
         );
     }
 
-    public Character GetData(int pageNum, int deckIndex)
+    public void GetData(int pageNum, int deckIndex)
     {
         var request = new GetUserDataRequest() { PlayFabId = playfabId };
 
@@ -116,19 +116,17 @@ public class DeckDataSync : MonoBehaviour
             }, error => Debug.LogWarningFormat("데이터 불러오기 실패: {0}", error.ErrorMessage)
         );
 
-        Character character = gameObject.AddComponent<Character>();
-        character.character_ID = int.Parse(character_id);
-        character.character_Type = (Character.Type)Enum.Parse(typeof(Character.Type), character_type);
-        character.character_Skill = (Character.Skill)Enum.Parse(typeof(Character.Skill), character_skill);
-        character.character_HP = int.Parse(character_hp);
-        character.character_Attack_Damage = int.Parse(character_attack_damage);
-        for (int i = 0; i < 9; i++)
-        {
-            character.character_Attack_Range[i] = Convert.ToBoolean(character_attack_range[i]);
-        }
+        //Character character = gameObject.AddComponent<Character>();
+        //character.character_ID = int.Parse(character_id);
+        //character.character_Type = (Character.Type)Enum.Parse(typeof(Character.Type), character_type);
+        //character.character_Skill = (Character.Skill)Enum.Parse(typeof(Character.Skill), character_skill);
+        //character.character_HP = int.Parse(character_hp);
+        //character.character_Attack_Damage = int.Parse(character_attack_damage);
+        //for (int i = 0; i < 9; i++)
+        //{
+        //    character.character_Attack_Range[i] = Convert.ToBoolean(character_attack_range[i]);
+        //}
 
-        Debug.LogFormat("ID: {0} / Type: {1} / Skill: {2} / HP: {3} / Attack_Damage: {4} / Attack_Range: {5}", character.character_ID, character.character_Type, character.character_Skill, character.character_HP, character.character_Attack_Damage, character_attack_range);
-
-        return character;
+        //Debug.LogFormat("ID: {0} / Type: {1} / Skill: {2} / HP: {3} / Attack_Damage: {4} / Attack_Range: {5}", character.character_ID, character.character_Type, character.character_Skill, character.character_HP, character.character_Attack_Damage, character_attack_range);
     }
 }
