@@ -68,7 +68,7 @@ public class Character_Action : Character
         {
             if (isCounter)
             {
-                damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100 / 2;
+                damage = character_Attack_Damage;
                 enemy_Character_Action.Character_Counter_Damaged(this.gameObject, damage); // 받을 데미지에 값이 저장되자마자 피격 함수 발동
 
                 character_Counter = false;
@@ -116,7 +116,6 @@ public class Character_Action : Character
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         { 
-            character_HP = 0;
             Character_Dead(attacker);
         }
 
@@ -137,7 +136,6 @@ public class Character_Action : Character
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         {
-            character_HP = 0;
             Character_Dead(attacker);
         }
     }
@@ -150,14 +148,15 @@ public class Character_Action : Character
     public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
     {
         Debug.Log(character_Num_Of_Grid + " is Dead");
+        character_HP = 0;
         attacker.GetComponent<Character>().character_is_Kill++;
         character_is_Killed = true;
         character_Counter = false;
+        killedBy = attacker;
     }
 
     public IEnumerator Dead()
     {
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = null;
         character_Is_Allive = false;
         character_is_Killed = false;
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);

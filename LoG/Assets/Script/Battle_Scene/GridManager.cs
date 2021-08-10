@@ -10,6 +10,37 @@ public class GridManager : MonoBehaviour
     public GameObject[] Team2Character_Postion;
     public GameObject[] Team1_Map;
     public GameObject[] Team2_Map;
+
+    private static GridManager _instance;
+    // 인스턴스에 접근하기 위한 프로퍼티
+    public static GridManager Instance
+    {
+        get
+        {
+            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
+            if (!_instance)
+            {
+                _instance = FindObjectOfType(typeof(GridManager)) as GridManager;
+
+                if (_instance == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _instance;
+        }
+    }
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+    }
     // Start is called before the first frame update
     void Start()
     {

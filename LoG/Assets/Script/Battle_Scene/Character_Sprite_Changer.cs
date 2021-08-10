@@ -24,7 +24,7 @@ public class Character_Sprite_Changer : MonoBehaviour
         this.gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
 
         if(this.gameObject.GetComponent<Character>().character_Is_Allive == false)
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[0];
+           this.gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[0];
 
     }
 }

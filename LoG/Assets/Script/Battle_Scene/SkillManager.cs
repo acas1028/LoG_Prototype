@@ -48,7 +48,7 @@ public class SkillManager : MonoBehaviour
         
     }
 
-    public bool AfterSetting(GameObject character)
+    public bool AfterSetting(GameObject character,GameObject[] enemys)
     {
         bool result;
         Character CCS = character.GetComponent<Character>();
@@ -59,7 +59,13 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        if(CCS.character_Skill == Character.Skill.Balance_GBGH)
+        if (CCS.character_Skill == Character.Skill.Attack_DivineShield)
+        {
+            result = Skill_Attack_DivineShield(character);
+            if (result) return true;
+        }
+
+        if (CCS.character_Skill == Character.Skill.Balance_GBGH)
         {
             result = Skill_Balanced_GBGH(character);
             if (result) return true;
@@ -67,19 +73,18 @@ public class SkillManager : MonoBehaviour
 
         if(CCS.character_Skill == Character.Skill.Balance_Blessing)
         {
-      
-           
+            result = Skill_Balanced_Blessing(character);
+            if (result) return true;
         }
 
-        if(CCS.character_Skill == Character.Skill.Attack_DivineShield)
+        if (CCS.character_Skill == Character.Skill.Balance_Smoke)
         {
-            result = Skill_Attack_DivineShield(character);
+            result = Skill_Balanced_Smoke(character,enemys);
             if (result) return true;
         }
 
         return false;
     }
-
     public bool BeforeAttack(GameObject attacker,GameObject[] Damaged)
     {
         bool result;
@@ -105,7 +110,6 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
-
     public bool AfterCounterAttack(GameObject attacker,GameObject[] Damaged)
     {
         bool result;
@@ -119,7 +123,6 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
-
     public bool BeforeCounterAttack(GameObject attacker,GameObject[] Damaged)
     {
         bool result;
@@ -134,7 +137,35 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
+    public bool AfterDead(GameObject deadCharacter)
+    {
+        bool result;
+        Character DCS = deadCharacter.GetComponent<Character>();
 
+        if(DCS.character_Skill == Character.Skill.Balance_Curse)
+        {
+            result = Skill_Balanced_Curse(deadCharacter);
+            if (result) return true;
+        }
+
+        if(DCS.character_Skill == Character.Skill.Balance_DestinyBond)
+        {
+            result = Skill_Balanced_DestinyBond(deadCharacter);
+            if (result) return true;
+        }
+        return false;
+    }
+
+    public bool CounterAttacking(GameObject attacker,GameObject counterAttacker)
+    {
+        bool result;
+        if(counterAttacker.GetComponent<Character>().character_Skill == Character.Skill.Balance_WideCounter)
+        {
+            result = Skill_Balanced_WideCounter(attacker, counterAttacker);
+            if (result) return true;
+        }
+        return false;
+    }
     // 공격형 스킬
     bool Skill_Attack_Confidence(GameObject character) // 자신감
     {
@@ -185,7 +216,6 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
-
     bool Check_Arround(Character ACS,int num1,int num2,int num3,int num4)
     {
         int dum = 0;
@@ -219,7 +249,6 @@ public class SkillManager : MonoBehaviour
             return true;
         return false;
     }
-
     bool Check_Arround(Character ACS,int num1, int num2, int num3)
     {
         int dum = 0;
@@ -250,7 +279,6 @@ public class SkillManager : MonoBehaviour
             return true;
         return false;
     }
-
     bool Check_Arround(Character ACS,int num1, int num2)
     {
         int dum = 0;
@@ -297,7 +325,6 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }                                       
-
     bool Skill_Attack_Struggle(GameObject character) // 발악
     {
         Character CCS = character.GetComponent<Character>();
@@ -319,7 +346,6 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
-
     bool SKill_Attack_Ranger(GameObject character,GameObject[] enemy) // 명사수 
     {
         Character CCS = character.GetComponent<Character>();
@@ -343,7 +369,7 @@ public class SkillManager : MonoBehaviour
         minHP = enemy[0].GetComponent<Character>().character_HP;
         for (int i = 0; i < 5; i++)
         {
-            if (minHP > enemy[i].GetComponent<Character>().character_HP)
+            if (minHP > enemy[i].GetComponent<Character>().character_HP && enemy[i].GetComponent<Character>().character_Is_Allive)
             {
                 minHP = enemy[i].GetComponent<Character>().character_HP;
                 num = i;
@@ -361,7 +387,6 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
-
     public int ArmorPiercer(GameObject character,GameObject enemy) // 철갑탄
     {
         Character ACS = character.GetComponent<Character>();
@@ -378,7 +403,6 @@ public class SkillManager : MonoBehaviour
         }
         return damage;
     }
-
     bool Skill_Attack_ArmorPiercer(GameObject character, GameObject[] enemys)
     {
         Character CCS = character.GetComponent<Character>();
@@ -405,7 +429,6 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
-
     bool Skill_Attack_DivineShield(GameObject character) // 천상의 보호막 
     {
         Character CCS = character.GetComponent<Character>();
@@ -485,9 +508,586 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
+    bool Skill_Balanced_Blessing(GameObject character) // 축복
+    {
+        Character CCS = character.GetComponent<Character>();
 
+        if (CCS.character_Team_Number == 1)
+        {
+            if (CCS.character_Num_Of_Grid % 3 == 1)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Damaged += 20;
+                }
+            }
+            if (CCS.character_Num_Of_Grid % 3 == 2)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Damaged += 20;
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Attack += 20;
+                }
+            }
 
+            if (CCS.character_Num_Of_Grid % 3 == 0)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Attack += 20;
+                }
+            }
+        }
 
+        if (CCS.character_Team_Number == 2)
+        {
+            if (CCS.character_Num_Of_Grid % 3 == 1)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Damaged += 20;
+                }
+            }
+            if (CCS.character_Num_Of_Grid % 3 == 2)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Damaged += 20;
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Attack += 20;
+                }
+            }
+
+            if (CCS.character_Num_Of_Grid % 3 == 0)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Attack += 20;
+                }
+            }
+        }
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character, "축복");
+
+        return true;
+    }
+    bool Blessing_Dead(GameObject character) // 축복 캐릭터 사망 시
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        if (CCS.character_Team_Number == 1)
+        {
+            if (CCS.character_Num_Of_Grid % 3 == 1)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Damaged -= 20;
+                }
+            }
+            if (CCS.character_Num_Of_Grid % 3 == 2)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Damaged -= 20;
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Attack -= 20;
+                }
+            }
+
+            if (CCS.character_Num_Of_Grid % 3 == 0)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Attack -= 20;
+                }
+            }
+        }
+
+        if (CCS.character_Team_Number == 2)
+        {
+            if (CCS.character_Num_Of_Grid % 3 == 1)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Damaged -= 20;
+                }
+            }
+            if (CCS.character_Num_Of_Grid % 3 == 2)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                        TCS.character_Buffed_Damaged -= 20;
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Attack -= 20;
+                }
+            }
+
+            if (CCS.character_Num_Of_Grid % 3 == 0)
+            {
+                foreach (var team in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                        TCS.character_Buffed_Attack -= 20;
+                }
+            }
+        }
+
+        return false;
+    }
+    bool Skill_Balanced_Smoke(GameObject character,GameObject[] enemys)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        foreach(var enemy in enemys)
+        {
+            if(CCS.character_Num_Of_Grid == BattleManager.Instance.Reverse_Enemy(enemy.GetComponent<Character>().character_Num_Of_Grid))
+            {
+                enemy.GetComponent<Character>().character_Buffed_Attack -= 40;
+            }
+        }
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character, "연막탄");
+
+        return true;
+    }
+    bool SKill_Balanced_Survivor(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        CCS.character_Buffed_Attack += 20;
+        CCS.character_HP += 20;
+
+        // 잠시 보류
+        return true;
+    }
+    bool Skill_Balanced_Curse(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+        int cursedgrid = BattleManager.Instance.Reverse_Enemy(CCS.character_Num_Of_Grid);
+        if (cursedgrid % 3 == 1)
+        {
+            if(CCS.character_Team_Number == 1)
+            {
+                foreach(var team2 in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team2.GetComponent<Character>();
+                    if(TCS.character_Num_Of_Grid == cursedgrid)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if(TCS.character_Num_Of_Grid == cursedgrid + 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                }
+            }
+            if(CCS.character_Team_Number == 2)
+            {
+                foreach (var team1 in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team1.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == cursedgrid)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if (TCS.character_Num_Of_Grid == cursedgrid + 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                }
+            }
+        }
+        if(CCS.character_Num_Of_Grid % 3 == 2)
+        {
+            if (CCS.character_Team_Number == 1)
+            {
+                foreach (var team2 in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team2.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == cursedgrid)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if (TCS.character_Num_Of_Grid == cursedgrid + 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if (TCS.character_Num_Of_Grid == cursedgrid - 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                }
+            }
+            if (CCS.character_Team_Number == 2)
+            {
+                foreach (var team1 in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team1.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == cursedgrid)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if (TCS.character_Num_Of_Grid == cursedgrid + 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if (TCS.character_Num_Of_Grid == cursedgrid - 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                }
+            }
+        }
+        if(CCS.character_Num_Of_Grid % 3 == 0)
+        {
+            if (CCS.character_Team_Number == 1)
+            {
+                foreach (var team2 in BattleManager.Instance.bM_Character_Team2)
+                {
+                    Character TCS = team2.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == cursedgrid)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if (TCS.character_Num_Of_Grid == cursedgrid - 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                }
+            }
+            if (CCS.character_Team_Number == 2)
+            {
+                foreach (var team1 in BattleManager.Instance.bM_Character_Team1)
+                {
+                    Character TCS = team1.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == cursedgrid)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                    if (TCS.character_Num_Of_Grid == cursedgrid - 1)
+                    {
+                        TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
+                        TCS.character_Buffed_Attack -= 30;
+                        // 카운터 확률
+                    }
+                }
+            }
+        }
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character, "저주");
+
+        return true;
+    }
+    bool Skill_Balanced_WideCounter(GameObject attacker, GameObject counterAttacker)
+    {
+        switch(attacker.GetComponent<Character>().character_Num_Of_Grid)
+        {
+            case 1:
+                CounterArround(counterAttacker, 1, 2, 4);
+                break;
+            case 2:
+                CounterArround(counterAttacker, 2, 1, 3, 5);
+                break;
+            case 3:
+                CounterArround(counterAttacker, 3, 2, 6);
+                break;
+            case 4:
+                CounterArround(counterAttacker, 4, 1, 5, 7);
+                break;
+            case 5:
+                CounterArround(counterAttacker, 5, 2, 4, 6, 8);
+                break;
+            case 6:
+                CounterArround(counterAttacker, 6, 3, 5, 9);
+                break;
+            case 7:
+                CounterArround(counterAttacker, 7, 4, 8);
+                break;
+            case 8:
+                CounterArround(counterAttacker, 8, 5, 7, 9);
+                break;
+            case 9:
+                CounterArround(counterAttacker, 9, 6, 8);
+                break;
+        }
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(counterAttacker, "광역반격");
+
+        return true;
+    }
+
+    void CounterArround(GameObject counterAttacker, int num1, int num2, int num3)
+    { 
+        if(counterAttacker.GetComponent<Character>().character_Team_Number == 1)
+        {
+            foreach(var character in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character CCS = character.GetComponent<Character>();
+
+                if(CCS.character_Num_Of_Grid == num1)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if(CCS.character_Num_Of_Grid == num2)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num3)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                GridManager.Instance.Create_Damaged_Grid_Team2(num1);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num2);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num3);
+            }
+        }
+        else
+        {
+            foreach(var character in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character CCS = character.GetComponent<Character>();
+
+                if (CCS.character_Num_Of_Grid == num1)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num2)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num3)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                GridManager.Instance.Create_Damaged_Grid_Team1(num1);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num2);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num3);
+            }
+        }
+    }
+    void CounterArround(GameObject counterAttacker, int num1, int num2, int num3,int num4)
+    {
+        if (counterAttacker.GetComponent<Character>().character_Team_Number == 1)
+        {
+            foreach (var character in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character CCS = character.GetComponent<Character>();
+
+                if (CCS.character_Num_Of_Grid == num1)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num2)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num3)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num4)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                GridManager.Instance.Create_Damaged_Grid_Team2(num1);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num2);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num3);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num4);
+            }
+        }
+        else
+        {
+            foreach (var character in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character CCS = character.GetComponent<Character>();
+
+                if (CCS.character_Num_Of_Grid == num1)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num2)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num3)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num4)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                GridManager.Instance.Create_Damaged_Grid_Team1(num1);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num2);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num3);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num4);
+            }
+        }
+    }
+    void CounterArround(GameObject counterAttacker, int num1, int num2, int num3, int num4, int num5)
+    {
+        if (counterAttacker.GetComponent<Character>().character_Team_Number == 1)
+        {
+            foreach (var character in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character CCS = character.GetComponent<Character>();
+
+                if (CCS.character_Num_Of_Grid == num1)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num2)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num3)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num4)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num5)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                GridManager.Instance.Create_Damaged_Grid_Team2(num1);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num2);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num3);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num4);
+                GridManager.Instance.Create_Damaged_Grid_Team2(num5);
+            }
+        }
+        else
+        {
+            foreach (var character in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character CCS = character.GetComponent<Character>();
+
+                if (CCS.character_Num_Of_Grid == num1)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num2)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num3)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num4)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                if (CCS.character_Num_Of_Grid == num5)
+                {
+                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                }
+                GridManager.Instance.Create_Damaged_Grid_Team1(num1);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num2);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num3);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num4);
+                GridManager.Instance.Create_Damaged_Grid_Team1(num5);
+            }
+        }
+    }
+    bool Skill_Balanced_DestinyBond(GameObject deadCharacter)
+    {
+        int rand = Random.Range(0, 1);
+        GameObject killedBy = deadCharacter.GetComponent<Character>().killedBy;
+
+        if (rand == 0)
+        {
+            killedBy.GetComponent<Character_Action>().Character_Dead(deadCharacter);
+        }
+        else
+        {
+            killedBy.GetComponent<Character>().character_HP -= killedBy.GetComponent<Character>().character_HP / 2;
+            killedBy.GetComponent<Character>().character_Buffed_Attack -= 50;
+            // 카운터 확률
+        }
+        return true;
+    }
     // 방어형 스킬
     bool Skill_Defender_Disarm(GameObject attacker,GameObject[] Damaged) // 무장해제 
     {

@@ -5,7 +5,6 @@ using Photon.Pun;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
-    public GridManager gridManager;
     public AlertMessage alertMessage;
     public GameObject[] bM_Character_Team1;
     public GameObject[] bM_Character_Team2;
@@ -104,7 +103,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             for (int i = 0; i < 5; i++)
             {
-                result = SkillManager.Instance.AfterSetting(bM_Character_Team1[i]);
+                result = SkillManager.Instance.AfterSetting(bM_Character_Team1[i],bM_Character_Team2);
                 if (result)
                 {
                     StartCoroutine(bM_Character_Team1[i].GetComponent<Character_Action>().SetCharacterColor("green"));
@@ -113,7 +112,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
             for(int i = 0; i < 5; i++)
             {
-                result = SkillManager.Instance.AfterSetting(bM_Character_Team2[i]);
+                result = SkillManager.Instance.AfterSetting(bM_Character_Team2[i], bM_Character_Team1);
                 if (result)
                 {
                     StartCoroutine(bM_Character_Team2[i].GetComponent<Character_Action>().SetCharacterColor("green"));
@@ -199,9 +198,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
 
             int gridnum = bM_Character_Team1[i].GetComponent<Character>().character_Num_Of_Grid;
-            bM_Character_Team1[i].transform.position = gridManager.Team1Character_Position[gridnum - 1].transform.position;
+            bM_Character_Team1[i].transform.position = GridManager.Instance.Team1Character_Position[gridnum - 1].transform.position;
             gridnum = bM_Character_Team2[i].GetComponent<Character>().character_Num_Of_Grid;
-            bM_Character_Team2[i].transform.position = gridManager.Team2Character_Postion[gridnum - 1].transform.position;
+            bM_Character_Team2[i].transform.position = GridManager.Instance.Team2Character_Postion[gridnum - 1].transform.position;
         }
     }
 
@@ -236,9 +235,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
             if (attacker.GetComponent<Character>().character_Attack_Range[j] == true) // 공격범위만큼 공격한다.
             {
                 if (attacker.GetComponent<Character>().character_Team_Number == 1)
-                    gridManager.Create_Damaged_Grid_Team2(j + 1);
+                    GridManager.Instance.Create_Damaged_Grid_Team2(j + 1);
                 else
-                    gridManager.Create_Damaged_Grid_Team1(j + 1);
+                    GridManager.Instance.Create_Damaged_Grid_Team1(j + 1);
 
                 foreach (GameObject enemy_Character in enemy_Characters)
                 {
@@ -258,7 +257,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if(result)
         {
             alertMessage.gameObject.SetActive(false);
-            yield return StartCoroutine(Dead(enemy_Characters));
+            yield return StartCoroutine(Dead());
         }
         
 
@@ -275,7 +274,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (result)
         {
             alertMessage.gameObject.SetActive(false);
-            yield return StartCoroutine(Dead(enemy_Characters));
+            yield return StartCoroutine(Dead());
         }
 
         result = SkillManager.Instance.AfterCounterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
@@ -283,6 +282,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(attacker.GetComponent<Character_Action>().SkillAttack());
+        }
+
+        result = Check_Character_Dead();
+        if (result)
+        {
+            alertMessage.gameObject.SetActive(false);
+            yield return StartCoroutine(Dead());
         }
 
         Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
@@ -304,32 +310,54 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         return false;
     }
-    IEnumerator Dead(GameObject[] enemy_Characters)
+    IEnumerator Dead()
     {
         for(int i = 0; i < 5; i++)
         {
-            Character EnemyScript = enemy_Characters[i].GetComponent<Character>();
-            if(EnemyScript.character_is_Killed == true)
+            Character Team1Script = bM_Character_Team1[i].GetComponent<Character>();
+            if(Team1Script.character_is_Killed == true)
             {
-                StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().Dead());
+                StartCoroutine(bM_Character_Team1[i].GetComponent<Character_Action>().Dead());
                 alertMessage.gameObject.SetActive(true);
-                alertMessage.Dead(enemy_Characters[i]);
+                alertMessage.Dead(bM_Character_Team1[i]);
+                yield return new WaitForSeconds(Instance.bM_Timegap);
+
+                // 여기에 넣음 AfterDead 
+            }
+
+            Character Team2Script = bM_Character_Team2[i].GetComponent<Character>();
+            if (Team2Script.character_is_Killed == true)
+            {
+                StartCoroutine(bM_Character_Team2[i].GetComponent<Character_Action>().Dead());
+                alertMessage.gameObject.SetActive(true);
+                alertMessage.Dead(bM_Character_Team2[i]);
                 yield return new WaitForSeconds(Instance.bM_Timegap);
             }
         }
+
+
     }
 
     IEnumerator Counter(GameObject attacker, GameObject[] enemy_Characters)
     {
+        bool result;
         for(int i = 0; i < 5; i++)
         {
             Character EnemyScript = enemy_Characters[i].GetComponent<Character>();
             if (EnemyScript.character_Counter == true && EnemyScript.character_Is_Allive == true)
             {
-                StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().Attack(attacker, true));
-                alertMessage.gameObject.SetActive(true);
-                alertMessage.Counter(enemy_Characters[i]);
-
+                result = SkillManager.Instance.CounterAttacking(attacker, enemy_Characters[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    yield return StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().SkillAttack());
+                }
+                else
+                {
+                    StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().Attack(attacker, true));
+                    alertMessage.gameObject.SetActive(true);
+                    alertMessage.Counter(enemy_Characters[i]);
+                }
                 yield return new WaitForSeconds(Instance.bM_Timegap);
             }
         }
@@ -409,7 +437,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    int Reverse_Enemy(int num) // 적 공격 시 공격범위를 좌우반전시킴.
+    public int Reverse_Enemy(int num) // 적 공격 시 공격범위를 좌우반전시킴.
     {
         int dummy = 0;
         switch(num)

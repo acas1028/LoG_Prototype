@@ -57,6 +57,7 @@ public class Character : MonoBehaviour
     public int character_is_Kill { get; set; } // 해당 턴에 적을 죽였는지를 판단하는 변수
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool character_Sturdy { get; set; } // 옹골참 발동
+    public GameObject killedBy { get; set; }
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
@@ -106,6 +107,7 @@ public class Character : MonoBehaviour
         character_is_Kill = 0;
         character_Number = 0;
         character_is_Killed = false;
+        killedBy = null;
     }
 
     public void Debuging_Character()
