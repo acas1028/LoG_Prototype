@@ -8,18 +8,13 @@ using PlayFab.ClientModels;
 
 public class DeckDataSync : MonoBehaviour
 {
+    Deck_Manager deckManager;
     private string playfabId;
-
-    private string character_id;
-    private string character_type;
-    private string character_skill;
-    private string character_hp;
-    private string character_attack_damage;
-    private string character_attack_range;
 
     // Start is called before the first frame update
     void Awake()
     {
+        deckManager = Deck_Manager.instance;
         playfabId = PlayerPrefs.GetString("PlayFabId");
         if (playfabId == string.Empty)
             Debug.LogError("로그인을 먼저 하십시오.");
@@ -32,11 +27,11 @@ public class DeckDataSync : MonoBehaviour
         // 0은 페이지 번호 (맨 앞 페이지인 경우 0)
         // 3은 해당 페이지 내에서 캐릭터의 위치, 인덱스 번호 (맨 앞 인덱스인 경우 0)
 
-        character_id = character.character_ID.ToString();
-        character_type = ((int)character.character_Type).ToString();
-        character_skill = ((int)character.character_Skill).ToString();
-        character_hp = character.character_HP.ToString();
-        character_attack_damage = character.character_Attack_Damage.ToString();
+        string character_id = character.character_ID.ToString();
+        string character_type = ((int)character.character_Type).ToString();
+        string character_skill = ((int)character.character_Skill).ToString();
+        string character_hp = character.character_HP.ToString();
+        string character_attack_damage = character.character_Attack_Damage.ToString();
 
         // 오버헤드를 줄이기 위하여 StringBuilder 사용
         StringBuilder sb = new StringBuilder();
@@ -44,15 +39,14 @@ public class DeckDataSync : MonoBehaviour
         {
             sb.Append(item ? 1 : 0);
         }
-        character_attack_range = sb.ToString();
+        string character_attack_range = sb.ToString();
 
+        // 저장되는 데이터의 Key와 Value값 예시
+        // Key값: 0_5_character_stats
+        // Value값: id14_type2_skill13_hp350_damage40_range111110101
         var data = new Dictionary<string, string>() {
-            { pageNum + "_" + deckIndex + "_character_id", character_id },
-            { pageNum + "_" + deckIndex + "_character_type", character_type },
-            { pageNum + "_" + deckIndex + "_character_skill", character_skill },
-            { pageNum + "_" + deckIndex + "_character_hp", character_hp },
-            { pageNum + "_" + deckIndex + "_character_attack_damage", character_attack_damage },
-            { pageNum + "_" + deckIndex + "_character_attack_range", character_attack_range }
+            { pageNum + "_" + deckIndex + "_character_stats", string.Format("id{0}_type{1}_skill{2}_hp{3}_damage{4}_range{5}",
+            character_id, character_type, character_skill, character_hp, character_attack_damage, character_attack_range) },
         };
 
         SendData(data);
@@ -73,61 +67,45 @@ public class DeckDataSync : MonoBehaviour
         );
     }
 
-    public Character GetData(int pageNum, int deckIndex)
+    public void GetData(int pageNum)
     {
         var request = new GetUserDataRequest() { PlayFabId = playfabId };
-        Character character = gameObject.AddComponent<Character>();
 
         PlayFabClientAPI.GetUserData(request,
             result =>
             {
                 foreach (var item in result.Data)
                 {
-                    if (item.Key == pageNum + "_" + deckIndex + "_character_id")
+                    if ((int)(item.Key[0] - '0') == pageNum && item.Key.Contains("character_stats"))
                     {
-                        character_id = item.Value.Value;
-                        character.character_ID = int.Parse(character_id);
-                        Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_id);
-                    }
-                    else if (item.Key == pageNum + "_" + deckIndex + "_character_type")
-                    {
-                        character_type = item.Value.Value;
-                        character.character_Type = (Character.Type)Enum.Parse(typeof(Character.Type), character_type);
-                        Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_type);
-                    }
-                    else if (item.Key == pageNum + "_" + deckIndex + "_character_skill")
-                    {
-                        character_skill = item.Value.Value;
-                        character.character_Skill = (Character.Skill)Enum.Parse(typeof(Character.Skill), character_skill);
-                        Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_skill);
-                    }
-                    else if (item.Key == pageNum + "_" + deckIndex + "_character_hp")
-                    {
-                        character_hp = item.Value.Value;
-                        character.character_HP = int.Parse(character_hp);
-                        Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_hp);
-                    }
-                    else if (item.Key == pageNum + "_" + deckIndex + "_character_attack_damage")
-                    {
-                        character_attack_damage = item.Value.Value;
-                        character.character_Attack_Damage = int.Parse(character_attack_damage);
-                        Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_attack_damage);
-                    }
-                    else if (item.Key == pageNum + "_" + deckIndex + "_character_attack_range")
-                    {
-                        character_attack_range = item.Value.Value;
+                        Character character = gameObject.AddComponent<Character>();
+                        int indexOfId = item.Value.Value.IndexOf("id");
+                        int indexOfType = item.Value.Value.IndexOf("type");
+                        int indexOfSkill = item.Value.Value.IndexOf("skill");
+                        int indexOfHp = item.Value.Value.IndexOf("hp");
+                        int indexOfDamage = item.Value.Value.IndexOf("damage");
+                        int indexOfRange = item.Value.Value.IndexOf("range");
+
+                        character.character_ID = int.Parse(item.Value.Value.Substring(indexOfId + 2, indexOfType - indexOfId - 3));
+                        character.character_Type = (Character.Type)Enum.Parse(typeof(Character.Type), item.Value.Value.Substring(indexOfType + 4, indexOfSkill - indexOfType - 5));
+                        character.character_Skill = (Character.Skill)Enum.Parse(typeof(Character.Skill), item.Value.Value.Substring(indexOfSkill + 5, indexOfHp - indexOfSkill - 6));
+                        character.character_HP = int.Parse(item.Value.Value.Substring(indexOfHp + 2, indexOfDamage - indexOfHp - 3));
+                        character.character_Attack_Damage = int.Parse(item.Value.Value.Substring(indexOfDamage + 6, indexOfRange - indexOfDamage - 7));
+
+                        string attack_range_temp = item.Value.Value.Substring(indexOfRange + 5);
                         for (int i = 0; i < 9; i++)
                         {
-                            character.character_Attack_Range[i] = (character_attack_range[i] != '0');
+                            character.character_Attack_Range[i] = (attack_range_temp[i] != '0');
                         }
-                        Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, character_attack_range);
+                        character.Debuging_Character();
+
+                        var ch = deckManager.Save_Characters[(int)(item.Key[2] - '0')].GetComponent<Character>();
+                        ch = character;
+
+                        Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, item.Value.Value);
                     }
                 }
             }, error => Debug.LogWarningFormat("데이터 불러오기 실패: {0}", error.ErrorMessage)
         );
-
-        character.Debuging_Character();
-
-        return character;
     }
 }

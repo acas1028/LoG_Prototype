@@ -28,11 +28,7 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
-        for (int i = 0; i < 7; i++)
-        {
-            Character ch = Save_Characters[i].GetComponent<Character>();
-            ch = deckDataSync.GetData(0, i);
-        }
+        deckDataSync.GetData(0);
     }
 
     void Update()
