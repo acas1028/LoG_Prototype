@@ -12,7 +12,6 @@ public class Deck_Manager : MonoBehaviour
     public GameObject[] Character_Slot;
     public GameObject[] Set_Character_;
     public GameObject[] Grid_Button;
-    public GameObject[] Save_Characters;
     public List<GameObject> Skill_Button = new List<GameObject>();
     public GameObject[] D_Page;
     public GameObject Current_Character;
@@ -20,13 +19,14 @@ public class Deck_Manager : MonoBehaviour
     public GameObject Deck_Reset_Button;
     public GameObject Pre_Skill;
     public DeckDataSync deckDataSync;
+    public Deck_Data_Send Deck_Data = Deck_Data_Send.instance;
 
     public Text[] Character_Stat;
 
     private void Awake()
     {
         instance = this;
-        deckDataSync.GetData(0);
+        //deckDataSync.GetData(0);
     }
     void Start()
     {
@@ -111,11 +111,11 @@ public class Deck_Manager : MonoBehaviour
 
             for (int i = 0; i < 7; i++)
             {
-                if (Character_Slot[i].activeSelf && Save_Characters[i].GetComponent<Character>().character_ID == 0)
+                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[i].GetComponent<Character>().character_ID == 0)
                 {
-                    Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
-                    Save_Characters[i].GetComponent<Character>().Debuging_Character();
-                    deckDataSync.SetData(0, i, Save_Characters[i].GetComponent<Character>());
+                    Deck_Data.Save_Data[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
+                    Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
+                    deckDataSync.SetData(0, i, Deck_Data.Save_Data[i].GetComponent<Character>());
                 }
             }
             Character_Stat[1].text = current.character_AP.ToString();
@@ -129,7 +129,7 @@ public class Deck_Manager : MonoBehaviour
         bool save = false;
         for (int i = 0; i < 7; i++)
         {
-            if (Save_Characters[i].GetComponent<Character>().character_ID==0)
+            if (Deck_Data.Save_Data[i].GetComponent<Character>().character_ID==0)
             {
                 save = true;
                 return;
@@ -148,8 +148,8 @@ public class Deck_Manager : MonoBehaviour
         {
             Character_Slot[i].GetComponent<Character>().Character_Reset();
             Character_Slot[i].GetComponent<Character>().Debuging_Character();
-            Save_Characters[i].GetComponent<Character>().Character_Reset();
-            Save_Characters[i].GetComponent<Character>().Debuging_Character();
+            Deck_Data.Save_Data[i].GetComponent<Character>().Character_Reset();
+            Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
         }
         Skill_Button.Clear();
@@ -175,7 +175,7 @@ public class Deck_Manager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < 7; i++)
         {
-            Character ch = Save_Characters[i].GetComponent<Character>();
+            Character ch = Deck_Data.Save_Data[i].GetComponent<Character>();
             Character cs = Character_Slot[i].GetComponent<Character>();
             if (ch.character_ID != 0)
             {
@@ -183,7 +183,7 @@ public class Deck_Manager : MonoBehaviour
                 Character_Slot[i].SetActive(true);
                 Slot_Type[i].SetActive(true);
                 Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type((int)ch.character_Type);
-                cs.Copy_Character_Stat(Save_Characters[i]);
+                cs.Copy_Character_Stat(Deck_Data.Save_Data[i]);
                 cs.Debuging_Character();
             }
         }

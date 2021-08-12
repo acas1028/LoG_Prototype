@@ -78,7 +78,7 @@ public class DeckDataSync : MonoBehaviour
                 {
                     if ((int)(item.Key[0] - '0') == pageNum && item.Key.Contains("character_stats"))
                     {
-                        Character character = deckManager.Save_Characters[(int)(item.Key[2] - '0')].GetComponent<Character>();
+                        Character character = Deck_Data_Send.instance.Save_Data[(int)(item.Key[2] - '0')].GetComponent<Character>();
                         int indexOfId = item.Value.Value.IndexOf("id");
                         int indexOfType = item.Value.Value.IndexOf("type");
                         int indexOfSkill = item.Value.Value.IndexOf("skill");

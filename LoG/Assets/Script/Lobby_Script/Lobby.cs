@@ -65,6 +65,8 @@ public class Lobby : MonoBehaviourPunCallbacks
 	private Dictionary<string, RoomInfo> cachedRoomList;
 	private Dictionary<string, GameObject> roomListEntries;
 
+	public DeckDataSync deckDataSync;
+
 	#endregion
 
 	#region Private 변수
@@ -140,7 +142,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 			LogFeedback("연결됨");
 			Debug.Log("<color=lightblue>현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.</color>");
 			// #Critical, we must first and foremost connect to Photon Online Server.
-
 			PlayFabAuth.SetActive(true);
 
 			PhotonNetwork.ConnectUsingSettings();
@@ -326,6 +327,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 		WebSyncPanel.SetActive(true);
 		SetActivePanel(SelectionPanel.name);
+		deckDataSync.GetData(0);
 	}
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
