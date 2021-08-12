@@ -119,6 +119,8 @@ public class Lobby : MonoBehaviourPunCallbacks
 			loadingEffect.StartLoaderAnimation();
 		}
 
+		PlayFabAuth.SetActive(true);
+
 		// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
 		if (PhotonNetwork.IsConnected)
 		{
@@ -135,7 +137,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 			LogFeedback("연결됨");
 			Debug.Log("<color=lightblue>현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.</color>");
 			// #Critical, we must first and foremost connect to Photon Online Server.
-			PlayFabAuth.SetActive(true);
 
 			PhotonNetwork.ConnectUsingSettings();
 			PhotonNetwork.GameVersion = this.gameVersion;
