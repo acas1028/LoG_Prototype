@@ -106,7 +106,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 result = SkillManager.Instance.AfterSetting(bM_Character_Team1[i],bM_Character_Team2);
                 if (result)
                 {
-                    StartCoroutine(bM_Character_Team1[i].GetComponent<Character_Action>().SetCharacterColor("green"));
+                    StartCoroutine((bM_Character_Team1[i].GetComponent<Character>() as Character_Action).SetCharacterColor("green"));
                     yield return new WaitForSeconds(bM_Timegap);
                 }
             }
@@ -115,7 +115,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 result = SkillManager.Instance.AfterSetting(bM_Character_Team2[i], bM_Character_Team1);
                 if (result)
                 {
-                    StartCoroutine(bM_Character_Team2[i].GetComponent<Character_Action>().SetCharacterColor("green"));
+                    StartCoroutine((bM_Character_Team2[i].GetComponent<Character>() as Character_Action).SetCharacterColor("green"));
                     yield return new WaitForSeconds(bM_Timegap);
                 }
             }
@@ -227,7 +227,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (result)
         {
             alertMessage.gameObject.SetActive(false);
-            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SkillAttack());
+            yield return StartCoroutine((attacker.GetComponent<Character>() as Character_Action).SkillAttack());
         }
 
         for (int j = 0; j < 9; j++)
@@ -243,8 +243,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     if (enemy_Character.GetComponent<Character>().character_Num_Of_Grid == j + 1)
                     {
-                        StopCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
-                        StartCoroutine(attacker.GetComponent<Character_Action>().Attack(enemy_Character, false));
+                        StopCoroutine((attacker.GetComponent<Character>() as Character_Action).Attack(enemy_Character, false));
+                        StartCoroutine((attacker.GetComponent<Character>() as Character_Action).Attack(enemy_Character, false));
                     }
                 }
             }
@@ -265,7 +265,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if(result)
         {
             alertMessage.gameObject.SetActive(false);
-            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
+            yield return StartCoroutine((attacker.GetComponent<Character>() as Character_Action).SetCharacterColor("blue"));
         }
         // 아래 코루틴이 끝날 때 까지 대기(반격)
         yield return StartCoroutine(Counter(attacker, enemy_Characters));
@@ -281,7 +281,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (result)
         {
             alertMessage.gameObject.SetActive(false);
-            yield return StartCoroutine(attacker.GetComponent<Character_Action>().SkillAttack());
+            yield return StartCoroutine((attacker.GetComponent<Character>() as Character_Action).SkillAttack());
         }
 
         result = Check_Character_Dead();
@@ -317,7 +317,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Character Team1Script = bM_Character_Team1[i].GetComponent<Character>();
             if(Team1Script.character_is_Killed == true)
             {
-                StartCoroutine(bM_Character_Team1[i].GetComponent<Character_Action>().Dead());
+                StartCoroutine((bM_Character_Team1[i].GetComponent<Character>() as Character_Action).Dead());
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Dead(bM_Character_Team1[i]);
                 yield return new WaitForSeconds(Instance.bM_Timegap);
@@ -328,7 +328,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Character Team2Script = bM_Character_Team2[i].GetComponent<Character>();
             if (Team2Script.character_is_Killed == true)
             {
-                StartCoroutine(bM_Character_Team2[i].GetComponent<Character_Action>().Dead());
+                StartCoroutine((bM_Character_Team2[i].GetComponent<Character>() as Character_Action).Dead());
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Dead(bM_Character_Team2[i]);
                 yield return new WaitForSeconds(Instance.bM_Timegap);
@@ -350,11 +350,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 if (result)
                 {
                     alertMessage.gameObject.SetActive(false);
-                    yield return StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().SkillAttack());
+                    yield return StartCoroutine((enemy_Characters[i].GetComponent<Character>() as Character_Action).SkillAttack());
                 }
                 else
                 {
-                    StartCoroutine(enemy_Characters[i].GetComponent<Character_Action>().Attack(attacker, true));
+                    StartCoroutine((enemy_Characters[i].GetComponent<Character>() as Character_Action).Attack(attacker, true));
                     alertMessage.gameObject.SetActive(true);
                     alertMessage.Counter(enemy_Characters[i]);
                 }

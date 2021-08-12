@@ -16,11 +16,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 	[Header("PlayFab 로그인 관리자")]
 	public GameObject PlayFabAuth;
 
-	[Header("Web Sync Panel")]
-	[Tooltip("웹 동기화 패널")]
-	[SerializeField]
-	private GameObject WebSyncPanel;
-
 	[Header("Login Panel")]
 	[Tooltip("플레이어 이름 입력 패널")]
 	[SerializeField]
@@ -64,8 +59,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	private Dictionary<string, RoomInfo> cachedRoomList;
 	private Dictionary<string, GameObject> roomListEntries;
-
-	public DeckDataSync deckDataSync;
 
 	#endregion
 
@@ -271,6 +264,16 @@ public class Lobby : MonoBehaviourPunCallbacks
 		SetActivePanel(SelectionPanel.name);
 	}
 
+	public void OnCreateRoomPanelButtonClicked()
+    {
+		if (PhotonNetwork.InLobby)
+		{
+			PhotonNetwork.LeaveLobby();
+		}
+
+		SetActivePanel(CreateRoomPanel.name);
+	}
+
 	public void OnCreateRoomButtonClicked()
 	{
 		if (loadingEffect)
@@ -325,9 +328,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 		if (loadingEffect)
 			loadingEffect.StopLoaderAnimation();
 
-		WebSyncPanel.SetActive(true);
 		SetActivePanel(SelectionPanel.name);
-		deckDataSync.GetData(0);
 	}
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -390,7 +391,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 		LogFeedback("연결 해제됨");
 		Debug.LogWarning("<color=yellow>Disconnected\n연결 해제됨</color>");
 
-		WebSyncPanel.SetActive(false);
 		SetActivePanel(LoginPanel.name);
 	}
 

@@ -16,6 +16,9 @@ public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
     [SerializeField]
     private InputField nameInput;
 
+    [SerializeField]
+    private DeckDataSync deckDataSync;
+
     /// <summary>
     /// 개인의 데이터에 접근하기 위한 ID
     /// </summary>
@@ -66,36 +69,12 @@ public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
         PhotonNetwork.AuthValues = customAuth;
 
         PlayerPrefs.SetString("PlayFabId", _playFabPlayerIdCache);
+        GetDeckData();
     }
 
-    public void SendData()
+    private void GetDeckData()
     {
-        // Key 값 지우는 방법: value 값을 null 로 해준다.
-        var data = new Dictionary<string, string>() { { "name", PhotonNetwork.NickName } };
-        var request = new UpdateUserDataRequest() { Data = data, Permission = UserDataPermission.Private };
-        PlayFabClientAPI.UpdateUserData(request,
-            result => {
-                foreach (var item in request.Data)
-                {
-                    Debug.LogFormat("플레이어 데이터 저장 성공: {0} / {1}", item.Key, item.Value);
-                }
-            }, error => Debug.LogWarningFormat("플레이어 데이터 저장 실패: {0}", error.ErrorMessage)
-        );
-    }
-
-    public void GetData()
-    {
-        var request = new GetUserDataRequest() { PlayFabId = _playFabPlayerIdCache };
-        PlayFabClientAPI.GetUserData(request,
-            result => {
-                foreach (var item in result.Data)
-                {
-                    if (item.Key == "name")
-                        nameInput.text = item.Value.Value;
-                    Debug.LogFormat("불러온 데이터: {0} / {1}", item.Key, item.Value.Value);
-                }
-            }, error => Debug.LogWarningFormat("데이터 불러오기 실패: {0}", error.ErrorMessage)
-        );
+        deckDataSync.GetData(0);
     }
 
     // 에러 발생시 콜백되는 함수

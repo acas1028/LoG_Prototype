@@ -880,18 +880,18 @@ public class SkillManager : MonoBehaviour
 
                 if(CCS.character_Num_Of_Grid == num1)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if(CCS.character_Num_Of_Grid == num2)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num3)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 GridManager.Instance.Create_Damaged_Grid_Team2(num1);
                 GridManager.Instance.Create_Damaged_Grid_Team2(num2);
@@ -906,18 +906,18 @@ public class SkillManager : MonoBehaviour
 
                 if (CCS.character_Num_Of_Grid == num1)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num2)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num3)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 GridManager.Instance.Create_Damaged_Grid_Team1(num1);
                 GridManager.Instance.Create_Damaged_Grid_Team1(num2);
@@ -935,23 +935,23 @@ public class SkillManager : MonoBehaviour
 
                 if (CCS.character_Num_Of_Grid == num1)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num2)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num3)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num4)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 GridManager.Instance.Create_Damaged_Grid_Team2(num1);
                 GridManager.Instance.Create_Damaged_Grid_Team2(num2);
@@ -967,23 +967,23 @@ public class SkillManager : MonoBehaviour
 
                 if (CCS.character_Num_Of_Grid == num1)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num2)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num3)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num4)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 GridManager.Instance.Create_Damaged_Grid_Team1(num1);
                 GridManager.Instance.Create_Damaged_Grid_Team1(num2);
@@ -1002,28 +1002,28 @@ public class SkillManager : MonoBehaviour
 
                 if (CCS.character_Num_Of_Grid == num1)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num2)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num3)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num4)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num5)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 GridManager.Instance.Create_Damaged_Grid_Team2(num1);
                 GridManager.Instance.Create_Damaged_Grid_Team2(num2);
@@ -1040,28 +1040,28 @@ public class SkillManager : MonoBehaviour
 
                 if (CCS.character_Num_Of_Grid == num1)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num2)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num3)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num4)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 if (CCS.character_Num_Of_Grid == num5)
                 {
-                    StopCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
-                    StartCoroutine(counterAttacker.GetComponent<Character_Action>().Attack(character, true));
+                    StopCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
+                    StartCoroutine((counterAttacker.GetComponent<Character>() as Character_Action).Attack(character, true));
                 }
                 GridManager.Instance.Create_Damaged_Grid_Team1(num1);
                 GridManager.Instance.Create_Damaged_Grid_Team1(num2);
