@@ -14,14 +14,6 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
 
     private void Update()
     {
-        if(is_Arrayed==true)
-        {
-            Block_Inventory.SetActive(true); 
-        }
-        else
-        {
-            Block_Inventory.SetActive(false);
-        }
 
     }
     public void Setting_Character_Stat(GameObject Popup)
@@ -31,7 +23,6 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
     public int Return_Character_ID()
     {
         return this.gameObject.GetComponent<Inventory_ID>().m_Character_ID;
-        
     }
 
     public void OnPointerDown(PointerEventData eventData)

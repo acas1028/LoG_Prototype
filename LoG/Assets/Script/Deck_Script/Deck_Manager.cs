@@ -14,6 +14,7 @@ public class Deck_Manager : MonoBehaviour
     public GameObject[] Grid_Button;
     public GameObject[] Save_Characters;
     public List<GameObject> Skill_Button = new List<GameObject>();
+    public GameObject[] D_Page;
     public GameObject Current_Character;
     public GameObject Current_Grid;
     public GameObject Deck_Reset_Button;
@@ -25,10 +26,11 @@ public class Deck_Manager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        deckDataSync.GetData(0);
     }
     void Start()
     {
-        deckDataSync.GetData(0);
+        StartCoroutine("Load_Deck");
     }
 
     void Update()
@@ -42,6 +44,7 @@ public class Deck_Manager : MonoBehaviour
         Character_Stat[0].text = current.character_HP.ToString();
         Character_Stat[1].text = current.character_AP.ToString();
         Character_Stat[2].text = current.character_Attack_Damage.ToString();
+        Character_Stat[3].text = "(" + "+" + current.character_AP + ")";
         for (int i = 0; i < 9; i++)
         {
             if (current.character_Attack_Range[i] == true)
@@ -79,29 +82,63 @@ public class Deck_Manager : MonoBehaviour
     }
     public void Save_Button()
     {
-        Character current = Current_Character.GetComponent<Character>();
-
-        for (int i=0;i<7;i++)
-        {
-            while(Character_Slot[i].GetComponent<Character>().character_AP>0)
-            {
-                Character_Slot[i].GetComponent<Character>().character_Attack_Damage += 10;
-                Character_Slot[i].GetComponent<Character>().character_AP -= 10;//임의
-                Character_Slot[i].GetComponent<Character>().Debuging_Character();
-            }
-        }
-
+        bool cant_save = false;
         for (int i = 0; i < 7; i++)
         {
-            if (Character_Slot[i].activeSelf && Save_Characters[i].GetComponent<Character>().character_ID == 0)
+            if (Character_Slot[i].GetComponent<Character>().character_ID == 0)
             {
-                Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
-                Save_Characters[i].GetComponent<Character>().Debuging_Character();
-                deckDataSync.SetData(0, i, Save_Characters[i].GetComponent<Character>());
+                Debug.Log("캐릭터를 전부 할당해 주세요");
+                cant_save = true;
+                return;
             }
         }
-        Character_Stat[1].text = current.character_AP.ToString();
-        Character_Stat[2].text = current.character_Attack_Damage.ToString();
+
+        if (cant_save == false)
+        {
+            Character current = Current_Character.GetComponent<Character>();
+
+            for (int i = 0; i < 7; i++)
+            {
+                Character ch = Character_Slot[i].GetComponent<Character>();
+
+                while (ch.character_AP > 0)
+                {
+                    ch.character_Attack_Damage += 10;
+                    ch.character_AP -= 10;//임의
+                    ch.Debuging_Character();
+                }
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (Character_Slot[i].activeSelf && Save_Characters[i].GetComponent<Character>().character_ID == 0)
+                {
+                    Save_Characters[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
+                    Save_Characters[i].GetComponent<Character>().Debuging_Character();
+                    deckDataSync.SetData(0, i, Save_Characters[i].GetComponent<Character>());
+                }
+            }
+            Character_Stat[1].text = current.character_AP.ToString();
+            Character_Stat[2].text = current.character_Attack_Damage.ToString();
+            Character_Stat[3].text = "(" + "+" + current.character_AP + ")";
+        }
+    }
+
+    public void Auto_Save()
+    {
+        bool save = false;
+        for (int i = 0; i < 7; i++)
+        {
+            if (Save_Characters[i].GetComponent<Character>().character_ID==0)
+            {
+                save = true;
+                return;
+            }
+        }
+        if(save)
+        {
+            Save_Button();
+        }
     }
     public void Reset_Button()
     {
@@ -130,6 +167,25 @@ public class Deck_Manager : MonoBehaviour
             CB.selectedColor = white_Grid;
             Grid.colors = CB;
             Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
+        }
+    }
+
+    IEnumerator Load_Deck()
+    {
+        yield return new WaitForSeconds(0.2f);
+        for (int i = 0; i < 7; i++)
+        {
+            Character ch = Save_Characters[i].GetComponent<Character>();
+            Character cs = Character_Slot[i].GetComponent<Character>();
+            if (ch.character_ID != 0)
+            {
+                Set_Character_[i].SetActive(false);
+                Character_Slot[i].SetActive(true);
+                Slot_Type[i].SetActive(true);
+                Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type((int)ch.character_Type);
+                cs.Copy_Character_Stat(Save_Characters[i]);
+                cs.Debuging_Character();
+            }
         }
     }
     private void Reset_Skill()

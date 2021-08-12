@@ -78,7 +78,7 @@ public class DeckDataSync : MonoBehaviour
                 {
                     if ((int)(item.Key[0] - '0') == pageNum && item.Key.Contains("character_stats"))
                     {
-                        Character character = gameObject.AddComponent<Character>();
+                        Character character = deckManager.Save_Characters[(int)(item.Key[2] - '0')].GetComponent<Character>();
                         int indexOfId = item.Value.Value.IndexOf("id");
                         int indexOfType = item.Value.Value.IndexOf("type");
                         int indexOfSkill = item.Value.Value.IndexOf("skill");
@@ -98,10 +98,6 @@ public class DeckDataSync : MonoBehaviour
                             character.character_Attack_Range[i] = (attack_range_temp[i] != '0');
                         }
                         character.Debuging_Character();
-
-                        var ch = deckManager.Save_Characters[(int)(item.Key[2] - '0')].GetComponent<Character>();
-                        ch = character;
-
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, item.Value.Value);
                     }
                 }

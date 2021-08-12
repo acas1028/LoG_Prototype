@@ -106,7 +106,8 @@ public class Arrayment_Manager : MonoBehaviour
         {
             GameObject Grid_Character = hit.transform.gameObject;
             Character cs = Grid_Character.GetComponent<Character>();
-            cs.Character_Setting(click_id);
+            Deck_Data_Send sd = Deck_Data_Send.instance;
+            cs.Copy_Character_Stat(sd.Save_Data[click_id - 1]);
             Grid_Character.tag = "Character";
             for(int i=0;i<9;i++)
             {
@@ -134,6 +135,7 @@ public class Arrayment_Manager : MonoBehaviour
                 if(inven.m_Character_ID==cs.character_ID)
                 {
                     inven.is_Arrayed = true;
+                    inven.Block_Inventory.SetActive(true);
                 }
             }
             Sync_Character();
@@ -496,7 +498,6 @@ public class Arrayment_Manager : MonoBehaviour
             character_Arrayment_Showing.temp = Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Attack_Range;
         }
         cancle_num = Reverse_Array(Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Num_Of_Grid)-1;
-        Debug.Log(cancle_num);
     }
     public void Sync_Character()
     {
@@ -561,6 +562,7 @@ public class Arrayment_Manager : MonoBehaviour
             if (inven.m_Character_ID == cs.team1[num].GetComponent<Character>().character_ID)
             {
                 inven.is_Arrayed = false;
+                inven.Block_Inventory.SetActive(false);
             }
         }
         cs.team1[num].GetComponent<Character>().Character_Reset();

@@ -9,11 +9,6 @@ public class Deck_Type_Slot : MonoBehaviour
     public int Character_Type = 0;
     public Sprite[] Type_Image;
 
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
