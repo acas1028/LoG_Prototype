@@ -112,6 +112,7 @@ public class Character_Action : Character
             final_damage = 0;
         }
 
+        is_hit_this_turn = true;
         character_HP -= final_damage;
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
@@ -124,7 +125,7 @@ public class Character_Action : Character
     public void Character_Counter_Damaged(GameObject attacker, int damage) // 카운터 발동
     {
         StartCoroutine(SetCharacterColor("red"));
-        int final_damage = (damage * (100 + character_Buffed_Damaged)) / 100;
+        int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
         if (character_Divine_Shield == true && final_damage > 0)
         {
@@ -132,6 +133,7 @@ public class Character_Action : Character
             final_damage = 0;
         }
 
+        is_hit_this_turn = true;
         character_HP -= final_damage;
 
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동

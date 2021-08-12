@@ -145,6 +145,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             CCS.character_is_Kill = 0;
             CCS.character_is_Killed = false;
+            CCS.is_hit_this_turn = false;
         }
 
         foreach (var team2 in bM_Character_Team2)
@@ -153,6 +154,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             CCS.character_is_Kill = 0;
             CCS.character_is_Killed = false;
+            CCS.is_hit_this_turn = false;
         }
     }
     void BM_Character_Setting()

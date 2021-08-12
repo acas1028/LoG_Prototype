@@ -29,6 +29,13 @@ public class Character : MonoBehaviour
         Balance_WideCounter,        // 광역반격
         Balance_DestinyBond,        // 길동무 
         Defense_Disarm,             // 무장해제
+        Defense_Coward,             // 겁쟁이
+        Defense_Patience,           // 인내심
+        Defense_Responsibility,     // 책임감
+        Defense_Barrier,            // 방벽
+        Defense_Encourage,          // 격려
+        Defense_Thronmail           // 가시갑옷
+
     };
 
     // 전투 전 캐릭터가 기본으로 가지고 있는 변수
@@ -56,8 +63,9 @@ public class Character : MonoBehaviour
     public bool character_is_Killed { get; set; } //  해당 턴에 사망했는지를 판단하는 변수
     public int character_is_Kill { get; set; } // 해당 턴에 적을 죽였는지를 판단하는 변수
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
-    public bool character_Sturdy { get; set; } // 옹골참 발동
+    public bool is_patience_buffed { get; set; } // 인내심 버프가 켜져있는가? (인내심캐릭터만 적용)
     public GameObject killedBy { get; set; }
+    public bool is_hit_this_turn { get; set; }
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
@@ -102,12 +110,13 @@ public class Character : MonoBehaviour
         character_Buffed_Attack = 0;
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
-        character_Sturdy = false;
+        is_patience_buffed = false;
         character_Counter = false;
         character_is_Kill = 0;
         character_Number = 0;
         character_is_Killed = false;
         killedBy = null;
+        is_hit_this_turn = false;
     }
 
     public void Debuging_Character()
@@ -187,7 +196,24 @@ public class Character : MonoBehaviour
             case "길동무":
                 character_Skill = Skill.Balance_DestinyBond;
                 break;
-
+            case "겁쟁이":
+                character_Skill = Skill.Defense_Coward;
+                break;
+            case "인내심":
+                character_Skill = Skill.Defense_Patience;
+                break;
+            case "책임감":
+                character_Skill = Skill.Defense_Responsibility;
+                break;
+            case "방벽":
+                character_Skill = Skill.Defense_Barrier;
+                break;
+            case "격려":
+                character_Skill = Skill.Defense_Encourage;
+                break;
+            case "가시갑옷":
+                character_Skill = Skill.Defense_Thronmail;
+                break;
 
 
         }
@@ -257,7 +283,6 @@ public class Character : MonoBehaviour
         character_Buffed_Attack = copy.character_Buffed_Attack;
         character_Buffed_Damaged = copy.character_Buffed_Damaged;
         character_Divine_Shield = copy.character_Divine_Shield;
-        character_Sturdy = copy.character_Sturdy;
 
     }
 }

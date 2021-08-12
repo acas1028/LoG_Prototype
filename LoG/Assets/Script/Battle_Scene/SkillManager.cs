@@ -83,6 +83,24 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
+        if(CCS.character_Skill == Character.Skill.Defense_Coward)
+        {
+            result = Skill_Defender_Coward(character);
+            if (result) return true;
+        }
+
+        if(CCS.character_Skill == Character.Skill.Defense_Responsibility)
+        {
+            result = SKill_Defender_Responsibility(character);
+            if (result) return true;
+        }
+
+        if(CCS.character_Skill == Character.Skill.Defense_Barrier)
+        {
+            result = Skill_Defender_Barrier(character);
+            if (result) return true;
+        }
+
         return false;
     }
     public bool BeforeAttack(GameObject attacker,GameObject[] Damaged)
@@ -120,7 +138,14 @@ public class SkillManager : MonoBehaviour
             result = Skill_Attack_Executioner(attacker);
             if (result) return true;
         }
+        result = SKill_Defender_Patience();
+        if (result) return true;
 
+        result = Skill_Defender_Encourage();
+        if (result) return true;
+
+        result = SKill_Defender_Thronmail(false);
+        if (result) return true;
         return false;
     }
     public bool BeforeCounterAttack(GameObject attacker,GameObject[] Damaged)
@@ -134,6 +159,16 @@ public class SkillManager : MonoBehaviour
             result = Skill_Defender_Disarm(attacker, Damaged);
             if (result) return true;
         }
+
+
+        result = SKill_Defender_Patience();
+        if (result) return true;
+
+        result = Skill_Defender_Encourage();
+        if (result) return true;
+
+        result = SKill_Defender_Thronmail(true);
+        if (result) return true;
 
         return false;
     }
@@ -153,6 +188,22 @@ public class SkillManager : MonoBehaviour
             result = Skill_Balanced_DestinyBond(deadCharacter);
             if (result) return true;
         }
+
+        result = Skill_Defender_Coward_Check(deadCharacter);
+        if (result) return true;
+
+        if (DCS.character_Skill == Character.Skill.Balance_Blessing)
+        {
+            result = Blessing_Dead(deadCharacter);
+            if (result) return true;
+        }
+
+        if(DCS.character_Skill == Character.Skill.Defense_Barrier)
+        {
+            result = Barrier_Dead(deadCharacter);
+            if (result) return true;
+        }
+
         return false;
     }
 
@@ -164,6 +215,13 @@ public class SkillManager : MonoBehaviour
             result = Skill_Balanced_WideCounter(attacker, counterAttacker);
             if (result) return true;
         }
+
+        if(counterAttacker.GetComponent<Character>().character_Skill == Character.Skill.Defense_Thronmail)
+        {
+            result = Thronmail_Production(counterAttacker);
+            if (result) return true;
+        }
+
         return false;
     }
     // 공격형 스킬
@@ -869,7 +927,6 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
-
     void CounterArround(GameObject counterAttacker, int num1, int num2, int num3)
     { 
         if(counterAttacker.GetComponent<Character>().character_Team_Number == 1)
@@ -1130,6 +1187,407 @@ public class SkillManager : MonoBehaviour
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(attacker,"무장해제");
+
+        return true;
+    }
+
+    bool Skill_Defender_Coward(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        CCS.character_Buffed_Damaged += 60;
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character, "겁쟁이");
+
+        return true;
+    }
+    bool Skill_Defender_Coward_Check(GameObject deadCharacter)
+    {
+        Character DCS = deadCharacter.GetComponent<Character>();
+
+        if(DCS.character_Team_Number == 1)
+        {
+            foreach(var team in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if(TCS.character_Skill == Character.Skill.Defense_Coward)
+                {
+                    TCS.character_Buffed_Damaged -= 30;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "겁쟁이");
+                    return true;
+                }
+            }
+        }
+
+        if (DCS.character_Team_Number == 2)
+        {
+            foreach (var team in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Skill == Character.Skill.Defense_Coward)
+                {
+                    TCS.character_Buffed_Damaged -= 30;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "겁쟁이");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    bool SKill_Defender_Patience()
+    {
+        foreach (var team in BattleManager.Instance.bM_Character_Team1)
+        {
+            Character TCS = team.GetComponent<Character>();
+
+            if(TCS.character_Skill == Character.Skill.Defense_Patience)
+            {
+                if(TCS.is_patience_buffed == false && TCS.character_HP < TCS.character_MaxHP)
+                {
+                    TCS.is_patience_buffed = true;
+                    TCS.character_Buffed_Damaged += 40;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "인내심");
+                    return true;
+                }
+            }
+        }
+        foreach (var team in BattleManager.Instance.bM_Character_Team2)
+        {
+            Character TCS = team.GetComponent<Character>();
+
+            if (TCS.character_Skill == Character.Skill.Defense_Patience)
+            {
+                if (TCS.is_patience_buffed == false && TCS.character_HP < TCS.character_MaxHP)
+                {
+                    TCS.is_patience_buffed = true;
+                    TCS.character_Buffed_Damaged += 40;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "인내심");
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    bool SKill_Defender_Responsibility(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+        int num_of_defender = 0;
+
+        if (CCS.character_Team_Number == 1)
+        {
+            foreach(var team in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character TCS = team.GetComponent<Character>();
+
+                if(TCS.character_Type == Character.Type.Defender)
+                {
+                    num_of_defender += 1;
+                }
+            }
+
+            if(num_of_defender > 1)
+            {
+                CCS.character_MaxHP = CCS.character_MaxHP * 13 / 10;
+                CCS.character_HP = CCS.character_HP * 13 / 10;
+                CCS.character_Buffed_Attack += 30;
+                // 카운터 확률 증가
+
+                skillmessage.SetActive(true);
+                skillmessage.GetComponent<SkillMessage>().Message(character, "책임감");
+                return true;
+            }
+        }
+
+        if (CCS.character_Team_Number == 2)
+        {
+            foreach (var team in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character TCS = team.GetComponent<Character>();
+
+                if (TCS.character_Type == Character.Type.Defender)
+                {
+                    num_of_defender += 1;
+                }
+            }
+
+            if (num_of_defender > 1)
+            {
+                CCS.character_MaxHP = CCS.character_MaxHP * 13 / 10;
+                CCS.character_HP = CCS.character_HP * 13 / 10;
+                CCS.character_Buffed_Attack += 30;
+                // 카운터 확률 증가
+
+                skillmessage.SetActive(true);
+                skillmessage.GetComponent<SkillMessage>().Message(character, "책임감");
+                return true;
+            }
+        }
+        return false;
+    }
+    bool Skill_Defender_Barrier(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        if(CCS.character_Team_Number == 1)
+        {
+            if (CCS.character_Num_Of_Grid == 1 || CCS.character_Num_Of_Grid == 4 || CCS.character_Num_Of_Grid == 7) return false;
+
+            foreach(var team in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                {
+                    TCS.character_Buffed_Damaged += 20;
+                    CCS.character_Buffed_Damaged += 20;
+
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "방벽");
+
+                    return true;
+                }
+            }
+        }
+
+        if (CCS.character_Team_Number == 2)
+        {
+            if (CCS.character_Num_Of_Grid == 3 || CCS.character_Num_Of_Grid == 6 || CCS.character_Num_Of_Grid == 9) return false;
+
+            foreach (var team in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                {
+                    TCS.character_Buffed_Damaged += 20;
+                    CCS.character_Buffed_Damaged += 20;
+
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "방벽");
+
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    bool Barrier_Dead(GameObject deadCharacter)
+    {
+        Character CCS = deadCharacter.GetComponent<Character>();
+
+        if (CCS.character_Team_Number == 1)
+        {
+            if (CCS.character_Num_Of_Grid == 1 || CCS.character_Num_Of_Grid == 4 || CCS.character_Num_Of_Grid == 7) return false;
+
+            foreach (var team in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                {
+                    TCS.character_Buffed_Damaged -= 20;
+                    CCS.character_Buffed_Damaged -= 20;
+                }
+            }
+        }
+
+        if (CCS.character_Team_Number == 2)
+        {
+            if (CCS.character_Num_Of_Grid == 3 || CCS.character_Num_Of_Grid == 6 || CCS.character_Num_Of_Grid == 9) return false;
+
+            foreach (var team in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                {
+                    TCS.character_Buffed_Damaged -= 20;
+                    CCS.character_Buffed_Damaged -= 20;
+                }
+            }
+        }
+        return false;
+    }
+    bool Skill_Defender_Encourage()
+    {
+        foreach(var team in BattleManager.Instance.bM_Character_Team1)
+        {
+            Character TCS = team.GetComponent<Character>();
+
+            if(TCS.character_Skill == Character.Skill.Defense_Encourage && TCS.is_hit_this_turn == true)
+            {
+                if (TCS.character_Team_Number == 1)
+                {
+                    switch (TCS.character_Num_Of_Grid)
+                    {
+                        case 1:
+                            return false;
+                        case 2:
+                            Encourage(team,1, 1);
+                            return true;
+                        case 3:
+                            Encourage(team, 1, 1, 2);
+                            return true;
+                        case 4:
+                            return false;
+                        case 5:
+                            Encourage(team, 1, 4);
+                            return true;
+                        case 6:
+                            Encourage(team, 1, 4, 5);
+                            return true;
+                        case 7:
+                            return false;
+                        case 8:
+                            Encourage(team, 1, 7);
+                            return true;
+                        case 9:
+                            Encourage(team, 1, 7, 8);
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+
+                if(TCS.character_Team_Number == 2)
+                {
+                    switch (TCS.character_Num_Of_Grid)
+                    {
+                        case 1:
+                            Encourage(team, 2, 2, 3);
+                            return true;
+                        case 2:
+                            Encourage(team, 2, 3);
+                            return true;
+                        case 3:
+                            return false;
+                        case 4:
+                            Encourage(team, 2, 5, 6);
+                            return true;
+                        case 5:
+                            Encourage(team, 2, 6);
+                            return true;
+                        case 6:
+                            return false;
+                        case 7:
+                            Encourage(team, 2, 8, 9);
+                            return true;
+                        case 8:
+                            Encourage(team, 2, 9);
+                            return true;
+                        case 9:
+                            return false;
+                        default:
+                            return false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    void Encourage(GameObject character,int teamNumber,int num1,int num2)
+    {
+        if(teamNumber == 1)
+        {
+            foreach(var team in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == num1 || TCS.character_Num_Of_Grid == num2)
+                {
+                    TCS.character_Buffed_Attack += 20;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
+                }
+            }
+        }
+
+        if(teamNumber == 2)
+        {
+            foreach(var team in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == num1 || TCS.character_Num_Of_Grid == num2)
+                {
+                    TCS.character_Buffed_Attack += 20;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
+                }
+            }
+        }
+    }
+    void Encourage(GameObject character,int teamNumber,int num1)
+    {
+        if (teamNumber == 1)
+        {
+            foreach (var team in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == num1)
+                {
+                    TCS.character_Buffed_Attack += 20;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
+                }
+            }
+        }
+
+        if (teamNumber == 2)
+        {
+            foreach (var team in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Num_Of_Grid == num1)
+                {
+                    TCS.character_Buffed_Attack += 20;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
+                }
+            }
+        }
+    }
+    bool SKill_Defender_Thronmail(bool is_before_counter)
+    {
+        foreach (var team in BattleManager.Instance.bM_Character_Team1)
+        {
+            Character TCS = team.GetComponent<Character>();
+
+            if(TCS.character_Skill == Character.Skill.Defense_Thronmail)
+            {
+                if(is_before_counter == true)
+                {
+                    TCS.character_Attack_Damage *= 3;
+                }
+                else
+                {
+                    TCS.character_Attack_Damage /= 3;
+                }
+            }
+        }
+        foreach (var team in BattleManager.Instance.bM_Character_Team2)
+        {
+            Character TCS = team.GetComponent<Character>();
+
+            if (TCS.character_Skill == Character.Skill.Defense_Thronmail)
+            {
+                if (is_before_counter == true)
+                {
+                    TCS.character_Attack_Damage *= 3;
+                }
+                else
+                {
+                    TCS.character_Attack_Damage /= 3;
+                }
+            }
+        }
+        return false;
+    }
+    bool Thronmail_Production(GameObject counterAttacker)
+    {
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(counterAttacker, "가시갑옷");
 
         return true;
     }
