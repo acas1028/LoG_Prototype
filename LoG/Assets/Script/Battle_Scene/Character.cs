@@ -52,7 +52,7 @@ public class Character : MonoBehaviour
     public int character_Num_Of_Grid { get; set; } // 그리드 넘버
     public int character_Attack_Order { get; set; } // 공격 순서
     public bool[] character_Attack_Range { get; set; } // 공격 범위
-
+    public int character_Counter_Probability { get; set; } // 반격확률
     // 전투 중 활성화되는 변수
     // Battle-Oriented Variables
     public int character_Number { get; set; }  // ~~번 캐릭터 공격!할때 쓰는 변수
@@ -108,7 +108,7 @@ public class Character : MonoBehaviour
             { false, false, false,
               false, false, false,
               false, false, false };
-
+        character_Counter_Probability = 0;
         character_Buffed_Attack = 0;
         character_Buffed_Damaged = 0;
         character_Divine_Shield = false;
@@ -266,6 +266,7 @@ public class Character : MonoBehaviour
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
         character_Attack_Range = new bool[9];
         setting_Attack_Range(num);
+        character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
     }
 
     public void Copy_Character_Stat(GameObject copyObject) // 캐릭터스크립트 내의 변수들을 복사하는 함수
@@ -289,6 +290,7 @@ public class Character : MonoBehaviour
         character_Buffed_Attack = copy.character_Buffed_Attack;
         character_Buffed_Damaged = copy.character_Buffed_Damaged;
         character_Divine_Shield = copy.character_Divine_Shield;
+        character_Counter_Probability = copy.character_Counter_Probability;
 
     }
 }

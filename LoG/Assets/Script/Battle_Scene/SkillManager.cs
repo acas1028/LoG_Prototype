@@ -771,13 +771,13 @@ public class SkillManager : MonoBehaviour
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 30;
                     }
                     if(TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                 }
             }
@@ -790,13 +790,13 @@ public class SkillManager : MonoBehaviour
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                 }
             }
@@ -812,19 +812,19 @@ public class SkillManager : MonoBehaviour
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                 }
             }
@@ -837,19 +837,19 @@ public class SkillManager : MonoBehaviour
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                 }
             }
@@ -865,13 +865,13 @@ public class SkillManager : MonoBehaviour
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                 }
             }
@@ -884,13 +884,13 @@ public class SkillManager : MonoBehaviour
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
-                        // 카운터 확률
+                        TCS.character_Counter_Probability -= 10;
                     }
                 }
             }
@@ -1153,7 +1153,7 @@ public class SkillManager : MonoBehaviour
         {
             killedBy.GetComponent<Character>().character_HP -= killedBy.GetComponent<Character>().character_HP / 2;
             killedBy.GetComponent<Character>().character_Buffed_Attack -= 50;
-            // 카운터 확률
+            killedBy.GetComponent<Character>().character_Counter_Probability -= 40;
         }
         return true;
     }
@@ -1290,7 +1290,7 @@ public class SkillManager : MonoBehaviour
                 CCS.character_MaxHP = CCS.character_MaxHP * 13 / 10;
                 CCS.character_HP = CCS.character_HP * 13 / 10;
                 CCS.character_Buffed_Attack += 30;
-                // 카운터 확률 증가
+                CCS.character_Counter_Probability += 20;
 
                 skillmessage.SetActive(true);
                 skillmessage.GetComponent<SkillMessage>().Message(character, "책임감");
@@ -1315,7 +1315,7 @@ public class SkillManager : MonoBehaviour
                 CCS.character_MaxHP = CCS.character_MaxHP * 13 / 10;
                 CCS.character_HP = CCS.character_HP * 13 / 10;
                 CCS.character_Buffed_Attack += 30;
-                // 카운터 확률 증가
+                CCS.character_Counter_Probability += 20;
 
                 skillmessage.SetActive(true);
                 skillmessage.GetComponent<SkillMessage>().Message(character, "책임감");

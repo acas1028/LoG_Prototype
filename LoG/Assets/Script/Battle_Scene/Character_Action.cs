@@ -147,7 +147,17 @@ public class Character_Action : Character
 
     public void Character_Counter()
     {
-        character_Counter = true;
+        if (character_Counter_Probability > 100)
+            character_Counter_Probability = 100;
+        if (character_Counter_Probability < 0)
+            character_Counter_Probability = 0;
+
+        int rand = Random.Range(0, 100);
+
+        if (rand < character_Counter_Probability)
+            character_Counter = true;
+        else
+            character_Counter = false;
     }
 
     public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
