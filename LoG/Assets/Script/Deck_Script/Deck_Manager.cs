@@ -21,6 +21,9 @@ public class Deck_Manager : MonoBehaviour
     public DeckDataSync deckDataSync;
     public Deck_Data_Send Deck_Data = Deck_Data_Send.instance;
 
+    public Sprite Grid_disselected_sprite;
+    public Sprite Grid_selected_sprite;
+
     public Text[] Character_Stat;
 
     private void Awake()
@@ -160,12 +163,18 @@ public class Deck_Manager : MonoBehaviour
         for(int i=0;i<9;i++)
         {
             Button Grid = Grid_Button[i].GetComponent<Button>();
-            ColorBlock CB = Grid.colors;
-            Color white_Grid = Color.white;
-            CB.normalColor = white_Grid;
-            CB.pressedColor = white_Grid;
-            CB.selectedColor = white_Grid;
-            Grid.colors = CB;
+            //ColorBlock CB = Grid.colors;
+            //Color white_Grid = Color.white;
+            //CB.normalColor = white_Grid;
+            //CB.pressedColor = white_Grid;
+            //CB.selectedColor = white_Grid;
+            //Grid.colors = CB;
+            SpriteState spriteState = Grid.spriteState;
+            spriteState.disabledSprite = Grid_disselected_sprite;
+            spriteState.highlightedSprite = Grid_disselected_sprite;
+            spriteState.pressedSprite = Grid_disselected_sprite;
+            spriteState.selectedSprite = Grid_disselected_sprite;
+            Grid.spriteState = spriteState;
             Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
         }
     }
@@ -205,21 +214,33 @@ public class Deck_Manager : MonoBehaviour
     private void Recolor_Grid(int num)
     {
         Button Grid = Grid_Button[num].GetComponent<Button>();
-        ColorBlock CB = Grid.colors;
-        Color white_Grid = Color.white;
-        CB.normalColor = white_Grid;
-        CB.pressedColor = white_Grid;
-        CB.selectedColor = white_Grid;
-        Grid.colors = CB;
+        //ColorBlock CB = Grid.colors;
+        //Color white_Grid = Color.white;
+        //CB.normalColor = white_Grid;
+        //CB.pressedColor = white_Grid;
+        //CB.selectedColor = white_Grid;
+        //Grid.colors = CB;
+        SpriteState spriteState = Grid.spriteState;
+        spriteState.disabledSprite = Grid_disselected_sprite;
+        spriteState.highlightedSprite = Grid_disselected_sprite;
+        spriteState.pressedSprite = Grid_disselected_sprite;
+        spriteState.selectedSprite = Grid_disselected_sprite;
+        Grid.spriteState = spriteState;
     }
     private void Color_Grid(int num)
     {
         Button Grid = Grid_Button[num].GetComponent<Button>();
-        ColorBlock CB = Grid.colors;
-        Color Red_Grid = Color.red;
-        CB.normalColor = Red_Grid;
-        CB.pressedColor = Red_Grid;
-        CB.selectedColor = Red_Grid;
-        Grid.colors = CB;
+        //ColorBlock CB = Grid.colors;
+        //Color Red_Grid = Color.red;
+        //CB.normalColor = Red_Grid;
+        //CB.pressedColor = Red_Grid;
+        //CB.selectedColor = Red_Grid;
+        //Grid.colors = CB;
+        SpriteState spriteState = Grid.spriteState;
+        spriteState.disabledSprite = Grid_selected_sprite;
+        spriteState.highlightedSprite = Grid_selected_sprite;
+        spriteState.pressedSprite = Grid_selected_sprite;
+        spriteState.selectedSprite = Grid_selected_sprite;
+        Grid.spriteState = spriteState;
     }
 }
