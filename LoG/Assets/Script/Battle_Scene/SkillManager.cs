@@ -138,11 +138,6 @@ public class SkillManager : MonoBehaviour
             result = Skill_Attack_Executioner(attacker);
             if (result) return true;
         }
-        result = SKill_Defender_Patience();
-        if (result) return true;
-
-        result = Skill_Defender_Encourage();
-        if (result) return true;
 
         result = SKill_Defender_Thronmail(false);
         if (result) return true;
@@ -161,18 +156,12 @@ public class SkillManager : MonoBehaviour
         }
 
 
-        result = SKill_Defender_Patience();
-        if (result) return true;
-
-        result = Skill_Defender_Encourage();
-        if (result) return true;
-
         result = SKill_Defender_Thronmail(true);
         if (result) return true;
 
         return false;
     }
-    public bool AfterDead(GameObject deadCharacter)
+    public bool BeforeDead(GameObject deadCharacter)
     {
         bool result;
         Character DCS = deadCharacter.GetComponent<Character>();
@@ -203,6 +192,26 @@ public class SkillManager : MonoBehaviour
             result = Barrier_Dead(deadCharacter);
             if (result) return true;
         }
+
+        if(DCS.character_Skill == Character.Skill.Attack_Sturdy)
+        {
+            result = Skill_Attack_Sturdy(deadCharacter);
+            if (result) return true;
+        }
+
+        return false;
+    }
+
+    public bool AfterHitted(GameObject hittedCharacter)
+    {
+        bool result;
+
+        result = SKill_Defender_Patience(hittedCharacter);
+        if (result) return true;
+
+        result = Skill_Defender_Encourage(hittedCharacter);
+        if (result) return true;
+
 
         return false;
     }
@@ -422,9 +431,8 @@ public class SkillManager : MonoBehaviour
         }
 
         int num = 0;
-        int minHP = 0;
+        int minHP = 200;
 
-        minHP = enemy[0].GetComponent<Character>().character_HP;
         for (int i = 0; i < 5; i++)
         {
             if (minHP > enemy[i].GetComponent<Character>().character_HP && enemy[i].GetComponent<Character>().character_Is_Allive)
@@ -497,19 +505,23 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
+    bool Skill_Attack_Sturdy(GameObject character) // ¿Ë°ñÂü 
+    {
+        Character CCS = character.GetComponent<Character>();
+        if (CCS.is_overkill == false)
+            return false;
 
-    //bool Skill_Attack_Sturdy(GameObject character) // ¿Ë°ñÂü 
-    //{
-    //    Character CCS = character.GetComponent<Character>();
-    //    if (CCS.character_Sturdy == false)
-    //        return false;
+        CCS.character_HP = 1;
+        CCS.killedBy.GetComponent<Character>().character_is_Kill--;
+        CCS.character_is_Killed = false;
+        CCS.character_Counter = true;
+        CCS.killedBy = null;
 
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character, "¿Ë°ñÂü");
 
-    //    skillmessage.SetActive(true);
-    //    skillmessage.GetComponent<SkillMessage>().Message(character, "¿Ë°ñÂü");
-
-    //    return true;
-    //}
+        return true;
+    }
 
 
     // ¹ë·±½ºÇü ½ºÅ³
@@ -1237,38 +1249,20 @@ public class SkillManager : MonoBehaviour
         }
         return false;
     }
-    bool SKill_Defender_Patience()
+    bool SKill_Defender_Patience(GameObject hittedCharacter)
     {
-        foreach (var team in BattleManager.Instance.bM_Character_Team1)
-        {
-            Character TCS = team.GetComponent<Character>();
+        Character TCS = hittedCharacter.GetComponent<Character>();
 
-            if(TCS.character_Skill == Character.Skill.Defense_Patience)
-            {
-                if(TCS.is_patience_buffed == false && TCS.character_HP < TCS.character_MaxHP)
-                {
-                    TCS.is_patience_buffed = true;
-                    TCS.character_Buffed_Damaged += 40;
-                    skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(team, "ÀÎ³»½É");
-                    return true;
-                }
-            }
-        }
-        foreach (var team in BattleManager.Instance.bM_Character_Team2)
+        if (TCS.character_Skill == Character.Skill.Defense_Patience)
         {
-            Character TCS = team.GetComponent<Character>();
-
-            if (TCS.character_Skill == Character.Skill.Defense_Patience)
+            if (TCS.is_patience_buffed == false && TCS.character_HP < TCS.character_MaxHP)
             {
-                if (TCS.is_patience_buffed == false && TCS.character_HP < TCS.character_MaxHP)
-                {
-                    TCS.is_patience_buffed = true;
-                    TCS.character_Buffed_Damaged += 40;
-                    skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(team, "ÀÎ³»½É");
-                    return true;
-                }
+                TCS.is_patience_buffed = true;
+                TCS.character_Buffed_Damaged += 40;
+                TCS.is_hit_this_turn = false;
+                skillmessage.SetActive(true);
+                skillmessage.GetComponent<SkillMessage>().Message(hittedCharacter, "ÀÎ³»½É");
+                return true;
             }
         }
 
@@ -1410,78 +1404,77 @@ public class SkillManager : MonoBehaviour
         }
         return false;
     }
-    bool Skill_Defender_Encourage()
+    bool Skill_Defender_Encourage(GameObject hittedCharacter)
     {
-        foreach(var team in BattleManager.Instance.bM_Character_Team1)
+        Character TCS = hittedCharacter.GetComponent<Character>();
+
+        if (TCS.character_Skill == Character.Skill.Defense_Encourage && TCS.is_hit_this_turn == true)
         {
-            Character TCS = team.GetComponent<Character>();
-
-            if(TCS.character_Skill == Character.Skill.Defense_Encourage && TCS.is_hit_this_turn == true)
+            if (TCS.character_Team_Number == 1)
             {
-                if (TCS.character_Team_Number == 1)
+                TCS.is_hit_this_turn = false;
+                switch (TCS.character_Num_Of_Grid)
                 {
-                    switch (TCS.character_Num_Of_Grid)
-                    {
-                        case 1:
-                            return false;
-                        case 2:
-                            Encourage(team,1, 1);
-                            return true;
-                        case 3:
-                            Encourage(team, 1, 1, 2);
-                            return true;
-                        case 4:
-                            return false;
-                        case 5:
-                            Encourage(team, 1, 4);
-                            return true;
-                        case 6:
-                            Encourage(team, 1, 4, 5);
-                            return true;
-                        case 7:
-                            return false;
-                        case 8:
-                            Encourage(team, 1, 7);
-                            return true;
-                        case 9:
-                            Encourage(team, 1, 7, 8);
-                            return true;
-                        default:
-                            return false;
-                    }
+                    case 1:
+                        return false;
+                    case 2:
+                        Encourage(hittedCharacter, 1, 1);
+                        return true;
+                    case 3:
+                        Encourage(hittedCharacter, 1, 1, 2);
+                        return true;
+                    case 4:
+                        return false;
+                    case 5:
+                        Encourage(hittedCharacter, 1, 4);
+                        return true;
+                    case 6:
+                        Encourage(hittedCharacter, 1, 4, 5);
+                        return true;
+                    case 7:
+                        return false;
+                    case 8:
+                        Encourage(hittedCharacter, 1, 7);
+                        return true;
+                    case 9:
+                        Encourage(hittedCharacter, 1, 7, 8);
+                        return true;
+                    default:
+                        return false;
                 }
+            }
 
-                if(TCS.character_Team_Number == 2)
+            if (TCS.character_Team_Number == 2)
+            {
+                TCS.is_hit_this_turn = false;
+                switch (TCS.character_Num_Of_Grid)
                 {
-                    switch (TCS.character_Num_Of_Grid)
-                    {
-                        case 1:
-                            Encourage(team, 2, 2, 3);
-                            return true;
-                        case 2:
-                            Encourage(team, 2, 3);
-                            return true;
-                        case 3:
-                            return false;
-                        case 4:
-                            Encourage(team, 2, 5, 6);
-                            return true;
-                        case 5:
-                            Encourage(team, 2, 6);
-                            return true;
-                        case 6:
-                            return false;
-                        case 7:
-                            Encourage(team, 2, 8, 9);
-                            return true;
-                        case 8:
-                            Encourage(team, 2, 9);
-                            return true;
-                        case 9:
-                            return false;
-                        default:
-                            return false;
-                    }
+                    case 1:
+                        Encourage(hittedCharacter, 2, 2, 3);
+                        return true;
+                    case 2:
+                        Encourage(hittedCharacter, 2, 3);
+                        return true;
+                    case 3:
+                        return false;
+                    case 4:
+                        Encourage(hittedCharacter, 2, 5, 6);
+                        return true;
+                    case 5:
+                        Encourage(hittedCharacter, 2, 6);
+                        return true;
+                    case 6:
+                        return false;
+                    case 7:
+                        Encourage(hittedCharacter, 2, 8, 9);
+                        return true;
+                    case 8:
+                        Encourage(hittedCharacter, 2, 9);
+                        return true;
+                    case 9:
+                        return false;
+                    default:
+                        return false;
                 }
             }
         }

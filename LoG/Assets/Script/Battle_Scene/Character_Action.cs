@@ -115,6 +115,9 @@ public class Character_Action : Character
         is_hit_this_turn = true;
         character_HP -= final_damage;
 
+        if (character_HP == character_MaxHP && character_HP <= final_damage)
+            is_overkill = true;
+
         if (character_HP <= 0) // 체력이 0이하가되면 체력을 0으로 초기화하고 사망함수 발동
         { 
             Character_Dead(attacker);

@@ -261,7 +261,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
             alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(Dead());
         }
-        
+
+        result = Check_Character_Hitted();
+        if(result)
+        {
+            alertMessage.gameObject.SetActive(false);
+            yield return StartCoroutine(Hitted());
+        }
 
         result = SkillManager.Instance.BeforeCounterAttack(attacker, enemy_Characters);
         if(result)
@@ -277,6 +283,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(Dead());
+        }
+
+        result = Check_Character_Hitted();
+        if (result)
+        {
+            alertMessage.gameObject.SetActive(false);
+            yield return StartCoroutine(Hitted());
         }
 
         result = SkillManager.Instance.AfterCounterAttack(attacker, enemy_Characters); // 스킬 발동 시점 체크
@@ -314,20 +327,40 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
     IEnumerator Dead()
     {
+        bool result;
+
         for(int i = 0; i < 5; i++)
         {
             Character Team1Script = bM_Character_Team1[i].GetComponent<Character>();
+
+            if (Team1Script.character_is_Killed == true)
+            {
+                result = SkillManager.Instance.BeforeDead(bM_Character_Team1[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    yield return StartCoroutine((bM_Character_Team1[i].GetComponent<Character>() as Character_Action).SkillAttack());
+                }
+            }
             if(Team1Script.character_is_Killed == true)
             {
                 StartCoroutine((bM_Character_Team1[i].GetComponent<Character>() as Character_Action).Dead());
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Dead(bM_Character_Team1[i]);
                 yield return new WaitForSeconds(Instance.bM_Timegap);
-
-                // 여기에 넣음 AfterDead 
             }
 
             Character Team2Script = bM_Character_Team2[i].GetComponent<Character>();
+
+            if (Team2Script.character_is_Killed == true)
+            {
+                result = SkillManager.Instance.BeforeDead(bM_Character_Team2[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    yield return StartCoroutine((bM_Character_Team2[i].GetComponent<Character>() as Character_Action).SkillAttack());
+                }
+            }
             if (Team2Script.character_is_Killed == true)
             {
                 StartCoroutine((bM_Character_Team2[i].GetComponent<Character>() as Character_Action).Dead());
@@ -338,6 +371,54 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
 
+    }
+
+    bool Check_Character_Hitted()
+    {
+        foreach (var character in bM_Character_Team1)
+        {
+            if (character.GetComponent<Character>().is_hit_this_turn == true)
+                return true;
+        }
+
+        foreach (var character in bM_Character_Team2)
+        {
+            if (character.GetComponent<Character>().is_hit_this_turn == true)
+                return true;
+        }
+        return false;
+    }
+
+    IEnumerator Hitted()
+    {
+        bool result;
+
+        for (int i = 0; i < 5; i++)
+        {
+            Character Team1Script = bM_Character_Team1[i].GetComponent<Character>();
+
+            if (Team1Script.is_hit_this_turn == true)
+            {
+                result = SkillManager.Instance.AfterHitted(bM_Character_Team1[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    yield return StartCoroutine((bM_Character_Team1[i].GetComponent<Character>() as Character_Action).SkillAttack());
+                }
+            }
+
+            Character Team2Script = bM_Character_Team2[i].GetComponent<Character>();
+
+            if (Team2Script.is_hit_this_turn == true)
+            {
+                result = SkillManager.Instance.AfterHitted(bM_Character_Team2[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    yield return StartCoroutine((bM_Character_Team2[i].GetComponent<Character>() as Character_Action).SkillAttack());
+                }
+            }
+        }
     }
 
     IEnumerator Counter(GameObject attacker, GameObject[] enemy_Characters)

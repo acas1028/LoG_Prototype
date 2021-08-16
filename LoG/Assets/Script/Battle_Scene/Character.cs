@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
         Attack_Ranger,              // 명사수
         Attack_ArmorPiercer,        // 철갑탄
         Attack_DivineShield,        // 천상의보호막
-     // Attack_Sturdy,              // 옹골참
+        Attack_Sturdy,              // 옹골참(기합)
         Balance_Blessing,           // 축복
         Balance_GBGH,               // 모아니면 도
         Balance_Smoke,              // 연막탄
@@ -65,7 +65,9 @@ public class Character : MonoBehaviour
     public bool character_Divine_Shield { get; set; } // 천상의 보호막 유/무 true = 있음 false = 없음
     public bool is_patience_buffed { get; set; } // 인내심 버프가 켜져있는가? (인내심캐릭터만 적용)
     public GameObject killedBy { get; set; }
-    public bool is_hit_this_turn { get; set; }
+    public bool is_hit_this_turn { get; set; } //피격 시 발동되는 스킬을 위한 변수
+
+    public bool is_overkill { get; set; }
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
@@ -117,6 +119,7 @@ public class Character : MonoBehaviour
         character_is_Killed = false;
         killedBy = null;
         is_hit_this_turn = false;
+        is_overkill = false;
     }
 
     public void Debuging_Character()
@@ -171,6 +174,9 @@ public class Character : MonoBehaviour
                 break;
             case "천상의보호막":
                 character_Skill = Skill.Attack_DivineShield;
+                break;
+            case "옹골참":
+                character_Skill = Skill.Attack_Sturdy;
                 break;
             case "축복":
                 character_Skill = Skill.Balance_Blessing;
