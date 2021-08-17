@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Deck_Data_Send : MonoBehaviour
 {
-    static public Deck_Data_Send instance;
+    static public Deck_Data_Send instance = null;
     public GameObject[] Save_Data;
     // Start is called before the first frame update
     private void Awake()

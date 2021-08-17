@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandler,IEndDragHandler,IDragHandler
 {
     public int m_Inventory_ID;
-    public int m_Character_ID;
     public GameObject Block_Inventory;
     public bool is_Arrayed;
    
@@ -18,13 +17,14 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
     }
     public void Setting_Character_Stat(GameObject Popup)
     {
-        Popup.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(m_Character_ID);
+        //Popup.GetComponent<ShowingCharacterStats>().Character_Showing_Stats();
     }
-    public int Return_Character_ID()
+    public void Click_Inven()
     {
-        return this.gameObject.GetComponent<Inventory_ID>().m_Character_ID;
+        Inventory_ID cs = this.gameObject.GetComponent<Inventory_ID>();
+        cs.is_Arrayed = true;
+        cs.Block_Inventory.SetActive(true);
     }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log(gameObject.name);

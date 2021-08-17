@@ -129,15 +129,6 @@ public class Arrayment_Manager : MonoBehaviour
                 }
                 j++;
             }
-            for(int i=0;i<Inventory.Length;i++)
-            {
-                Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
-                if(inven.m_Character_ID==cs.character_ID)
-                {
-                    inven.is_Arrayed = true;
-                    inven.Block_Inventory.SetActive(true);
-                }
-            }
             Sync_Character();
             is_click_inventory = false;
         }
@@ -534,7 +525,7 @@ public class Arrayment_Manager : MonoBehaviour
             random = Random.Range(0, 9);
         }
 
-        Grids[random].GetComponent<Character>().Character_Setting(Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().m_Character_ID);
+        //Grids[random].GetComponent<Character>().Character_Setting();
         Grids[random].GetComponent<Character>().character_Num_Of_Grid = random + 1;
         Grids[random].GetComponent<Character>().Debuging_Character();
 
@@ -556,7 +547,7 @@ public class Arrayment_Manager : MonoBehaviour
     private void Order_Rearrange(int num)
     {
         Arrayed_Data cs = Arrayed_Data.instance;
-        for (int i = 0; i < Inventory.Length; i++)
+        /*for (int i = 0; i < Inventory.Length; i++)
         {
             Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
             if (inven.m_Character_ID == cs.team1[num].GetComponent<Character>().character_ID)
@@ -564,7 +555,7 @@ public class Arrayment_Manager : MonoBehaviour
                 inven.is_Arrayed = false;
                 inven.Block_Inventory.SetActive(false);
             }
-        }
+        }*/
         cs.team1[num].GetComponent<Character>().Character_Reset();
         cs.team1[num].GetComponent<Character>().Debuging_Character();
         for (int i = num; i < 4; i++)

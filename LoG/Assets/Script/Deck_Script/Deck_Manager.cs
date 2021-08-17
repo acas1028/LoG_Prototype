@@ -19,7 +19,7 @@ public class Deck_Manager : MonoBehaviour
     public GameObject Deck_Reset_Button;
     public GameObject Pre_Skill;
     public DeckDataSync deckDataSync;
-    public Deck_Data_Send Deck_Data = Deck_Data_Send.instance;
+    public Deck_Data_Send Deck_Data;
 
     public Sprite Grid_disselected_sprite;
     public Sprite Grid_selected_sprite;
@@ -29,7 +29,7 @@ public class Deck_Manager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        //deckDataSync.GetData(0);
+        Deck_Data = Deck_Data_Send.instance;
     }
     void Start()
     {
