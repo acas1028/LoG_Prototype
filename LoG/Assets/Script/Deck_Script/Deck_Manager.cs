@@ -176,6 +176,7 @@ public class Deck_Manager : MonoBehaviour
             spriteState.pressedSprite = Grid_disselected_sprite;
             spriteState.selectedSprite = Grid_disselected_sprite;
             Grid.spriteState = spriteState;
+            Grid.GetComponent<Image>().sprite = Grid_disselected_sprite;
             Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
         }
     }
@@ -227,6 +228,7 @@ public class Deck_Manager : MonoBehaviour
         spriteState.pressedSprite = Grid_disselected_sprite;
         spriteState.selectedSprite = Grid_disselected_sprite;
         Grid.spriteState = spriteState;
+        Grid.GetComponent<Image>().sprite = Grid_disselected_sprite;
     }
     private void Color_Grid(int num)
     {
@@ -243,5 +245,6 @@ public class Deck_Manager : MonoBehaviour
         spriteState.pressedSprite = Grid_selected_sprite;
         spriteState.selectedSprite = Grid_selected_sprite;
         Grid.spriteState = spriteState;
+        Grid.GetComponent<Image>().sprite = Grid_selected_sprite;
     }
 }
