@@ -14,9 +14,6 @@ using ExitGames.Client.Photon;
 public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private InputField nameInput;
-
-    [SerializeField]
     private DeckDataSync deckDataSync;
 
     /// <summary>

@@ -30,7 +30,7 @@ public class Deck_Skill : MonoBehaviour
     public void On_Skill_Button()
     {
         Deck_Manager cs = Deck_Manager.instance;
-        Character D_Character = Deck_Manager.instance.Current_Character.GetComponent<Character>();
+        Character D_Character = Deck_Manager.instance.Current_Character.GetComponentInChildren<Character>();
 
         if (this.gameObject.GetComponent<Deck_Skill>().is_selected == true)
             return;

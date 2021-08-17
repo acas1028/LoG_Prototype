@@ -38,6 +38,8 @@ public class Character : MonoBehaviour
 
     };
 
+    public Sprite[] Character_Sprite;
+
     // 전투 전 캐릭터가 기본으로 가지고 있는 변수
     // Original Variables
     public int character_ID { get; set; } // 캐릭터 ID
@@ -89,7 +91,19 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Character_Sprite_Setting();
+    }
+
+    public void Character_Sprite_Setting()
+    {
+        if (gameObject.CompareTag("Null_Character"))
+            gameObject.GetComponent<SpriteRenderer>().sprite = null;
+        else
+        {
+            // 현재 ID 개수(14개)만큼의 스프라이트가 없어서 임시로 적용함
+            // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
+            gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
+        }
     }
 
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.
@@ -97,7 +111,7 @@ public class Character : MonoBehaviour
         character_ID = 0;
         character_Type = Type.Attacker;
         character_Skill = Skill.Attack_Confidence;
-        character_Is_Allive = false;
+        character_Is_Allive = true;
         character_MaxHP = 0;
         character_HP = 0;
         character_AP = 0;

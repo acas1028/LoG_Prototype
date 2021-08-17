@@ -18,6 +18,13 @@ public class Character_Action : Character
 
     private void Update()
     {
+        if (character_Is_Allive)
+            // 현재 ID 개수(14개)만큼의 스프라이트가 없어서 임시로 적용함
+            // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
+            gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
+        else
+            gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[0];
+
         if (isMoveToEnemy && enemyTransform)
             transform.position = Vector3.SmoothDamp(transform.position, enemyTransform.transform.position, ref velocity,
                 (character_Counter ? BattleManager.Instance.bM_Timegap : BattleManager.Instance.bM_AttackTimegap) / 4);
@@ -60,7 +67,7 @@ public class Character_Action : Character
         // 적 캐릭터를 받아와서, 그 캐릭터의 정보에 접근하여 받을 데미지에 공격력 만큼을 저장시킴.
 
         Character_Action enemy_Character_Action;
-        enemy_Character_Action = enemy_Character.GetComponent<Character>() as Character_Action;
+        enemy_Character_Action = enemy_Character.GetComponent<Character_Action>();
 
         int damage = 0;
 

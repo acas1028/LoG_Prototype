@@ -19,7 +19,8 @@ public class Deck_Manager : MonoBehaviour
     public GameObject Deck_Reset_Button;
     public GameObject Pre_Skill;
     public DeckDataSync deckDataSync;
-    public Deck_Data_Send Deck_Data;
+
+    private Deck_Data_Send Deck_Data;
 
     public Sprite Grid_disselected_sprite;
     public Sprite Grid_selected_sprite;
@@ -42,7 +43,7 @@ public class Deck_Manager : MonoBehaviour
     }
     public void Check_Stat()
     {
-        Character current = Current_Character.GetComponent<Character>();
+        Character current = Current_Character.GetComponentInChildren<Character>();
         current.Debuging_Character();
         Character_Stat[0].text = current.character_HP.ToString();
         Character_Stat[1].text = current.character_AP.ToString();
@@ -58,7 +59,7 @@ public class Deck_Manager : MonoBehaviour
     }
     public void Click_Grid_2()
     {
-        Character current = Current_Character.GetComponent<Character>();
+        Character current = Current_Character.GetComponentInChildren<Character>();
         Deck_Grid CG = Current_Grid.GetComponent<Deck_Grid>();
 
         if (CG.is_Clicked_Grid == true)
@@ -88,7 +89,7 @@ public class Deck_Manager : MonoBehaviour
         bool cant_save = false;
         for (int i = 0; i < 7; i++)
         {
-            if (Character_Slot[i].GetComponent<Character>().character_ID == 0)
+            if (Character_Slot[i].GetComponentInChildren<Character>().character_ID == 0)
             {
                 Debug.Log("캐릭터를 전부 할당해 주세요");
                 cant_save = true;
@@ -98,11 +99,11 @@ public class Deck_Manager : MonoBehaviour
 
         if (cant_save == false)
         {
-            Character current = Current_Character.GetComponent<Character>();
+            Character current = Current_Character.GetComponentInChildren<Character>();
 
             for (int i = 0; i < 7; i++)
             {
-                Character ch = Character_Slot[i].GetComponent<Character>();
+                Character ch = Character_Slot[i].GetComponentInChildren<Character>();
 
                 while (ch.character_AP > 0)
                 {
@@ -149,8 +150,8 @@ public class Deck_Manager : MonoBehaviour
         Reset_Skill();
         for (int i=0;i<7;i++)
         {
-            Character_Slot[i].GetComponent<Character>().Character_Reset();
-            Character_Slot[i].GetComponent<Character>().Debuging_Character();
+            Character_Slot[i].GetComponentInChildren<Character>().Character_Reset();
+            Character_Slot[i].GetComponentInChildren<Character>().Debuging_Character();
             Deck_Data.Save_Data[i].GetComponent<Character>().Character_Reset();
             Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
@@ -185,7 +186,7 @@ public class Deck_Manager : MonoBehaviour
         for (int i = 0; i < 7; i++)
         {
             Character ch = Deck_Data.Save_Data[i].GetComponent<Character>();
-            Character cs = Character_Slot[i].GetComponent<Character>();
+            Character cs = Character_Slot[i].GetComponentInChildren<Character>();
             if (ch.character_ID != 0)
             {
                 Set_Character_[i].SetActive(false);

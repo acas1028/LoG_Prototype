@@ -105,10 +105,11 @@ public class Arrayment_Manager : MonoBehaviour
         if(hit.transform.tag=="Null_Character"&&is_click_inventory==true)// 인벤토리를 누르고, 빈 그리드를 클릭 -> 정상적인 배치를 한 경우.
         {
             GameObject Grid_Character = hit.transform.gameObject;
-            Character cs = Grid_Character.GetComponent<Character>();
+            Character cs = Grid_Character.GetComponentInChildren<Character>();
             Deck_Data_Send sd = Deck_Data_Send.instance;
             cs.Copy_Character_Stat(sd.Save_Data[click_id - 1]);
             Grid_Character.tag = "Character";
+            cs.tag = Grid_Character.tag;
             for(int i=0;i<9;i++)
             {
                 if (Grid_Character == Grids[i])
@@ -122,7 +123,7 @@ public class Arrayment_Manager : MonoBehaviour
             {
                 if (T.team1[j].GetComponent<Character>().character_ID == 0)
                 {
-                    T.team1[j].GetComponent<Character>().Copy_Character_Stat(Grid_Character);
+                    T.team1[j].GetComponent<Character>().Copy_Character_Stat(Grid_Character.transform.Find("Character_Prefab").gameObject);
                     T.team1[j].GetComponent<Character>().Debuging_Character();
                     T.team1[j].tag = "Character";
                     break;
@@ -455,7 +456,7 @@ public class Arrayment_Manager : MonoBehaviour
 
     public void Cancle_Array()
     {
-        Character cs = Cancle_Character.GetComponent<Character>();
+        Character cs = Cancle_Character.GetComponentInChildren<Character>();
         Arrayed_Data T = Arrayed_Data.instance;
         for (int i = 0; i < 5; i++)
         {
@@ -468,7 +469,8 @@ public class Arrayment_Manager : MonoBehaviour
             }
         }
         character_Arrayment_Showing.Set_AttackRange_Ui(false);
-        cs.tag = "Null_Character";
+        Cancle_Character.tag = "Null_Character";
+        cs.tag = Cancle_Character.tag;
         cs.Character_Reset();
         cs.Debuging_Character();
     }
