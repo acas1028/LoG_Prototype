@@ -6,6 +6,8 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 
+using CharacterStats;
+
 public class DeckDataSync : MonoBehaviour
 {
     Deck_Manager deckManager;
@@ -87,8 +89,8 @@ public class DeckDataSync : MonoBehaviour
                         int indexOfRange = item.Value.Value.IndexOf("range");
 
                         character.character_ID = int.Parse(item.Value.Value.Substring(indexOfId + 2, indexOfType - indexOfId - 3));
-                        character.character_Type = (Character.Type)Enum.Parse(typeof(Character.Type), item.Value.Value.Substring(indexOfType + 4, indexOfSkill - indexOfType - 5));
-                        character.character_Skill = (Character.Skill)Enum.Parse(typeof(Character.Skill), item.Value.Value.Substring(indexOfSkill + 5, indexOfHp - indexOfSkill - 6));
+                        character.character_Type = (CharacterType)Enum.Parse(typeof(CharacterType), item.Value.Value.Substring(indexOfType + 4, indexOfSkill - indexOfType - 5));
+                        character.character_Skill = (CharacterSkill)Enum.Parse(typeof(CharacterSkill), item.Value.Value.Substring(indexOfSkill + 5, indexOfHp - indexOfSkill - 6));
                         character.character_HP = int.Parse(item.Value.Value.Substring(indexOfHp + 2, indexOfDamage - indexOfHp - 3));
                         character.character_Attack_Damage = int.Parse(item.Value.Value.Substring(indexOfDamage + 6, indexOfRange - indexOfDamage - 7));
 

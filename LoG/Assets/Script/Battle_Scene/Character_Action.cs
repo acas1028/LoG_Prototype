@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using CharacterStats;
 
 
 // 캐릭터의 스탯을 기반으로 특정 행동을 취하는 클래스
@@ -82,7 +83,7 @@ public class Character_Action : Character
             }
             else
             {
-                if (character_Skill == Skill.Attack_ArmorPiercer)
+                if (character_Skill == CharacterSkill.Attack_ArmorPiercer)
                     damage = SkillManager.Instance.ArmorPiercer(this.gameObject, enemy_Character);
                 else
                     damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;

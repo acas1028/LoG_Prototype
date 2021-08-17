@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CharacterStats;
 
-// 캐릭터의 스탯을 가지고 있는 클래스
-public class Character : MonoBehaviour
+namespace CharacterStats
 {
-    public enum Type
+    public enum CharacterType
     {
         Attacker = 1,
         Defender,
         Balance
     };
 
-    public enum Skill
+    public enum CharacterSkill
     {
         Attack_Confidence,          // 자신감
         Attack_Executioner,         // 처형자
@@ -37,14 +37,18 @@ public class Character : MonoBehaviour
         Defense_Thronmail           // 가시갑옷
 
     };
+}
 
+// 캐릭터의 스탯을 가지고 있는 클래스
+public class Character : MonoBehaviour
+{
     public Sprite[] Character_Sprite;
 
     // 전투 전 캐릭터가 기본으로 가지고 있는 변수
     // Original Variables
     public int character_ID { get; set; } // 캐릭터 ID
-    public Type character_Type { get; set; }
-    public Skill character_Skill { get; set; }
+    public CharacterType character_Type { get; set; }
+    public CharacterSkill character_Skill { get; set; }
     public bool character_Is_Allive { get; set; } // 캐릭터 생존 유무
     public int character_HP { get; set; } // 현재 체력
 
@@ -74,8 +78,8 @@ public class Character : MonoBehaviour
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
     // Debug
-    public Type Debug_Type;
-    public Skill Debug_Skill;
+    public CharacterType Debug_Type;
+    public CharacterSkill Debug_Skill;
     public bool[] Debug_character_Attack_Range;
     public int Debug_character_Grid_Number;
     public int Debug_Character_Damage;
@@ -109,8 +113,8 @@ public class Character : MonoBehaviour
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.
     {
         character_ID = 0;
-        character_Type = Type.Attacker;
-        character_Skill = Skill.Attack_Confidence;
+        character_Type = CharacterType.Attacker;
+        character_Skill = CharacterSkill.Attack_Confidence;
         character_Is_Allive = true;
         character_MaxHP = 0;
         character_HP = 0;
@@ -151,17 +155,17 @@ public class Character : MonoBehaviour
     {
         if ((string)character_data[num]["Type"] == "공격형")
         {
-            character_Type = Type.Attacker;
+            character_Type = CharacterType.Attacker;
         }
 
         if ((string)character_data[num]["Type"] == "밸런스형")
         {
-            character_Type = Type.Balance;
+            character_Type = CharacterType.Balance;
         }
 
         if ((string)character_data[num]["Type"] == "방어형")
         {
-            character_Type = Type.Defender;
+            character_Type = CharacterType.Defender;
         }
         //Debug.Log(character_data[num]["Type"]);
         //Debug.Log(character_Type);
@@ -172,67 +176,67 @@ public class Character : MonoBehaviour
         switch ((string)character_data[num]["Skill"])
         {
             case "자신감":
-                character_Skill = Skill.Attack_Confidence;
+                character_Skill = CharacterSkill.Attack_Confidence;
                 break;
             case "처형자":
-                character_Skill = Skill.Attack_Executioner;
+                character_Skill = CharacterSkill.Attack_Executioner;
                 break;
             case "발악":
-                character_Skill = Skill.Attack_Struggle;
+                character_Skill = CharacterSkill.Attack_Struggle;
                 break;
             case "명사수":
-                character_Skill = Skill.Attack_Ranger;
+                character_Skill = CharacterSkill.Attack_Ranger;
                 break;
             case "철갑탄":
-                character_Skill = Skill.Attack_ArmorPiercer;
+                character_Skill = CharacterSkill.Attack_ArmorPiercer;
                 break;
             case "천상의보호막":
-                character_Skill = Skill.Attack_DivineShield;
+                character_Skill = CharacterSkill.Attack_DivineShield;
                 break;
             case "옹골참":
-                character_Skill = Skill.Attack_Sturdy;
+                character_Skill = CharacterSkill.Attack_Sturdy;
                 break;
             case "축복":
-                character_Skill = Skill.Balance_Blessing;
+                character_Skill = CharacterSkill.Balance_Blessing;
                 break;
             case "모아니면도":
-                character_Skill = Skill.Balance_GBGH;
+                character_Skill = CharacterSkill.Balance_GBGH;
                 break;
             case "무장해제":
-                character_Skill = Skill.Defense_Disarm;
+                character_Skill = CharacterSkill.Defense_Disarm;
                 break;
             case "연막탄":
-                character_Skill = Skill.Balance_Smoke;
+                character_Skill = CharacterSkill.Balance_Smoke;
                 break;
             case "생존자":
-                character_Skill = Skill.Balance_Survivor;
+                character_Skill = CharacterSkill.Balance_Survivor;
                 break;
             case "저주":
-                character_Skill = Skill.Balance_Curse;
+                character_Skill = CharacterSkill.Balance_Curse;
                 break;
             case "광역반격":
-                character_Skill = Skill.Balance_WideCounter;
+                character_Skill = CharacterSkill.Balance_WideCounter;
                 break;
             case "길동무":
-                character_Skill = Skill.Balance_DestinyBond;
+                character_Skill = CharacterSkill.Balance_DestinyBond;
                 break;
             case "겁쟁이":
-                character_Skill = Skill.Defense_Coward;
+                character_Skill = CharacterSkill.Defense_Coward;
                 break;
             case "인내심":
-                character_Skill = Skill.Defense_Patience;
+                character_Skill = CharacterSkill.Defense_Patience;
                 break;
             case "책임감":
-                character_Skill = Skill.Defense_Responsibility;
+                character_Skill = CharacterSkill.Defense_Responsibility;
                 break;
             case "방벽":
-                character_Skill = Skill.Defense_Barrier;
+                character_Skill = CharacterSkill.Defense_Barrier;
                 break;
             case "격려":
-                character_Skill = Skill.Defense_Encourage;
+                character_Skill = CharacterSkill.Defense_Encourage;
                 break;
             case "가시갑옷":
-                character_Skill = Skill.Defense_Thronmail;
+                character_Skill = CharacterSkill.Defense_Thronmail;
                 break;
 
 

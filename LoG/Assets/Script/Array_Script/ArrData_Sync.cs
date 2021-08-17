@@ -6,6 +6,8 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 using Photon.Pun;
 
+using CharacterStats;
+
 public class ArrData_Sync : MonoBehaviourPunCallbacks
 {
     public ArrRoomManager roomManager;
@@ -208,8 +210,8 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         targetPlayer.CustomProperties.TryGetValue(index + "_AttackOrder", out o_attackOrder);
 
         c.character_ID = (int)o_id;
-        c.character_Type = (Character.Type)o_type;
-        c.character_Skill = (Character.Skill)o_skill;
+        c.character_Type = (CharacterType)o_type;
+        c.character_Skill = (CharacterSkill)o_skill;
         c.character_Is_Allive = (bool)o_isAlive;
         c.character_HP = (int)o_hp;
         c.character_AP = (int)o_ap;

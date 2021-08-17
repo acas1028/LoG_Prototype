@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CharacterStats;
 
 public class Deck_Save_Ui : MonoBehaviour
 {
@@ -46,13 +47,13 @@ public class Deck_Save_Ui : MonoBehaviour
         {
             if (save_Character[i].GetComponent<Character>().GetType() != null)
             {
-                Character.Type type = save_Character[i].GetComponent<Character>().character_Type;
-                if(type== Character.Type.Attacker)
+                CharacterType type = save_Character[i].GetComponent<Character>().character_Type;
+                if(type== CharacterType.Attacker)
                 {
                     character_Type[i].GetComponent<Image>().sprite = type_Images[0];
                 }
 
-                else if(type == Character.Type.Balance)
+                else if(type == CharacterType.Balance)
                 {
                     character_Type[i].GetComponent<Image>().sprite = type_Images[1];
                 }

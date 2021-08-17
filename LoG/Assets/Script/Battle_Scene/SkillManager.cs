@@ -1,4 +1,5 @@
 using UnityEngine;
+using CharacterStats;
 
 public class SkillManager : MonoBehaviour
 {
@@ -53,49 +54,49 @@ public class SkillManager : MonoBehaviour
         bool result;
         Character CCS = character.GetComponent<Character>();
 
-        if(CCS.character_Skill == Character.Skill.Attack_Confidence)
+        if(CCS.character_Skill == CharacterSkill.Attack_Confidence)
         {
             result = Skill_Attack_Confidence(character);
             if (result) return true;
         }
 
-        if (CCS.character_Skill == Character.Skill.Attack_DivineShield)
+        if (CCS.character_Skill == CharacterSkill.Attack_DivineShield)
         {
             result = Skill_Attack_DivineShield(character);
             if (result) return true;
         }
 
-        if (CCS.character_Skill == Character.Skill.Balance_GBGH)
+        if (CCS.character_Skill == CharacterSkill.Balance_GBGH)
         {
             result = Skill_Balanced_GBGH(character);
             if (result) return true;
         }
 
-        if(CCS.character_Skill == Character.Skill.Balance_Blessing)
+        if(CCS.character_Skill == CharacterSkill.Balance_Blessing)
         {
             result = Skill_Balanced_Blessing(character);
             if (result) return true;
         }
 
-        if (CCS.character_Skill == Character.Skill.Balance_Smoke)
+        if (CCS.character_Skill == CharacterSkill.Balance_Smoke)
         {
             result = Skill_Balanced_Smoke(character,enemys);
             if (result) return true;
         }
 
-        if(CCS.character_Skill == Character.Skill.Defense_Coward)
+        if(CCS.character_Skill == CharacterSkill.Defense_Coward)
         {
             result = Skill_Defender_Coward(character);
             if (result) return true;
         }
 
-        if(CCS.character_Skill == Character.Skill.Defense_Responsibility)
+        if(CCS.character_Skill == CharacterSkill.Defense_Responsibility)
         {
             result = SKill_Defender_Responsibility(character);
             if (result) return true;
         }
 
-        if(CCS.character_Skill == Character.Skill.Defense_Barrier)
+        if(CCS.character_Skill == CharacterSkill.Defense_Barrier)
         {
             result = Skill_Defender_Barrier(character);
             if (result) return true;
@@ -108,19 +109,19 @@ public class SkillManager : MonoBehaviour
         bool result;
         Character ACS = attacker.GetComponent<Character>();
 
-        if(ACS.character_Skill == Character.Skill.Attack_Ranger)
+        if(ACS.character_Skill == CharacterSkill.Attack_Ranger)
         {
             result = SKill_Attack_Ranger(attacker,Damaged);
             if (result) return true;
         }
 
-        if(ACS.character_Skill == Character.Skill.Attack_Struggle)
+        if(ACS.character_Skill == CharacterSkill.Attack_Struggle)
         {
             result = Skill_Attack_Struggle(attacker);
             if (result) return true;
         }
 
-        if(ACS.character_Skill == Character.Skill.Attack_ArmorPiercer)
+        if(ACS.character_Skill == CharacterSkill.Attack_ArmorPiercer)
         {
             result = Skill_Attack_ArmorPiercer(attacker,Damaged);
             if (result) return true;
@@ -133,7 +134,7 @@ public class SkillManager : MonoBehaviour
         bool result;
         Character ACS = attacker.GetComponent<Character>();
 
-        if(ACS.character_Skill == Character.Skill.Attack_Executioner)
+        if(ACS.character_Skill == CharacterSkill.Attack_Executioner)
         {
             result = Skill_Attack_Executioner(attacker);
             if (result) return true;
@@ -149,7 +150,7 @@ public class SkillManager : MonoBehaviour
         Character ACS = attacker.GetComponent<Character>();
 
 
-        if (ACS.character_Skill == Character.Skill.Defense_Disarm)
+        if (ACS.character_Skill == CharacterSkill.Defense_Disarm)
         {
             result = Skill_Defender_Disarm(attacker, Damaged);
             if (result) return true;
@@ -166,13 +167,13 @@ public class SkillManager : MonoBehaviour
         bool result;
         Character DCS = deadCharacter.GetComponent<Character>();
 
-        if(DCS.character_Skill == Character.Skill.Balance_Curse)
+        if(DCS.character_Skill == CharacterSkill.Balance_Curse)
         {
             result = Skill_Balanced_Curse(deadCharacter);
             if (result) return true;
         }
 
-        if(DCS.character_Skill == Character.Skill.Balance_DestinyBond)
+        if(DCS.character_Skill == CharacterSkill.Balance_DestinyBond)
         {
             result = Skill_Balanced_DestinyBond(deadCharacter);
             if (result) return true;
@@ -181,19 +182,19 @@ public class SkillManager : MonoBehaviour
         result = Skill_Defender_Coward_Check(deadCharacter);
         if (result) return true;
 
-        if (DCS.character_Skill == Character.Skill.Balance_Blessing)
+        if (DCS.character_Skill == CharacterSkill.Balance_Blessing)
         {
             result = Blessing_Dead(deadCharacter);
             if (result) return true;
         }
 
-        if(DCS.character_Skill == Character.Skill.Defense_Barrier)
+        if(DCS.character_Skill == CharacterSkill.Defense_Barrier)
         {
             result = Barrier_Dead(deadCharacter);
             if (result) return true;
         }
 
-        if(DCS.character_Skill == Character.Skill.Attack_Sturdy)
+        if(DCS.character_Skill == CharacterSkill.Attack_Sturdy)
         {
             result = Skill_Attack_Sturdy(deadCharacter);
             if (result) return true;
@@ -219,13 +220,13 @@ public class SkillManager : MonoBehaviour
     public bool CounterAttacking(GameObject attacker,GameObject counterAttacker)
     {
         bool result;
-        if(counterAttacker.GetComponent<Character>().character_Skill == Character.Skill.Balance_WideCounter)
+        if(counterAttacker.GetComponent<Character>().character_Skill == CharacterSkill.Balance_WideCounter)
         {
             result = Skill_Balanced_WideCounter(attacker, counterAttacker);
             if (result) return true;
         }
 
-        if(counterAttacker.GetComponent<Character>().character_Skill == Character.Skill.Defense_Thronmail)
+        if(counterAttacker.GetComponent<Character>().character_Skill == CharacterSkill.Defense_Thronmail)
         {
             result = Thronmail_Production(counterAttacker);
             if (result) return true;
@@ -459,7 +460,7 @@ public class SkillManager : MonoBehaviour
         Character DCS = enemy.GetComponent<Character>();
         int damage;
 
-        if(DCS.character_Type == Character.Type.Defender)
+        if(DCS.character_Type == CharacterType.Defender)
         {
             damage = (ACS.character_Attack_Damage * (100 + ACS.character_Buffed_Attack + 60)) / 100;
         }
@@ -482,7 +483,7 @@ public class SkillManager : MonoBehaviour
             {
                 if (CCS.character_Attack_Range[i])
                 {
-                    if (enemy.GetComponent<Character>().character_Num_Of_Grid == i + 1 && enemy.GetComponent<Character>().character_Type == Character.Type.Defender)
+                    if (enemy.GetComponent<Character>().character_Num_Of_Grid == i + 1 && enemy.GetComponent<Character>().character_Type == CharacterType.Defender)
                     {
                         haveDefender = true;
                     }
@@ -1223,7 +1224,7 @@ public class SkillManager : MonoBehaviour
             foreach(var team in BattleManager.Instance.bM_Character_Team1)
             {
                 Character TCS = team.GetComponent<Character>();
-                if(TCS.character_Skill == Character.Skill.Defense_Coward)
+                if(TCS.character_Skill == CharacterSkill.Defense_Coward)
                 {
                     TCS.character_Buffed_Damaged -= 30;
                     skillmessage.SetActive(true);
@@ -1238,7 +1239,7 @@ public class SkillManager : MonoBehaviour
             foreach (var team in BattleManager.Instance.bM_Character_Team2)
             {
                 Character TCS = team.GetComponent<Character>();
-                if (TCS.character_Skill == Character.Skill.Defense_Coward)
+                if (TCS.character_Skill == CharacterSkill.Defense_Coward)
                 {
                     TCS.character_Buffed_Damaged -= 30;
                     skillmessage.SetActive(true);
@@ -1253,7 +1254,7 @@ public class SkillManager : MonoBehaviour
     {
         Character TCS = hittedCharacter.GetComponent<Character>();
 
-        if (TCS.character_Skill == Character.Skill.Defense_Patience)
+        if (TCS.character_Skill == CharacterSkill.Defense_Patience)
         {
             if (TCS.is_patience_buffed == false && TCS.character_HP < TCS.character_MaxHP)
             {
@@ -1279,7 +1280,7 @@ public class SkillManager : MonoBehaviour
             {
                 Character TCS = team.GetComponent<Character>();
 
-                if(TCS.character_Type == Character.Type.Defender)
+                if(TCS.character_Type == CharacterType.Defender)
                 {
                     num_of_defender += 1;
                 }
@@ -1304,7 +1305,7 @@ public class SkillManager : MonoBehaviour
             {
                 Character TCS = team.GetComponent<Character>();
 
-                if (TCS.character_Type == Character.Type.Defender)
+                if (TCS.character_Type == CharacterType.Defender)
                 {
                     num_of_defender += 1;
                 }
@@ -1408,7 +1409,7 @@ public class SkillManager : MonoBehaviour
     {
         Character TCS = hittedCharacter.GetComponent<Character>();
 
-        if (TCS.character_Skill == Character.Skill.Defense_Encourage && TCS.is_hit_this_turn == true)
+        if (TCS.character_Skill == CharacterSkill.Defense_Encourage && TCS.is_hit_this_turn == true)
         {
             if (TCS.character_Team_Number == 1)
             {
@@ -1547,7 +1548,7 @@ public class SkillManager : MonoBehaviour
         {
             Character TCS = team.GetComponent<Character>();
 
-            if(TCS.character_Skill == Character.Skill.Defense_Thronmail)
+            if(TCS.character_Skill == CharacterSkill.Defense_Thronmail)
             {
                 if(is_before_counter == true)
                 {
@@ -1563,7 +1564,7 @@ public class SkillManager : MonoBehaviour
         {
             Character TCS = team.GetComponent<Character>();
 
-            if (TCS.character_Skill == Character.Skill.Defense_Thronmail)
+            if (TCS.character_Skill == CharacterSkill.Defense_Thronmail)
             {
                 if (is_before_counter == true)
                 {
