@@ -99,6 +99,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     IEnumerator Running_Phase()
     {
         bool result;
+        yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team1));
+        yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team2));
         if(bM_Round == 0)
         {
             for (int i = 0; i < 5; i++)
