@@ -117,7 +117,7 @@ public class Deck_Manager : MonoBehaviour
             {
                 if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[i].GetComponent<Character>().character_ID == 0)
                 {
-                    Deck_Data.Save_Data[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i]);
+                    Deck_Data.Save_Data[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
                     Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
                     deckDataSync.SetData(0, i, Deck_Data.Save_Data[i].GetComponent<Character>());
                 }
