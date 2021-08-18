@@ -68,37 +68,37 @@ public class SynergeManager : MonoBehaviour
         if (attack >= 1 && balance >= 1 && defense >= 1)
         {
             A1D1B1(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+            yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
         }
         if (attack == 2)
         {
             A2(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+            yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
         }
         if (attack >= 3)
         {
             A3(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+            yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
         }
         if (defense == 2)
         {
             D2(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+            yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
         }
         if (defense >= 3)
         {
             D3(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+            yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
         }
         if (balance == 2)
         {
             B2(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+            yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
         }
         if (balance >= 3)
         {
             B3(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+            yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
         }
     }
 
