@@ -22,9 +22,4 @@ public class SynergeMessage : MonoBehaviour
 
         Invoke("Disable", BattleManager.Instance.bM_Timegap);
     }
-
-    private void Disable()
-    {
-        this.gameObject.SetActive(false);
-    }
 }

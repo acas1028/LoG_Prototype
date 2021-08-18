@@ -182,6 +182,6 @@ public class Character_Action : Character
     {
         character_Is_Allive = false;
         character_is_Killed = false;
-        yield return new WaitForSeconds(BattleManager.Instance.bM_Timegap);
+        yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
     }
 }
