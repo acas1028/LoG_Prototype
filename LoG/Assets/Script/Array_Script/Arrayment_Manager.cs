@@ -172,6 +172,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[0]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[0].GetComponent<Character>().character_Attack_Order = 1;
                         }
                         else
                         {
@@ -185,6 +186,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[1]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[1].GetComponent<Character>().character_Attack_Order = 2;
                         }
                         else
                         {
@@ -227,6 +229,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[2]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[2].GetComponent<Character>().character_Attack_Order = 3;
                         }
                         else
                         {
@@ -240,6 +243,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[3]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[3].GetComponent<Character>().character_Attack_Order = 4;
                         }
                         else
                         {
@@ -282,6 +286,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[4]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[4].GetComponent<Character>().character_Attack_Order = 5;
                         }
                         else
                         {
@@ -311,6 +316,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[0]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[0].GetComponent<Character>().character_Attack_Order = 1;
                         }
                         else
                         {
@@ -353,6 +359,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[1]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[1].GetComponent<Character>().character_Attack_Order = 2;
                         }
                         else
                         {
@@ -366,6 +373,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[2]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[2].GetComponent<Character>().character_Attack_Order = 3;
                         }
                         else
                         {
@@ -408,6 +416,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[3]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[3].GetComponent<Character>().character_Attack_Order = 4;
                         }
                         else
                         {
@@ -421,6 +430,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Copy_Character_Stat(cs.team2[4]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
+                            cs.team2[4].GetComponent<Character>().character_Attack_Order = 5;
                         }
                         else
                         {
@@ -548,15 +558,15 @@ public class Arrayment_Manager : MonoBehaviour
     private void Order_Rearrange(int num)
     {
         Arrayed_Data cs = Arrayed_Data.instance;
-        /*for (int i = 0; i < Inventory.Length; i++)
+        for (int i = 0; i < Inventory.Length; i++)
         {
             Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
-            if (inven.m_Character_ID == cs.team1[num].GetComponent<Character>().character_ID)
+            if (inven.m_Inventory_ID == cs.team1[num].GetComponent<Character>().character_ID)
             {
                 inven.is_Arrayed = false;
                 inven.Block_Inventory.SetActive(false);
             }
-        }*/
+        }
         cs.team1[num].GetComponent<Character>().Character_Reset();
         cs.team1[num].GetComponent<Character>().Debuging_Character();
         for (int i = num; i < 4; i++)
