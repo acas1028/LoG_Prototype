@@ -15,7 +15,10 @@ public class Deck_Skill : MonoBehaviour
         Character D_Character = Deck_Manager.instance.Current_Character.GetComponentInChildren<Character>();
 
         if (this.gameObject.GetComponent<Deck_Skill>().is_selected == true)
+        {
+            Cancle_Skill();
             return;
+        }
         else
         {
             if (D_Character.character_ID != 0)
@@ -24,9 +27,9 @@ public class Deck_Skill : MonoBehaviour
                 Cancle_Skill();
                 cs.Reset_Grid();
             }
-            this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
             cs.Pre_Skill = this.gameObject;
-            cs.Skill_Button.Add(this.gameObject);
+            this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
+            cs.Skill_List.Add(this.gameObject);
             Button SKill = this.gameObject.GetComponent<Button>();
             ColorBlock CB = SKill.colors;
             Color Red_Grid = Color.red;
@@ -97,12 +100,12 @@ public class Deck_Skill : MonoBehaviour
         }
         
     }
-
     public void Cancle_Skill()
     {
+        Debug.Log("Äµ½½");
         Deck_Manager cs = Deck_Manager.instance;
         cs.Pre_Skill.GetComponent<Deck_Skill>().is_selected = false;
-        cs.Skill_Button.Remove(cs.Pre_Skill);
+        cs.Skill_List.Remove(cs.Pre_Skill);
         Button B_SKill = cs.Pre_Skill.GetComponent<Button>();
         ColorBlock CB = B_SKill.colors;
         Color white = Color.white;

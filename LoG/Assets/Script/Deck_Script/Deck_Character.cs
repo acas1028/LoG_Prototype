@@ -37,5 +37,7 @@ public class Deck_Character : MonoBehaviour
     {
         Deck_Manager cs = Deck_Manager.instance;
         cs.Current_Character = this.gameObject;
+        int num = (int)this.gameObject.GetComponentInChildren<Character>().character_Skill;
+        cs.Pre_Skill = cs.Skill_Button[num];
     }
 }

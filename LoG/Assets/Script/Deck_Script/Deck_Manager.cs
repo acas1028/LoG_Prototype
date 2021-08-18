@@ -12,7 +12,8 @@ public class Deck_Manager : MonoBehaviour
     public GameObject[] Character_Slot;
     public GameObject[] Set_Character_;
     public GameObject[] Grid_Button;
-    public List<GameObject> Skill_Button = new List<GameObject>();
+    public List<GameObject> Skill_List = new List<GameObject>();
+    public GameObject[] Skill_Button;
     public GameObject[] D_Page;
     public GameObject Current_Character;
     public GameObject Current_Grid;
@@ -156,7 +157,7 @@ public class Deck_Manager : MonoBehaviour
             Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
         }
-        Skill_Button.Clear();
+        Skill_List.Clear();
     }
 
     public void Reset_Grid()
@@ -198,13 +199,34 @@ public class Deck_Manager : MonoBehaviour
                 cs.Debuging_Character();
             }
         }
+        Load_Skill();
+    }
+    private void Load_Skill()
+    {
+        for(int i=0;i<7;i++)
+        {
+            int num = (int)Deck_Data.Save_Data[i].GetComponent<Character>().character_Skill;
+            Skill_List.Add(Skill_Button[num]);
+        }
+        for(int i=0;i<Skill_List.Count;i++)
+        {
+            Skill_List[i].GetComponent<Deck_Skill>().is_selected = true;
+            Button SKill = Skill_List[i].GetComponent<Button>();
+            ColorBlock CB = SKill.colors;
+            Color Red_Grid = Color.red;
+            CB.normalColor = Red_Grid;
+            CB.pressedColor = Red_Grid;
+            CB.selectedColor = Red_Grid;
+            SKill.colors = CB;
+        }
+        Pre_Skill = Skill_List[6];
     }
     private void Reset_Skill()
     {
-        for(int i=0;i<Skill_Button.Count;i++)
+        for(int i=0;i<Skill_List.Count;i++)
         {
-            Skill_Button[i].GetComponent<Deck_Skill>().is_selected = false;
-            Button b_Skill = Skill_Button[i].GetComponent<Button>();
+            Skill_List[i].GetComponent<Deck_Skill>().is_selected = false;
+            Button b_Skill = Skill_List[i].GetComponent<Button>();
             ColorBlock CB = b_Skill.colors;
             Color white = Color.white;
             CB.normalColor = white;
