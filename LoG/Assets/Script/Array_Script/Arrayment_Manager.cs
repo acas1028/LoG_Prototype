@@ -19,8 +19,7 @@ public class Arrayment_Manager : MonoBehaviour
     public GameObject Array_Time;
     public GameObject[] Grids;
     public GameObject[] Enemy_Grids;
-    private GameObject[] Inventory;
-    public GameObject[] Block_Inventory;
+    public GameObject[] Inventory;
     public GameObject PopUp_UI;
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
@@ -60,8 +59,8 @@ public class Arrayment_Manager : MonoBehaviour
 
     void Start()
     {
-        Inventory = GameObject.FindGameObjectsWithTag("Character_inventory_Button");
         Phase = arrRoomManager.GetArrayPhase();
+        StartCoroutine("Get_Inventory_ID");
     }
     void Update()
     {
@@ -591,6 +590,16 @@ public class Arrayment_Manager : MonoBehaviour
         if (On_Raycast == false)
         {
             Ready_Array = false;
+        }
+    }
+    IEnumerator Get_Inventory_ID()
+    {
+        yield return new WaitForSeconds(0.2f);
+        for (int i = 0; i < Inventory.Length; i++)
+        {
+            Inventory_ID cs = Inventory[i].GetComponent<Inventory_ID>();
+            Character sv = Deck_Data_Send.instance.Save_Data[i].GetComponent<Character>();
+            cs.m_Inventory_ID = sv.character_ID;
         }
     }
     private int Reverse_Array(int num)
