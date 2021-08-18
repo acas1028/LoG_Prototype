@@ -96,6 +96,30 @@ public class Deck_Skill : MonoBehaviour
                     D_Character.Character_Setting(14);
                     D_Character.Debuging_Character();
                     break;
+                case CharacterSkill.Defense_Coward:
+                    D_Character.Character_Setting(15);
+                    D_Character.Debuging_Character();
+                    break;
+                case CharacterSkill.Defense_Patience:
+                    D_Character.Character_Setting(16);
+                    D_Character.Debuging_Character();
+                    break;
+                case CharacterSkill.Defense_Responsibility:
+                    D_Character.Character_Setting(17);
+                    D_Character.Debuging_Character();
+                    break;
+                case CharacterSkill.Defense_Barrier:
+                    D_Character.Character_Setting(18);
+                    D_Character.Debuging_Character();
+                    break;
+                case CharacterSkill.Defense_Encourage:
+                    D_Character.Character_Setting(19);
+                    D_Character.Debuging_Character();
+                    break;
+                case CharacterSkill.Defense_Thronmail:
+                    D_Character.Character_Setting(20);
+                    D_Character.Debuging_Character();
+                    break;
             }
         }
         
