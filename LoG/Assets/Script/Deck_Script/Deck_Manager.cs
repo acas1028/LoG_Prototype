@@ -9,6 +9,7 @@ public class Deck_Manager : MonoBehaviour
     static public Deck_Manager instance;
 
     public GameObject[] Slot_Type;
+    public GameObject[] Slot_Property;
     public GameObject[] Character_Slot;
     public GameObject[] Set_Character_;
     public GameObject[] Grid_Button;
