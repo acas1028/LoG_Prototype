@@ -80,6 +80,7 @@ public class Character : MonoBehaviour
     // Debug
     public CharacterType Debug_Type;
     public CharacterSkill Debug_Skill;
+    public int Debug_Character_ID;
     public bool[] Debug_character_Attack_Range;
     public int Debug_character_Grid_Number;
     public int Debug_Character_Damage;
@@ -92,22 +93,16 @@ public class Character : MonoBehaviour
         Debug_character_Attack_Range = new bool[9];
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        Character_Sprite_Setting();
+        gameObject.GetComponent<SpriteRenderer>().sprite = null;
     }
 
     public void Character_Sprite_Setting()
     {
-        if (gameObject.CompareTag("Null_Character"))
-            gameObject.GetComponent<SpriteRenderer>().sprite = null;
-        else
-        {
-            // 현재 ID 개수(14개)만큼의 스프라이트가 없어서 임시로 적용함
-            // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
-            gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
-        }
+        // 현재 ID 개수(14개)만큼의 스프라이트가 없어서 임시로 적용함
+        // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
+        gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
     }
 
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.
@@ -144,6 +139,7 @@ public class Character : MonoBehaviour
     {
         Debug_Skill = character_Skill;
         Debug_Type = character_Type;
+        Debug_Character_ID = character_ID;
         Debug_Character_HP = character_HP;
         Debug_character_Attack_Range = character_Attack_Range;
         Debug_character_Grid_Number = character_Num_Of_Grid;

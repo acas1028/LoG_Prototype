@@ -15,17 +15,11 @@ public class Character_Action : Character
     {
         startPosition = transform.position;
         isMoveToEnemy = false;
+        gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
     }
 
     private void Update()
     {
-        if (character_Is_Allive)
-            // 현재 ID 개수(14개)만큼의 스프라이트가 없어서 임시로 적용함
-            // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
-            gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
-        else
-            gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[0];
-
         if (isMoveToEnemy && enemyTransform)
             transform.position = Vector3.SmoothDamp(transform.position, enemyTransform.transform.position, ref velocity,
                 (character_Counter ? BattleManager.Instance.bM_Timegap : BattleManager.Instance.bM_AttackTimegap) / 4);
@@ -180,6 +174,7 @@ public class Character_Action : Character
 
     public IEnumerator Dead()
     {
+        gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[0];
         character_Is_Allive = false;
         character_is_Killed = false;
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
