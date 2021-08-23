@@ -2,20 +2,30 @@ using System.Collections;
 using UnityEngine;
 using CharacterStats;
 
+using Photon.Pun;
 
 // 캐릭터의 스탯을 기반으로 특정 행동을 취하는 클래스
-public class Character_Action : Character
+public class Character_Action : Character, IPunObservable
 {
     private Vector3 startPosition;
     private bool isMoveToEnemy;
     private Transform enemyTransform;
     private Vector3 velocity;
 
+    private int counterRand;
+
     private void Start()
     {
         startPosition = transform.position;
         isMoveToEnemy = false;
         gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
+        counterRand = 100;
+
+        if (!photonView.IsMine && !PhotonNetwork.OfflineMode)
+        {
+            BattleManager.Instance.bM_Character_Team2.Add(gameObject);
+        }
+
     }
 
     private void Update()
@@ -154,9 +164,10 @@ public class Character_Action : Character
         if (character_Counter_Probability < 0)
             character_Counter_Probability = 0;
 
-        int rand = Random.Range(0, 100);
+        if (photonView.IsMine)
+            counterRand = Random.Range(0, 100); // 0~99
 
-        if (rand < character_Counter_Probability)
+        if (counterRand < character_Counter_Probability)
             character_Counter = true;
         else
             character_Counter = false;
@@ -179,4 +190,14 @@ public class Character_Action : Character
         character_is_Killed = false;
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
     }
+
+    #region 포톤 데이터 교환, IPunObservable 인터페이스 상속
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo message)
+    {
+        if (stream.IsWriting)
+            stream.SendNext(counterRand);
+        else // stream.IsReading
+            counterRand = (int)stream.ReceiveNext();
+    }
+    #endregion
 }

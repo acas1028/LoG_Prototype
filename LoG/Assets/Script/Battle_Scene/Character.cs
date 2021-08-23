@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CharacterStats;
 
+using Photon.Pun;
+
 namespace CharacterStats
 {
     public enum CharacterType
@@ -40,7 +42,7 @@ namespace CharacterStats
 }
 
 // 캐릭터의 스탯을 가지고 있는 클래스
-public class Character : MonoBehaviour
+public class Character : MonoBehaviourPunCallbacks
 {
     public Sprite[] Character_Sprite;
 

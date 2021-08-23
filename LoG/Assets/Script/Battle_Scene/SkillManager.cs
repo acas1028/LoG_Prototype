@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using CharacterStats;
 
@@ -49,7 +50,7 @@ public class SkillManager : MonoBehaviour
         
     }
 
-    public bool AfterSetting(GameObject character,GameObject[] enemys)
+    public bool AfterSetting(GameObject character, List<GameObject> enemies)
     {
         bool result;
         Character CCS = character.GetComponent<Character>();
@@ -80,7 +81,7 @@ public class SkillManager : MonoBehaviour
 
         if (CCS.character_Skill == CharacterSkill.Balance_Smoke)
         {
-            result = Skill_Balanced_Smoke(character,enemys);
+            result = Skill_Balanced_Smoke(character, enemies);
             if (result) return true;
         }
 
@@ -104,14 +105,14 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
-    public bool BeforeAttack(GameObject attacker,GameObject[] Damaged)
+    public bool BeforeAttack(GameObject attacker, List<GameObject> Damaged)
     {
         bool result;
         Character ACS = attacker.GetComponent<Character>();
 
         if(ACS.character_Skill == CharacterSkill.Attack_Ranger)
         {
-            result = SKill_Attack_Ranger(attacker,Damaged);
+            result = SKill_Attack_Ranger(attacker, Damaged);
             if (result) return true;
         }
 
@@ -123,13 +124,13 @@ public class SkillManager : MonoBehaviour
 
         if(ACS.character_Skill == CharacterSkill.Attack_ArmorPiercer)
         {
-            result = Skill_Attack_ArmorPiercer(attacker,Damaged);
+            result = Skill_Attack_ArmorPiercer(attacker, Damaged);
             if (result) return true;
         }
 
         return false;
     }
-    public bool AfterCounterAttack(GameObject attacker,GameObject[] Damaged)
+    public bool AfterCounterAttack(GameObject attacker, List<GameObject> Damaged)
     {
         bool result;
         Character ACS = attacker.GetComponent<Character>();
@@ -144,7 +145,7 @@ public class SkillManager : MonoBehaviour
         if (result) return true;
         return false;
     }
-    public bool BeforeCounterAttack(GameObject attacker,GameObject[] Damaged)
+    public bool BeforeCounterAttack(GameObject attacker, List<GameObject> Damaged)
     {
         bool result;
         Character ACS = attacker.GetComponent<Character>();
@@ -414,7 +415,7 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
-    bool SKill_Attack_Ranger(GameObject character,GameObject[] enemy) // 명사수 
+    bool SKill_Attack_Ranger(GameObject character, List<GameObject> enemy) // 명사수 
     {
         Character CCS = character.GetComponent<Character>();
 
@@ -470,13 +471,13 @@ public class SkillManager : MonoBehaviour
         }
         return damage;
     }
-    bool Skill_Attack_ArmorPiercer(GameObject character, GameObject[] enemys)
+    bool Skill_Attack_ArmorPiercer(GameObject character, List<GameObject> enemies)
     {
         Character CCS = character.GetComponent<Character>();
 
         bool haveDefender = false;
 
-        foreach (var enemy in enemys)
+        foreach (var enemy in enemies)
         {
 
             for (int i = 0; i < 9; i++)
@@ -730,7 +731,7 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
-    bool Skill_Balanced_Smoke(GameObject character,GameObject[] enemys)
+    bool Skill_Balanced_Smoke(GameObject character, List<GameObject> enemys)
     {
         Character CCS = character.GetComponent<Character>();
 
@@ -1159,7 +1160,7 @@ public class SkillManager : MonoBehaviour
         return true;
     }
     // 방어형 스킬
-    bool Skill_Defender_Disarm(GameObject attacker,GameObject[] Damaged) // 무장해제 
+    bool Skill_Defender_Disarm(GameObject attacker, List<GameObject> Damaged) // 무장해제 
     {
         Character ACS = attacker.GetComponent<Character>();
 

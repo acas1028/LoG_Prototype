@@ -6,8 +6,8 @@ using Photon.Pun;
 public class BattleManager : MonoBehaviourPunCallbacks
 {
     public AlertMessage alertMessage;
-    public GameObject[] bM_Character_Team1;
-    public GameObject[] bM_Character_Team2;
+    public List<GameObject> bM_Character_Team1;
+    public List<GameObject> bM_Character_Team2;
     public GameObject Character_Prefab;
 
     public float bM_Timegap { get { return 2.0f; } }
@@ -54,7 +54,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
 
 
-    void Start()
+    IEnumerator Start()
     {
         if (Is_Preemptive())
             bM_Team1_Is_Preemitive = true;
@@ -67,15 +67,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_HP_Team2 = 0;
         bM_Round = 0;
 
-        bM_Character_Team1 = new GameObject[5];
-        bM_Character_Team2 = new GameObject[5];
-
         for (int i = 0; i < 5; i++)
         {
-            bM_Character_Team1[i] = Instantiate(Character_Prefab);
-            bM_Character_Team2[i] = Instantiate(Character_Prefab);
+            bM_Character_Team1.Add(PhotonNetwork.Instantiate("Character_Action_Prefab", Vector3.zero, Quaternion.identity));
+
+            if (PhotonNetwork.OfflineMode)
+                bM_Character_Team2.Add(Instantiate(Character_Prefab));
         }
 
+        yield return new WaitUntil(() => { return bM_Character_Team2.Count >= 5; });
         BM_Character_Setting();
         StartCoroutine(Running_Phase());
     }
@@ -105,7 +105,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             for (int i = 0; i < 5; i++)
             {
-                result = SkillManager.Instance.AfterSetting(bM_Character_Team1[i],bM_Character_Team2);
+                result = SkillManager.Instance.AfterSetting(bM_Character_Team1[i], bM_Character_Team2);
                 if (result)
                 {
                     StartCoroutine(bM_Character_Team1[i].GetComponent<Character_Action>().SetCharacterColor("green"));
@@ -220,7 +220,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         return dummy;
     }
 
-    IEnumerator Character_Attack(GameObject attacker,GameObject[] enemy_Characters) //캐릭터 공격
+    IEnumerator Character_Attack(GameObject attacker, List<GameObject> enemy_Characters) //캐릭터 공격
     {
         bool result;
         Debug.LogFormat("<color=red>Character_Attack 코루틴 시작, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
@@ -423,7 +423,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    IEnumerator Counter(GameObject attacker, GameObject[] enemy_Characters)
+    IEnumerator Counter(GameObject attacker, List<GameObject> enemy_Characters)
     {
         bool result;
         for(int i = 0; i < 5; i++)

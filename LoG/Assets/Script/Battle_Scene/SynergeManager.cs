@@ -48,7 +48,7 @@ public class SynergeManager : MonoBehaviour
         
     }
 
-    public IEnumerator CheckSynerge(GameObject[] team)
+    public IEnumerator CheckSynerge(List<GameObject> team)
     {
         int attack = 0;
         int defense = 0;
@@ -102,7 +102,7 @@ public class SynergeManager : MonoBehaviour
         }
     }
 
-    void A1D1B1(GameObject[] team) // 공1방1밸1 시너지
+    void A1D1B1(List<GameObject> team) // 공1방1밸1 시너지
     {
         foreach(var character in team)
         {
@@ -114,7 +114,7 @@ public class SynergeManager : MonoBehaviour
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "공1방1밸1");
     }
-    void A2(GameObject[] team) // 공2 시너지
+    void A2(List<GameObject> team) // 공2 시너지
     {
         foreach (var character in team)
         {
@@ -125,7 +125,7 @@ public class SynergeManager : MonoBehaviour
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "공2");
     }
-    void A3(GameObject[] team) // 공3 시너지
+    void A3(List<GameObject> team) // 공3 시너지
     {
         foreach (var character in team)
         {
@@ -136,7 +136,7 @@ public class SynergeManager : MonoBehaviour
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "공3");
     }
-    void B2(GameObject[] team) // 밸2 시너지
+    void B2(List<GameObject> team) // 밸2 시너지
     {
         foreach (var character in team)
         {
@@ -151,7 +151,7 @@ public class SynergeManager : MonoBehaviour
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "밸2");
     }
-    void B3(GameObject[] team) // 밸3 시너지
+    void B3(List<GameObject> team) // 밸3 시너지
     {
         foreach (var character in team)
         {
@@ -164,7 +164,7 @@ public class SynergeManager : MonoBehaviour
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "밸3");
     }
 
-    void D2(GameObject[] team) // 방2 시너지
+    void D2(List<GameObject> team) // 방2 시너지
     {
         foreach(var character in team)
         {
@@ -179,7 +179,7 @@ public class SynergeManager : MonoBehaviour
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "방2");
     }
 
-    void D3(GameObject[] team) // 방3 시너지
+    void D3(List<GameObject> team) // 방3 시너지
     {
         foreach (var character in team)
         {

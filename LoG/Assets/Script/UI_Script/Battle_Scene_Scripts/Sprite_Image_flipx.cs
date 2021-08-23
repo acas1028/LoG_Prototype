@@ -25,7 +25,7 @@ public class Sprite_Image_flipx : MonoBehaviour
         if (Change_point == 1)
             return;
 
-        for(int i=0; i< BattleManager.Instance.bM_Character_Team2.Length;i++)
+        for(int i=0; i< BattleManager.Instance.bM_Character_Team2.Count; i++)
         {
             BattleManager.Instance.bM_Character_Team2[i].GetComponent<SpriteRenderer>().flipX = true;
 

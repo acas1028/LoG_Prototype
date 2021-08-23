@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3448498586279676910}
   - component: {fileID: 941173567636121254}
   - component: {fileID: 7095867674015409313}
+  - component: {fileID: -4630676617419687443}
   m_Layer: 0
   m_Name: Character_Action_Prefab
   m_TagString: Untagged
@@ -55,6 +56,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3115540dc71cb8e4ebff345ad8426d28, type: 3}
   Debug_Type: 0
   Debug_Skill: 0
+  Debug_Character_ID: 0
   Debug_character_Attack_Range: 
   Debug_character_Grid_Number: 0
   Debug_Character_Damage: 0
@@ -111,3 +113,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4630676617419687443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448498586279676905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
