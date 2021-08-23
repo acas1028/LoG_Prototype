@@ -120,7 +120,6 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
                 {
                     if (changes_Attack_Range[i] == true)
                     {
-                        Debug.Log(i);
                         Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
                     }
                 }
