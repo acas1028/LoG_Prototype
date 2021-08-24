@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class SkillMessage : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject skill_Animation_image;
+    public GameObject skill_explanation;
+    
     void Start()
     {
         
@@ -19,11 +21,20 @@ public class SkillMessage : MonoBehaviour
 
     public void Message(GameObject character , string skillname)
     {
-        Character ACS = character.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "팀 " + ACS.character_Number + "번 캐릭터 " + skillname + " 스킬 발동!";
+        skill_Animation_image.GetComponent<Animator>().Play("Skill_Production_appear", -1, 0f);
 
-        Invoke("Disable", BattleManager.Instance.bM_Timegap);
+        
+        Character ACS = character.GetComponent<Character>();
+        this.GetComponent<Text>().text = skillname;
+        
+        skill_explanation.GetComponent<SkillMessage_Explanation>().Skill_Message_explanation(skillname);
+        
+        //Invoke("Disable", BattleManager.Instance.bM_Timegap);
+        
+        
     }
+
+    
 
     private void Disable()
     {

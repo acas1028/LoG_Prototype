@@ -66,7 +66,7 @@ public class Deck_Manager : MonoBehaviour
 
         if (CG.is_Clicked_Grid == true)
         {
-            current.character_AP += 10;
+            current.character_AP += 20;
             current.character_Attack_Range[CG.Grid_Num] = false;
             CG.is_Clicked_Grid = false;
             Recolor_Grid(CG.Grid_Num);
@@ -74,11 +74,11 @@ public class Deck_Manager : MonoBehaviour
         }
         else//그리드 선택
         {
-            if (current.character_AP < 10)
+            if (current.character_AP < 20)
                 return;
             else
             {
-                current.character_AP -= 10;
+                current.character_AP -= 20;
                 current.character_Attack_Range[CG.Grid_Num] = true;
                 CG.is_Clicked_Grid = true;
                 Color_Grid(CG.Grid_Num);
