@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CharacterStats;
-
 using Photon.Pun;
 
 namespace CharacterStats

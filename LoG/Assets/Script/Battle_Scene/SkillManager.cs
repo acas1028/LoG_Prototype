@@ -389,7 +389,7 @@ public class SkillManager : MonoBehaviour
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(attacker, "Ã³ÇüÀÚ");
 
-        BattleManager.Instance.bM_Round--;
+        BattleManager.Instance.bM_Phase--;
         ACS.character_is_Kill = 0;
 
         return true;

@@ -18,7 +18,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public int bM_Remain_HP_Team1 { get; set; }
     public int bM_Remain_HP_Team2 { get; set; }
 
-    public int bM_Round { get; set; }
+    public int bM_Phase { get; set; }
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
@@ -65,7 +65,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_Character_Team2 = 0;
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
-        bM_Round = 0;
+        bM_Phase = 0;
 
         for (int i = 0; i < 5; i++)
         {
@@ -101,7 +101,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bool result;
         yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team1));
         yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team2));
-        if(bM_Round == 0)
+        if(bM_Phase == 0)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -129,10 +129,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             // 캐릭터 세팅 이후 스킬체크 과정
         }
-        while (bM_Round >= 0 && bM_Round < 10)
+        while (bM_Phase >= 0 && bM_Phase < 10)
         {
-            bM_Round++;
-            yield return StartCoroutine(Battle(bM_Round));
+            bM_Phase++;
+            yield return StartCoroutine(Battle(bM_Phase));
         }
 
         Debug.Log("게임 종료");
