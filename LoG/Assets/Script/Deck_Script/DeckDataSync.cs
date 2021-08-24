@@ -106,4 +106,38 @@ public class DeckDataSync : MonoBehaviour
             }, error => Debug.LogWarningFormat("데이터 불러오기 실패: {0}", error.ErrorMessage)
         );
     }
+
+    public void SendLastPageNum(int lastPageNum)
+    {
+        // Key 값 지우는 방법: value 값을 null 로 해준다.
+        var request = new UpdateUserDataRequest() { Data = new Dictionary<string, string>() { { "lastPageNum", lastPageNum.ToString()} }, Permission = UserDataPermission.Private };
+        PlayFabClientAPI.UpdateUserData(request,
+            result =>
+            {
+                foreach (var item in request.Data)
+                {
+                    Debug.LogFormat("마지막 페이지 번호 저장 성공: {0} / {1}", item.Key, item.Value);
+                }
+            }, error => Debug.LogWarningFormat("마지막 페이지 번호 저장 실패: {0}", error.ErrorMessage)
+        );
+    }
+
+    public int GetLastPageNum()
+    {
+        int lastPageNum = -1;
+        var request = new GetUserDataRequest() { PlayFabId = playfabId };
+
+        PlayFabClientAPI.GetUserData(request,
+            result =>
+            {
+                foreach (var item in result.Data)
+                {
+                    if (item.Key.Contains("lastPageNum"))
+                        lastPageNum = int.Parse(item.Value.Value);
+                }
+            }, error => Debug.LogWarningFormat("마지막 페이지 번호 불러오기 실패: {0}", error.ErrorMessage)
+        );
+
+        return lastPageNum;
+    }
 }
