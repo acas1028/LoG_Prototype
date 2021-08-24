@@ -82,7 +82,7 @@ public class Showing_Hp : MonoBehaviour
 
     private void Update()
     {
-        if (BattleManager.Instance.bM_Round >= 1)
+        if (BattleManager.Instance.bM_Phase >= 1)
         {
             original_Hp();
 
