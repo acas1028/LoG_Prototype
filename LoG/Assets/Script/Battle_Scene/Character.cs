@@ -44,7 +44,7 @@ namespace CharacterStats
 // 캐릭터의 스탯을 가지고 있는 클래스
 public class Character : MonoBehaviourPunCallbacks
 {
-    public Sprite[] Character_Sprite;
+    public CharacterSpriteManager spriteManager;
 
     // 전투 전 캐릭터가 기본으로 가지고 있는 변수
     // Original Variables
@@ -95,18 +95,12 @@ public class Character : MonoBehaviourPunCallbacks
     {
         Character_Reset();
         Debug_character_Attack_Range = new bool[9];
-    }
-
-    private void Start()
-    {
         gameObject.GetComponent<SpriteRenderer>().sprite = null;
     }
 
-    public void Character_Sprite_Setting()
+    public void InitializeCharacterSprite()
     {
-        // 현재 ID 개수(14개)만큼의 스프라이트가 없어서 임시로 적용함
-        // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
-        gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
+        spriteManager.SetInitialSprite(character_ID);
     }
 
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.

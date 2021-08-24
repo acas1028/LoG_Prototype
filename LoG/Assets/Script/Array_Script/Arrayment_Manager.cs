@@ -116,7 +116,7 @@ public class Arrayment_Manager : MonoBehaviour
                 }
             }
             cs.Debuging_Character();
-            cs.Character_Sprite_Setting();
+            cs.InitializeCharacterSprite();
             int j = 0;
             while(j<5)
             {
@@ -172,7 +172,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[0].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[0]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[0].GetComponent<Character>().character_Attack_Order = 1;
                         }
@@ -181,7 +181,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Debug.Log(cs.team2[0].GetComponent<Character>().character_ID);
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         
@@ -190,7 +190,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[1].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[1]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[1].GetComponent<Character>().character_Attack_Order = 2;
                         }
@@ -198,7 +198,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         
@@ -237,7 +237,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[2].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[2]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[2].GetComponent<Character>().character_Attack_Order = 3;
                         }
@@ -245,7 +245,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         if (cs.team2[3].GetComponent<Character> ().character_ID != 0)
@@ -253,7 +253,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[3].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[3]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[3].GetComponent<Character>().character_Attack_Order = 4;
                         }
@@ -261,7 +261,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -299,7 +299,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[4].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[4]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[4].GetComponent<Character>().character_Attack_Order = 5;
                         }
@@ -307,7 +307,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -331,7 +331,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[0].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[0]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[0].GetComponent<Character>().character_Attack_Order = 1;
                         }
@@ -340,7 +340,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Debug.Log(cs.team2[0].GetComponent<Character>().character_ID);
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -378,7 +378,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[1].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[1]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[1].GetComponent<Character>().character_Attack_Order = 2;
                         }
@@ -386,7 +386,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         if (cs.team2[2].GetComponent<Character>().character_ID != 0)
@@ -394,7 +394,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[2].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[2]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[2].GetComponent<Character>().character_Attack_Order = 3;
                         }
@@ -402,7 +402,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -440,7 +440,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[3].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[3]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[3].GetComponent<Character>().character_Attack_Order = 4;
                         }
@@ -448,7 +448,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         if (cs.team2[4].GetComponent<Character>().character_ID != 0)
@@ -456,7 +456,7 @@ public class Arrayment_Manager : MonoBehaviour
                             Enemy_Grid_Num = Reverse_Array(cs.team2[4].GetComponent<Character>().character_Num_Of_Grid);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Copy_Character_Stat(cs.team2[4]);
                             Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[Enemy_Grid_Num - 1].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             cs.team2[4].GetComponent<Character>().character_Attack_Order = 5;
                         }
@@ -464,7 +464,7 @@ public class Arrayment_Manager : MonoBehaviour
                         {
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Sprite_Setting();
+                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         } 
                         arrData_Sync.is_datasync = false;
@@ -511,7 +511,7 @@ public class Arrayment_Manager : MonoBehaviour
         Cancle_Character.tag = "Null_Character";
         cs.Character_Reset();
         cs.Debuging_Character();
-        cs.Character_Sprite_Setting();
+        cs.InitializeCharacterSprite();
     }
 
     [PunRPC]
@@ -568,7 +568,7 @@ public class Arrayment_Manager : MonoBehaviour
         //Grids[random].GetComponent<Character>().Character_Setting();
         Grids[random].GetComponentInChildren<Character>().character_Num_Of_Grid = random + 1;
         Grids[random].GetComponentInChildren<Character>().Debuging_Character();
-        Grids[random].GetComponentInChildren<Character>().Character_Sprite_Setting();
+        Grids[random].GetComponentInChildren<Character>().InitializeCharacterSprite();
 
         int j = 0;
         while(j<5)

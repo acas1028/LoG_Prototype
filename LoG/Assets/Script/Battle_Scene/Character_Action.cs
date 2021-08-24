@@ -188,7 +188,7 @@ public class Character_Action : Character, IPunObservable
 
     public IEnumerator Dead()
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[0];
+        spriteManager.SetDeadSprite();
         character_Is_Allive = false;
         character_is_Killed = false;
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
