@@ -88,6 +88,8 @@ public class Character : MonoBehaviourPunCallbacks
     public int Debug_Character_Damage;
     public int Debug_Character_HP;
     public int Debug_Character_Attack_order;
+    public int Debug_Character_Buffed_Attack;
+    public int Debug_Character_Buffed_Damaged;
 
     private void Awake()
     {
@@ -147,6 +149,8 @@ public class Character : MonoBehaviourPunCallbacks
         Debug_character_Grid_Number = character_Num_Of_Grid;
         Debug_Character_Damage = character_Attack_Damage;
         Debug_Character_Attack_order = character_Attack_Order;
+        Debug_Character_Buffed_Attack = character_Buffed_Attack;
+        Debug_Character_Buffed_Damaged = character_Buffed_Damaged;
     }
 
     protected void setting_type(int num)
@@ -241,22 +245,6 @@ public class Character : MonoBehaviourPunCallbacks
         }
     }
 
-    protected void setting_Attack_Range(int num)
-    {
-        int number = (int)character_data[num]["Attack_Range"];
-        int arrayNumber = 0;
-
-        while (number != 0)
-        {
-            if (number % 10 == 1)
-                character_Attack_Range[arrayNumber] = false;
-            else
-                character_Attack_Range[arrayNumber] = true;
-            arrayNumber++;
-            number /= 10;
-        }
-    }
-
     public void Character_Setting(int num) // 데이터 세팅
     {
         //데이터 세팅.
@@ -280,8 +268,6 @@ public class Character : MonoBehaviourPunCallbacks
         character_MaxHP = character_HP;
         character_AP = (int)character_data[num]["AP"];
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
-        character_Attack_Range = new bool[9];
-        setting_Attack_Range(num);
         character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
     }
 
