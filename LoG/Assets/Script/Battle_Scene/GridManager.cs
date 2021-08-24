@@ -7,7 +7,7 @@ public class GridManager : MonoBehaviour
     public GameObject Mine_Red_Grid;     // 붉은 그리드(나)
     public GameObject Opponent_Red_Grid; // 붉은 그리드(적)
     public GameObject[] Team1Character_Position;
-    public GameObject[] Team2Character_Postion;
+    public GameObject[] Team2Character_Position;
     public GameObject[] Team1_Map;
     public GameObject[] Team2_Map;
 

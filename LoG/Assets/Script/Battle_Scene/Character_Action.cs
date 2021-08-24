@@ -16,7 +16,7 @@ public class Character_Action : Character, IPunObservable
 
     private void Start()
     {
-        startPosition = transform.position;
+        startPosition = Vector3.zero;
         isMoveToEnemy = false;
         gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
         counterRand = 100;
@@ -36,6 +36,11 @@ public class Character_Action : Character, IPunObservable
         else if (!isMoveToEnemy)
             transform.position = Vector3.SmoothDamp(transform.position, startPosition, ref velocity,
                 (character_Counter ? BattleManager.Instance.bM_Timegap : BattleManager.Instance.bM_AttackTimegap) / 4);
+    }
+
+    public void SetStartPos(Vector3 startPos)
+    {
+        startPosition = startPos;
     }
 
     public IEnumerator SetCharacterColor(string colorName = "default")

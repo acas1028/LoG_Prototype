@@ -201,10 +201,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 Team2CS.character_Attack_Order = Team2CS.character_Attack_Order * 2 - 1;
             }
 
-            int gridnum = bM_Character_Team1[i].GetComponent<Character>().character_Num_Of_Grid;
-            bM_Character_Team1[i].transform.position = GridManager.Instance.Team1Character_Position[gridnum - 1].transform.position;
-            gridnum = bM_Character_Team2[i].GetComponent<Character>().character_Num_Of_Grid;
-            bM_Character_Team2[i].transform.position = GridManager.Instance.Team2Character_Postion[gridnum - 1].transform.position;
+            Vector3 gridPos;
+
+            gridPos = GridManager.Instance.Team1Character_Position[Team1CS.character_Num_Of_Grid - 1].transform.position;
+            bM_Character_Team1[i].GetComponent<Character_Action>().SetStartPos(gridPos);
+            gridPos = GridManager.Instance.Team2Character_Position[Team2CS.character_Num_Of_Grid - 1].transform.position;
+            bM_Character_Team2[i].GetComponent<Character_Action>().SetStartPos(gridPos);
         }
     }
 

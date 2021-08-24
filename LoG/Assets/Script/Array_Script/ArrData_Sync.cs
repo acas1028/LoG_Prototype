@@ -97,6 +97,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                 c.Character_Setting(1);
                 c.character_Num_Of_Grid = gridNumSet[0];
+                c.character_Attack_Range = new bool[] { true, true, false, true, false, false, false, true, false };
                 c.character_Attack_Order = 1;
                 c.Debuging_Character();
 
@@ -104,6 +105,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                 c.Character_Setting(2);
                 c.character_Num_Of_Grid = gridNumSet[1];
+                c.character_Attack_Range = new bool[] { false, false, false, false, false, true, false, true, true };
                 c.character_Attack_Order = 2;
                 c.Debuging_Character();
                 break;
@@ -112,6 +114,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                 c.Character_Setting(3);
                 c.character_Num_Of_Grid = gridNumSet[2];
+                c.character_Attack_Range = new bool[] { false, true, false, false, true, false, false, true, false };
                 c.character_Attack_Order = 3;
                 c.Debuging_Character();
 
@@ -119,6 +122,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                 c.Character_Setting(4);
                 c.character_Num_Of_Grid = gridNumSet[3];
+                c.character_Attack_Range = new bool[] { true, false, false, true, false, false, true, false, false };
                 c.character_Attack_Order = 4;
                 c.Debuging_Character();
                 break;
@@ -127,6 +131,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
                 c.Character_Setting(5);
                 c.character_Num_Of_Grid = gridNumSet[4];
+                c.character_Attack_Range = new bool[] { false, false, false, true, true, true, false, false, false };
                 c.character_Attack_Order = 5;
                 c.Debuging_Character();
                 break;
