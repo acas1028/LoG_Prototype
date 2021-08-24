@@ -173,6 +173,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Team1CS.Copy_Character_Stat(Team1data);
             Team1CS.character_Team_Number = 1;
             Team1CS.character_Number = Team1CS.character_Attack_Order;
+            Team1CS.Character_Sprite_Setting();
             Team1CS.Debuging_Character();
 
             if (Team1CS.character_HP != 0)
@@ -185,6 +186,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Team2CS.character_Attack_Range = Enemy_AttackRange_Change(Team2CS);
             Team2CS.character_Team_Number = 2;
             Team2CS.character_Number = Team2CS.character_Attack_Order;
+            Team2CS.Character_Sprite_Setting();
             Team2CS.Debuging_Character();
       
             if (Team2CS.character_HP != 0)

@@ -18,14 +18,12 @@ public class Character_Action : Character, IPunObservable
     {
         startPosition = Vector3.zero;
         isMoveToEnemy = false;
-        gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[(character_ID - 1) % 7 + 1];
         counterRand = 100;
 
         if (!photonView.IsMine && !PhotonNetwork.OfflineMode)
         {
             BattleManager.Instance.bM_Character_Team2.Add(gameObject);
         }
-
     }
 
     private void Update()
