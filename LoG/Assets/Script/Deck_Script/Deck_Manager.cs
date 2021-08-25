@@ -15,7 +15,6 @@ public class Deck_Manager : MonoBehaviour
     public GameObject[] Grid_Button;
     public List<GameObject> Skill_List = new List<GameObject>();
     public GameObject[] Skill_Button;
-    public GameObject[] D_Page;
     public GameObject Current_Character;
     public GameObject Current_Grid;
     public GameObject Deck_Reset_Button;
@@ -29,6 +28,8 @@ public class Deck_Manager : MonoBehaviour
 
     public Text[] Character_Stat;
 
+    public int Page_Num;
+
     private void Awake()
     {
         instance = this;
@@ -36,6 +37,7 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
+        Page_Num = deckDataSync.GetLastPageNum();
         StartCoroutine("Load_Deck");
     }
 
@@ -56,6 +58,7 @@ public class Deck_Manager : MonoBehaviour
             if (current.character_Attack_Range[i] == true)
             {
                 Color_Grid(i);
+                Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = true;
             }
         }
     }
@@ -107,10 +110,10 @@ public class Deck_Manager : MonoBehaviour
             {
                 Character ch = Character_Slot[i].GetComponentInChildren<Character>();
 
-                while (ch.character_AP > 0)
+                if(ch.character_AP > 0)
                 {
-                    ch.character_Attack_Damage += 10;
-                    ch.character_AP -= 10;//임의
+                    ch.character_Attack_Damage += ch.character_AP;
+                    ch.character_AP = 0;
                     ch.Debuging_Character();
                 }
             }
@@ -121,7 +124,8 @@ public class Deck_Manager : MonoBehaviour
                 {
                     Deck_Data.Save_Data[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
                     Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
-                    deckDataSync.SetData(0, i, Deck_Data.Save_Data[i].GetComponent<Character>());
+                    deckDataSync.SetData(Page_Num, i, Deck_Data.Save_Data[i].GetComponent<Character>());
+                    deckDataSync.SendLastPageNum(Page_Num);
                 }
             }
             Character_Stat[1].text = current.character_AP.ToString();
@@ -166,12 +170,6 @@ public class Deck_Manager : MonoBehaviour
         for(int i=0;i<9;i++)
         {
             Button Grid = Grid_Button[i].GetComponent<Button>();
-            //ColorBlock CB = Grid.colors;
-            //Color white_Grid = Color.white;
-            //CB.normalColor = white_Grid;
-            //CB.pressedColor = white_Grid;
-            //CB.selectedColor = white_Grid;
-            //Grid.colors = CB;
             SpriteState spriteState = Grid.spriteState;
             spriteState.disabledSprite = Grid_disselected_sprite;
             spriteState.highlightedSprite = Grid_disselected_sprite;
@@ -195,12 +193,39 @@ public class Deck_Manager : MonoBehaviour
                 Set_Character_[i].SetActive(false);
                 Character_Slot[i].SetActive(true);
                 Slot_Type[i].SetActive(true);
+                //특성 SetActive(true);
                 Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type((int)ch.character_Type);
                 cs.Copy_Character_Stat(Deck_Data.Save_Data[i]);
                 cs.Debuging_Character();
             }
         }
         Load_Skill();
+    }
+
+    IEnumerator Switch_Page()
+    {
+        Reset_Button();
+        yield return StartCoroutine("Load_Deck");
+        bool Switch = true;
+        for(int i=0;i<7;i++)
+        {
+            Character cs = Character_Slot[i].GetComponentInChildren<Character>();
+            if(cs.character_ID==0)
+            {
+                Switch = false;
+            }
+        }
+        if(Switch == false)
+        {
+            for(int i = 0; i<7; i++)
+            {
+                Set_Character_[i].SetActive(true);
+                Character_Slot[i].SetActive(false);
+                Slot_Type[i].SetActive(false);
+                //특성 (false);
+            }
+        }
+
     }
     private void Load_Skill()
     {
@@ -239,12 +264,6 @@ public class Deck_Manager : MonoBehaviour
     private void Recolor_Grid(int num)
     {
         Button Grid = Grid_Button[num].GetComponent<Button>();
-        //ColorBlock CB = Grid.colors;
-        //Color white_Grid = Color.white;
-        //CB.normalColor = white_Grid;
-        //CB.pressedColor = white_Grid;
-        //CB.selectedColor = white_Grid;
-        //Grid.colors = CB;
         SpriteState spriteState = Grid.spriteState;
         spriteState.disabledSprite = Grid_disselected_sprite;
         spriteState.highlightedSprite = Grid_disselected_sprite;
@@ -256,12 +275,6 @@ public class Deck_Manager : MonoBehaviour
     private void Color_Grid(int num)
     {
         Button Grid = Grid_Button[num].GetComponent<Button>();
-        //ColorBlock CB = Grid.colors;
-        //Color Red_Grid = Color.red;
-        //CB.normalColor = Red_Grid;
-        //CB.pressedColor = Red_Grid;
-        //CB.selectedColor = Red_Grid;
-        //Grid.colors = CB;
         SpriteState spriteState = Grid.spriteState;
         spriteState.disabledSprite = Grid_selected_sprite;
         spriteState.highlightedSprite = Grid_selected_sprite;

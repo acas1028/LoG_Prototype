@@ -126,7 +126,6 @@ public class Deck_Skill : MonoBehaviour
     }
     public void Cancle_Skill()
     {
-        Debug.Log("Äµ½½");
         Deck_Manager cs = Deck_Manager.instance;
         cs.Pre_Skill.GetComponent<Deck_Skill>().is_selected = false;
         cs.Skill_List.Remove(cs.Pre_Skill);

@@ -71,7 +71,9 @@ public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
 
     private void GetDeckData()
     {
-        deckDataSync.GetData(0);
+        int num = deckDataSync.GetLastPageNum();
+        //deckDataSync.GetData(0);
+        deckDataSync.GetData(num);
     }
 
     // 에러 발생시 콜백되는 함수

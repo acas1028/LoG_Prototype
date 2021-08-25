@@ -12,7 +12,10 @@ public class Deck_Page : MonoBehaviour
         Deck_Manager DM = Deck_Manager.instance;
 
         P_num = this.gameObject.GetComponent<Deck_Page>().P_num;
+        DM.Page_Num = P_num;
 
-        //deckDataSync.GetData(P_num);
+        deckDataSync.GetData(P_num);
+
+        DM.StartCoroutine("Switch_Page");
     }
 }
