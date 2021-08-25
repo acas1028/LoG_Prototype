@@ -120,11 +120,11 @@ public class Deck_Manager : MonoBehaviour
 
             for (int i = 0; i < 7; i++)
             {
-                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[i].GetComponent<Character>().character_ID == 0)
+                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID == 0)
                 {
-                    Deck_Data.Save_Data[i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
-                    Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
-                    deckDataSync.SetData(Page_Num, i, Deck_Data.Save_Data[i].GetComponent<Character>());
+                    Deck_Data.Save_Data[0, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
+                    Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
+                    deckDataSync.SetData(Page_Num, i, Deck_Data.Save_Data[0, i].GetComponent<Character>());
                     deckDataSync.SendLastPageNum(Page_Num);
                 }
             }
@@ -139,7 +139,7 @@ public class Deck_Manager : MonoBehaviour
         bool save = false;
         for (int i = 0; i < 7; i++)
         {
-            if (Deck_Data.Save_Data[i].GetComponent<Character>().character_ID==0)
+            if (Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID==0)
             {
                 save = true;
                 return;
@@ -158,8 +158,8 @@ public class Deck_Manager : MonoBehaviour
         {
             Character_Slot[i].GetComponentInChildren<Character>().Character_Reset();
             Character_Slot[i].GetComponentInChildren<Character>().Debuging_Character();
-            Deck_Data.Save_Data[i].GetComponent<Character>().Character_Reset();
-            Deck_Data.Save_Data[i].GetComponent<Character>().Debuging_Character();
+            Deck_Data.Save_Data[0, i].GetComponent<Character>().Character_Reset();
+            Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
         }
         Skill_List.Clear();
@@ -189,7 +189,7 @@ public class Deck_Manager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < 7; i++)
         {
-            Character ch = Deck_Data.Save_Data[i].GetComponent<Character>();
+            Character ch = Deck_Data.Save_Data[0, i].GetComponent<Character>();
             Character cs = Character_Slot[i].GetComponentInChildren<Character>();
             if (ch.character_ID != 0)
             {
@@ -198,7 +198,7 @@ public class Deck_Manager : MonoBehaviour
                 Slot_Type[i].SetActive(true);
                 //Æ¯¼º SetActive(true);
                 Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type((int)ch.character_Type);
-                cs.Copy_Character_Stat(Deck_Data.Save_Data[i]);
+                cs.Copy_Character_Stat(Deck_Data.Save_Data[0, i]);
                 cs.Debuging_Character();
             }
         }
@@ -234,7 +234,7 @@ public class Deck_Manager : MonoBehaviour
     {
         for(int i=0;i<7;i++)
         {
-            int num = (int)Deck_Data.Save_Data[i].GetComponent<Character>().character_Skill;
+            int num = (int)Deck_Data.Save_Data[0, i].GetComponent<Character>().character_Skill;
             Skill_List.Add(Skill_Button[num]);
         }
         for(int i=0;i<Skill_List.Count;i++)

@@ -88,7 +88,15 @@ public class DeckDataSync : MonoBehaviour
                     }
                     else if (item.Key.Contains("character_stats"))
                     {
-                        Character character = Deck_Data_Send.instance.Save_Data[(int)(item.Key[2] - '0')].GetComponent<Character>();
+                        int pageNum = (int)(item.Key[0] - '0');
+                        int index = (int)(item.Key[2] - '0');
+                        if (index == -1)
+                        {
+                            Debug.LogError("인덱스 번호가 -1 이므로 덱 정보를 불러올 수 없습니다.");
+                            break;
+                        }
+
+                        Character character = Deck_Data_Send.instance.Save_Data[pageNum, index].GetComponent<Character>();
                         int indexOfId = item.Value.Value.IndexOf("id");
                         int indexOfType = item.Value.Value.IndexOf("type");
                         int indexOfSkill = item.Value.Value.IndexOf("skill");

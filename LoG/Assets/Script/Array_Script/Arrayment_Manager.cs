@@ -106,7 +106,7 @@ public class Arrayment_Manager : MonoBehaviour
             GameObject Grid_Character = hit.transform.gameObject;
             Character cs = Grid_Character.GetComponentInChildren<Character>();
             Deck_Data_Send sd = Deck_Data_Send.instance;
-            cs.Copy_Character_Stat(sd.Save_Data[click_id - 1]);
+            cs.Copy_Character_Stat(sd.Save_Data[0, click_id - 1]);
             Grid_Character.tag = "Character";
             for(int i=0;i<9;i++)
             {
@@ -638,7 +638,7 @@ public class Arrayment_Manager : MonoBehaviour
         for (int i = 0; i < Inventory.Length; i++)
         {
             Inventory_ID cs = Inventory[i].GetComponent<Inventory_ID>();
-            Character sv = Deck_Data_Send.instance.Save_Data[i].GetComponent<Character>();
+            Character sv = Deck_Data_Send.instance.Save_Data[0, i].GetComponent<Character>();
             cs.m_Inventory_ID = sv.character_ID;
         }
     }
