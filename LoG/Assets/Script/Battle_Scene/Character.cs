@@ -188,7 +188,7 @@ public class Character : MonoBehaviourPunCallbacks
             case "천상의보호막":
                 character_Skill = CharacterSkill.Attack_DivineShield;
                 break;
-            case "옹골참":
+            case "기합":
                 character_Skill = CharacterSkill.Attack_Sturdy;
                 break;
             case "축복":
