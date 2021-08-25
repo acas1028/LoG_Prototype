@@ -10,16 +10,16 @@ using CharacterStats;
 
 public class DeckDataSync : MonoBehaviour
 {
-    Deck_Manager deckManager;
     private string playfabId;
+    bool isGetAllData;
 
     // Start is called before the first frame update
     void Awake()
     {
-        deckManager = Deck_Manager.instance;
         playfabId = PlayerPrefs.GetString("PlayFabId");
         if (playfabId == string.Empty)
             Debug.LogError("로그인을 먼저 하십시오.");
+        isGetAllData = false;
     }
 
     public void SetData(int pageNum, int deckIndex, Character character)
@@ -69,8 +69,10 @@ public class DeckDataSync : MonoBehaviour
         );
     }
 
-    public void GetData(int pageNum)
+    public void GetData()
     {
+        int lastPageNum = -1;
+
         var request = new GetUserDataRequest() { PlayFabId = playfabId };
 
         PlayFabClientAPI.GetUserData(request,
@@ -78,7 +80,13 @@ public class DeckDataSync : MonoBehaviour
             {
                 foreach (var item in result.Data)
                 {
-                    if ((int)(item.Key[0] - '0') == pageNum && item.Key.Contains("character_stats"))
+                    if (item.Key == "lastPageNum")
+                    {
+                        lastPageNum = int.Parse(item.Value.Value);
+                        Deck_Data_Send.instance.lastPageNum = lastPageNum;
+                        Debug.Log("마지막 페이지 번호 불러오기: " + lastPageNum);
+                    }
+                    else if (item.Key.Contains("character_stats"))
                     {
                         Character character = Deck_Data_Send.instance.Save_Data[(int)(item.Key[2] - '0')].GetComponent<Character>();
                         int indexOfId = item.Value.Value.IndexOf("id");
@@ -103,6 +111,7 @@ public class DeckDataSync : MonoBehaviour
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, item.Value.Value);
                     }
                 }
+                isGetAllData = true;
             }, error => Debug.LogWarningFormat("데이터 불러오기 실패: {0}", error.ErrorMessage)
         );
     }
@@ -110,7 +119,7 @@ public class DeckDataSync : MonoBehaviour
     public void SendLastPageNum(int lastPageNum)
     {
         // Key 값 지우는 방법: value 값을 null 로 해준다.
-        var request = new UpdateUserDataRequest() { Data = new Dictionary<string, string>() { { "lastPageNum", lastPageNum.ToString()} }, Permission = UserDataPermission.Private };
+        var request = new UpdateUserDataRequest() { Data = new Dictionary<string, string>() { { "lastPageNum", lastPageNum.ToString() } }, Permission = UserDataPermission.Private };
         PlayFabClientAPI.UpdateUserData(request,
             result =>
             {
@@ -122,22 +131,8 @@ public class DeckDataSync : MonoBehaviour
         );
     }
 
-    public int GetLastPageNum()
+    public bool IsGetAllData()
     {
-        int lastPageNum = -1;
-        var request = new GetUserDataRequest() { PlayFabId = playfabId };
-
-        PlayFabClientAPI.GetUserData(request,
-            result =>
-            {
-                foreach (var item in result.Data)
-                {
-                    if (item.Key.Contains("lastPageNum"))
-                        lastPageNum = int.Parse(item.Value.Value);
-                }
-            }, error => Debug.LogWarningFormat("마지막 페이지 번호 불러오기 실패: {0}", error.ErrorMessage)
-        );
-
-        return lastPageNum;
+        return isGetAllData;
     }
 }

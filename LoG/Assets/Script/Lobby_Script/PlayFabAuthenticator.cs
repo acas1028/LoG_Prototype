@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections;
 
 using PlayFab;
 using PlayFab.ClientModels;
@@ -71,9 +71,7 @@ public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
 
     private void GetDeckData()
     {
-        int num = deckDataSync.GetLastPageNum();
-        //deckDataSync.GetData(0);
-        deckDataSync.GetData(num);
+        deckDataSync.GetData();
     }
 
     // 에러 발생시 콜백되는 함수

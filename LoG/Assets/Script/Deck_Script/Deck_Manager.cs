@@ -37,7 +37,7 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
-        Page_Num = deckDataSync.GetLastPageNum();
+        Page_Num = -1;
         StartCoroutine("Load_Deck");
     }
 
@@ -183,6 +183,9 @@ public class Deck_Manager : MonoBehaviour
 
     IEnumerator Load_Deck()
     {
+        yield return new WaitUntil(() => { return deckDataSync.IsGetAllData(); });
+        Page_Num = Deck_Data_Send.instance.lastPageNum;
+
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < 7; i++)
         {
