@@ -15,6 +15,7 @@ public class Deck_Manager : MonoBehaviour
     public GameObject[] Grid_Button;
     public List<GameObject> Skill_List = new List<GameObject>();
     public GameObject[] Skill_Button;
+    public GameObject[] Property_Slot;
     public GameObject Current_Character;
     public GameObject Current_Grid;
     public GameObject Deck_Reset_Button;
@@ -37,7 +38,7 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
-        Page_Num = -1;
+        Page_Num = deckDataSync.GetLastPageNum();
         StartCoroutine("Load_Deck");
     }
 
@@ -61,6 +62,7 @@ public class Deck_Manager : MonoBehaviour
                 Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = true;
             }
         }
+        Show_Property_Slot();
     }
     public void Click_Grid_2()
     {
@@ -120,7 +122,7 @@ public class Deck_Manager : MonoBehaviour
 
             for (int i = 0; i < 7; i++)
             {
-                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID == 0)
+                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[i].GetComponent<Character>().character_ID == 0)
                 {
                     Deck_Data.Save_Data[0, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
                     Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
@@ -139,7 +141,7 @@ public class Deck_Manager : MonoBehaviour
         bool save = false;
         for (int i = 0; i < 7; i++)
         {
-            if (Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID==0)
+            if (Deck_Data.Save_Data[i].GetComponent<Character>().character_ID==0)
             {
                 save = true;
                 return;
@@ -196,7 +198,7 @@ public class Deck_Manager : MonoBehaviour
                 Set_Character_[i].SetActive(false);
                 Character_Slot[i].SetActive(true);
                 Slot_Type[i].SetActive(true);
-                //Æ¯¼º SetActive(true);
+                Slot_Property[i].GetComponent<Property_Slot>().Change_property(cs.character_Skill.ToString());
                 Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type((int)ch.character_Type);
                 cs.Copy_Character_Stat(Deck_Data.Save_Data[0, i]);
                 cs.Debuging_Character();
@@ -232,23 +234,30 @@ public class Deck_Manager : MonoBehaviour
     }
     private void Load_Skill()
     {
-        for(int i=0;i<7;i++)
+        if (Deck_Data.Save_Data[0].GetComponent<Character>().character_ID == 0)
         {
-            int num = (int)Deck_Data.Save_Data[0, i].GetComponent<Character>().character_Skill;
-            Skill_List.Add(Skill_Button[num]);
+            return;
         }
-        for(int i=0;i<Skill_List.Count;i++)
-        {
-            Skill_List[i].GetComponent<Deck_Skill>().is_selected = true;
-            Button SKill = Skill_List[i].GetComponent<Button>();
-            ColorBlock CB = SKill.colors;
-            Color Red_Grid = Color.red;
-            CB.normalColor = Red_Grid;
-            CB.pressedColor = Red_Grid;
-            CB.selectedColor = Red_Grid;
-            SKill.colors = CB;
+        else
+        { 
+            for (int i = 0; i < 7; i++)
+            {
+                int num = (int)Deck_Data.Save_Data[0, i].GetComponent<Character>().character_Skill;
+                Skill_List.Add(Skill_Button[num]);
+            }
+            for (int i = 0; i < Skill_List.Count; i++)
+            {
+                Skill_List[i].GetComponent<Deck_Skill>().is_selected = true;
+                Button SKill = Skill_List[i].GetComponent<Button>();
+                ColorBlock CB = SKill.colors;
+                Color Red_Grid = Color.red;
+                CB.normalColor = Red_Grid;
+                CB.pressedColor = Red_Grid;
+                CB.selectedColor = Red_Grid;
+                SKill.colors = CB;
+            }
+            Pre_Skill = Skill_List[6];
         }
-        Pre_Skill = Skill_List[6];
     }
     private void Reset_Skill()
     {
@@ -262,6 +271,39 @@ public class Deck_Manager : MonoBehaviour
             CB.pressedColor = white;
             CB.selectedColor = white;
             b_Skill.colors = CB;
+        }
+    }
+    private void Show_Property_Slot()
+    {
+        int j = 0;
+        while (j < 7)
+        {
+            if (Current_Character == Character_Slot[j])
+            {
+                break;
+            }
+            j++;
+        }
+        switch((int)Slot_Type[j].GetComponent<Deck_Type_Slot>().Character_Type)
+        {
+            case 1:
+                Property_Slot[0].SetActive(false);
+                Property_Slot[1].SetActive(true);
+                Property_Slot[2].SetActive(false);
+                Property_Slot[3].SetActive(false);
+                break;
+            case 2:
+                Property_Slot[0].SetActive(false);
+                Property_Slot[1].SetActive(false);
+                Property_Slot[2].SetActive(true);
+                Property_Slot[3].SetActive(false);
+                break;
+            case 3:
+                Property_Slot[0].SetActive(false);
+                Property_Slot[1].SetActive(false);
+                Property_Slot[2].SetActive(false);
+                Property_Slot[3].SetActive(true);
+                break;
         }
     }
     private void Recolor_Grid(int num)
