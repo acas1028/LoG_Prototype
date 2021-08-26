@@ -29,38 +29,30 @@ public class Arrayment_Manager : MonoBehaviourPun
     public ArrData_Sync arrData_Sync;
     public Character_arrayment_showing character_Arrayment_Showing;
 
-    private static Arrayment_Manager ArrayManager;
-    public static Arrayment_Manager Array_instance
-    {
-        get
-        {
-            if (!ArrayManager)
-            {
-                ArrayManager = FindObjectOfType(typeof(Arrayment_Manager)) as Arrayment_Manager;
-
-                if (ArrayManager == null)
-                    Debug.Log("no Singleton obj");
-            }
-            return ArrayManager;
-        }
-    }
-    private void Awake()
-    {
-        if (ArrayManager == null)
-        {
-            ArrayManager = this;
-        }
-        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
-        else if (!ArrayManager != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
     void Start()
     {
         Phase = arrRoomManager.GetArrayPhase();
         StartCoroutine("Get_Inventory_ID");
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject ac = Arrayed_Data.instance.team1[i];
+            Character c = Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].GetComponentInChildren<Character>();
+            Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].tag = "Character";
+            c.Copy_Character_Stat(ac);
+            c.InitializeCharacterSprite();
+
+            ac = Arrayed_Data.instance.team2[i];
+            c = Enemy_Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].GetComponentInChildren<Character>();
+            Enemy_Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].tag = "Character";
+            c.Copy_Character_Stat(ac);
+            c.InitializeCharacterSprite();
+        }
+
+        for (int i = 0; i < 7; i++)
+        {
+            Inventory[i].GetComponent<Inventory_ID>().Block_Inventory.SetActive(true);
+        }
     }
     void Update()
     {
