@@ -6,21 +6,19 @@ using UnityEngine.UI;
 public class Character_inventory_filled : MonoBehaviour
 {
     private Image characterImage;
+    public int inventoryId;
     public GameObject spritePrefab;
     public GameObject character_inventory; // 캐릭터칸
 
     IEnumerator Start()
     {
-        //yield return new WaitUntil(DeckDataSync.Instance.IsGetAllData);
+        yield return new WaitUntil(DeckDataSync.Instance.IsGetAllData);
 
-        //characterImage = gameObject.GetComponent<Image>();
-        //int pageNum = Deck_Data_Send.instance.lastPageNum;
-        //int index = transform.parent.GetComponent<Inventory_ID>().m_Inventory_ID;
-        //Debug.Log("pageNum: " + pageNum + ", index: " + index);
-        //int characterId = Deck_Data_Send.instance.Save_Data[pageNum, index - 1].GetComponent<Character>().character_ID;
-        //Debug.Log("캐릭터 ID: " + characterId);
+        characterImage = gameObject.GetComponent<Image>();
+        int pageNum = Deck_Data_Send.instance.lastPageNum;
+        int characterId = Deck_Data_Send.instance.Save_Data[pageNum, inventoryId - 1].GetComponent<Character>().character_ID;
 
-        //characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[(characterId - 1) % 5 + 1];
+        characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[(characterId - 1) % 5 + 1];
     }
 
     private void Update()

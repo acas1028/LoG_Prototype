@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandler,IEndDragHandler,IDragHandler
 {
-    public int m_Inventory_ID;
+    public int inventory_ID;
     public GameObject Block_Inventory;
     public bool is_Arrayed;
 
@@ -20,9 +20,8 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
     }
     public void Click_Inven()
     {
-        Inventory_ID cs = this.gameObject.GetComponent<Inventory_ID>();
-        cs.is_Arrayed = true;
-        cs.Block_Inventory.SetActive(true);
+        is_Arrayed = true;
+        Block_Inventory.SetActive(true);
     }
     public void OnPointerDown(PointerEventData eventData)
     {

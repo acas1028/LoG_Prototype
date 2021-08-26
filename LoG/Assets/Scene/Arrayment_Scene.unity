@@ -556,6 +556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4cb89ff5dc1d7489e3ae1486aaeba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryId: 3
   spritePrefab: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
   character_inventory: {fileID: 355931431}
 --- !u!114 &56694101
@@ -1728,6 +1729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4cb89ff5dc1d7489e3ae1486aaeba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryId: 1
   spritePrefab: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
   character_inventory: {fileID: 646410695}
 --- !u!114 &155276849
@@ -4043,7 +4045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97422f4069e453b498fa8c48ed504ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory_ID: 3
+  inventory_ID: 3
   Block_Inventory: {fileID: 750876612}
   is_Arrayed: 0
 --- !u!114 &355931437
@@ -4122,6 +4124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4cb89ff5dc1d7489e3ae1486aaeba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryId: 5
   spritePrefab: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
   character_inventory: {fileID: 840285645}
 --- !u!114 &356529029
@@ -7165,6 +7168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4cb89ff5dc1d7489e3ae1486aaeba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryId: 7
   spritePrefab: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
   character_inventory: {fileID: 684794455}
 --- !u!114 &625243425
@@ -7777,7 +7781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97422f4069e453b498fa8c48ed504ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory_ID: 1
+  inventory_ID: 1
   Block_Inventory: {fileID: 1322666078}
   is_Arrayed: 0
 --- !u!114 &646410701
@@ -8159,7 +8163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97422f4069e453b498fa8c48ed504ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory_ID: 7
+  inventory_ID: 7
   Block_Inventory: {fileID: 530909490}
   is_Arrayed: 0
 --- !u!114 &684794460
@@ -10246,7 +10250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97422f4069e453b498fa8c48ed504ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory_ID: 5
+  inventory_ID: 5
   Block_Inventory: {fileID: 1513283900}
   is_Arrayed: 0
 --- !u!114 &840285651
@@ -11532,6 +11536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4cb89ff5dc1d7489e3ae1486aaeba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryId: 4
   spritePrefab: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
   character_inventory: {fileID: 1492328832}
 --- !u!114 &896293201
@@ -17981,7 +17986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97422f4069e453b498fa8c48ed504ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory_ID: 4
+  inventory_ID: 4
   Block_Inventory: {fileID: 1112606643}
   is_Arrayed: 0
 --- !u!114 &1492328838
@@ -18306,6 +18311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4cb89ff5dc1d7489e3ae1486aaeba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryId: 2
   spritePrefab: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
   character_inventory: {fileID: 1822452834}
 --- !u!114 &1521525284
@@ -20598,6 +20604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4cb89ff5dc1d7489e3ae1486aaeba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryId: 6
   spritePrefab: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
   character_inventory: {fileID: 1752367870}
 --- !u!114 &1732485417
@@ -21118,7 +21125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97422f4069e453b498fa8c48ed504ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory_ID: 6
+  inventory_ID: 6
   Block_Inventory: {fileID: 916582042}
   is_Arrayed: 0
 --- !u!114 &1752367875
@@ -22246,7 +22253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97422f4069e453b498fa8c48ed504ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory_ID: 2
+  inventory_ID: 2
   Block_Inventory: {fileID: 854391639}
   is_Arrayed: 0
 --- !u!114 &1822452840

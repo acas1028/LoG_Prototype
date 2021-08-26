@@ -594,7 +594,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         for (int i = 0; i < Inventory.Length; i++)
         {
             Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
-            if (inven.m_Inventory_ID == cs.team1[num].GetComponent<Character>().character_ID)
+            if (inven.inventory_ID == cs.team1[num].GetComponent<Character>().character_ID)
             {
                 inven.is_Arrayed = false;
                 inven.Block_Inventory.SetActive(false);
@@ -642,7 +642,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         {
             Inventory_ID cs = Inventory[i].GetComponent<Inventory_ID>();
             Character sv = Deck_Data_Send.instance.Save_Data[0, i].GetComponent<Character>();
-            cs.m_Inventory_ID = sv.character_ID;
+            cs.inventory_ID = sv.character_ID;
         }
     }
     private int Reverse_Array(int num)
