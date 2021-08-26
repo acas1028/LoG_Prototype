@@ -9,7 +9,6 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
     public int m_Inventory_ID;
     public GameObject Block_Inventory;
     public bool is_Arrayed;
-   
 
     private void Update()
     {

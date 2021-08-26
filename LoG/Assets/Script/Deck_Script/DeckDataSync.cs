@@ -10,12 +10,18 @@ using CharacterStats;
 
 public class DeckDataSync : MonoBehaviour
 {
+    public static DeckDataSync Instance;
     private string playfabId;
     bool isGetAllData;
 
     // Start is called before the first frame update
     void Awake()
     {
+        if (!Instance)
+            Instance = this;
+        else
+            Destroy(gameObject);
+
         playfabId = PlayerPrefs.GetString("PlayFabId");
         if (playfabId == string.Empty)
             Debug.LogError("로그인을 먼저 하십시오.");

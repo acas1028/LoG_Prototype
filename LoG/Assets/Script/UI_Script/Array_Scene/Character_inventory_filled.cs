@@ -5,18 +5,27 @@ using UnityEngine.UI;
 
 public class Character_inventory_filled : MonoBehaviour
 {
-    public Sprite[] Character_sprite; //캐릭터 내에 들어갈 이미지
+    private Image characterImage;
+    public GameObject spritePrefab;
     public GameObject character_inventory; // 캐릭터칸
-    private int character_Id; // 캐릭터 각자의 아이디
 
-    private void Start() 
+    IEnumerator Start()
     {
-        Character_sprite = GameObject.FindGameObjectWithTag("Sprite_Data").gameObject.GetComponent<Sprite_Data>().Character_Sprite;
+        //yield return new WaitUntil(DeckDataSync.Instance.IsGetAllData);
+
+        //characterImage = gameObject.GetComponent<Image>();
+        //int pageNum = Deck_Data_Send.instance.lastPageNum;
+        //int index = transform.parent.GetComponent<Inventory_ID>().m_Inventory_ID;
+        //Debug.Log("pageNum: " + pageNum + ", index: " + index);
+        //int characterId = Deck_Data_Send.instance.Save_Data[pageNum, index - 1].GetComponent<Character>().character_ID;
+        //Debug.Log("캐릭터 ID: " + characterId);
+
+        //characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[(characterId - 1) % 5 + 1];
     }
 
     private void Update()
     {
-        inventory_image_filled();
+        // inventory_image_filled();
     }
 
     void inventory_image_filled() // 캐릭터 인벤토리 내용물 채우기

@@ -11,8 +11,6 @@ public class ShowingCharacterStats : MonoBehaviour
   
     public Text attack_Damage;// 팝업창에 띄울 캐릭터 공격력
     public Text health_Point;// 팝업창에 띄울 캐릭터 hp
-
-    private GameObject sprite_Data;
     
     //private static ShowingCharacterStats PopUp_Manager;
     //public static ShowingCharacterStats PopUp_instance
@@ -37,10 +35,7 @@ public class ShowingCharacterStats : MonoBehaviour
 
     private void Start()
     {
-        sprite_Data = GameObject.FindGameObjectWithTag("Sprite_Data");
     }
-
-
 
     public void Character_Showing_Stats(int num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
     {

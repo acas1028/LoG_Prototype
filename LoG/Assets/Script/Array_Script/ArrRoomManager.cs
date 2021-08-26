@@ -89,7 +89,13 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        bool isPreemptive = Random.Range(0, 2) == 0 ? false : true;
+        bool isPreemptive = false;
+
+        if (GetRoundCount() == 1)
+            isPreemptive = !isPreemptive;
+        else
+            isPreemptive = Random.Range(0, 2) == 0 ? false : true;
+
         Hashtable player_1_table = new Hashtable() { { "IsPreemptive", isPreemptive } };
         Hashtable player_2_table = new Hashtable() { { "IsPreemptive", !isPreemptive } };
 
@@ -161,6 +167,22 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
 
         joinedPlayerList.text = "룸에 있는 플레이어" + playerList;
+    }
+
+    private int GetRoundWinCount()
+    {
+        object roundWinCount;
+
+        roundWinCount = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out roundWinCount);
+        return (int)roundWinCount;
+    }
+
+    private int GetRoundCount()
+    {
+        object roundCount;
+
+        roundCount = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out roundCount);
+        return (int)roundCount;
     }
 
     #region 포톤 콜백 함수

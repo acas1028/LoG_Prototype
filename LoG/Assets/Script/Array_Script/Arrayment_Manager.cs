@@ -37,26 +37,37 @@ public class Arrayment_Manager : MonoBehaviourPun
         for (int i = 0; i < 5; i++)
         {
             GameObject ac = Arrayed_Data.instance.team1[i];
-            Character c = Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].GetComponentInChildren<Character>();
-            Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].tag = "Character";
-            c.Copy_Character_Stat(ac);
-            c.InitializeCharacterSprite();
+            if (ac.GetComponent<Character>().character_ID != 0)
+            {
+                Character c = Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].GetComponentInChildren<Character>();
+                Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].tag = "Character";
+                c.Copy_Character_Stat(ac);
+                c.InitializeCharacterSprite();
+            }
 
             ac = Arrayed_Data.instance.team2[i];
-            c = Enemy_Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].GetComponentInChildren<Character>();
-            Enemy_Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].tag = "Character";
-            c.Copy_Character_Stat(ac);
-            c.InitializeCharacterSprite();
+            if (ac.GetComponent<Character>().character_ID != 0)
+            {
+                Character c = Enemy_Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].GetComponentInChildren<Character>();
+                Enemy_Grids[ac.GetComponent<Character>().character_Num_Of_Grid - 1].tag = "Character";
+                c.Copy_Character_Stat(ac);
+                c.InitializeCharacterSprite();
+            }
         }
 
-        for (int i = 0; i < 7; i++)
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", 0 } };
+        PhotonNetwork.SetPlayerCustomProperties(table);
+
+        if (PhotonNetwork.IsMasterClient)
         {
-            Inventory[i].GetComponent<Inventory_ID>().Block_Inventory.SetActive(true);
+            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", 0 } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(table);
         }
     }
+
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Arrayment_Raycast();
         }
@@ -72,7 +83,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         if (!hit)
             return;
 
-        if(hit.transform.tag=="Character") //자신이나 상대의 캐릭터를 클릭한 경우.
+        if(hit.transform.tag == "Character") //자신이나 상대의 캐릭터를 클릭한 경우.
         {
             //PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character>().character_ID);
             //클릭한 캐릭터의 정보를 보여준다
@@ -93,7 +104,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 }
             }
         }
-        if(hit.transform.tag=="Null_Character"&&is_click_inventory==true)// 인벤토리를 누르고, 빈 그리드를 클릭 -> 정상적인 배치를 한 경우.
+        if(hit.transform.tag == "Null_Character" && is_click_inventory == true)// 인벤토리를 누르고, 빈 그리드를 클릭 -> 정상적인 배치를 한 경우.
         {
             GameObject Grid_Character = hit.transform.gameObject;
             Character cs = Grid_Character.GetComponentInChildren<Character>();
@@ -668,5 +679,4 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
         return num;
     }
-
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using Photon.Pun;
 
 public class BattleManager : MonoBehaviourPunCallbacks
@@ -19,6 +20,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public int bM_Remain_HP_Team2 { get; set; }
 
     public int bM_Phase { get; set; }
+
+    int roundWinCount;
+    int roundCount;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
@@ -66,6 +70,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
         bM_Phase = 0;
+        roundWinCount = 0;
+        roundCount = 0;
 
         for (int i = 0; i < 5; i++)
         {
@@ -101,6 +107,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bool result;
         yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team1));
         yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team2));
+        roundCount++;
+
         if(bM_Phase == 0)
         {
             for (int i = 0; i < 5; i++)
@@ -580,6 +588,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             alertMessage.gameObject.SetActive(true);
             alertMessage.Win();
+            roundWinCount++;
         }
         else
         {
@@ -594,6 +603,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Win();
+                roundWinCount++;
             }
             else
             {
@@ -602,8 +612,16 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
         }
 
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
+        PhotonNetwork.SetPlayerCustomProperties(table);
+
         if (PhotonNetwork.IsMasterClient)
+        {
+            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+
             Invoke("LoadArraymentScene", 4.0f);
+        }
     }
 
     void LoadArraymentScene()
