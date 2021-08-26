@@ -38,7 +38,7 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
-        Page_Num = deckDataSync.GetLastPageNum();
+        Page_Num = -1;
         StartCoroutine("Load_Deck");
     }
 
@@ -122,7 +122,7 @@ public class Deck_Manager : MonoBehaviour
 
             for (int i = 0; i < 7; i++)
             {
-                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[i].GetComponent<Character>().character_ID == 0)
+                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID == 0)
                 {
                     Deck_Data.Save_Data[0, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
                     Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
@@ -141,7 +141,7 @@ public class Deck_Manager : MonoBehaviour
         bool save = false;
         for (int i = 0; i < 7; i++)
         {
-            if (Deck_Data.Save_Data[i].GetComponent<Character>().character_ID==0)
+            if (Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID==0)
             {
                 save = true;
                 return;
@@ -234,7 +234,7 @@ public class Deck_Manager : MonoBehaviour
     }
     private void Load_Skill()
     {
-        if (Deck_Data.Save_Data[0].GetComponent<Character>().character_ID == 0)
+        if (Deck_Data.Save_Data[0, 0].GetComponent<Character>().character_ID == 0)
         {
             return;
         }
