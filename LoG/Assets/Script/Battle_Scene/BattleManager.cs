@@ -598,9 +598,17 @@ public class BattleManager : MonoBehaviourPunCallbacks
             else
             {
                 alertMessage.gameObject.SetActive(true);
-                alertMessage.Message("ºñ°å½À´Ï´Ù!");
+                alertMessage.Draw();
             }
         }
+
+        if (PhotonNetwork.IsMasterClient)
+            Invoke("LoadArraymentScene", 4.0f);
+    }
+
+    void LoadArraymentScene()
+    {
+        PhotonNetwork.LoadLevel("Arrayment_Scene");
     }
 }
 

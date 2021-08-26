@@ -40,13 +40,17 @@ public class AlertMessage : MonoBehaviour
 
     public void Win()
     {
-        this.GetComponent<Text>().text = "승리!";
+        this.GetComponent<Text>().text = "승리하였습니다! 잠시 후 재배치를 시작합니다..";
     }
-
 
     public void Lose()
     {
-        this.GetComponent<Text>().text = "패배..";
+        this.GetComponent<Text>().text = "패배하였습니다. 잠시 후 재배치를 시작합니다..";
+    }
+
+    public void Draw()
+    {
+        this.GetComponent<Text>().text = "비겼습니다. 잠시 후 재배치를 시작합니다..";
     }
 
     public void Counter(GameObject Counter)

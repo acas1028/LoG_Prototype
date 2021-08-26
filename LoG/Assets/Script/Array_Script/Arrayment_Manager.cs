@@ -1,9 +1,10 @@
 using Photon.Pun;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrayment_Manager : MonoBehaviour
+public class Arrayment_Manager : MonoBehaviourPun
 {
 
     private bool is_click_inventory = false;
@@ -27,7 +28,6 @@ public class Arrayment_Manager : MonoBehaviour
     public ArrRoomManager arrRoomManager;
     public ArrData_Sync arrData_Sync;
     public Character_arrayment_showing character_Arrayment_Showing;
-    public PhotonView PV;
 
     private static Arrayment_Manager ArrayManager;
     public static Arrayment_Manager Array_instance
@@ -502,7 +502,7 @@ public class Arrayment_Manager : MonoBehaviour
             if (cs.character_ID == T.team1[i].GetComponent<Character>().character_ID)
             {
                 Array_Cancle_Button.SetActive(false);
-                PV.RPC("Cancle_Sync", RpcTarget.All, i);
+                photonView.RPC("Cancle_Sync", RpcTarget.All, i);
                 Order_Rearrange(i);
                 arrData_Sync.DataSync(i);
             }
