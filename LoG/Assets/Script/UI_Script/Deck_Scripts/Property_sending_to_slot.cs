@@ -12,14 +12,22 @@ public class Property_sending_to_slot : MonoBehaviour, IPointerClickHandler
         Deck_Manager cs = Deck_Manager.instance;
 
         int j = 0;
-        while (j < 7)
+
+
+        if (this.GetComponent<Deck_Skill>().is_selected != true)
         {
-            if (cs.Current_Character == cs.Character_Slot[j])
+            while (j < 7)
             {
-                cs.Slot_Property[j].GetComponent<Property_Slot>().Change_property(property_Name);
-                break;
+                if (cs.Current_Character == cs.Character_Slot[j])
+                {
+                    cs.Slot_Property[j].GetComponent<Property_Slot>().Change_property(property_Name);
+                    break;
+                }
+                j++;
             }
-            j++;
+
+            this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
         }
+
     }
 }

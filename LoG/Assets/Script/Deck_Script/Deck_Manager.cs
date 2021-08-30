@@ -160,6 +160,10 @@ public class Deck_Manager : MonoBehaviour
         {
             Character_Slot[i].GetComponentInChildren<Character>().Character_Reset();
             Character_Slot[i].GetComponentInChildren<Character>().Debuging_Character();
+            Character_Slot[i].GetComponent<Deck_Character>().Set_Active_Character = false;
+            Character_Slot[i].SetActive(false);
+            Set_Character_[i].SetActive(true);
+            Slot_Property[i].GetComponent<Image>().sprite = null;
             Deck_Data.Save_Data[0, i].GetComponent<Character>().Character_Reset();
             Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);

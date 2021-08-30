@@ -44,7 +44,6 @@ public class Deck_Skill : MonoBehaviour
                 cs.Reset_Grid();
             }
             cs.Pre_Skill = this.gameObject;
-            this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
             cs.Skill_List.Add(this.gameObject);
             Button SKill = this.gameObject.GetComponent<Button>();
             ColorBlock CB = SKill.colors;
@@ -141,7 +140,9 @@ public class Deck_Skill : MonoBehaviour
                     D_Character.Debuging_Character();
                     break;
             }
+
             Sync_Type();
+
         }
         
     }
