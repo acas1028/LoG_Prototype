@@ -16,6 +16,7 @@ public class Deck_Manager : MonoBehaviour
     public List<GameObject> Skill_List = new List<GameObject>();
     public GameObject[] Skill_Button;
     public GameObject[] Property_Slot;
+    public GameObject[] Page_Slot;
     public GameObject Current_Character;
     public GameObject Current_Grid;
     public GameObject Deck_Reset_Button;
@@ -30,6 +31,7 @@ public class Deck_Manager : MonoBehaviour
     public Text[] Character_Stat;
 
     public int Page_Num;
+    private int Pre_pageNum = -1;
 
     private void Awake()
     {
@@ -63,6 +65,7 @@ public class Deck_Manager : MonoBehaviour
             }
         }
         Show_Property_Slot();
+        Select_Skill();
     }
     public void Click_Grid_2()
     {
@@ -234,7 +237,7 @@ public class Deck_Manager : MonoBehaviour
                 //Æ¯¼º (false);
             }
         }
-
+        Color_Page();
     }
     private void Load_Skill()
     {
@@ -331,5 +334,45 @@ public class Deck_Manager : MonoBehaviour
         spriteState.selectedSprite = Grid_selected_sprite;
         Grid.spriteState = spriteState;
         Grid.GetComponent<Image>().sprite = Grid_selected_sprite;
+    }
+    private void Select_Skill()
+    {
+        for(int i=0;i<Skill_List.Count;i++)
+        {
+            if(Pre_Skill == Skill_List[i]&&i>0)
+            {
+                Button SKill = Skill_List[i-1].GetComponent<Button>();
+                ColorBlock CB = SKill.colors;
+                Color red_Grid = Color.red;
+                CB.normalColor = red_Grid;
+                CB.pressedColor = red_Grid;
+                CB.selectedColor = red_Grid;
+                SKill.colors = CB;
+                return;
+            }
+        }
+    }
+    private void Color_Page()
+    {
+        /*if (Pre_pageNum != -1)
+        {
+            Button Pre_Page = Skill_List[Pre_pageNum].GetComponent<Button>();
+            ColorBlock cb = Pre_Page.colors;
+            Color white_Grid = Color.white;
+            cb.normalColor = white_Grid;
+            cb.pressedColor = white_Grid;
+            cb.selectedColor = white_Grid;
+            Pre_Page.colors = cb;
+        }*/
+        
+        Button Page = Page_Slot[Page_Num].GetComponent<Button>();
+        ColorBlock CB = Page.colors;
+        Color red_Grid = Color.red;
+        CB.normalColor = red_Grid;
+        CB.pressedColor = red_Grid;
+        CB.selectedColor = red_Grid;
+        Page.colors = CB;
+
+        Pre_pageNum = Page_Num;
     }
 }

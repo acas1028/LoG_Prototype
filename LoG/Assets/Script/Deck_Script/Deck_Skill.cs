@@ -144,7 +144,6 @@ public class Deck_Skill : MonoBehaviour
             Sync_Type();
 
         }
-        
     }
     public void Cancle_Skill()
     {
@@ -175,4 +174,5 @@ public class Deck_Skill : MonoBehaviour
         }
         
     }
+
 }
