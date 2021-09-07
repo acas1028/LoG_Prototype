@@ -32,69 +32,69 @@ public class Property_Slot : MonoBehaviour
         switch(cs.property_Name)
         {
             //공격형 
-            case "ArmorPiercer":
+            case "Attack_ArmorPiercer":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[0];
                 break;
-            case "Confidence":
+            case "Attack_Confidence":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[1];
                 break;
-            case "DivineShield":
+            case "Attack_DivineShield":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[2];
                 break;
-            case "Executioner":
+            case "Attack_Executioner":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[3];
                 break;
-            case "Ranger":
+            case "Attack_Ranger":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[4];
                 break;
-            case "Struggle":
+            case "Attack_Struggle":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[5];
                 break;
-            case "Sturdy":
+            case "Attack_Sturdy":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[6];
                 break;
             //밸런스형
-            case "Blessing":
+            case "Balance_Blessing":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[0];
                 break;
-            case "Curse":
+            case "Balance_Curse":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[1];
                 break;
-            case "DestinyBond":
+            case "Balance_DestinyBond":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[2];
                 break;
-            case "GBGH":
+            case "Balance_GBGH":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[3];
                 break;
-            case "Smoke":
+            case "Balance_Smoke":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[4];
                 break;
-            case "Survivor":
+            case "Balance_Survivor":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[5];
                 break;
-            case "WideCounter":
+            case "Balance_WideCounter":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[6];
                 break;
             //방어형
-            case "Barrier":
+            case "Defense_Barrier":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[0];
                 break;
-            case "Coward":
+            case "Defense_Coward":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[1];
                 break;
-            case "Disarm":
+            case "Defense_Disarm":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[2];
                 break;
-            case "Encourage":
+            case "Defense_Encourage":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[3];
                 break;
-            case "Patience":
+            case "Defense_Patience":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[4];
                 break;
-            case "Responsibility":
+            case "Defense_Responsibility":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[5];
                 break;
-            case "Thronmail":
+            case "Defense_Thronmail":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[6];
                 break;
 

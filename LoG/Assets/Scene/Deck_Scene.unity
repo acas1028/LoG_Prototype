@@ -1179,6 +1179,7 @@ GameObject:
   - component: {fileID: 98250747}
   - component: {fileID: 98250749}
   - component: {fileID: 98250748}
+  - component: {fileID: 98250750}
   m_Layer: 5
   m_Name: Character_Space_2
   m_TagString: Untagged
@@ -1247,6 +1248,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98250746}
   m_CullTransparentMesh: 1
+--- !u!114 &98250750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98250746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d696024d352fb4687e4f861e22ffd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckSave: {fileID: 0}
+  TypeSlot: {fileID: 1754966126}
+  PropertySlot: {fileID: 580922578}
+  Character_Sprite: {fileID: 478371415}
+  SetCharacter: {fileID: 816002204}
+  Save_Character: {fileID: 0}
+  deck_Character_Count: 1
 --- !u!1 &103905674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,7 +1692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Smoke
+  property_Name: Balance_Smoke
 --- !u!1 &134932526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,7 +1944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Barrier
+  property_Name: Defense_Barrier
 --- !u!1 &147461305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2881,7 +2901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Blessing
+  property_Name: Balance_Blessing
 --- !u!1 &206235814
 GameObject:
   m_ObjectHideFlags: 0
@@ -3867,7 +3887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Disarm
+  property_Name: Defense_Disarm
 --- !u!1 &259108319
 GameObject:
   m_ObjectHideFlags: 0
@@ -5058,7 +5078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: WideCounter
+  property_Name: Balance_WideCounter
 --- !u!1 &341129780
 GameObject:
   m_ObjectHideFlags: 0
@@ -5235,7 +5255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Executioner
+  property_Name: Attack_Executioner
 --- !u!1 &354505291
 GameObject:
   m_ObjectHideFlags: 0
@@ -7576,7 +7596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Coward
+  property_Name: Defense_Coward
 --- !u!1 &571121038
 GameObject:
   m_ObjectHideFlags: 0
@@ -10376,6 +10396,7 @@ GameObject:
   - component: {fileID: 851437233}
   - component: {fileID: 851437235}
   - component: {fileID: 851437234}
+  - component: {fileID: 851437236}
   m_Layer: 5
   m_Name: Character_Space_1
   m_TagString: Untagged
@@ -10444,6 +10465,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851437232}
   m_CullTransparentMesh: 1
+--- !u!114 &851437236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851437232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d696024d352fb4687e4f861e22ffd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckSave: {fileID: 0}
+  TypeSlot: {fileID: 77140956}
+  PropertySlot: {fileID: 1427452789}
+  Character_Sprite: {fileID: 259108319}
+  SetCharacter: {fileID: 639261036}
+  Save_Character: {fileID: 0}
+  deck_Character_Count: 0
 --- !u!1 &873175867
 GameObject:
   m_ObjectHideFlags: 0
@@ -10767,7 +10807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: DivineShield
+  property_Name: Attack_DivineShield
 --- !u!1 &900324261
 GameObject:
   m_ObjectHideFlags: 0
@@ -11154,7 +11194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: DestinyBond
+  property_Name: Balance_DestinyBond
 --- !u!1 &930085081
 GameObject:
   m_ObjectHideFlags: 0
@@ -11241,6 +11281,7 @@ GameObject:
   - component: {fileID: 943913622}
   - component: {fileID: 943913624}
   - component: {fileID: 943913623}
+  - component: {fileID: 943913625}
   m_Layer: 5
   m_Name: Character_Space_6
   m_TagString: Untagged
@@ -11309,6 +11350,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943913621}
   m_CullTransparentMesh: 1
+--- !u!114 &943913625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943913621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d696024d352fb4687e4f861e22ffd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckSave: {fileID: 0}
+  TypeSlot: {fileID: 1427318635}
+  PropertySlot: {fileID: 25934687}
+  Character_Sprite: {fileID: 403511148}
+  SetCharacter: {fileID: 1735787416}
+  Save_Character: {fileID: 0}
+  deck_Character_Count: 5
 --- !u!1 &950728461
 GameObject:
   m_ObjectHideFlags: 0
@@ -12944,7 +13004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Encourage
+  property_Name: Defense_Encourage
 --- !u!1 &1112364850
 GameObject:
   m_ObjectHideFlags: 0
@@ -14158,7 +14218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Patience
+  property_Name: Defense_Patience
 --- !u!1 &1205320795
 GameObject:
   m_ObjectHideFlags: 0
@@ -15018,7 +15078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Survivor
+  property_Name: Balance_Survivor
 --- !u!1 &1369138630
 GameObject:
   m_ObjectHideFlags: 0
@@ -15189,6 +15249,7 @@ GameObject:
   - component: {fileID: 1375473370}
   - component: {fileID: 1375473372}
   - component: {fileID: 1375473371}
+  - component: {fileID: 1375473373}
   m_Layer: 5
   m_Name: Character_Space_5
   m_TagString: Untagged
@@ -15257,6 +15318,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1375473369}
   m_CullTransparentMesh: 1
+--- !u!114 &1375473373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375473369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d696024d352fb4687e4f861e22ffd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckSave: {fileID: 0}
+  TypeSlot: {fileID: 434239263}
+  PropertySlot: {fileID: 1925488336}
+  Character_Sprite: {fileID: 250653807}
+  SetCharacter: {fileID: 1137592677}
+  Save_Character: {fileID: 0}
+  deck_Character_Count: 4
 --- !u!1 &1377691855
 GameObject:
   m_ObjectHideFlags: 0
@@ -15709,7 +15789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Responsibility
+  property_Name: Defense_Responsibility
 --- !u!1 &1418556480
 GameObject:
   m_ObjectHideFlags: 0
@@ -15721,6 +15801,7 @@ GameObject:
   - component: {fileID: 1418556481}
   - component: {fileID: 1418556483}
   - component: {fileID: 1418556482}
+  - component: {fileID: 1418556484}
   m_Layer: 5
   m_Name: Character_Space_3
   m_TagString: Untagged
@@ -15789,6 +15870,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418556480}
   m_CullTransparentMesh: 1
+--- !u!114 &1418556484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418556480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d696024d352fb4687e4f861e22ffd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckSave: {fileID: 0}
+  TypeSlot: {fileID: 106803786}
+  PropertySlot: {fileID: 384631010}
+  Character_Sprite: {fileID: 1073380695}
+  SetCharacter: {fileID: 171591037}
+  Save_Character: {fileID: 0}
+  deck_Character_Count: 2
 --- !u!1 &1426270317
 GameObject:
   m_ObjectHideFlags: 0
@@ -16136,7 +16236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Confidence
+  property_Name: Attack_Confidence
 --- !u!1 &1427452789
 GameObject:
   m_ObjectHideFlags: 0
@@ -16149,7 +16249,6 @@ GameObject:
   - component: {fileID: 1427452792}
   - component: {fileID: 1427452791}
   - component: {fileID: 1427452793}
-  - component: {fileID: 1427452794}
   m_Layer: 5
   m_Name: Property-1
   m_TagString: Untagged
@@ -16227,20 +16326,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   property_Images_Collection: {fileID: 1745509879}
-  property_Name: 
---- !u!114 &1427452794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1427452789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c47195f46786adf469384754cde5d340, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Images_Collection: {fileID: 0}
   property_Name: 
 --- !u!1 &1443699261
 GameObject:
@@ -16556,7 +16641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Ranger
+  property_Name: Attack_Ranger
 --- !u!1 &1447567459
 GameObject:
   m_ObjectHideFlags: 0
@@ -17025,7 +17110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: ArmorPiercer
+  property_Name: Attack_ArmorPiercer
 --- !u!1001 &1465134617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17566,7 +17651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Thronmail
+  property_Name: Defense_Thronmail
 --- !u!1 &1540390245
 GameObject:
   m_ObjectHideFlags: 0
@@ -17731,6 +17816,7 @@ GameObject:
   - component: {fileID: 1555918071}
   - component: {fileID: 1555918073}
   - component: {fileID: 1555918072}
+  - component: {fileID: 1555918074}
   m_Layer: 5
   m_Name: Character_Space_7
   m_TagString: Untagged
@@ -17799,6 +17885,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555918070}
   m_CullTransparentMesh: 1
+--- !u!114 &1555918074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555918070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d696024d352fb4687e4f861e22ffd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckSave: {fileID: 0}
+  TypeSlot: {fileID: 480206851}
+  PropertySlot: {fileID: 1114625576}
+  Character_Sprite: {fileID: 1891593313}
+  SetCharacter: {fileID: 1669798060}
+  Save_Character: {fileID: 0}
+  deck_Character_Count: 6
 --- !u!1 &1606319065
 GameObject:
   m_ObjectHideFlags: 0
@@ -20483,7 +20588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Curse
+  property_Name: Balance_Curse
 --- !u!1 &1923629789
 GameObject:
   m_ObjectHideFlags: 0
@@ -21470,7 +21575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: GBGH
+  property_Name: Balance_GBGH
 --- !u!1 &1988778292
 GameObject:
   m_ObjectHideFlags: 0
@@ -21482,6 +21587,7 @@ GameObject:
   - component: {fileID: 1988778293}
   - component: {fileID: 1988778295}
   - component: {fileID: 1988778294}
+  - component: {fileID: 1988778296}
   m_Layer: 5
   m_Name: Character_Space_4
   m_TagString: Untagged
@@ -21550,6 +21656,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988778292}
   m_CullTransparentMesh: 1
+--- !u!114 &1988778296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988778292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d696024d352fb4687e4f861e22ffd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckSave: {fileID: 0}
+  TypeSlot: {fileID: 959470318}
+  PropertySlot: {fileID: 950728461}
+  Character_Sprite: {fileID: 394920335}
+  SetCharacter: {fileID: 51792690}
+  Save_Character: {fileID: 0}
+  deck_Character_Count: 3
 --- !u!1 &1995145764
 GameObject:
   m_ObjectHideFlags: 0
@@ -22404,7 +22529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Sturdy
+  property_Name: Attack_Sturdy
 --- !u!1 &2091154790
 GameObject:
   m_ObjectHideFlags: 0
@@ -23033,7 +23158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property_Name: Struggle
+  property_Name: Attack_Struggle
 --- !u!1 &2131524523
 GameObject:
   m_ObjectHideFlags: 0
