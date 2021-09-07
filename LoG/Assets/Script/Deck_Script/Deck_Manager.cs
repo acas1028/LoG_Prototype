@@ -40,7 +40,7 @@ public class Deck_Manager : MonoBehaviour
     }
     void Start()
     {
-        Page_Num = -1;
+        Page_Num = Deck_Data_Send.instance.lastPageNum;
         StartCoroutine("Load_Deck");
     }
 
@@ -125,11 +125,11 @@ public class Deck_Manager : MonoBehaviour
 
             for (int i = 0; i < 7; i++)
             {
-                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID == 0)
+                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().character_ID == 0)
                 {
                     Deck_Data.Save_Data[0, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
                     Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
-                    deckDataSync.SetData(Page_Num, i, Deck_Data.Save_Data[0, i].GetComponent<Character>());
+                    deckDataSync.SetData(Page_Num, i, Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>());
                     deckDataSync.SendLastPageNum(Page_Num);
                 }
             }
@@ -192,22 +192,22 @@ public class Deck_Manager : MonoBehaviour
 
     IEnumerator Load_Deck()
     {
-        yield return new WaitUntil(() => { return deckDataSync.IsGetAllData(); });
-        Page_Num = Deck_Data_Send.instance.lastPageNum;
-
+        // IsGetAllData();에서 반환이 안되는건지 무기한 대기상태로 들어가게 됨. 우선 주석처리, 아직까지 부작용은 없음.
+        /*yield return new WaitUntil(() => { return deckDataSync.IsGetAllData(); });
+        Page_Num = Deck_Data_Send.instance.lastPageNum;*/
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < 7; i++)
         {
-            Character ch = Deck_Data.Save_Data[0, i].GetComponent<Character>();
+            Character ch = Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>();
             Character cs = Character_Slot[i].GetComponentInChildren<Character>();
             if (ch.character_ID != 0)
             {
-                Set_Character_[i].SetActive(false);
+                //Set_Character_[i].SetActive(false);
                 Character_Slot[i].SetActive(true);
                 Slot_Type[i].SetActive(true);
                 Slot_Property[i].GetComponent<Property_Slot>().Change_property(cs.character_Skill.ToString());
                 Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type((int)ch.character_Type);
-                cs.Copy_Character_Stat(Deck_Data.Save_Data[0, i]);
+                cs.Copy_Character_Stat(Deck_Data.Save_Data[Page_Num, i]);
                 cs.Debuging_Character();
             }
         }
@@ -216,7 +216,7 @@ public class Deck_Manager : MonoBehaviour
 
     IEnumerator Switch_Page()
     {
-        Reset_Button();
+        //Reset_Button();
         yield return StartCoroutine("Load_Deck");
         bool Switch = true;
         for(int i=0;i<7;i++)
@@ -237,7 +237,6 @@ public class Deck_Manager : MonoBehaviour
                 //특성 (false);
             }
         }
-        Color_Page();
     }
     private void Load_Skill()
     {
@@ -249,7 +248,7 @@ public class Deck_Manager : MonoBehaviour
         { 
             for (int i = 0; i < 7; i++)
             {
-                int num = (int)Deck_Data.Save_Data[0, i].GetComponent<Character>().character_Skill;
+                int num = (int)Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().character_Skill;
                 Skill_List.Add(Skill_Button[num]);
             }
             for (int i = 0; i < Skill_List.Count; i++)
@@ -351,28 +350,5 @@ public class Deck_Manager : MonoBehaviour
                 return;
             }
         }
-    }
-    private void Color_Page()
-    {
-        /*if (Pre_pageNum != -1)
-        {
-            Button Pre_Page = Skill_List[Pre_pageNum].GetComponent<Button>();
-            ColorBlock cb = Pre_Page.colors;
-            Color white_Grid = Color.white;
-            cb.normalColor = white_Grid;
-            cb.pressedColor = white_Grid;
-            cb.selectedColor = white_Grid;
-            Pre_Page.colors = cb;
-        }*/
-        
-        Button Page = Page_Slot[Page_Num].GetComponent<Button>();
-        ColorBlock CB = Page.colors;
-        Color red_Grid = Color.red;
-        CB.normalColor = red_Grid;
-        CB.pressedColor = red_Grid;
-        CB.selectedColor = red_Grid;
-        Page.colors = CB;
-
-        Pre_pageNum = Page_Num;
     }
 }
