@@ -127,8 +127,8 @@ public class Deck_Manager : MonoBehaviour
             {
                 if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().character_ID == 0)
                 {
-                    Deck_Data.Save_Data[0, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
-                    Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
+                    Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
+                    Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Debuging_Character();
                     deckDataSync.SetData(Page_Num, i, Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>());
                     deckDataSync.SendLastPageNum(Page_Num);
                 }
@@ -167,8 +167,8 @@ public class Deck_Manager : MonoBehaviour
             Character_Slot[i].SetActive(false);
             Set_Character_[i].SetActive(true);
             Slot_Property[i].GetComponent<Image>().sprite = null;
-            Deck_Data.Save_Data[0, i].GetComponent<Character>().Character_Reset();
-            Deck_Data.Save_Data[0, i].GetComponent<Character>().Debuging_Character();
+            Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Character_Reset();
+            Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Debuging_Character();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
         }
         Skill_List.Clear();
@@ -350,5 +350,21 @@ public class Deck_Manager : MonoBehaviour
                 return;
             }
         }
+    }
+    public void Cancle_Grid()
+    {
+        Character cs = Current_Character.GetComponentInChildren<Character>();
+        bool[] Range = cs.character_Attack_Range;
+        int ID = cs.character_ID;
+        for (int i = 0; i < 9; i++)
+        {
+            if (Range[i])
+            {
+                Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
+                Recolor_Grid(i);
+            }
+        }
+        cs.Character_Setting(ID);
+        Check_Stat();
     }
 }
