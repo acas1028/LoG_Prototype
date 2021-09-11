@@ -18,10 +18,15 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
     {
         //Popup.GetComponent<ShowingCharacterStats>().Character_Showing_Stats();
     }
-    public void Click_Inven()
+    public void SetArrayed()
     {
         is_Arrayed = true;
         Block_Inventory.SetActive(true);
+    }
+    public void SetNotArrayed()
+    {
+        is_Arrayed = false;
+        Block_Inventory.SetActive(false);
     }
     public void OnPointerDown(PointerEventData eventData)
     {

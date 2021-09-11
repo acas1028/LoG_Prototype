@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Arrayment_Manager : MonoBehaviourPun
 {
@@ -17,6 +18,10 @@ public class Arrayment_Manager : MonoBehaviourPun
     private int cancle_num;
     private int click_id;
 
+    private List<int> invenNums;
+    private List<int> gridNums;
+    private int timeoutCount;
+
     public GameObject Array_Time;
     public GameObject[] Grids;
     public GameObject[] Enemy_Grids;
@@ -25,6 +30,8 @@ public class Arrayment_Manager : MonoBehaviourPun
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     private GameObject Cancle_Character;
+
+    public Text timeText;
     public ArrRoomManager arrRoomManager;
     public ArrData_Sync arrData_Sync;
     public Character_arrayment_showing character_Arrayment_Showing;
@@ -63,6 +70,20 @@ public class Arrayment_Manager : MonoBehaviourPun
             table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", 0 } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(table);
         }
+
+        invenNums = new List<int>();
+        gridNums = new List<int>();
+        timeoutCount = 0;
+        for (int i = 0; i < 7; i++)
+        {
+            invenNums.Add(i);
+        }
+        for (int i = 0; i < 9; i++)
+        {
+            gridNums.Add(i);
+        }
+        ShuffleList<int>(invenNums);
+        ShuffleList<int>(gridNums);
     }
 
     void Update()
@@ -107,35 +128,50 @@ public class Arrayment_Manager : MonoBehaviourPun
         if(hit.transform.tag == "Null_Character" && is_click_inventory == true)// 인벤토리를 누르고, 빈 그리드를 클릭 -> 정상적인 배치를 한 경우.
         {
             GameObject Grid_Character = hit.transform.gameObject;
-            Character cs = Grid_Character.GetComponentInChildren<Character>();
-            Deck_Data_Send sd = Deck_Data_Send.instance;
-            cs.Copy_Character_Stat(sd.Save_Data[0, click_id - 1]);
-            Grid_Character.tag = "Character";
-            for(int i=0;i<9;i++)
+            int gridNum = 0;
+
+            for (int i = 0; i < 9; i++)
             {
                 if (Grid_Character == Grids[i])
                 {
-                    cs.character_Num_Of_Grid = i + 1;
-                }
-            }
-            cs.Debuging_Character();
-            cs.InitializeCharacterSprite();
-            int j = 0;
-            while(j<5)
-            {
-                if (T.team1[j].GetComponent<Character>().character_ID == 0)
-                {
-                    T.team1[j].GetComponent<Character>().Copy_Character_Stat(Grid_Character.transform.Find("Character_Prefab").gameObject);
-                    T.team1[j].GetComponent<Character>().Debuging_Character();
+                    gridNum = i + 1;
                     break;
                 }
-                j++;
             }
-            Inventory[click_id - 1].GetComponent<Inventory_ID>().Block_Inventory.SetActive(true);
-            Sync_Character();
+
+            if (gridNum == 0)
+            {
+                Debug.LogError("Grid_Character 에 해당하는 Grids[i]의 개체 찾을 수 없음");
+                return;
+            }
+
+            ArrayOnGrid(click_id, gridNum);
             is_click_inventory = false;
         }
     }
+
+    private void ArrayOnGrid(int inventoryNum, int gridNum)
+    {
+        Grids[gridNum - 1].tag = "Character";
+        Character gridCharacter = Grids[gridNum - 1].GetComponentInChildren<Character>();
+        gridCharacter.Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[0, inventoryNum - 1]);
+        gridCharacter.character_Num_Of_Grid = gridNum;
+        gridCharacter.Debuging_Character();
+        gridCharacter.InitializeCharacterSprite();
+
+        Arrayed_Data arrayedData = Arrayed_Data.instance;
+        for (int i = 0; i < 5; i++)
+        {
+            if (arrayedData.team1[i].GetComponent<Character>().character_ID == 0)
+            {
+                arrayedData.team1[i].GetComponent<Character>().Copy_Character_Stat(Grids[gridNum - 1].transform.Find("Character_Prefab").gameObject);
+                break;
+            }
+        }
+        Inventory[inventoryNum - 1].GetComponent<Inventory_ID>().SetArrayed();
+        Sync_Character();
+    }
+
     public void Array_Order()
     {
         Phase = arrRoomManager.GetArrayPhase();
@@ -148,6 +184,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.FIRST1:
                     my_turn = true;
                     Pick = true;
+                    TimeOut(1);
                     if (cs.team1[0].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -211,6 +248,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.FIRST23:
                     my_turn = true;
                     Pick = true;
+                    TimeOut(2);
                     if (cs.team1[1].GetComponent<Character>().character_ID != 0 && cs.team1[2].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -273,6 +311,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.FIRST45:
                     my_turn = true;
                     Pick = true;
+                    TimeOut(2);
                     if (cs.team1[3].GetComponent<Character>().character_ID != 0 && cs.team1[4].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -352,6 +391,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.SECOND12:
                     my_turn = true;
                     Pick = true;
+                    TimeOut(2);
                     if (cs.team1[0].GetComponent<Character>().character_ID != 0 && cs.team1[1].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -414,6 +454,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.SECOND34:
                     my_turn = true;
                     Pick = true;
+                    TimeOut(2);
                     if (cs.team1[2].GetComponent<Character>().character_ID != 0 && cs.team1[3].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -476,6 +517,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.SECOND5:
                     my_turn = true;
                     Pick = true;
+                    TimeOut(1);
                     if (cs.team1[4].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -547,11 +589,12 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
         arrData_Sync.DataSync(Return_num);
     }
-   IEnumerator Time_OUT()
-   {
+
+    IEnumerator Time_OUT()
+    {
         int inventroy_Leng = 0;
         Arrayed_Data cs = Arrayed_Data.instance;
-        while (inventroy_Leng<Inventory.Length)
+        while (inventroy_Leng < Inventory.Length)
         {
             if (Inventory[inventroy_Leng].GetComponent<Inventory_ID>().is_Arrayed == false)
             {
@@ -560,10 +603,10 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
 
         inventroy_Leng++;
-        
+
         Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().is_Arrayed = true;
         int random = Random.Range(0, 9);
-        while(Grids[random].tag == "Character")
+        while (Grids[random].tag == "Character")
         {
             random = Random.Range(0, 9);
         }
@@ -574,9 +617,9 @@ public class Arrayment_Manager : MonoBehaviourPun
         Grids[random].GetComponentInChildren<Character>().InitializeCharacterSprite();
 
         int j = 0;
-        while(j<5)
+        while (j < 5)
         {
-            if(cs.team1[j].GetComponent<Character>().character_ID==0)
+            if (cs.team1[j].GetComponent<Character>().character_ID == 0)
             {
                 cs.team1[j].GetComponent<Character>().Copy_Character_Stat(Grids[random]);
                 cs.team1[j].GetComponent<Character>().Debuging_Character();
@@ -587,6 +630,37 @@ public class Arrayment_Manager : MonoBehaviourPun
         yield return null;
     }
 
+    private List<T> ShuffleList<T>(List<T> list)
+    {
+        int random1, random2;
+        T temp;
+
+        for (int i = 0; i < list.Count; ++i)
+        {
+            random1 = Random.Range(0, list.Count);
+            random2 = Random.Range(0, list.Count);
+
+            temp = list[random1];
+            list[random1] = list[random2];
+            list[random2] = temp;
+        }
+
+        return list;
+    }
+
+    private void TimeOut(int count)
+    {
+        if (!timeText.GetComponent<Time_FlowScript>().Time_Over)
+            return;
+
+        for (int i = 0; i < count; i++)
+        {
+            ArrayOnGrid(invenNums[timeoutCount++], gridNums[timeoutCount++]);
+        }
+
+        Ready_Array = true;
+        timeText.GetComponent<Time_FlowScript>().Time_Over = false;
+    }
 
     private void Order_Rearrange(int num)
     {
@@ -596,8 +670,7 @@ public class Arrayment_Manager : MonoBehaviourPun
             Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
             if (inven.inventory_ID == cs.team1[num].GetComponent<Character>().character_ID)
             {
-                inven.is_Arrayed = false;
-                inven.Block_Inventory.SetActive(false);
+                inven.SetNotArrayed();
             }
         }
         cs.team1[num].GetComponent<Character>().Character_Reset();
