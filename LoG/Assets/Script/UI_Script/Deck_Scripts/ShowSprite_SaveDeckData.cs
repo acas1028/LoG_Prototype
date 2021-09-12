@@ -29,6 +29,11 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         Show_Character_Sprite();
     }
 
+    private void Update()
+    {
+        Change_property_image_in_Wrong();   
+    }
+
     void isDeckSaveExist()
     {
         if (DeckSave == null)
@@ -76,6 +81,14 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
         PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
 
+    }
+
+    void Change_property_image_in_Wrong()
+    {
+        if (Save_Character.character_Skill.ToString() == PropertySlot.GetComponent<Property_Slot>().property_Name)
+            return;
+
+        PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
     }
 
     void Show_Character_Sprite()
