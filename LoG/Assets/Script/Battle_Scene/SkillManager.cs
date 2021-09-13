@@ -4,8 +4,6 @@ using CharacterStats;
 
 public class SkillManager : MonoBehaviour
 {
-    public GameObject skillmessage;
-
     private static SkillManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static SkillManager Instance
@@ -37,6 +35,7 @@ public class SkillManager : MonoBehaviour
 
     }
 
+    public GameObject skillmessage;
 
     // Start is called before the first frame update
     void Start()
@@ -278,7 +277,9 @@ public class SkillManager : MonoBehaviour
         }
 
         //스킬 발동 체크
-        ACS.character_Attack_Damage += 40;
+        ACS.character_Buffed_Attack += 20;
+
+        GridManager.Instance.Create_Buffed_Grid(ACS.character_Team_Number, ACS.character_Num_Of_Grid);
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"자신감");
@@ -409,6 +410,8 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_HP <= (CCS.character_MaxHP / 10) * i)
                 CCS.character_Buffed_Attack += 10;
         }
+
+        GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"발악");
@@ -541,6 +544,7 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 1)
             {
                 CCS.character_Buffed_Attack += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 9)
             {
@@ -549,6 +553,7 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 2)
             {
                 CCS.character_Buffed_Attack += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 10)
             {
@@ -560,6 +565,7 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 2)
             {
                 CCS.character_Buffed_Attack += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 10)
             {
@@ -568,12 +574,15 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 1)
             {
                 CCS.character_Buffed_Attack += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 9)
             {
                 CCS.character_Buffed_Damaged += 20;
             }
         }
+
+
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"모 아니면 도");
@@ -603,7 +612,10 @@ public class SkillManager : MonoBehaviour
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
                         TCS.character_Buffed_Damaged += 20;
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Attack += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
 
@@ -612,8 +624,10 @@ public class SkillManager : MonoBehaviour
                 foreach (var team in BattleManager.Instance.bM_Character_Team1)
                 {
                     Character TCS = team.GetComponent<Character>();
-                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Attack += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
         }
@@ -637,7 +651,10 @@ public class SkillManager : MonoBehaviour
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
                         TCS.character_Buffed_Damaged += 20;
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Attack += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
 
@@ -647,7 +664,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Attack += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
         }
@@ -1294,6 +1314,7 @@ public class SkillManager : MonoBehaviour
                 CCS.character_Buffed_Attack += 30;
                 CCS.character_Counter_Probability += 20;
 
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
                 skillmessage.SetActive(true);
                 skillmessage.GetComponent<SkillMessage>().Message(character, "책임감");
                 return true;
@@ -1493,6 +1514,7 @@ public class SkillManager : MonoBehaviour
                 if (TCS.character_Num_Of_Grid == num1 || TCS.character_Num_Of_Grid == num2)
                 {
                     TCS.character_Buffed_Attack += 20;
+                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
                 }
@@ -1507,6 +1529,7 @@ public class SkillManager : MonoBehaviour
                 if (TCS.character_Num_Of_Grid == num1 || TCS.character_Num_Of_Grid == num2)
                 {
                     TCS.character_Buffed_Attack += 20;
+                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
                 }
@@ -1523,6 +1546,7 @@ public class SkillManager : MonoBehaviour
                 if (TCS.character_Num_Of_Grid == num1)
                 {
                     TCS.character_Buffed_Attack += 20;
+                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
                 }
@@ -1537,6 +1561,7 @@ public class SkillManager : MonoBehaviour
                 if (TCS.character_Num_Of_Grid == num1)
                 {
                     TCS.character_Buffed_Attack += 20;
+                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(character, "격려");
                 }

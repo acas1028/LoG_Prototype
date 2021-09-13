@@ -119,8 +119,12 @@ public class SynergeManager : MonoBehaviour
         foreach (var character in team)
         {
             Character CCS = character.GetComponent<Character>();
-            if(CCS.character_Type == CharacterStats.CharacterType.Attacker)
+            if (CCS.character_Type == CharacterStats.CharacterType.Attacker)
+            {
                 CCS.character_Buffed_Attack += 20;
+
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
+            }
         }
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "°ø2");
@@ -132,6 +136,8 @@ public class SynergeManager : MonoBehaviour
             Character CCS = character.GetComponent<Character>();
 
             CCS.character_Buffed_Attack += 20;
+
+            GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
         }
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "°ø3");
@@ -145,7 +151,9 @@ public class SynergeManager : MonoBehaviour
             if(CCS.character_Type == CharacterStats.CharacterType.Balance)
             {
                 CCS.character_Buffed_Attack += 10;
-                CCS.character_Buffed_Damaged += 10;
+                CCS.character_Buffed_Damaged -= 10;
+
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
         }
         synergemessage.SetActive(true);
@@ -158,7 +166,9 @@ public class SynergeManager : MonoBehaviour
             Character CCS = character.GetComponent<Character>();
 
             CCS.character_Buffed_Attack += 10;
-            CCS.character_Buffed_Damaged += 10;
+            CCS.character_Buffed_Damaged -= 10;
+
+            GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
         }
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "¹ë3");

@@ -10,7 +10,8 @@ public class GridManager : MonoBehaviour
     public GameObject[] Team2Character_Position;
     public GameObject[] Team1_Map;
     public GameObject[] Team2_Map;
-
+    public GameObject BuffedEffect;
+    public GameObject NerfedEffect;
     private static GridManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static GridManager Instance
@@ -67,6 +68,20 @@ public class GridManager : MonoBehaviour
     {
         GameObject redGrid = Instantiate(Opponent_Red_Grid, Team2_Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
         Destroy(redGrid, BattleManager.Instance.bM_AttackTimegap);
+    }
+
+    public void Create_Buffed_Grid(int Team_Num,int Buffed_Grid_Num)
+    {
+        if (Team_Num == 1)
+        {
+            GameObject BuffedGrid = Instantiate(BuffedEffect, Team1_Map[Buffed_Grid_Num - 1].transform.position, Quaternion.identity);
+            Destroy(BuffedGrid, BattleManager.Instance.bM_AttackTimegap);
+        }
+        else
+        {
+            GameObject BuffedGrid = Instantiate(BuffedEffect, Team2_Map[Buffed_Grid_Num - 1].transform.position, Quaternion.identity);
+            Destroy(BuffedGrid, BattleManager.Instance.bM_AttackTimegap);
+        }
     }
 }
  
