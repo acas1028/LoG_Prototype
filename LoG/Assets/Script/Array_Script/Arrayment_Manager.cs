@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Arrayment_Manager : MonoBehaviourPun
 {
 
+    private int lastPageNum;
     private bool is_click_inventory = false;
     public bool Ready_Array = false; // 레디 버튼을 눌렀다.
     private bool my_turn = true; // 나의 턴이다.
@@ -38,6 +39,7 @@ public class Arrayment_Manager : MonoBehaviourPun
 
     void Start()
     {
+        lastPageNum = Deck_Data_Send.instance.lastPageNum;
         Phase = arrRoomManager.GetArrayPhase();
         StartCoroutine("Get_Inventory_ID");
 
@@ -154,7 +156,7 @@ public class Arrayment_Manager : MonoBehaviourPun
     {
         Grids[gridNum - 1].tag = "Character";
         Character gridCharacter = Grids[gridNum - 1].GetComponentInChildren<Character>();
-        gridCharacter.Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[0, inventoryNum - 1]);
+        gridCharacter.Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventoryNum - 1]);
         gridCharacter.character_Num_Of_Grid = gridNum;
         gridCharacter.Debuging_Character();
         gridCharacter.InitializeCharacterSprite();
@@ -655,7 +657,9 @@ public class Arrayment_Manager : MonoBehaviourPun
 
         for (int i = 0; i < count; i++)
         {
-            ArrayOnGrid(invenNums[timeoutCount++], gridNums[timeoutCount++]);
+            if (timeoutCount >= 5)
+                Debug.LogError("timeoutCount가 5 이상이 되었습니다. TimeOut 함수의 현재 단계가 5회를 초과하여 실행되었으므로 확인이 필요합니다.");
+            ArrayOnGrid(invenNums[timeoutCount], gridNums[timeoutCount++]);
         }
 
         Ready_Array = true;
@@ -714,7 +718,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         for (int i = 0; i < Inventory.Length; i++)
         {
             Inventory_ID cs = Inventory[i].GetComponent<Inventory_ID>();
-            Character sv = Deck_Data_Send.instance.Save_Data[0, i].GetComponent<Character>();
+            Character sv = Deck_Data_Send.instance.Save_Data[lastPageNum, i].GetComponent<Character>();
             cs.inventory_ID = sv.character_ID;
         }
     }

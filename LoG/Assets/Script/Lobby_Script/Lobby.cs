@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +19,11 @@ public class Lobby : MonoBehaviourPunCallbacks
 
 	[Header("Login Panel")]
 	[Tooltip("플레이어 이름 입력 패널")]
-	[SerializeField]
-	private GameObject LoginPanel;
+	public GameObject LoginPanel;
+
+	[Header("LoadingDeckDataPanel")]
+	[Tooltip("덱 데이터 불러오는 중 패널")]
+	public GameObject LoadingDeckDataPanel;
 
 	[Header("Selection Panel")]
 	[Tooltip("선택 패널")]
@@ -85,6 +89,8 @@ public class Lobby : MonoBehaviourPunCallbacks
 		{
 			Debug.LogError("<Color=Red><b>Missing</b></Color> 로딩 이펙트 찾을 수 없음.", this);
 		}
+
+		
 	}
 
     private void Start()
@@ -113,6 +119,11 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     public void Connect()
 	{
+		StartCoroutine(ConnectCoroutine());
+	}
+
+	IEnumerator ConnectCoroutine()
+    {
 		// start the loader animation for visual effect.
 		if (loadingEffect != null)
 		{
@@ -120,6 +131,9 @@ public class Lobby : MonoBehaviourPunCallbacks
 		}
 
 		PlayFabAuth.SetActive(true);
+
+		yield return new WaitUntil(DeckDataSync.Instance.IsGetAllData);
+		SetActivePanel("LoadingDeckDataPanel");
 
 		// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
 		if (PhotonNetwork.IsConnected)
@@ -162,6 +176,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public void SetActivePanel(string activePanel)
 	{
 		LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
+		LoadingDeckDataPanel.SetActive(activePanel.Equals(LoadingDeckDataPanel.name));
 		SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
 		CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
 		JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
@@ -329,7 +344,8 @@ public class Lobby : MonoBehaviourPunCallbacks
 		if (loadingEffect)
 			loadingEffect.StopLoaderAnimation();
 
-		SetActivePanel(SelectionPanel.name);
+		if (!PhotonNetwork.OfflineMode)
+			SetActivePanel(SelectionPanel.name);
 	}
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)

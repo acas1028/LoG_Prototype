@@ -10,10 +10,8 @@ public class Character_inventory_filled : MonoBehaviour
     public GameObject spritePrefab;
     public GameObject character_inventory; // Ä³¸¯ÅÍÄ­
 
-    IEnumerator Start()
+    private void Start()
     {
-        yield return new WaitUntil(DeckDataSync.Instance.IsGetAllData);
-
         characterImage = gameObject.GetComponent<Image>();
         int pageNum = Deck_Data_Send.instance.lastPageNum;
         int characterId = Deck_Data_Send.instance.Save_Data[pageNum, inventoryId - 1].GetComponent<Character>().character_ID;

@@ -9,10 +9,8 @@ public class Time_FlowScript : MonoBehaviour
 {
     public bool Time_Over;
 
-    [SerializeField]
     float time;
-
-    int max_Time;
+    public int max_Time;
 
     private void Start()
     {
@@ -40,7 +38,6 @@ public class Time_FlowScript : MonoBehaviour
 
     void Time_initialize() // 시간 초기화
     {
-        max_Time = 30;
         time = max_Time;
         Time_Over = false;
     }

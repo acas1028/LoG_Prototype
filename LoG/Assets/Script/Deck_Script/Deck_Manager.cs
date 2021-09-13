@@ -41,7 +41,7 @@ public class Deck_Manager : MonoBehaviour
     void Start()
     {
         Page_Num = Deck_Data_Send.instance.lastPageNum;
-        StartCoroutine("Load_Deck");
+        Load_Deck();
     }
 
     void Update()
@@ -190,12 +190,9 @@ public class Deck_Manager : MonoBehaviour
         }
     }
 
-    IEnumerator Load_Deck()
+    void Load_Deck()
     {
-        // IsGetAllData();에서 반환이 안되는건지 무기한 대기상태로 들어가게 됨. 우선 주석처리, 아직까지 부작용은 없음.
-        /*yield return new WaitUntil(() => { return deckDataSync.IsGetAllData(); });
-        Page_Num = Deck_Data_Send.instance.lastPageNum;*/
-        yield return new WaitForSeconds(0.2f);
+        // 로그인시, 혹은 오프라인 모드 입장시 덱 데이터를 불러온 후에 진행되도록 수정하였음
         for (int i = 0; i < 7; i++)
         {
             Character ch = Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>();
