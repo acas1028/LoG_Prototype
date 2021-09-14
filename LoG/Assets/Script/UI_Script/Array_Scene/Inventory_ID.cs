@@ -16,7 +16,7 @@ public class Inventory_ID : MonoBehaviour//,IPointerDownHandler,IBeginDragHandle
     }
     public void Setting_Character_Stat(GameObject Popup)
     {
-        //Popup.GetComponent<ShowingCharacterStats>().Character_Showing_Stats();
+        Popup.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(inventory_ID);
     }
     public void SetArrayed()
     {
