@@ -141,7 +141,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 }
             }
 
-            if (gridNum == 0)
+            if (gridNum <= 0 || gridNum > 9)
             {
                 Debug.LogError("Grid_Character 에 해당하는 Grids[i]의 개체 찾을 수 없음");
                 return;
@@ -659,7 +659,8 @@ public class Arrayment_Manager : MonoBehaviourPun
         {
             if (timeoutCount >= 5)
                 Debug.LogError("timeoutCount가 5 이상이 되었습니다. TimeOut 함수의 현재 단계가 5회를 초과하여 실행되었으므로 확인이 필요합니다.");
-            ArrayOnGrid(invenNums[timeoutCount], gridNums[timeoutCount++]);
+            ArrayOnGrid(invenNums[timeoutCount], gridNums[timeoutCount]);
+            timeoutCount++;
         }
 
         Ready_Array = true;
