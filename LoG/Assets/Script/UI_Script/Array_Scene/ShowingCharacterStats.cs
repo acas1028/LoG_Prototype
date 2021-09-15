@@ -15,16 +15,20 @@ public class ShowingCharacterStats : MonoBehaviour
 
     int lastPageNum;
 
-   
+
 
     private void Start()
     {
         lastPageNum = Deck_Data_Send.instance.lastPageNum;
+        prefabCharacter.GetComponent<Character>().Character_Reset();
     }
+    
 
-    public void Character_Showing_Stats(int num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
+
+    public void Character_Showing_Stats(int inventory_Num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
     {
-        prefabCharacter.GetComponent<Character>().Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventory.GetComponent<Inventory_ID>().inventory_ID - 1]);
+     
+        prefabCharacter.GetComponent<Character>().Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventory_Num-1]);
         attack_Damage.text = prefabCharacter.GetComponent<Character>().character_Attack_Damage.ToString();
         health_Point.text = prefabCharacter.GetComponent<Character>().character_HP.ToString();
 
