@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ShowingCharacterStats : MonoBehaviour
 {
     public GameObject prefabCharacter;// ÆË¾÷Ã¢¿¡ ¶ç¿ï Ä³¸¯ÅÍ
-    public GameObject inventory;
     public GameObject[] attack_Grid_Tile; //ÆË¾÷Ã¢¿¡ ¶ç¿ï °ø°Ý ¹üÀ§
     
   
@@ -44,9 +43,6 @@ public class ShowingCharacterStats : MonoBehaviour
             }
         }
 
-
-      
-        
     }
 
     

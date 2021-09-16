@@ -115,6 +115,17 @@ public class Arrayment_Manager : MonoBehaviourPun
             {
                 if (hit.transform.gameObject == Grids[i])//자신의 그리드에 있는 캐릭터를 클릭한 경우.
                 {
+                    //캐릭터 클릭시 팝업 생성 및 삭제
+                    if(hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.activeSelf==false)
+                    {
+                        hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.SetActive(true);
+                        hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).transform.GetChild(0).GetComponent<ShowingCharacterStat_In_Arrayment>().ShowingStatInarray();
+                    }
+                    else
+                    {
+                        hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.SetActive(false);
+                    }
+
                     if (my_turn == true)//자신의 턴이면 취소가 가능하다
                     {
                         Cancle_Character = hit.transform.gameObject;
