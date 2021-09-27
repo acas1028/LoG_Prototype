@@ -27,7 +27,7 @@ public class Deck_Data_Send : MonoBehaviour
         {
             for (int j = 0; j < 7; j++)
             {
-                Save_Data[i, j] = Instantiate(characterPrefab, transform);
+                Save_Data[i, j] = Instantiate(characterPrefab, transform.Find("Page " + (i + 1)));
             }
         }
     }

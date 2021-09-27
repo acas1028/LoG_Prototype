@@ -171,18 +171,22 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     private int GetRoundWinCount()
     {
-        object roundWinCount;
+        object o_roundWinCount;
 
-        roundWinCount = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out roundWinCount);
-        return (int)roundWinCount;
+        o_roundWinCount = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
+
+        int roundWinCount = (int)o_roundWinCount;
+        return roundWinCount;
     }
 
     private int GetRoundCount()
     {
-        object roundCount;
+        object o_roundCount;
 
-        roundCount = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out roundCount);
-        return (int)roundCount;
+        o_roundCount = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
+        
+        int roundCount = (int)o_roundCount;
+        return roundCount;
     }
 
     #region 포톤 콜백 함수
