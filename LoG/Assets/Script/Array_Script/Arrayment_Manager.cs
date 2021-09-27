@@ -86,6 +86,8 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
         ShuffleList<int>(invenNums);
         ShuffleList<int>(gridNums);
+
+        arrRoomManager.StartOnLoad();
     }
 
     void Update()

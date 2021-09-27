@@ -35,7 +35,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     Player secondPlayer;
     bool isPreemptivePlayerSet;
 
-    private void Start()
+    public void StartOnLoad()
     {
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         isEnemyJoinedText.text = "상대의 입장을 기다리는 중입니다...";
