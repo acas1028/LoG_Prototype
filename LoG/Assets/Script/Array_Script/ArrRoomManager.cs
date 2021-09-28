@@ -23,6 +23,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private int arrayPhase;
 
+    public static ArrRoomManager instance;
+
     public Text preemptiveCheck;
     public Text playerName;
     public Text roomStatusText;
@@ -35,8 +37,15 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     Player secondPlayer;
     bool isPreemptivePlayerSet;
 
-    public void StartOnLoad()
+    private void Start()
     {
+        bool result = false;
+
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         isEnemyJoinedText.text = "상대의 입장을 기다리는 중입니다...";
         preemptiveCheck.text = " ";
@@ -61,6 +70,46 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             roomStatusText.text = "로그인이 필요합니다";
         else
             roomStatusText.text = " ";
+
+        result = InitCustomProperties();
+        if (!result)
+        {
+            Debug.LogError("CustomProperties 초기화 실패");
+        }
+    }
+
+    private bool InitCustomProperties()
+    {
+        bool result = false;
+
+        Hashtable table = new Hashtable() { { "IsPreemptive", true } };
+        result = PhotonNetwork.SetPlayerCustomProperties(table);
+        if (!result)
+        {
+            Debug.LogError("IsPreemptive 동기화 실패");
+            return false;
+        }
+
+        table = new Hashtable() { { "RoundWinCount", 0 } };
+        result = PhotonNetwork.SetPlayerCustomProperties(table);
+        if (!result)
+        {
+            Debug.LogError("RoundWinCount 동기화 실패");
+            return false;
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            table = new Hashtable() { { "RoundCount", 0 } };
+            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+            if (!result)
+            {
+                Debug.LogError("RoundCount 동기화 실패");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     #region 외부에서 호출되는 public 함수
@@ -92,7 +141,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         bool isPreemptive = false;
 
         if (GetRoundCount() == 1)
-            isPreemptive = !isPreemptive;
+            isPreemptive = !GetIsPreemptive();
         else
             isPreemptive = Random.Range(0, 2) == 0 ? false : true;
 
@@ -169,6 +218,16 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         joinedPlayerList.text = "룸에 있는 플레이어" + playerList;
     }
 
+    private bool GetIsPreemptive()
+    {
+        object o_isPreemptive;
+
+        o_isPreemptive = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_isPreemptive);
+
+        bool isPreemptive = (bool)o_isPreemptive;
+        return isPreemptive;
+    }
+
     private int GetRoundWinCount()
     {
         object o_roundWinCount;
@@ -181,12 +240,13 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     private int GetRoundCount()
     {
-        object o_roundCount;
+        //object o_roundCount;
 
-        o_roundCount = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
-        
-        int roundCount = (int)o_roundCount;
-        return roundCount;
+        //o_roundCount = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
+
+        //int roundCount = (int)o_roundCount;
+        //return roundCount;
+        return 0;
     }
 
     #region 포톤 콜백 함수
@@ -212,8 +272,11 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
-        // 선, 후공 결정에 관한 데이터이면서 '나'의 선, 후공 데이터인 경우에만 아래 과정을 거친다.
-        if (changedProps.ContainsKey("IsPreemptive") && targetPlayer == PhotonNetwork.LocalPlayer && !isPreemptivePlayerSet)
+        // 선, 후공 결정에 관한 데이터이면서 '나'의 선, 후공 데이터인 경우에만 아래 과정을 거친다. 또한 두 플레이어가 방에 입장 후 처음 한 번만 이 과정을 거친다.
+        if (changedProps.ContainsKey("IsPreemptive")
+            && targetPlayer == PhotonNetwork.LocalPlayer
+            && IsAllPlayersJoined()
+            && !isPreemptivePlayerSet)
         {
             Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 

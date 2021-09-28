@@ -64,15 +64,6 @@ public class Arrayment_Manager : MonoBehaviourPun
             }
         }
 
-        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", 0 } };
-        PhotonNetwork.SetPlayerCustomProperties(table);
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", 0 } };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-        }
-
         invenNums = new List<int>();
         gridNums = new List<int>();
         timeoutCount = 0;
@@ -86,8 +77,6 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
         ShuffleList<int>(invenNums);
         ShuffleList<int>(gridNums);
-
-        arrRoomManager.StartOnLoad();
     }
 
     void Update()
