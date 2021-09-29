@@ -5,10 +5,16 @@ using UnityEngine.UI;
 
 public class Deck_Page : MonoBehaviour
 {
+    public GameObject[] characterData;
     public DeckDataSync deckDataSync;
     public int P_num;
     private Image Button_image;
 
+
+    private void Start()
+    {
+        characterData = GameObject.FindGameObjectsWithTag("DeckCharacterData");
+    }
     public void Click_Deck()
     {
         Deck_Manager DM = Deck_Manager.instance;
@@ -28,6 +34,11 @@ public class Deck_Page : MonoBehaviour
             {
                 DM.Page_Slot[i].GetComponent<Image>().color = new Color(255, 255, 255);
             }
+        }
+
+        for (int i = 0; i<characterData.Length;i++)
+        {
+            characterData[i].GetComponent<ShowSprite_SaveDeckData>().Show_Type_Sprite();
         }
     }
 }

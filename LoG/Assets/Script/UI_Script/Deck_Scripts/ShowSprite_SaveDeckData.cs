@@ -11,7 +11,9 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
     public GameObject Character_Sprite;
     public GameObject SetCharacter;
     public Character Save_Character;
+    public GameObject Page;
     public int deck_Character_Count;
+    public int Page_Num;
 
     bool IsDeckSaveexist;
     
@@ -19,6 +21,8 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
     void Start()
     {
         DeckSave = GameObject.FindGameObjectWithTag("Deck_Save_Character");
+        Page_Num = 1; // 처음은 1로 고정
+        Page = DeckSave.transform.GetChild(Page_Num - 1).gameObject;
         IsDeckSaveexist = false;
 
         isDeckSaveExist();
@@ -31,7 +35,7 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
     private void Update()
     {
-        Change_property_image_in_Wrong();   
+        /*Change_property_image_in_Wrong()*/;   
     }
 
     void isDeckSaveExist()
@@ -47,10 +51,10 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         if (IsDeckSaveexist == false)
             return;
 
-        Save_Character = DeckSave.transform.GetChild(deck_Character_Count).gameObject.GetComponent<Character>();
+        Save_Character = Page.transform.GetChild(deck_Character_Count).gameObject.GetComponent<Character>();
     }
 
-    void Show_Type_Sprite()
+    public void Show_Type_Sprite()
     {
         if (IsDeckSaveexist == false)
             return;
@@ -83,13 +87,15 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
     }
 
-    void Change_property_image_in_Wrong()
-    {
-        if (Save_Character.character_Skill.ToString() == PropertySlot.GetComponent<Property_Slot>().property_Name)
-            return;
+   
 
-        PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
-    }
+    //void Change_property_image_in_Wrong()
+    //{
+    //    if (Save_Character.character_Skill.ToString() == PropertySlot.GetComponent<Property_Slot>().property_Name)
+    //        return;
+
+    //    PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
+    //}
 
     void Show_Character_Sprite()
     {
