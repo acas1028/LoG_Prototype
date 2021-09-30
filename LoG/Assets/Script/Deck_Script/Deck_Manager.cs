@@ -42,6 +42,7 @@ public class Deck_Manager : MonoBehaviour
     {
         Page_Num = Deck_Data_Send.instance.lastPageNum;
         Load_Deck();
+        Invoke("StartDeckClick", 0.05f); //불러올때 잘못된 특성과 스킬을 불러오는 경우가 있어 덱 페이지 1를 클릭한 체 시작하도록 함
     }
 
     void Update()
@@ -209,6 +210,7 @@ public class Deck_Manager : MonoBehaviour
             }
         }
         Load_Skill();
+        
     }
 
     IEnumerator Switch_Page()
@@ -363,5 +365,10 @@ public class Deck_Manager : MonoBehaviour
         }
         cs.Character_Setting(ID);
         Check_Stat();
+    }
+
+    void StartDeckClick()
+    {
+        Page_Slot[0].GetComponent<Button>().onClick.Invoke();
     }
 }
