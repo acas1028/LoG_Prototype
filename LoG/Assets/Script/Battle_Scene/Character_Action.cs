@@ -103,8 +103,22 @@ public class Character_Action : Character, IPunObservable
         enemyTransform = null;
 
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+        
 
-        gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+        if(character_Num_Of_Grid == 1 || character_Num_Of_Grid == 2 || character_Num_Of_Grid == 3)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters_Line1";
+        }
+
+        if (character_Num_Of_Grid == 4 || character_Num_Of_Grid == 5 || character_Num_Of_Grid == 6)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters_Line2";
+        }
+
+        if (character_Num_Of_Grid == 7 || character_Num_Of_Grid == 8 || character_Num_Of_Grid == 9)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters_Line3";
+        }
     }
 
     public IEnumerator SkillAttack()
