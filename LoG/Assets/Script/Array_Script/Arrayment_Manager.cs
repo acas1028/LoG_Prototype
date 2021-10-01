@@ -18,6 +18,7 @@ public class Arrayment_Manager : MonoBehaviourPun
     private int Time_Out_Inventory;
     private int cancle_num;
     private int click_id;
+    private int arrayedThisTurn;
 
     private List<int> invenNums;
     private List<int> gridNums;
@@ -63,15 +64,16 @@ public class Arrayment_Manager : MonoBehaviourPun
                 c.InitializeCharacterSprite();
             }
         }
+        arrayedThisTurn = 0;
 
         invenNums = new List<int>();
         gridNums = new List<int>();
         timeoutCount = 0;
-        for (int i = 0; i < 7; i++)
+        for (int i = 1; i < 8; i++)
         {
             invenNums.Add(i);
         }
-        for (int i = 0; i < 9; i++)
+        for (int i = 1; i < 10; i++)
         {
             gridNums.Add(i);
         }
@@ -177,6 +179,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
         Inventory[inventoryNum - 1].GetComponent<Inventory_ID>().SetArrayed();
         Sync_Character();
+        arrayedThisTurn++;
     }
 
     public void Array_Order()
@@ -191,7 +194,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.FIRST1:
                     my_turn = true;
                     Pick = true;
-                    TimeOut(1);
+                    TimeOut(1 - arrayedThisTurn);
                     if (cs.team1[0].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -205,6 +208,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Ready_Array = false;
                             On_Raycast = false;
                             arrData_Sync.is_datasync = false;
+                            arrayedThisTurn = 0;
                         }
                     }
                     break;
@@ -255,7 +259,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.FIRST23:
                     my_turn = true;
                     Pick = true;
-                    TimeOut(2);
+                    TimeOut(2 - arrayedThisTurn);
                     if (cs.team1[1].GetComponent<Character>().character_ID != 0 && cs.team1[2].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -271,6 +275,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Ready_Array = false;
                             On_Raycast = false;
                             arrData_Sync.is_datasync = false;
+                            arrayedThisTurn = 0;
                         }
                     }
                     break;
@@ -318,7 +323,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.FIRST45:
                     my_turn = true;
                     Pick = true;
-                    TimeOut(2);
+                    TimeOut(2 - arrayedThisTurn);
                     if (cs.team1[3].GetComponent<Character>().character_ID != 0 && cs.team1[4].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -334,6 +339,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Ready_Array = false;
                             On_Raycast = false;
                             arrData_Sync.is_datasync = false;
+                            arrayedThisTurn = 0;
                         }
                     }
                     break;
@@ -398,7 +404,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.SECOND12:
                     my_turn = true;
                     Pick = true;
-                    TimeOut(2);
+                    TimeOut(2 - arrayedThisTurn);
                     if (cs.team1[0].GetComponent<Character>().character_ID != 0 && cs.team1[1].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -414,6 +420,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Ready_Array = false;
                             On_Raycast = false;
                             arrData_Sync.is_datasync = false;
+                            arrayedThisTurn = 0;
                         }
                     }
                     break;
@@ -461,7 +468,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.SECOND34:
                     my_turn = true;
                     Pick = true;
-                    TimeOut(2);
+                    TimeOut(2 - arrayedThisTurn);
                     if (cs.team1[2].GetComponent<Character>().character_ID != 0 && cs.team1[3].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -477,6 +484,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Ready_Array = false;
                             On_Raycast = false;
                             arrData_Sync.is_datasync = false;
+                            arrayedThisTurn = 0;
                         }
                     }
                     break;
@@ -524,7 +532,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 case (int)ArrayPhase.SECOND5:
                     my_turn = true;
                     Pick = true;
-                    TimeOut(1);
+                    TimeOut(1 - arrayedThisTurn);
                     if (cs.team1[4].GetComponent<Character>().character_ID != 0)
                     {
                         On_Raycast = true;
@@ -538,6 +546,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Ready_Array = false;
                             On_Raycast = false;
                             arrData_Sync.is_datasync = false;
+                            arrayedThisTurn = 0;
                         }
                     }
                     break;
@@ -564,6 +573,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         cs.Character_Reset();
         cs.Debuging_Character();
         cs.InitializeCharacterSprite();
+        arrayedThisTurn--;
     }
 
     [PunRPC]
