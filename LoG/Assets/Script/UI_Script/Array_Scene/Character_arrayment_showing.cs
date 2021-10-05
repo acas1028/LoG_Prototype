@@ -82,7 +82,9 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
                 {
                     if (Character_List[0].GetComponent<Character>().character_Attack_Range[i] == true)
                     {
-                        Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                        //Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                        Opponent_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(true);
+                        Opponent_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
                     }
                 }
 
@@ -94,14 +96,18 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
                 {
                     if (Character_List[1].GetComponent<Character>().character_Attack_Range[i] == true)
                     {
-                        if (Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == red_Sprite)
+                        if (Opponent_Grid_Color[i].transform.GetChild(0).gameObject.activeSelf==true)
                         {
-                            Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = blue_Sprite;
+                            //Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = blue_Sprite;
+                            Opponent_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(false);
+                            Opponent_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(true);
                         }
 
                         else
                         {
-                            Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                            Opponent_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(true);
+                            Opponent_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
+                            //Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
                         }
                     }
 
@@ -120,7 +126,9 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
                 {
                     if (changes_Attack_Range[i] == true)
                     {
-                        Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                        //Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                        Mine_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(true);
+                        Mine_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
                     }
                 }
                 
@@ -132,13 +140,17 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
                 {
                     if (changes_Attack_Range[i] == true)
                     {
-                        if (Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == red_Sprite)
+                        if (Mine_Grid_Color[i].transform.GetChild(0).gameObject.activeSelf==true)
                         {
-                            Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = blue_Sprite;
+                            //Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = blue_Sprite;
+                            Mine_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(false);
+                            Mine_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(true);
                         }
                         else
                         {
-                            Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                            //Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                            Mine_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(true);
+                            Mine_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
                         }
                     }
                 }
@@ -163,13 +175,16 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
             {
                 if (temp[i]==true)
                 {
-                    if (Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == red_Sprite)
+                    if (Opponent_Grid_Color[i].transform.GetChild(0).gameObject.activeSelf==true)
                     {
-                        Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+                        //Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+                        Opponent_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(false);
+                        Opponent_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
                     }
-                    else if(Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite==blue_Sprite)
+                    else if(Opponent_Grid_Color[i].transform.GetChild(1).gameObject==true)
                     {
-                        Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                        Opponent_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(true);
+                        Opponent_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
                     }
 
                 }
@@ -189,13 +204,16 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
             {
                 if (changes_Attack_Range[i] == true)
                 {
-                    if (Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == red_Sprite)
+                    if (Mine_Grid_Color[i].transform.GetChild(0).gameObject.activeSelf==true)
                     {
-                        Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+                        //Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+                        Mine_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(false);
+                        Mine_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
                     }
-                    else if (Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite == blue_Sprite)
+                    else if (Mine_Grid_Color[i].transform.GetChild(1).gameObject.activeSelf==true)
                     {
-                        Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = red_Sprite;
+                        Mine_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(true);
+                        Mine_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
                     }
 
                 }
@@ -290,11 +308,18 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
     {
         for(int i=0; i<Opponent_Grid_Color.Length;i++)
         {
-            Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+            //Opponent_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+            if (Opponent_Grid_Color[i].transform.childCount == 2)
+            {
+                Opponent_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(false);
+                Opponent_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
+            }
         }
         for (int i = 0; i < Mine_Grid_Color.Length;i++)
         {
-            Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+            //Mine_Grid_Color[i].GetComponent<SpriteRenderer>().sprite = null;
+            Mine_Grid_Color[i].transform.GetChild(0).gameObject.SetActive(false);
+            Mine_Grid_Color[i].transform.GetChild(1).gameObject.SetActive(false);
         }
         Character_List.Clear();
 
