@@ -5,6 +5,8 @@ using UnityEngine;
 public class SynergeManager : MonoBehaviour
 {
     public GameObject synergemessage;
+    public GameObject synergeEffect_Team1;
+    public GameObject synergeEffect_Team2;
 
     private static SynergeManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -53,6 +55,7 @@ public class SynergeManager : MonoBehaviour
         int attack = 0;
         int defense = 0;
         int balance = 0;
+        int lineNumber = 0;
 
         foreach(var character in team)
         {
@@ -65,44 +68,51 @@ public class SynergeManager : MonoBehaviour
             if (CCS.character_Type == CharacterStats.CharacterType.Balance)
                 balance++;
         }
-        if (attack >= 1 && balance >= 1 && defense >= 1)
-        {
-            A1D1B1(team);
-            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
-        }
         if (attack == 2)
         {
-            A2(team);
+            A2(team,lineNumber);
+            lineNumber++;
             yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
         }
         if (attack >= 3)
         {
-            A3(team);
+            A3(team, lineNumber);
+            lineNumber++;
             yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
         }
         if (defense == 2)
         {
-            D2(team);
+            D2(team, lineNumber);
+            lineNumber++;
             yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
         }
         if (defense >= 3)
         {
-            D3(team);
+            D3(team, lineNumber);
+            lineNumber++;
             yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
         }
         if (balance == 2)
         {
-            B2(team);
+            B2(team, lineNumber);
+            lineNumber++;
             yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
         }
         if (balance >= 3)
         {
-            B3(team);
+            B3(team, lineNumber);
+            lineNumber++;
+            yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
+        }
+        if (attack >= 1 && balance >= 1 && defense >= 1)
+        {
+            A1D1B1(team, lineNumber);
+            lineNumber++;
             yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
         }
     }
 
-    void A1D1B1(List<GameObject> team) // 공1방1밸1 시너지
+    void A1D1B1(List<GameObject> team,int lineNumber) // 공1방1밸1 시너지
     {
         foreach(var character in team)
         {
@@ -111,10 +121,14 @@ public class SynergeManager : MonoBehaviour
             CCS.character_Counter_Probability += 10;
         }
 
+        if (team[0].GetComponent<Character>().character_Team_Number == 1)
+            synergeEffect_Team1.GetComponent<SynergeEffect>().Insert(1, 2, 3, lineNumber);
+        else
+            synergeEffect_Team2.GetComponent<SynergeEffect>().Insert(1, 2, 3, lineNumber);
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "공1방1밸1");
     }
-    void A2(List<GameObject> team) // 공2 시너지
+    void A2(List<GameObject> team, int lineNumber) // 공2 시너지
     {
         foreach (var character in team)
         {
@@ -126,10 +140,14 @@ public class SynergeManager : MonoBehaviour
                 GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
         }
+        if (team[0].GetComponent<Character>().character_Team_Number == 1)
+            synergeEffect_Team1.GetComponent<SynergeEffect>().Insert(1, 1, 0, lineNumber);
+        else
+            synergeEffect_Team2.GetComponent<SynergeEffect>().Insert(1, 1, 0, lineNumber);
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "공2");
     }
-    void A3(List<GameObject> team) // 공3 시너지
+    void A3(List<GameObject> team, int lineNumber) // 공3 시너지
     {
         foreach (var character in team)
         {
@@ -139,10 +157,14 @@ public class SynergeManager : MonoBehaviour
 
             GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
         }
+        if (team[0].GetComponent<Character>().character_Team_Number == 1)
+            synergeEffect_Team1.GetComponent<SynergeEffect>().Insert(1, 1, 1, lineNumber);
+        else
+            synergeEffect_Team2.GetComponent<SynergeEffect>().Insert(1, 1, 1, lineNumber);
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "공3");
     }
-    void B2(List<GameObject> team) // 밸2 시너지
+    void B2(List<GameObject> team, int lineNumber) // 밸2 시너지
     {
         foreach (var character in team)
         {
@@ -156,10 +178,14 @@ public class SynergeManager : MonoBehaviour
                 GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
         }
+        if (team[0].GetComponent<Character>().character_Team_Number == 1)
+            synergeEffect_Team1.GetComponent<SynergeEffect>().Insert(3, 3, 0, lineNumber);
+        else
+            synergeEffect_Team2.GetComponent<SynergeEffect>().Insert(3, 3, 0, lineNumber);
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "밸2");
     }
-    void B3(List<GameObject> team) // 밸3 시너지
+    void B3(List<GameObject> team, int lineNumber) // 밸3 시너지
     {
         foreach (var character in team)
         {
@@ -170,11 +196,15 @@ public class SynergeManager : MonoBehaviour
 
             GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
         }
+        if (team[0].GetComponent<Character>().character_Team_Number == 1)
+            synergeEffect_Team1.GetComponent<SynergeEffect>().Insert(3, 3, 3, lineNumber);
+        else
+            synergeEffect_Team2.GetComponent<SynergeEffect>().Insert(3, 3, 3, lineNumber);
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "밸3");
     }
 
-    void D2(List<GameObject> team) // 방2 시너지
+    void D2(List<GameObject> team, int lineNumber) // 방2 시너지
     {
         foreach(var character in team)
         {
@@ -185,11 +215,15 @@ public class SynergeManager : MonoBehaviour
                 CCS.character_Buffed_Damaged -= 20;
             }
         }
+        if (team[0].GetComponent<Character>().character_Team_Number == 1)
+            synergeEffect_Team1.GetComponent<SynergeEffect>().Insert(2, 2, 0, lineNumber);
+        else
+            synergeEffect_Team2.GetComponent<SynergeEffect>().Insert(2, 2, 0, lineNumber);
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "방2");
     }
 
-    void D3(List<GameObject> team) // 방3 시너지
+    void D3(List<GameObject> team, int lineNumber) // 방3 시너지
     {
         foreach (var character in team)
         {
@@ -197,6 +231,10 @@ public class SynergeManager : MonoBehaviour
 
             CCS.character_Buffed_Damaged -= 20;
         }
+        if (team[0].GetComponent<Character>().character_Team_Number == 1)
+            synergeEffect_Team1.GetComponent<SynergeEffect>().Insert(2, 2, 2, lineNumber);
+        else
+            synergeEffect_Team2.GetComponent<SynergeEffect>().Insert(2, 2, 2, lineNumber);
         synergemessage.SetActive(true);
         synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "방3");
     }

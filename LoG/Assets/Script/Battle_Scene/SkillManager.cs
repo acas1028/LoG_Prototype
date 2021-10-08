@@ -624,6 +624,7 @@ public class SkillManager : MonoBehaviour
                 foreach (var team in BattleManager.Instance.bM_Character_Team1)
                 {
                     Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
                     {
                         TCS.character_Buffed_Attack += 20;
                         GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
