@@ -15,14 +15,12 @@ public class Arrayment_Manager : MonoBehaviourPun
     private bool Pick = true;// true라면 배치. false라면 정보를 읽을수만있다. 추가 배치를 막는다.
     private bool On_Raycast = false;//배치를 다했다.
     private int Phase = (int)ArrayPhase.STANDBY;
-    private int Time_Out_Inventory;
     private int cancle_num;
     private int click_id;
     private int arrayedThisTurn;
 
     private List<int> invenNums;
     private List<int> gridNums;
-    private int timeoutCount;
 
     public GameObject Array_Time;
     public GameObject[] Grids;
@@ -68,7 +66,7 @@ public class Arrayment_Manager : MonoBehaviourPun
 
         invenNums = new List<int>();
         gridNums = new List<int>();
-        timeoutCount = 0;
+
         for (int i = 1; i < 8; i++)
         {
             invenNums.Add(i);
@@ -229,7 +227,6 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Debug.Log(cs.team2[0].GetComponent<Character>().character_ID);
                             Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
                             Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
                             Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
@@ -296,9 +293,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         if (cs.team2[3].GetComponent<Character> ().character_ID != 0)
@@ -312,9 +309,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -360,9 +357,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -392,10 +389,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Debug.Log(cs.team2[0].GetComponent<Character>().character_ID);
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -441,9 +437,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         if (cs.team2[2].GetComponent<Character>().character_ID != 0)
@@ -457,9 +453,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         arrData_Sync.is_datasync = false;
@@ -505,9 +501,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         }
                         if (cs.team2[4].GetComponent<Character>().character_ID != 0)
@@ -521,9 +517,9 @@ public class Arrayment_Manager : MonoBehaviourPun
                         }
                         else
                         {
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponent<Character>().InitializeCharacterSprite();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
                             Enemy_Grids[cancle_num].tag = "Null_Character";
                         } 
                         arrData_Sync.is_datasync = false;
@@ -607,46 +603,6 @@ public class Arrayment_Manager : MonoBehaviourPun
         arrData_Sync.DataSync(Return_num);
     }
 
-    IEnumerator Time_OUT()
-    {
-        int inventroy_Leng = 0;
-        Arrayed_Data cs = Arrayed_Data.instance;
-        while (inventroy_Leng < Inventory.Length)
-        {
-            if (Inventory[inventroy_Leng].GetComponent<Inventory_ID>().is_Arrayed == false)
-            {
-                Time_Out_Inventory = inventroy_Leng;
-            }
-        }
-
-        inventroy_Leng++;
-
-        Inventory[Time_Out_Inventory].GetComponent<Inventory_ID>().is_Arrayed = true;
-        int random = Random.Range(0, 9);
-        while (Grids[random].tag == "Character")
-        {
-            random = Random.Range(0, 9);
-        }
-
-        //Grids[random].GetComponent<Character>().Character_Setting();
-        Grids[random].GetComponentInChildren<Character>().character_Num_Of_Grid = random + 1;
-        Grids[random].GetComponentInChildren<Character>().Debuging_Character();
-        Grids[random].GetComponentInChildren<Character>().InitializeCharacterSprite();
-
-        int j = 0;
-        while (j < 5)
-        {
-            if (cs.team1[j].GetComponent<Character>().character_ID == 0)
-            {
-                cs.team1[j].GetComponent<Character>().Copy_Character_Stat(Grids[random]);
-                cs.team1[j].GetComponent<Character>().Debuging_Character();
-                arrData_Sync.DataSync(j);
-                break;
-            }
-        }
-        yield return null;
-    }
-
     private List<T> ShuffleList<T>(List<T> list)
     {
         int random1, random2;
@@ -672,10 +628,10 @@ public class Arrayment_Manager : MonoBehaviourPun
 
         for (int i = 0; i < count; i++)
         {
-            if (timeoutCount >= 5)
-                Debug.LogError("timeoutCount가 5 이상이 되었습니다. TimeOut 함수의 현재 단계가 5회를 초과하여 실행되었으므로 확인이 필요합니다.");
-            ArrayOnGrid(invenNums[timeoutCount], gridNums[timeoutCount]);
-            timeoutCount++;
+            ArrayOnGrid(invenNums[0], gridNums[0]);
+            // 이미 배치된 인덱스 삭제 -> 같은 캐릭터가 두번 배치되는것을 방지하기 위함
+            invenNums.RemoveAt(0);
+            gridNums.RemoveAt(0);
         }
 
         Ready_Array = true;
