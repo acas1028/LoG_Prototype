@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class Arrayment_Manager : MonoBehaviourPun
 {
-
+    //변수들
+    #region
     private int lastPageNum;
     private bool is_click_inventory = false;
     public bool Ready_Array = false; // 레디 버튼을 눌렀다.
@@ -21,6 +22,7 @@ public class Arrayment_Manager : MonoBehaviourPun
 
     private List<int> invenNums;
     private List<int> gridNums;
+    private List<GameObject> SwitchCharacterTag = new List<GameObject>();
 
     public GameObject Array_Time;
     public GameObject[] Grids;
@@ -30,11 +32,14 @@ public class Arrayment_Manager : MonoBehaviourPun
     public GameObject Array_Cancle_Button;
     public GameObject PopUp_Manager;
     private GameObject Cancle_Character;
+    public GameObject move_object;
+    public GameObject arive_object;
 
     public Text timeText;
     public ArrRoomManager arrRoomManager;
     public ArrData_Sync arrData_Sync;
     public Character_arrayment_showing character_Arrayment_Showing;
+    #endregion//변수들 
 
     void Start()
     {
@@ -136,7 +141,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         {
             GameObject Grid_Character = hit.transform.gameObject;
             int gridNum = 0;
-
+            SwitchCharacterTag.Add(Grid_Character);
             for (int i = 0; i < 9; i++)
             {
                 if (Grid_Character == Grids[i])
@@ -552,6 +557,11 @@ public class Arrayment_Manager : MonoBehaviourPun
 
     public void Cancle_Array()
     {
+        for (int i = 0; i < SwitchCharacterTag.Count; i++)
+        {
+            if (SwitchCharacterTag[i] == Cancle_Character)
+                SwitchCharacterTag.RemoveAt(i);
+        }
         Character cs = Cancle_Character.GetComponentInChildren<Character>();
         Arrayed_Data T = Arrayed_Data.instance;
         for (int i = 0; i < 5; i++)
@@ -638,6 +648,31 @@ public class Arrayment_Manager : MonoBehaviourPun
         timeText.GetComponent<Time_FlowScript>().Time_Over = false;
     }
 
+    public void Move_Grid()
+    {
+        Cancle_Character = move_object;
+        int ID = move_object.GetComponentInChildren<Character>().character_ID;
+        for (int i = 0; i < Inventory.Length; i++)
+        {
+            if(ID==Inventory[i].GetComponent<Inventory_ID>().inventory_ID)
+            {
+                ID = Inventory[i].GetComponent<Inventory_ID>().inventory_Num;
+                break;
+            }
+        }
+        int GN=0;
+        for (int i = 0; i < Grids.Length; i++)
+        {
+            if (arive_object == Grids[i])
+            {
+                GN = i+1;
+                break;
+            }        
+        }
+        Debug.Log(ID);
+        ArrayOnGrid(ID, GN);
+        Cancle_Array();
+    }
     private void Order_Rearrange(int num)
     {
         Arrayed_Data cs = Arrayed_Data.instance;
@@ -683,6 +718,11 @@ public class Arrayment_Manager : MonoBehaviourPun
         {
             Ready_Array = false;
         }
+        for (int i = 0; i < SwitchCharacterTag.Count; i++)
+        {
+            SwitchCharacterTag[i].tag = "Player";
+        }
+        SwitchCharacterTag.Clear();
     }
     IEnumerator Get_Inventory_ID()
     {
