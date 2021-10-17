@@ -112,10 +112,15 @@ public class Arrayment_Manager : MonoBehaviourPun
             {
                 hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.SetActive(true);
                 hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).transform.GetChild(0).GetComponent<ShowingCharacterStat_In_Arrayment>().ShowingStatInarray();
+                Limit_Popup.Limit_Poup_instance.SetIsbutton(this.gameObject);
+                Limit_Popup.Limit_Poup_instance.SetPopup(hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject);
+                Limit_Popup.Limit_Poup_instance.limit_Popup_button.SetActive(true);
             }
             else
             {
                 hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.SetActive(false);
+                Limit_Popup.Limit_Poup_instance.SetIsbutton(null);
+                Limit_Popup.Limit_Poup_instance.limit_Popup_button.SetActive(false);
             }
 
             for (int i = 0; i < 9; i++)

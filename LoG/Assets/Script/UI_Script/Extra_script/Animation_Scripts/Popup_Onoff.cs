@@ -10,7 +10,7 @@ public class Popup_Onoff : MonoBehaviour
 
     private void Start()
     {
-        popup.SetActive(false);
+        popup.SetActive(false); //аж╫ц 
     }
     public void PopupOnOff()
     {

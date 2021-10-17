@@ -5,6 +5,7 @@ using UnityEngine;
 public class animation_On_off : MonoBehaviour
 {
     public Animator animator;
+    public GameObject temporary_button; //배치된 캐릭터 팝업 클릭시 등장하는 배치 취소 버튼이 거스렬서 제작, 추후에 삭제
 
     private void Awake()
     {
@@ -27,6 +28,11 @@ public class animation_On_off : MonoBehaviour
 
     public void AnimationOff()
     {
+        if(temporary_button!=null)
+        {
+            temporary_button.SetActive(false);
+        }
+
         animator.SetInteger("PopUp", 1);
         StartCoroutine(WaitForAnimation(animator));
     }
