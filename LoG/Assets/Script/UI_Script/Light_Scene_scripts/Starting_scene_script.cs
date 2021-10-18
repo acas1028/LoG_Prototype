@@ -21,4 +21,5 @@ public class Starting_scene_script : MonoBehaviour
     {
         SceneManager.LoadScene("LobbyScene");
     }
+
 }
