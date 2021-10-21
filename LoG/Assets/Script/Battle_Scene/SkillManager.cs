@@ -1241,6 +1241,9 @@ public class SkillManager : MonoBehaviour
     {
         Character DCS = deadCharacter.GetComponent<Character>();
 
+        if (DCS.character_Skill == CharacterSkill.Defense_Coward)
+            return false;
+
         if(DCS.character_Team_Number == 1)
         {
             foreach(var team in BattleManager.Instance.bM_Character_Team1)
