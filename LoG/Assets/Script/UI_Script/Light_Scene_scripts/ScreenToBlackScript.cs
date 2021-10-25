@@ -8,7 +8,10 @@ public class ScreenToBlackScript : MonoBehaviour
 
     public void SettingPopupOff()
     {
-        settingPopup.GetComponent<animation_On_off>().AnimationOff();
-        this.gameObject.SetActive(false);
+        if (this.gameObject.activeSelf == true)
+        {
+            settingPopup.GetComponent<animation_On_off>().AnimationOff();
+            this.gameObject.SetActive(false);
+        }
     }
 }
