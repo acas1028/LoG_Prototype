@@ -7,6 +7,7 @@ using Photon.Pun;
 // 캐릭터의 스탯을 기반으로 특정 행동을 취하는 클래스
 public class Character_Action : Character, IPunObservable
 {
+    public GameObject hudDamageText;
     private Vector3 startPosition;
     private bool isMoveToEnemy;
     private Transform enemyTransform;
@@ -140,6 +141,11 @@ public class Character_Action : Character, IPunObservable
             character_Divine_Shield = false;
             final_damage = 0;
         }
+
+        GameObject hudText = Instantiate(hudDamageText);
+        hudText.transform.SetParent(GameObject.Find("Canvas").transform);
+        hudText.transform.position = hudText.GetComponent<DamageUI>().worldToUISpace(GameObject.Find("Canvas").transform.GetComponent<Canvas>(), this.transform.position);
+        hudText.GetComponent<DamageUI>().damage = final_damage;
 
         is_hit_this_turn = true;
         character_HP -= final_damage;
