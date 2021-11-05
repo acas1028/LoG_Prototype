@@ -170,6 +170,11 @@ public class Lobby : MonoBehaviourPunCallbacks
 		PhotonNetwork.LoadLevel("Deck_Scene");
     }
 
+	public void InventoryScene()
+    {
+		PhotonNetwork.LoadLevel("Inventory_Scene");
+    }
+
 	/// <summary>
 	/// 하나만 활성화하고 나머지 패널들을 모두 비활성화하는 함수
 	/// </summary>
