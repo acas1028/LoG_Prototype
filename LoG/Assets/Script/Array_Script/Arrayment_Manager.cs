@@ -27,6 +27,7 @@ public class Arrayment_Manager : MonoBehaviourPun
     public GameObject Array_Time;
     public GameObject[] Grids;
     public GameObject[] Enemy_Grids;
+    public GameObject[] GridsHighLight;
     public GameObject[] Inventory;
     public GameObject PopUp_UI;
     public GameObject Array_Cancle_Button;
@@ -756,6 +757,15 @@ public class Arrayment_Manager : MonoBehaviourPun
             Character sv = Deck_Data_Send.instance.Save_Data[lastPageNum, i].GetComponent<Character>();
             cs.inventory_ID = sv.character_ID;
         }
+    }
+
+    public void GridsOnHighLight(int num)
+    {
+        GridsHighLight[num].SetActive(true);
+    }
+    public void GridsOffHighLight(int num)
+    {
+        GridsHighLight[num].SetActive(false);
     }
     private int Reverse_Array(int num)
     {
