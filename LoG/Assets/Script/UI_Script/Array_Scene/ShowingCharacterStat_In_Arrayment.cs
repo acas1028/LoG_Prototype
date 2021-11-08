@@ -10,6 +10,7 @@ public class ShowingCharacterStat_In_Arrayment : MonoBehaviour
     public GameObject[] attack_Grid_Tile; //팝업창에 띄울 공격 범위
     public Text attack_Damage;// 팝업창에 띄울 캐릭터 공격력
     public Text health_Point;// 팝업창에 띄울 캐릭터 hp
+    public Text property;
 
     public void ShowingStatInarray()
     {
@@ -18,6 +19,7 @@ public class ShowingCharacterStat_In_Arrayment : MonoBehaviour
 
         attack_Damage.text = Character.GetComponent<Character>().character_Attack_Damage.ToString();
         health_Point.text = Character.GetComponent<Character>().character_HP.ToString();
+        property.text = this.GetComponent<Property_Name_To_Korean>().PropertyNameTOKorean(Character.GetComponent<Character>().character_Skill.ToString());
 
         for (int i = 0; i < Character.GetComponent<Character>().character_Attack_Range.Length; i++)
         {

@@ -21,7 +21,7 @@ public class Showing_Hp : MonoBehaviour
     private void Start()
     {
         original_hp = 1;
-        hp_bar_y_position = -70;
+        hp_bar_y_position = 175;
         canvas = this.gameObject.transform.parent.gameObject;
         hp_bar = this.gameObject;
 

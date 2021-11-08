@@ -11,6 +11,7 @@ public class ShowingCharacterStats : MonoBehaviour
   
     public Text attack_Damage;// 팝업창에 띄울 캐릭터 공격력
     public Text health_Point;// 팝업창에 띄울 캐릭터 hp
+    public Text property_text; //팝업창에 띄울 캐릭터 특성
 
     int lastPageNum;
 
@@ -30,6 +31,7 @@ public class ShowingCharacterStats : MonoBehaviour
         prefabCharacter.GetComponent<Character>().Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventory_Num-1]);
         attack_Damage.text = prefabCharacter.GetComponent<Character>().character_Attack_Damage.ToString();
         health_Point.text = prefabCharacter.GetComponent<Character>().character_HP.ToString();
+        property_text.text = this.GetComponent<Property_Name_To_Korean>().PropertyNameTOKorean(prefabCharacter.GetComponent<Character>().character_Skill.ToString());
 
         for(int i=0; i<prefabCharacter.GetComponent<Character>().character_Attack_Range.Length; i++)
         {
@@ -44,6 +46,8 @@ public class ShowingCharacterStats : MonoBehaviour
         }
 
     }
+
+    
 
     
 }
