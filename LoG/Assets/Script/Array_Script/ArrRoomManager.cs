@@ -23,13 +23,11 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private int arrayPhase;
 
-    public static ArrRoomManager instance;
-
     public Text preemptiveCheck;
     public Text playerName;
-    public Text roundText;
+    public Text enemyPlayerName;
+    public Text winStateText;
     public Text roomStatusText;
-    public Text joinedPlayerList;
     public Text isEnemyJoinedText;
     public Text timeText;
     public Button readyButton;
@@ -43,10 +41,15 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     {
         get { return isPreemptive; }
     }
-    private int roundWinCount;
-    public int RoundWinCount
+    private int winCount;
+    public int WinCount
     {
-        get { return roundWinCount; }
+        get { return winCount; }
+    }
+    private int enemyWinCount;
+    public int EnemyWinCount
+    {
+        get { return enemyWinCount; }
     }
     private int roundCount;
     public int RoundCount
@@ -58,14 +61,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     {
         bool result = false;
 
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(gameObject);
-
-        roundWinCount = 0;
-        roundCount = 0;
-
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         isEnemyJoinedText.text = "상대의 입장을 기다리는 중입니다...";
         preemptiveCheck.text = " ";
@@ -76,7 +71,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         arrayPhase = (int)ArrayPhase.STANDBY;
 
-        RenewPlayerList();
+        RenewEnemyPlayer();
 
         if (PhotonNetwork.OfflineMode)
         {
@@ -99,7 +94,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             }
         }
 
-        roundText.text = "라운드: " + (roundCount + 1);
+        winStateText.text = winCount + " : " + enemyWinCount;
+
+        if (PhotonNetwork.IsMasterClient && IsAllPlayersJoined())
+            SetPreemptivePlayer();
     }
 
     private bool InitCustomProperties()
@@ -139,14 +137,26 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
         isPreemptive = (bool)o_isPreemptive;
 
-        object o_roundWinCount;
-        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
-        if (o_roundWinCount == null)
+        object o_winCount;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_winCount);
+        if (o_winCount == null)
         {
             Debug.LogWarning("RoundWinCount 값을 가져오는데 실패했습니다. 값을 새로 할당합니다.");
             return false;
         }
-        roundWinCount = (int)o_roundWinCount;
+        winCount = (int)o_winCount;
+
+        object o_enemyWinCount;
+        foreach (Player player in PhotonNetwork.PlayerListOthers)
+        {
+            player.CustomProperties.TryGetValue("RoundWinCount", out o_enemyWinCount);
+            if (o_enemyWinCount == null)
+            {
+                Debug.LogWarning("RoundWinCount 값을 가져오는데 실패했습니다. 값을 새로 할당합니다.");
+                return false;
+            }
+            enemyWinCount = (int)o_enemyWinCount;
+        }
 
         object o_roundCount;
         PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
@@ -191,7 +201,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         if (roundCount == 1)
             _isPreemptive = !isPreemptive;
         else
+        {
+            Debug.Log("현재 라운드가 2 이상이므로 무작위로 선공을 재결정합니다.");
             _isPreemptive = Random.Range(0, 2) == 0 ? false : true;
+        }
 
         Hashtable player_1_table = new Hashtable() { { "IsPreemptive", _isPreemptive } };
         Hashtable player_2_table = new Hashtable() { { "IsPreemptive", !_isPreemptive } };
@@ -254,16 +267,12 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         Debug.Log("<color=yellow>RPC Success with ArrayPhase: </color><color=lightblue>" + (ArrayPhase)arrayPhase + "</color>");
     }
 
-    private void RenewPlayerList()
+    private void RenewEnemyPlayer()
     {
-        string playerList = string.Empty;
+        enemyPlayerName.text = " ";
 
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            playerList += System.Environment.NewLine + player.NickName;
-        }
-
-        joinedPlayerList.text = "룸에 있는 플레이어" + playerList;
+        foreach (Player player in PhotonNetwork.PlayerListOthers)
+            enemyPlayerName.text = player.NickName;
     }
 
     #region 포톤 콜백 함수
@@ -271,7 +280,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     {
         roomStatusText.text = "상대 플레이어 " + other.NickName + " 입장";
         Debug.Log("<color=yellow>플레이어 " + other.NickName + " 입장</color>");
-        RenewPlayerList();
+        RenewEnemyPlayer();
 
         if (PhotonNetwork.IsMasterClient && IsAllPlayersJoined())
             SetPreemptivePlayer();
@@ -281,7 +290,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     {
         roomStatusText.text = "상대 플레이어 " + other.NickName + " 퇴장";
         Debug.Log("<color=yellow>플레이어 " + other.NickName + " 퇴장</color>");
-        RenewPlayerList();
+        RenewEnemyPlayer();
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
@@ -301,21 +310,18 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
                 targetPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_is_preemptive);
                 is_preemptive = (bool)o_is_preemptive;
 
-                if (is_preemptive)
+                foreach (var player in PhotonNetwork.PlayerListOthers)
                 {
-                    foreach (var player in PhotonNetwork.PlayerListOthers)
+                    if (is_preemptive)
                     {
                         secondPlayer = player;
+                        preemptiveCheck.text = "선공";
                     }
-                    preemptiveCheck.text = "선공";
-                }
-                else
-                {
-                    foreach (var player in PhotonNetwork.PlayerListOthers)
+                    else
                     {
                         firstPlayer = player;
+                        preemptiveCheck.text = "후공";
                     }
-                    preemptiveCheck.text = "후공";
                 }
 
                 isPreemptivePlayerSet = true;

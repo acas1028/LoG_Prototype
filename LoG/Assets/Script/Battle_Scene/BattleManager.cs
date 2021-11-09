@@ -570,8 +570,38 @@ public class BattleManager : MonoBehaviourPunCallbacks
         return dummy;
     }
 
+    bool GetServerVariables()
+    {
+        object o_roundCount;
+        object o_roundWinCount;
+
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
+        if (o_roundCount == null)
+        {
+            Debug.LogError("Failed to get 'RoundCount' from server");
+            return false;
+        }
+        roundCount = (int)o_roundCount;
+
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
+        if (o_roundWinCount == null)
+        {
+            Debug.LogError("Failed to get 'RoundWinCount' from server");
+            return false;
+        }
+        roundWinCount = (int)o_roundWinCount;
+
+        return true;
+    }
+
     void Finish_Game()
     {
+        if (GetServerVariables() == false)
+        {
+            Debug.LogError("Failed to get server variables so that can't implement finishing match");
+            return;
+        }    
+
         Calculate_Remain_HP();
         Calculate_Remain_Character();
 
