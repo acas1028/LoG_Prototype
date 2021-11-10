@@ -67,6 +67,9 @@ public class Showing_Hp : MonoBehaviour
 
     void Hp_bar_position_translate() //hp bar들의 위치 이동시키는 함수
     {
+        if (BattleManager.Instance.bM_Character_Team2[character_count] == null)
+            return;
+
         if (Team_count == 1)
         {
             hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position);
