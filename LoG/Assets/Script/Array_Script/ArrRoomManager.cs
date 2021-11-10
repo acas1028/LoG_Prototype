@@ -20,6 +20,7 @@ public enum ArrayPhase
 
 public class ArrRoomManager : MonoBehaviourPunCallbacks
 {
+    private UI_Manager uiManager;
     [SerializeField]
     private int arrayPhase;
 
@@ -28,7 +29,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     public Text enemyPlayerName;
     public Text winStateText;
     public Text roomStatusText;
-    public Text isEnemyJoinedText;
     public Text timeText;
     public Button readyButton;
 
@@ -61,8 +61,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     {
         bool result = false;
 
+        uiManager = FindObjectOfType<UI_Manager>();
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
-        isEnemyJoinedText.text = "상대의 입장을 기다리는 중입니다...";
         preemptiveCheck.text = " ";
 
         firstPlayer = PhotonNetwork.LocalPlayer;
@@ -81,8 +81,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
         else if (!PhotonNetwork.IsConnected)
             roomStatusText.text = "로그인이 필요합니다";
+        else if (IsAllPlayersJoined())
+            roomStatusText.text = "잠시 후 게임이 시작됩니다.";
         else
-            roomStatusText.text = " ";
+            roomStatusText.text = "상대의 입장을 기다리는 중입니다...";
 
         result = GetCustomProperties();
         if (!result)
@@ -233,8 +235,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void NextArrayPhase()
     {
-        if (isEnemyJoinedText.gameObject.activeSelf)
-            isEnemyJoinedText.gameObject.SetActive(false);
         if (timeText.gameObject.activeSelf)
             timeText.gameObject.SetActive(false);
 
@@ -249,7 +249,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
         else if (arrayPhase % 2 == 0)
         {
-            roomStatusText.text = "#" + (arrayPhase + 1) + " 선공 " + firstPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            roomStatusText.text = "<color=#FFE439>" + firstPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
             if (IsPlayerPreemptive())
                 readyButton.gameObject.SetActive(true);
             else
@@ -257,7 +257,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
         else if (arrayPhase % 2 == 1)
         {
-            roomStatusText.text = "#" + (arrayPhase + 1) + " 후공 " + secondPlayer.NickName + ", " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
+            roomStatusText.text = "<color=#FFE439>" + secondPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
             if (IsPlayerPreemptive())
                 readyButton.gameObject.SetActive(false);
             else
@@ -283,7 +283,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         RenewEnemyPlayer();
 
         if (PhotonNetwork.IsMasterClient && IsAllPlayersJoined())
-            SetPreemptivePlayer();
+        {
+            roomStatusText.text = "잠시 후 게임이 시작됩니다.";
+            Invoke("SetPreemptivePlayer", 3.0f);
+        }
     }
 
     public override void OnPlayerLeftRoom(Player other)
@@ -291,6 +294,9 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         roomStatusText.text = "상대 플레이어 " + other.NickName + " 퇴장";
         Debug.Log("<color=yellow>플레이어 " + other.NickName + " 퇴장</color>");
         RenewEnemyPlayer();
+
+        timeText.gameObject.SetActive(false);
+        uiManager.ShowMatchResult(true);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

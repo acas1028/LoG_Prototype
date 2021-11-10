@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
+    private UI_Manager uiManager;
+
     public AlertMessage alertMessage;
     public List<GameObject> bM_Character_Team1;
     public List<GameObject> bM_Character_Team2;
@@ -60,6 +62,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     IEnumerator Start()
     {
+        uiManager = FindObjectOfType<UI_Manager>();
+
         if (Is_Preemptive())
             bM_Team1_Is_Preemitive = true;
         else
@@ -642,6 +646,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
         }
 
+        if (roundWinCount >= 2)
+        {
+            photonView.RPC("MatchOver", RpcTarget.All, roundWinCount >= 2 ? true : false);
+            return;
+        }
+
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
         PhotonNetwork.SetPlayerCustomProperties(table);
 
@@ -657,6 +667,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
     void LoadArraymentScene()
     {
         PhotonNetwork.LoadLevel("Arrayment_Scene");
+    }
+
+    [PunRPC]
+    void MatchOver(bool isWin)
+    {
+        uiManager.ShowMatchResult(isWin);
+
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", 0 } };
+        PhotonNetwork.SetPlayerCustomProperties(table);
     }
 }
 

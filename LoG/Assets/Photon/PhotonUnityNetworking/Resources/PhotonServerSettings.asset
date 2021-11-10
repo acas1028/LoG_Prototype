@@ -26,15 +26,21 @@ MonoBehaviour:
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
-    NetworkLogging: 1
+    NetworkLogging: 0
   DevRegion: kr
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - Arrayment_cancle_inGrid
+  - Cancle_Sync
+  - Character_showing_arrayment_Reset
+  - MatchOver
   - NextArrayPhase
+  - RespawnSpaceship
   - ShowEnemyEmoticon
+  - Showing_Character_arrayment
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
