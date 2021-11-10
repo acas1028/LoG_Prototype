@@ -1,10 +1,28 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 using Photon.Pun;
 
 public class UI_Manager : MonoBehaviourPunCallbacks
 {
+    Text matchResultText;
+
+    [Header("Match Result Panel")]
+    public GameObject matchResultPanel;
+
+    private void Start()
+    {
+        matchResultText = matchResultPanel.GetComponentInChildren<Text>();
+    }
+
+    public void ShowMatchResult(bool isWin)
+    {
+        Instantiate(matchResultPanel, GameObject.Find("Canvas").transform);
+        matchResultText.text = isWin ? "½Â¸®" : "ÆÐ¹è";
+        Invoke("LeaveRoom", 3.0f);
+    }
+
     public void BackToLobby()
     {
         SceneManager.LoadScene("LobbyScene");

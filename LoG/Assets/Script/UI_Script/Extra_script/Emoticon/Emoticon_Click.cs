@@ -44,7 +44,7 @@ public class Emoticon_Click : MonoBehaviourPun
             Destroy(emoticon_Block_Mine);
 
         emoticon_Block_Mine = Instantiate(prefab_Block_Mine, GameObject.Find("Canvas").transform);
-        emoticon_Block_Mine.GetComponent<RectTransform>().anchoredPosition = new Vector2(-450.0f, 600.0f);
+        emoticon_Block_Mine.GetComponent<RectTransform>().anchoredPosition = new Vector2(-500.0f, 550.0f);
         emoticon_Block_Mine.transform.GetChild(0).GetComponent<Image>().sprite = emoticon_Images[emoticonNum].sprite;
 
         photonView.RPC("ShowEnemyEmoticon", RpcTarget.Others, emoticonNum);
@@ -67,7 +67,7 @@ public class Emoticon_Click : MonoBehaviourPun
             Destroy(emoticon_Block_Enemy);
 
         emoticon_Block_Enemy = Instantiate(prefab_Block_Enemy, GameObject.Find("Canvas").transform);
-        emoticon_Block_Enemy.GetComponent<RectTransform>().anchoredPosition = new Vector2(450.0f, 600.0f);
+        emoticon_Block_Enemy.GetComponent<RectTransform>().anchoredPosition = new Vector2(500.0f, 550.0f);
         emoticon_Block_Enemy.GetComponent<RectTransform>().localScale = new Vector2(-1, 1);
         emoticon_Block_Enemy.transform.GetChild(0).GetComponent<Image>().sprite = emoticon_Images[emoticonNum].sprite;
     }
