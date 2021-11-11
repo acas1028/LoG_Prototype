@@ -75,6 +75,7 @@ public class Character : MonoBehaviourPunCallbacks
     public bool is_hit_this_turn { get; set; } //피격 시 발동되는 스킬을 위한 변수
 
     public bool is_overkill { get; set; }
+    public int stack_Survivor { get; set; }
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
@@ -131,6 +132,7 @@ public class Character : MonoBehaviourPunCallbacks
         killedBy = null;
         is_hit_this_turn = false;
         is_overkill = false;
+        stack_Survivor = 0;
     }
 
     public void Debuging_Character()
@@ -287,6 +289,7 @@ public class Character : MonoBehaviourPunCallbacks
         character_Buffed_Damaged = copy.character_Buffed_Damaged;
         character_Divine_Shield = copy.character_Divine_Shield;
         character_Counter_Probability = copy.character_Counter_Probability;
+        stack_Survivor = copy.stack_Survivor;
 
     }
 }

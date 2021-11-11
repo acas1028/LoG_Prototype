@@ -72,6 +72,12 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
+        if(CCS.character_Skill == CharacterSkill.Balance_Survivor)
+        {
+            result = SKill_Balanced_Survivor_Setting(character);
+            if (result) return true;
+        }
+
         if(CCS.character_Skill == CharacterSkill.Balance_Blessing)
         {
             result = Skill_Balanced_Blessing(character);
@@ -101,6 +107,8 @@ public class SkillManager : MonoBehaviour
             result = Skill_Defender_Barrier(character);
             if (result) return true;
         }
+
+        
 
         return false;
     }
@@ -188,6 +196,14 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
+        result = Skill_Balanced_Survivor_Check(deadCharacter);
+        if (result) return true;
+
+        if(DCS.character_Skill == CharacterSkill.Balance_Survivor)
+        {
+            result = Skill_Balanced_Survivor_Dead(deadCharacter);
+            if (result) return true;
+        }
         if(DCS.character_Skill == CharacterSkill.Defense_Barrier)
         {
             result = Barrier_Dead(deadCharacter);
@@ -769,15 +785,75 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
-    bool SKill_Balanced_Survivor(GameObject character)
+    bool SKill_Balanced_Survivor_Setting(GameObject character)
     {
         Character CCS = character.GetComponent<Character>();
 
-        CCS.character_Buffed_Attack += 20;
-        CCS.character_HP += 20;
+        if (CCS.stack_Survivor == 0) return false;
 
-        // 잠시 보류
+       
+        CCS.character_Buffed_Attack += (20 * CCS.stack_Survivor);
+        CCS.character_HP *= 100 + (20 * CCS.stack_Survivor);
+        CCS.character_MaxHP *= 100 + (20 * CCS.stack_Survivor);
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character, "생존자");
+
         return true;
+    }
+
+    bool Skill_Balanced_Survivor_Dead(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        CCS.stack_Survivor = 0;
+
+        return false;
+    }
+
+    bool Skill_Balanced_Survivor_Check(GameObject deadCharacter)
+    {
+        Character DCS = deadCharacter.GetComponent<Character>();
+
+        if (DCS.character_Skill == CharacterSkill.Balance_Survivor)
+            return false;
+
+        if (DCS.character_Team_Number == 1)
+        {
+            foreach (var team in BattleManager.Instance.bM_Character_Team1)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Skill == CharacterSkill.Balance_Survivor)
+                {
+                    TCS.character_Buffed_Damaged += 20;
+                    TCS.character_MaxHP *= 120;
+                    TCS.character_HP *= 120;
+                    TCS.stack_Survivor++;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "생존자");
+                    return true;
+                }
+            }
+        }
+
+        if (DCS.character_Team_Number == 2)
+        {
+            foreach (var team in BattleManager.Instance.bM_Character_Team2)
+            {
+                Character TCS = team.GetComponent<Character>();
+                if (TCS.character_Skill == CharacterSkill.Balance_Survivor)
+                {
+                    TCS.character_Buffed_Damaged += 20;
+                    TCS.character_MaxHP *= 120;
+                    TCS.character_HP *= 120;
+                    TCS.stack_Survivor++;
+                    skillmessage.SetActive(true);
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "생존자");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     bool Skill_Balanced_Curse(GameObject character)
     {
