@@ -34,7 +34,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     Player firstPlayer;
     Player secondPlayer;
-    bool isPreemptivePlayerSet;
 
     private bool isPreemptive;
     public bool IsPreemptive
@@ -67,7 +66,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         firstPlayer = PhotonNetwork.LocalPlayer;
         secondPlayer = PhotonNetwork.LocalPlayer;
-        isPreemptivePlayerSet = false;
 
         arrayPhase = (int)ArrayPhase.STANDBY;
 
@@ -77,6 +75,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         {
             roomStatusText.text = "<오프라인 모드>";
             preemptiveCheck.text = "선공";
+
+            Hashtable table = new Hashtable() { { "IsPreemptive", true } };
+            PhotonNetwork.SetPlayerCustomProperties(table);
+
             StartArrayPhase();
         }
         else if (!PhotonNetwork.IsConnected)
@@ -106,7 +108,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     {
         bool result = false;
 
-        Hashtable table = new Hashtable() { { "IsPreemptive", true }, { "RoundWinCount", 0 } };
+        Hashtable table = new Hashtable() { { "RoundWinCount", 0 } };
         result = PhotonNetwork.SetPlayerCustomProperties(table);
         if (!result)
         {
@@ -116,7 +118,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            table = new Hashtable() { { "RoundCount", 0 } };
+            table = new Hashtable() { { "RoundCount", 1 } };
             result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
             if (!result)
             {
@@ -134,7 +136,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_isPreemptive);
         if (o_isPreemptive == null)
         {
-            Debug.LogWarning("isPreemptive 값을 가져오는데 실패했습니다. 값을 새로 할당합니다.");
+            Debug.LogWarning("isPreemptive 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
             return false;
         }
         isPreemptive = (bool)o_isPreemptive;
@@ -143,7 +145,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_winCount);
         if (o_winCount == null)
         {
-            Debug.LogWarning("RoundWinCount 값을 가져오는데 실패했습니다. 값을 새로 할당합니다.");
+            Debug.LogWarning("RoundWinCount 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
             return false;
         }
         winCount = (int)o_winCount;
@@ -154,7 +156,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             player.CustomProperties.TryGetValue("RoundWinCount", out o_enemyWinCount);
             if (o_enemyWinCount == null)
             {
-                Debug.LogWarning("RoundWinCount 값을 가져오는데 실패했습니다. 값을 새로 할당합니다.");
+                Debug.LogWarning("적 RoundWinCount 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
                 return false;
             }
             enemyWinCount = (int)o_enemyWinCount;
@@ -164,7 +166,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
         if (o_roundCount == null)
         {
-            Debug.LogWarning("RoundCount 값을 가져오는데 실패했습니다. 값을 새로 할당합니다.");
+            Debug.LogWarning("RoundCount 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
             return false;
         }
         roundCount = (int)o_roundCount;
@@ -200,11 +202,11 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         bool _isPreemptive = false;
 
-        if (roundCount == 1)
+        if (roundCount == 2)
             _isPreemptive = !isPreemptive;
         else
         {
-            Debug.Log("현재 라운드가 2 이상이므로 무작위로 선공을 재결정합니다.");
+            Debug.Log("현재 라운드가 첫 라운드 혹은 3 이상이므로 무작위로 선공을 재결정합니다.");
             _isPreemptive = Random.Range(0, 2) == 0 ? false : true;
         }
 
@@ -285,7 +287,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient && IsAllPlayersJoined())
         {
             roomStatusText.text = "잠시 후 게임이 시작됩니다.";
-            Invoke("SetPreemptivePlayer", 3.0f);
+            Invoke("SetPreemptivePlayer", 4.0f);
         }
     }
 
@@ -306,8 +308,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         {
             if (changedProps.ContainsKey("IsPreemptive")
                 && !PhotonNetwork.OfflineMode
-                && IsAllPlayersJoined()
-                && !isPreemptivePlayerSet)
+                && IsAllPlayersJoined())
             {
                 Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 
@@ -329,9 +330,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
                         preemptiveCheck.text = "후공";
                     }
                 }
-
-                isPreemptivePlayerSet = true;
-                roomStatusText.text = "선, 후공을 결정합니다...";
 
                 if (PhotonNetwork.IsMasterClient)
                 {

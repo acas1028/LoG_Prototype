@@ -111,7 +111,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bool result;
         yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team1));
         yield return StartCoroutine(SynergeManager.Instance.CheckSynerge(bM_Character_Team2));
-        roundCount++;
 
         if(bM_Phase == 0)
         {
@@ -657,7 +656,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount } };
+            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount + 1 } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(table);
 
             Invoke("LoadArraymentScene", 4.0f);
@@ -673,9 +672,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
     void MatchOver(bool isWin)
     {
         uiManager.ShowMatchResult(isWin);
-
-        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", 0 } };
-        PhotonNetwork.SetPlayerCustomProperties(table);
     }
 }
 
