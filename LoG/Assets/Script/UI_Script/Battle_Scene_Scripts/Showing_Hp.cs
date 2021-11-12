@@ -67,8 +67,18 @@ public class Showing_Hp : MonoBehaviour
 
     void Hp_bar_position_translate() //hp bar들의 위치 이동시키는 함수
     {
-        if (BattleManager.Instance.bM_Character_Team2[character_count] == null)
-            return;
+        
+
+        //if (BattleManager.Instance.bM_Character_Team1[character_count] == null && Team_count==1)
+        //    return;
+
+        //if (BattleManager.Instance.bM_Character_Team2[character_count] == null && Team_count==2)
+        //    return;
+
+        //Debug.Log(BattleManager.Instance.bM_Character_Team2.Count);
+
+        //if (BattleManager.Instance.bM_Character_Team2.Count != 5)
+        //    return;
 
         if (Team_count == 1)
         {
@@ -81,6 +91,8 @@ public class Showing_Hp : MonoBehaviour
             hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team2[character_count].transform.position);
             hp_bar.transform.Translate(0, hp_bar_y_position, 0);
         }
+
+       
     }
 
     private void Update()
@@ -90,9 +102,15 @@ public class Showing_Hp : MonoBehaviour
             original_Hp();
 
             showing_Hp_point();
+
+            
         }
 
-        Hp_bar_position_translate();
+        if (BattleManager.Instance.bM_Character_Team1.Count == 5 && BattleManager.Instance.bM_Character_Team2.Count == 5) //예외 처리
+        {
+            Hp_bar_position_translate();
+        }
+
     }
 
 
