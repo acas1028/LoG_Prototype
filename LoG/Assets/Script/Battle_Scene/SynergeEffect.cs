@@ -33,16 +33,19 @@ public class SynergeEffect : MonoBehaviour
                 RedEffect = Instantiate(RedEffect, new Vector3(-75, 75 - (lineNum * 75) , 0), Quaternion.identity);
                 RedEffect.transform.SetParent(gameObject.transform);
                 RedEffect.transform.localPosition = new Vector3(-75, 75 - (lineNum * 75));
+                RedEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 2:
                 BlueEffect = Instantiate(BlueEffect, new Vector3(-75, 75 - (lineNum * 75), 0), Quaternion.identity);
                 BlueEffect.transform.SetParent(gameObject.transform);
                 BlueEffect.transform.localPosition = new Vector3(-75, 75 - (lineNum * 75), 0);
+                BlueEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 3:
                 GreenEffect = Instantiate(GreenEffect, new Vector3(-75, 75 - (lineNum * 75), 0), Quaternion.identity);
                 GreenEffect.transform.SetParent(gameObject.transform);
                 GreenEffect.transform.localPosition = new Vector3(-75, 75 - (lineNum * 75), 0);
+                GreenEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
         }
 
@@ -54,16 +57,19 @@ public class SynergeEffect : MonoBehaviour
                 RedEffect = Instantiate(RedEffect, new Vector3(0, 75 - (lineNum * 75), 0), Quaternion.identity) as GameObject;
                 RedEffect.transform.SetParent(gameObject.transform);
                 RedEffect.transform.localPosition = new Vector3(0, 75 - (lineNum * 75));
+                RedEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 2:
                 BlueEffect = Instantiate(BlueEffect, new Vector3(0, 75 - (lineNum * 75), 0), Quaternion.identity) as GameObject;
                 BlueEffect.transform.SetParent(gameObject.transform);
                 BlueEffect.transform.localPosition = new Vector3(0, 75 - (lineNum * 75), 0);
+                BlueEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 3:
                 GreenEffect = Instantiate(GreenEffect, new Vector3(0, 75 - (lineNum * 75), 0), Quaternion.identity) as GameObject;
                 GreenEffect.transform.SetParent(gameObject.transform);
                 GreenEffect.transform.localPosition = new Vector3(0, 75 - (lineNum * 75), 0);
+                GreenEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
         }
 
@@ -75,16 +81,19 @@ public class SynergeEffect : MonoBehaviour
                 RedEffect = Instantiate(RedEffect, new Vector3(75, 75 - (lineNum * 75), 0), Quaternion.identity) as GameObject;
                 RedEffect.transform.SetParent(gameObject.transform);
                 RedEffect.transform.localPosition = new Vector3(75, 75 - (lineNum * 75));
+                RedEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 2:
                 BlueEffect = Instantiate(BlueEffect, new Vector3(75, 75 - (lineNum * 75), 0), Quaternion.identity) as GameObject;
                 BlueEffect.transform.SetParent(gameObject.transform);
                 BlueEffect.transform.localPosition = new Vector3(75, 75 - (lineNum * 75), 0);
+                BlueEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 3:
                 GreenEffect = Instantiate(GreenEffect, new Vector3(75, 75 - (lineNum * 75), 0), Quaternion.identity) as GameObject;
                 GreenEffect.transform.SetParent(gameObject.transform);
                 GreenEffect.transform.localPosition = new Vector3(75, 75 - (lineNum * 75), 0);
+                GreenEffect.transform.localScale = new Vector3(1, 1, 1);
                 break;
         }
 
