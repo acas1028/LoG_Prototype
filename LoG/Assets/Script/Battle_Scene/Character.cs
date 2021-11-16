@@ -132,7 +132,6 @@ public class Character : MonoBehaviourPunCallbacks
         killedBy = null;
         is_hit_this_turn = false;
         is_overkill = false;
-        stack_Survivor = 0;
     }
 
     public void Debuging_Character()

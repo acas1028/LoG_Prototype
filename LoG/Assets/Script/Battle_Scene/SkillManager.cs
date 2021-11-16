@@ -789,6 +789,8 @@ public class SkillManager : MonoBehaviour
     {
         Character CCS = character.GetComponent<Character>();
 
+        CCS.stack_Survivor = StackManager.Instance.survivor_stack;
+
         if (CCS.stack_Survivor == 0) return false;
 
        
@@ -807,6 +809,7 @@ public class SkillManager : MonoBehaviour
         Character CCS = character.GetComponent<Character>();
 
         CCS.stack_Survivor = 0;
+        StackManager.Instance.survivor_stack = 0;
 
         return false;
     }
@@ -829,6 +832,8 @@ public class SkillManager : MonoBehaviour
                     TCS.character_MaxHP *= 120;
                     TCS.character_HP *= 120;
                     TCS.stack_Survivor++;
+
+                    StackManager.Instance.survivor_stack++;
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(team, "»ýÁ¸ÀÚ");
                     return true;
