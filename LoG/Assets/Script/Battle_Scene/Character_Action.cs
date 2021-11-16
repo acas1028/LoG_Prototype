@@ -13,7 +13,8 @@ public class Character_Action : Character, IPunObservable
     private Transform enemyTransform;
     private Vector3 velocity;
 
-    private int counterRand;
+    [Header("¹Ý°Ý È®·ü")]
+    public int counterRand;
 
     private void Start()
     {

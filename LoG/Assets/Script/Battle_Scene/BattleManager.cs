@@ -63,6 +63,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     IEnumerator Start()
     {
         uiManager = FindObjectOfType<UI_Manager>();
+        PhotonNetwork.Instantiate("StackManager", Vector3.zero, Quaternion.identity);
 
         if (Is_Preemptive())
             bM_Team1_Is_Preemitive = true;
