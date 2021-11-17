@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CharacterStats;
 
+using Photon.Pun;
+
 public class SkillManager : MonoBehaviour
 {
     private static SkillManager _instance;
@@ -782,6 +784,38 @@ public class SkillManager : MonoBehaviour
 
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character, "연막탄");
+
+        return true;
+    }
+    int Skill_Get_Stack_Survivor()
+    {
+        // 내 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 불러오는 함수
+        bool result;
+        object o_stack_survivor;
+        int stack_survivor;
+
+        result = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Stack_Survivor", out o_stack_survivor);
+        if (!result || o_stack_survivor == null)
+        {
+            Debug.LogError("Failed to get \"Stack_Survivor\" from server");
+            return 0;
+        }
+
+        stack_survivor = (int)o_stack_survivor;
+        return stack_survivor;
+    }
+    bool Skill_Set_Stack_Survivor(int val)
+    {
+        // 내 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 서버에 저장하는 함수
+        bool result;
+
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "Stack_Survivor", val } };
+        result = PhotonNetwork.SetPlayerCustomProperties(table);
+        if (!result)
+        {
+            Debug.LogError("Failed to set \"Stack_Survivor\" to server");
+            return false;
+        }
 
         return true;
     }
