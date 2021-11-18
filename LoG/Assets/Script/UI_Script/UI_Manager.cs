@@ -13,7 +13,10 @@ public class UI_Manager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        matchResultText = matchResultPanel.GetComponentInChildren<Text>();
+        if (matchResultPanel != null)
+        {
+            matchResultText = matchResultPanel.GetComponentInChildren<Text>();
+        }
     }
 
     public void ShowMatchResult(bool isWin)
