@@ -3,6 +3,7 @@ using UnityEngine;
 using CharacterStats;
 
 using Photon.Pun;
+using Photon.Realtime;
 
 public class SkillManager : MonoBehaviour
 {
@@ -787,7 +788,7 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
-    int Skill_Get_Stack_Survivor()
+    int Skill_Get_My_Stack_Survivor()
     {
         // 내 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 불러오는 함수
         bool result;
@@ -803,6 +804,29 @@ public class SkillManager : MonoBehaviour
 
         stack_survivor = (int)o_stack_survivor;
         return stack_survivor;
+    }
+    int Skill_Get_Enemy_Stack_Survivor()
+    {
+        // 적 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 불러오는 함수
+        bool result;
+        object o_stack_survivor;
+        int stack_survivor;
+
+        foreach (Player player in PhotonNetwork.PlayerListOthers)
+        {
+            result = player.CustomProperties.TryGetValue("Stack_Survivor", out o_stack_survivor);
+            if (!result || o_stack_survivor == null)
+            {
+                Debug.LogError("Failed to get \"Stack_Survivor\" from server");
+                return 0;
+            }
+
+            stack_survivor = (int)o_stack_survivor;
+            return stack_survivor;
+        }
+
+        Debug.LogError("There's no other player");
+        return 0;
     }
     bool Skill_Set_Stack_Survivor(int val)
     {
