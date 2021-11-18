@@ -6,22 +6,17 @@ using Photon.Pun;
 
 public class UI_Manager : MonoBehaviourPunCallbacks
 {
-    Text matchResultText;
-
     [Header("Match Result Panel")]
     public GameObject matchResultPanel;
 
     private void Start()
     {
-        if (matchResultPanel != null)
-        {
-            matchResultText = matchResultPanel.GetComponentInChildren<Text>();
-        }
+
     }
 
     public void ShowMatchResult(bool isWin)
     {
-        Instantiate(matchResultPanel, GameObject.Find("Canvas").transform);
+        Text matchResultText = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform).GetComponentInChildren<Text>();
         matchResultText.text = isWin ? "승리" : "패배";
         Invoke("LeaveRoom", 4.0f);
     }
@@ -40,7 +35,7 @@ public class UI_Manager : MonoBehaviourPunCallbacks
     {
         Debug.Log("<color=yellow>OnLeftRoom() 호출\n룸을 나갑니다. 로비로 이동합니다.</color>");
 
-        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable { { "IsPreemptive", null }, { "RoundWinCount", null } };
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable { { "IsPreemptive", null }, { "RoundWinCount", null }, { "Stack_Survivor", null } };
         PhotonNetwork.SetPlayerCustomProperties(table);
 
         SceneManager.LoadScene("LobbyScene");

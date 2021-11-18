@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Photon.Pun;
+using Photon.Realtime;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
@@ -673,6 +674,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
     void MatchOver(bool isWin)
     {
         uiManager.ShowMatchResult(isWin);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        uiManager.ShowMatchResult(true);
     }
 }
 
