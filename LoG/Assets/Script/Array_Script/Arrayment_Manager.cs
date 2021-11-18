@@ -17,8 +17,8 @@ public class Arrayment_Manager : MonoBehaviourPun
     private bool On_Raycast = false;//배치를 다했다.
     private int Phase = (int)ArrayPhase.STANDBY;
     private int cancle_num;
-    private int click_id;
     private int arrayedThisTurn;
+    private int InvenNum;
 
     private List<int> invenNums;
     private List<int> gridNums;
@@ -182,7 +182,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 return;
             }
 
-            ArrayOnGrid(click_id, gridNum);
+            ArrayOnGrid(InvenNum, gridNum);
             is_click_inventory = false;
         }
     }
@@ -604,6 +604,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         cs.Debuging_Character();
         cs.InitializeCharacterSprite();
         arrayedThisTurn--;
+        GridOffHighLight();
     }
 
     [PunRPC]
@@ -678,9 +679,9 @@ public class Arrayment_Manager : MonoBehaviourPun
         int ID = move_object.GetComponentInChildren<Character>().character_ID;
         for (int i = 0; i < Inventory.Length; i++)
         {
-            if(ID==Inventory[i].GetComponent<Inventory_ID>().inventory_ID)
+            if(ID==Inventory[i].GetComponent<Inventory_ID>().GetCharacterID())
             {
-                ID = Inventory[i].GetComponent<Inventory_ID>().inventory_Num;
+                ID = Inventory[i].GetComponent<Inventory_ID>().GetInventoryNum();
                 break;
             }
         }
@@ -693,9 +694,8 @@ public class Arrayment_Manager : MonoBehaviourPun
                 break;
             }        
         }
-        Debug.Log(ID);
-        ArrayOnGrid(ID, GN);
         Cancle_Array();
+        ArrayOnGrid(ID, GN);
     }
     private void Order_Rearrange(int num)
     {
@@ -703,7 +703,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         for (int i = 0; i < Inventory.Length; i++)
         {
             Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
-            if (inven.inventory_ID == saved.team1[num].GetComponent<Character>().character_ID)
+            if (inven.GetCharacterID() == saved.team1[num].GetComponent<Character>().character_ID)
             {
                 inven.SetNotArrayed();
             }
@@ -732,8 +732,11 @@ public class Arrayment_Manager : MonoBehaviourPun
     public void Click_Inventory(int num)
     {
         if (my_turn == true&&Pick==true)
+        {
             is_click_inventory = true;
-        click_id = num;
+            InvenNum = Inventory[num-1].GetComponent<Inventory_ID>().GetInventoryNum();
+        }
+
     }
     public void BanPick_Ready()
     {
@@ -755,7 +758,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         {
             Inventory_ID cs = Inventory[i].GetComponent<Inventory_ID>();
             Character sv = Deck_Data_Send.instance.Save_Data[lastPageNum, i].GetComponent<Character>();
-            cs.inventory_ID = sv.character_ID;
+            cs.SetCharacterID(sv.character_ID);
         }
     }
 
@@ -766,6 +769,11 @@ public class Arrayment_Manager : MonoBehaviourPun
     public void GridsOffHighLight(int num)
     {
         GridsHighLight[num].SetActive(false);
+    }
+    private void GridOffHighLight()
+    {
+        for (int i = 0; i < 9; i++)
+            GridsHighLight[i].SetActive(false);
     }
     private int Reverse_Array(int num)
     {

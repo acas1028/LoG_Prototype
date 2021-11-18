@@ -28,7 +28,7 @@ public class ShowingCharacterStats : MonoBehaviour
     public void Character_Showing_Stats(int inventory_Num) //캐릭터 스탯을 팝업창에 띄우기 위한 함수
     {
      
-        prefabCharacter.GetComponent<Character>().Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventory_Num-1]);
+        //prefabCharacter.GetComponent<Character>().Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventory_Num-1]);
         attack_Damage.text = prefabCharacter.GetComponent<Character>().character_Attack_Damage.ToString();
         health_Point.text = prefabCharacter.GetComponent<Character>().character_HP.ToString();
         property_text.text = this.GetComponent<Property_Name_To_Korean>().PropertyNameTOKorean(prefabCharacter.GetComponent<Character>().character_Skill.ToString());
