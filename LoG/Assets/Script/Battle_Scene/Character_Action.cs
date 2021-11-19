@@ -20,7 +20,7 @@ public class Character_Action : Character, IPunObservable
     {
         startPosition = Vector3.zero;
         isMoveToEnemy = false;
-        counterRand = 100;
+        counterRand = 0;
 
         if (!photonView.IsMine && !PhotonNetwork.OfflineMode)
         {
@@ -183,18 +183,20 @@ public class Character_Action : Character, IPunObservable
 
     public void Character_Counter()
     {
-        if (character_Counter_Probability > 100)
-            character_Counter_Probability = 100;
-        if (character_Counter_Probability < 0)
-            character_Counter_Probability = 0;
+        //if (character_Counter_Probability > 100)
+        //    character_Counter_Probability = 100;
+        //if (character_Counter_Probability < 0)
+        //    character_Counter_Probability = 0;
 
-        if (photonView.IsMine)
-            counterRand = Random.Range(0, 100); // 0~99
+        //if (photonView.IsMine)
+        //    counterRand = Random.Range(0, 100); // 0~99
 
-        if (counterRand < character_Counter_Probability)
-            character_Counter = true;
-        else
-            character_Counter = false;
+        //if (counterRand < character_Counter_Probability)
+        //    character_Counter = true;
+        //else
+        //    character_Counter = false;
+
+        character_Counter = false;
     }
 
     public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
