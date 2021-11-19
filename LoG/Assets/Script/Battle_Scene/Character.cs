@@ -102,6 +102,7 @@ public class Character : MonoBehaviourPunCallbacks
     {
         spriteManager.SetInitialSprite(character_ID);
         spriteManager.SetSortingLayer(character_Num_Of_Grid);
+        Debug.Log("Sprite");
     }
 
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.

@@ -254,13 +254,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[0].GetComponent<Character>().character_Attack_Order = 1;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         
                         if (saved.team2[1].GetComponent<Character>().character_ID != 0)
                         {
@@ -271,13 +271,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[1].GetComponent<Character>().character_Attack_Order = 2;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         
                        arrData_Sync.is_datasync = false;
                     }
@@ -320,13 +320,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[2].GetComponent<Character>().character_Attack_Order = 3;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         if (saved.team2[3].GetComponent<Character> ().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(saved.team2[3].GetComponent<Character>().character_Num_Of_Grid);
@@ -336,13 +336,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[3].GetComponent<Character>().character_Attack_Order = 4;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         arrData_Sync.is_datasync = false;
                     }
                     break;
@@ -384,13 +384,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[4].GetComponent<Character>().character_Attack_Order = 5;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         arrData_Sync.is_datasync = false;
                     }
                     break;
@@ -416,13 +416,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[0].GetComponent<Character>().character_Attack_Order = 1;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         arrData_Sync.is_datasync = false;
                     }
                     break;
@@ -464,13 +464,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[1].GetComponent<Character>().character_Attack_Order = 2;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         if (saved.team2[2].GetComponent<Character>().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(saved.team2[2].GetComponent<Character>().character_Num_Of_Grid);
@@ -480,13 +480,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[2].GetComponent<Character>().character_Attack_Order = 3;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         arrData_Sync.is_datasync = false;
                     }
                     break;
@@ -528,13 +528,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[3].GetComponent<Character>().character_Attack_Order = 4;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        }
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //}
                         if (saved.team2[4].GetComponent<Character>().character_ID != 0)
                         {
                             Enemy_Grid_Num = Reverse_Array(saved.team2[4].GetComponent<Character>().character_Num_Of_Grid);
@@ -544,13 +544,13 @@ public class Arrayment_Manager : MonoBehaviourPun
                             Enemy_Grids[Enemy_Grid_Num - 1].tag = "Character";
                             saved.team2[4].GetComponent<Character>().character_Attack_Order = 5;
                         }
-                        else
-                        {
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
-                            Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
-                            Enemy_Grids[cancle_num].tag = "Null_Character";
-                        } 
+                        //else
+                        //{
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Character_Reset();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().Debuging_Character();
+                        //    Enemy_Grids[cancle_num].GetComponentInChildren<Character>().InitializeCharacterSprite();
+                        //    Enemy_Grids[cancle_num].tag = "Null_Character";
+                        //} 
                         arrData_Sync.is_datasync = false;
                     }
                     break;
@@ -610,6 +610,7 @@ public class Arrayment_Manager : MonoBehaviourPun
     [PunRPC]
     private void Cancle_Sync(int i)
     {
+        Debug.Log("Cancle");
         arrData_Sync.DataSync(i);
         if(character_Arrayment_Showing.is_Mine==true)
         {
