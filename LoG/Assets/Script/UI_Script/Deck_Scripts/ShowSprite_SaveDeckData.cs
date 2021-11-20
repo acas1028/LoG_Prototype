@@ -83,7 +83,12 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         if (IsDeckSaveexist == false)
             return;
 
+        if (Save_Character.character_Skill.ToString() == "Attack_Confidence") //촬영을 위한 임시 코드. 추후 기본 값이 confidence가 되지 않도록 조정해야함. 
+            return;
+        
         PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
+
+        
 
     }
 
