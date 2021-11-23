@@ -84,6 +84,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.OfflineMode)
                 bM_Character_Team2.Add(Instantiate(Character_Prefab));
+            // 온라인 환경에서 bM_Character_Team2 의 캐릭터 인스턴스는 Character_Action 스크립트의 Start 부분에서 등록된다.
         }
 
         yield return new WaitUntil(() => { return bM_Character_Team2.Count >= 5; });

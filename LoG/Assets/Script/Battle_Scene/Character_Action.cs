@@ -13,14 +13,18 @@ public class Character_Action : Character, IPunObservable
     private Transform enemyTransform;
     private Vector3 velocity;
 
-    [Header("반격 확률")]
-    public int counterRand;
+    bool isCounterChanged;
+    int counterRand;
 
     private void Start()
     {
         startPosition = Vector3.zero;
         isMoveToEnemy = false;
+
+        // 기본 반격 확률: 10%
+        character_Counter_Probability = 10;
         counterRand = 0;
+        isCounterChanged = false;
 
         if (!photonView.IsMine && !PhotonNetwork.OfflineMode)
         {
@@ -133,7 +137,7 @@ public class Character_Action : Character, IPunObservable
     {
         // 받을 데미지를 다시 계산.
         StartCoroutine(SetCharacterColor("red"));
-        Character_Counter();
+        StartCoroutine(Character_Counter());
 
         int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
@@ -181,22 +185,19 @@ public class Character_Action : Character, IPunObservable
         }
     }
 
-    public void Character_Counter()
+    public IEnumerator Character_Counter()
     {
-        //if (character_Counter_Probability > 100)
-        //    character_Counter_Probability = 100;
-        //if (character_Counter_Probability < 0)
-        //    character_Counter_Probability = 0;
+        if (photonView.IsMine)
+            counterRand = Random.Range(0, 100); // 0~99
 
-        //if (photonView.IsMine)
-        //    counterRand = Random.Range(0, 100); // 0~99
+        yield return new WaitUntil(() => isCounterChanged);
 
-        //if (counterRand < character_Counter_Probability)
-        //    character_Counter = true;
-        //else
-        //    character_Counter = false;
+        if (counterRand < character_Counter_Probability)
+            character_Counter = true;
+        else
+            character_Counter = false;
 
-        character_Counter = false;
+        isCounterChanged = false;
     }
 
     public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
@@ -224,6 +225,8 @@ public class Character_Action : Character, IPunObservable
             stream.SendNext(counterRand);
         else // stream.IsReading
             counterRand = (int)stream.ReceiveNext();
+
+        isCounterChanged = true;
     }
     #endregion
 }
