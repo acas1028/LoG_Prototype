@@ -21,6 +21,8 @@ public enum ArrayPhase
 public class ArrRoomManager : MonoBehaviourPunCallbacks
 {
     private UI_Manager uiManager;
+    public Arrayment_Manager arraymentManager;
+
     [SerializeField]
     private int arrayPhase;
 
@@ -253,17 +255,29 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         {
             roomStatusText.text = "<color=#FFE439>" + firstPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
             if (IsPlayerPreemptive())
+            {
+                arraymentManager.InventoryUnblock();
                 readyButton.gameObject.SetActive(true);
+            }
             else
+            {
+                arraymentManager.InventoryBlock();
                 readyButton.gameObject.SetActive(false);
+            }
         }
         else if (arrayPhase % 2 == 1)
         {
             roomStatusText.text = "<color=#FFE439>" + secondPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "개의 캐릭터를 배치하십시오.";
             if (IsPlayerPreemptive())
+            {
+                arraymentManager.InventoryBlock();
                 readyButton.gameObject.SetActive(false);
+            }
             else
+            {
+                arraymentManager.InventoryUnblock();
                 readyButton.gameObject.SetActive(true);
+            }
         }
 
         Debug.Log("<color=yellow>RPC Success with ArrayPhase: </color><color=lightblue>" + (ArrayPhase)arrayPhase + "</color>");

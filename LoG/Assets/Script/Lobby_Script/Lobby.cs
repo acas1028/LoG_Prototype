@@ -46,13 +46,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public GameObject RoomListContent;
 	public GameObject RoomListEntryPrefab;
 
-	[Tooltip("연결 상태 텍스트 수직스크롤바")]
-	public Scrollbar statusVerticalBar;
-
-	[Tooltip("연결 상태 출력 텍스트")]
-	[SerializeField]
-	private Text feedbackText;
-
 	[Tooltip("룸에 입장할 수 있는 최대 인원 수")]
 	[SerializeField]
 	private byte maxPlayersPerRoom = 2;
@@ -141,14 +134,12 @@ public class Lobby : MonoBehaviourPunCallbacks
 			SetActivePanel(JoinRandomRoomPanel.name);
 
 			// offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
-			LogFeedback("룸에 입장 중...");
 			Debug.Log("<color=lightblue>현재 서버와 연결되어있거나 오프라인 모드입니다. 룸에 입장합니다.</color>");
 			// #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else
 		{
-			LogFeedback("연결됨");
 			Debug.Log("<color=lightblue>현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.</color>");
 			// #Critical, we must first and foremost connect to Photon Online Server.
 
@@ -160,7 +151,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 	public void OfflineMode()
 	{
 		PhotonNetwork.OfflineMode = true;
-		LogFeedback("오프라인 모드로 입장 중...");
 
 		Connect();
 	}
@@ -187,26 +177,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 		JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
 		RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
 	}
-
-	/// <summary>
-	/// Logs the feedback in the UI view for the player, as opposed to inside the Unity Editor for the developer.
-	/// </summary>
-	/// <param name="message">Message.</param>
-	private void LogFeedback(string message)
-	{
-		// we do not assume there is a feedbackText defined.
-		if (feedbackText == null)
-		{
-			return;
-		}
-
-		if (feedbackText.text.Length > 10)
-			statusVerticalBar.value -= 0.028f;
-
-		// add new messages as a new line and at the bottom of the log.
-		feedbackText.text += System.Environment.NewLine + message;
-	}
-
 	#endregion
 
 	#region Private 함수
@@ -396,7 +366,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 	/// </remarks>
 	public override void OnJoinRandomFailed(short returnCode, string message)
 	{
-		LogFeedback("<Color=Red>OnJoinRandomFailed</Color>: 입장 가능한 룸이 없어 새 룸을 만듭니다.");
 		Debug.Log("<color=yellow>OnJoinRandomFailed() 호출\n입장 가능한 룸이 없어 새 룸을 만듭니다.</color>");
 
 		string roomName = "Room " + Random.Range(1, 100);
@@ -410,7 +379,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 	/// </summary>
 	public override void OnDisconnected(DisconnectCause cause)
 	{
-		LogFeedback("연결 해제됨");
 		Debug.LogWarning("<color=yellow>Disconnected\n연결 해제됨</color>");
 
 		SetActivePanel(LoginPanel.name);
@@ -432,7 +400,6 @@ public class Lobby : MonoBehaviourPunCallbacks
 		if (loadingEffect)
 			loadingEffect.StopLoaderAnimation();
 
-		LogFeedback("<Color=Green>OnJoinedRoom</Color> " + PhotonNetwork.CurrentRoom.PlayerCount + "명이 있는 룸에 입장합니다.");
 		Debug.Log("<color=yellow>OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.</color>");
 
 		PhotonNetwork.LoadLevel("Arrayment_Scene");

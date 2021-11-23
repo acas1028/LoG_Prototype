@@ -67,6 +67,8 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
         ShuffleList<int>(invenNums);
         ShuffleList<int>(gridNums);
+
+        InventoryBlock();
     }
 
     void Update()
@@ -76,6 +78,22 @@ public class Arrayment_Manager : MonoBehaviourPun
             Arrayment_Raycast();
         }
         Array_Order();
+    }
+
+    public void InventoryBlock()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            Inventory[i].GetComponent<Inventory_ID>().SetArrayed();
+        }
+    }
+
+    public void InventoryUnblock()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            Inventory[i].GetComponent<Inventory_ID>().SetNotArrayed();
+        }
     }
 
     // 지금은 사용되지 않는 함수
