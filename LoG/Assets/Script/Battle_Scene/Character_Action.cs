@@ -13,18 +13,16 @@ public class Character_Action : Character, IPunObservable
     private Transform enemyTransform;
     private Vector3 velocity;
 
-    bool isCounterChanged;
-    int counterRand;
+    int prevCounterRand;
+    int nowCounterRand;
 
     private void Start()
     {
         startPosition = Vector3.zero;
         isMoveToEnemy = false;
 
-        // 기본 반격 확률: 10%
-        character_Counter_Probability = 10;
-        counterRand = 0;
-        isCounterChanged = false;
+        prevCounterRand = 0;
+        nowCounterRand = 0;
 
         if (!photonView.IsMine && !PhotonNetwork.OfflineMode)
         {
@@ -188,16 +186,16 @@ public class Character_Action : Character, IPunObservable
     public IEnumerator Character_Counter()
     {
         if (photonView.IsMine)
-            counterRand = Random.Range(0, 100); // 0~99
+            nowCounterRand = Random.Range(0, 100); // 0~99
 
-        yield return new WaitUntil(() => isCounterChanged);
+        yield return new WaitUntil(() => prevCounterRand != nowCounterRand);
 
-        if (counterRand < character_Counter_Probability)
+        if (nowCounterRand < character_Counter_Probability)
             character_Counter = true;
         else
             character_Counter = false;
 
-        isCounterChanged = false;
+        prevCounterRand = nowCounterRand;
     }
 
     public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
@@ -222,11 +220,9 @@ public class Character_Action : Character, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo message)
     {
         if (stream.IsWriting)
-            stream.SendNext(counterRand);
+            stream.SendNext(nowCounterRand);
         else // stream.IsReading
-            counterRand = (int)stream.ReceiveNext();
-
-        isCounterChanged = true;
+            nowCounterRand = (int)stream.ReceiveNext();
     }
     #endregion
 }
