@@ -649,7 +649,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (roundWinCount >= 2)
         {
-            photonView.RPC("MatchOver", RpcTarget.All, roundWinCount >= 2 ? true : false);
+            photonView.RPC("MatchOver", RpcTarget.All);
             return;
         }
 
@@ -671,9 +671,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void MatchOver(bool isWin)
+    void MatchOver()
     {
-        uiManager.ShowMatchResult(isWin);
+        uiManager.ShowMatchResult(roundWinCount >= 2 ? true : false);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
