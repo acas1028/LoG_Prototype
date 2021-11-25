@@ -17,6 +17,7 @@ public class Deck_Manager : MonoBehaviour
     public GameObject[] Skill_Button;
     public GameObject[] Property_Slot;
     public GameObject[] Page_Slot;
+    public GameObject[] CharacterSpace;
     public GameObject Current_Character;
     public GameObject Current_Grid;
     public GameObject Deck_Reset_Button;
@@ -232,9 +233,13 @@ public class Deck_Manager : MonoBehaviour
             {
                 Set_Character_[i].SetActive(true);
                 Character_Slot[i].SetActive(false);
-                Slot_Type[i].SetActive(false);
+                Slot_Type[i].SetActive(false);            
                 //특성 (false);
             }
+        }
+        for(int i=0; i<7; i++) //덱 페이지 바뀌었을 때 스프라이트 변화
+        {
+            CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().SetSprite();
         }
     }
     private void Load_Skill()

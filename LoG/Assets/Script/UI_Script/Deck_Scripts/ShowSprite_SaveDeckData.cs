@@ -35,7 +35,7 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
     private void Update()
     {
-        /*Change_property_image_in_Wrong()*/;   
+        FindPageNum();
     }
 
     void isDeckSaveExist()
@@ -58,6 +58,9 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
     {
         if (IsDeckSaveexist == false)
             return;
+        if (TypeSlot == null)
+            return;
+
 
         TypeSlot.SetActive(true);
 
@@ -82,10 +85,13 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
     {
         if (IsDeckSaveexist == false)
             return;
-
-        if (Save_Character.character_Skill.ToString() == "Attack_Confidence") //촬영을 위한 임시 코드. 추후 기본 값이 confidence가 되지 않도록 조정해야함. 
+        if (PropertySlot == null)
             return;
-        
+
+        //if (Save_Character.character_Skill.ToString() == "Attack_Confidence") //촬영을 위한 임시 코드. 추후 기본 값이 confidence가 되지 않도록 조정해야함. 
+        //    return;
+
+        PropertySlot.SetActive(true);
         PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
 
         
@@ -109,5 +115,47 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
         SetCharacter.SetActive(false);
         Character_Sprite.SetActive(true);
+    }
+
+
+    void FindPageNum() // 현재 페이지 찾기
+    {
+        if (Page_Num == Deck_Manager.instance.Page_Num + 1)
+            return;
+
+        Page_Num = Deck_Manager.instance.Page_Num + 1;
+    }
+
+    public void ResetSpirteData() // 스프라이트 리셋 
+    {
+        
+        if (TypeSlot == null)
+            return;
+
+        if (PropertySlot == null)
+            return;
+
+        Debug.Log("sss");
+
+        TypeSlot.SetActive(false);
+        PropertySlot.SetActive(false);
+        Character_Sprite.SetActive(false);
+        SetCharacter.SetActive(true);
+        //TypeSlot = null;
+        //PropertySlot = null;
+
+    }
+
+    public void SetSprite() // 스프라이트 적용
+    {
+        Page = DeckSave.transform.GetChild(Page_Num - 1).gameObject;
+
+
+
+        Find_Save_Character();
+
+        Show_Type_Sprite();
+        Show_Property_Sprite();
+        Show_Character_Sprite();
     }
 }
