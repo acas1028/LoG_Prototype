@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CharacterStats;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -360,6 +361,23 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     alertMessage.gameObject.SetActive(false);
                     yield return StartCoroutine((bM_Character_Team1[i].GetComponent<Character>() as Character_Action).SkillAttack());
                 }
+
+                result = SkillManager.Instance.CowardCheck(bM_Character_Team1[i]);
+                if(result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    GameObject CowardCharacter = FindCowardCharacter(1);
+                    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                }
+
+                result = SkillManager.Instance.SurvivorCheck(bM_Character_Team1[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    GameObject CowardCharacter = FindSurvivorCharacter(1);
+                    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                }
+                // 분리해보자.
             }
             if(Team1Script.character_is_Killed == true)
             {
@@ -379,6 +397,22 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     alertMessage.gameObject.SetActive(false);
                     yield return StartCoroutine((bM_Character_Team2[i].GetComponent<Character>() as Character_Action).SkillAttack());
                 }
+
+                result = SkillManager.Instance.CowardCheck(bM_Character_Team2[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    GameObject CowardCharacter = FindCowardCharacter(2);
+                    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                }
+
+                result = SkillManager.Instance.SurvivorCheck(bM_Character_Team2[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    GameObject CowardCharacter = FindSurvivorCharacter(2);
+                    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                }
             }
             if (Team2Script.character_is_Killed == true)
             {
@@ -391,6 +425,77 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
 
     }
+
+    GameObject FindCowardCharacter(int TeamNumber)
+    {
+        if(TeamNumber == 1)
+        {
+            for(int i = 0; i < 5; i++)
+            {
+                foreach (var team in bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Skill == CharacterSkill.Defense_Coward)
+                    {
+                        return team;
+                    }
+                }
+            }
+        }
+
+        if (TeamNumber == 2)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                foreach (var team in bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Skill == CharacterSkill.Defense_Coward)
+                    {
+                        return team;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    GameObject FindSurvivorCharacter(int TeamNumber)
+    {
+        if (TeamNumber == 1)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                foreach (var team in bM_Character_Team1)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Skill == CharacterSkill.Balance_Survivor)
+                    {
+                        return team;
+                    }
+                }
+            }
+        }
+
+        if (TeamNumber == 2)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                foreach (var team in bM_Character_Team2)
+                {
+                    Character TCS = team.GetComponent<Character>();
+                    if (TCS.character_Skill == CharacterSkill.Balance_Survivor)
+                    {
+                        return team;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
 
     bool Check_Character_Hitted()
     {

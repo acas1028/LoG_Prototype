@@ -190,17 +190,12 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        result = Skill_Defender_Coward_Check(deadCharacter);
-        if (result) return true;
 
         if (DCS.character_Skill == CharacterSkill.Balance_Blessing)
         {
             result = Blessing_Dead(deadCharacter);
             if (result) return true;
         }
-
-        result = Skill_Balanced_Survivor_Check(deadCharacter);
-        if (result) return true;
 
         if(DCS.character_Skill == CharacterSkill.Balance_Survivor)
         {
@@ -218,6 +213,30 @@ public class SkillManager : MonoBehaviour
             result = Skill_Attack_Sturdy(deadCharacter);
             if (result) return true;
         }
+
+        return false;
+    }
+
+    public bool CowardCheck(GameObject deadCharacter)
+    {
+        bool result;
+        Character DCS = deadCharacter.GetComponent<Character>();
+
+
+        result = Skill_Balanced_Survivor_Check(deadCharacter);
+        if (result) return true;
+
+
+        return false;
+    }
+
+    public bool SurvivorCheck(GameObject deadCharacter)
+    {
+        bool result;
+        Character DCS = deadCharacter.GetComponent<Character>();
+
+        result = Skill_Balanced_Survivor_Check(deadCharacter);
+        if (result) return true;
 
         return false;
     }
