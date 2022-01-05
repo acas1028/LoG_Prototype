@@ -99,7 +99,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 c.character_Num_Of_Grid = gridNumSet[0];
                 c.character_Attack_Range = new bool[] { true, true, false, true, false, false, false, true, false };
                 c.character_Attack_Order = 1;
-                c.Debuging_Character();
 
                 c = Arrayed_Data.instance.team2[1].GetComponent<Character>();
 
@@ -107,7 +106,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 c.character_Num_Of_Grid = gridNumSet[1];
                 c.character_Attack_Range = new bool[] { false, false, false, false, false, true, false, true, true };
                 c.character_Attack_Order = 2;
-                c.Debuging_Character();
                 break;
             case (int)ArrayPhase.SECOND34:
                 c = Arrayed_Data.instance.team2[2].GetComponent<Character>();
@@ -116,7 +114,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 c.character_Num_Of_Grid = gridNumSet[2];
                 c.character_Attack_Range = new bool[] { false, true, false, false, true, false, false, true, false };
                 c.character_Attack_Order = 3;
-                c.Debuging_Character();
 
                 c = Arrayed_Data.instance.team2[3].GetComponent<Character>();
 
@@ -124,7 +121,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 c.character_Num_Of_Grid = gridNumSet[3];
                 c.character_Attack_Range = new bool[] { true, false, false, true, false, false, true, false, false };
                 c.character_Attack_Order = 4;
-                c.Debuging_Character();
                 break;
             case (int)ArrayPhase.SECOND5:
                 c = Arrayed_Data.instance.team2[4].GetComponent<Character>();
@@ -133,7 +129,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
                 c.character_Num_Of_Grid = gridNumSet[4];
                 c.character_Attack_Range = new bool[] { false, false, false, true, true, true, false, false, false };
                 c.character_Attack_Order = 5;
-                c.Debuging_Character();
                 break;
             default:
                 break;
@@ -225,7 +220,6 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         c.character_Num_Of_Grid = (int)o_gridNumber;
         c.character_Attack_Order = (int)o_attackOrder;
         is_datasync = true;
-        c.Debuging_Character();
 
 
         if (Arrayed_Data.instance.team2[character_Arrayment_Showing.Oppenent_Count].GetComponent<Character>().character_ID != 0)

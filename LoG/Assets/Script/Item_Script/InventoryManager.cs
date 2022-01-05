@@ -58,41 +58,36 @@ public class InventoryManager : MonoBehaviour
     public void AddGold()
     {
         var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "GD", Amount = 100 };
-        PlayFabClientAPI.AddUserVirtualCurrency(request, (result) => { print("100 골드 획득"); GetInventory(); }, (error) => print("골드 획득 실패"));
+        PlayFabClientAPI.AddUserVirtualCurrency(request, (result) => { print("100 골드 획득"); GetInventory(); }, (error) => { print("골드 획득 실패"); GetInventory(); });
     }
 
     public void SubtractGold()
     {
         var request = new SubtractUserVirtualCurrencyRequest() { VirtualCurrency = "GD", Amount = 100 };
-        PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) => { print("100 골드 차감"); GetInventory(); }, (error) => print("골드 차감 실패"));
-        GetInventory();
+        PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) => { print("100 골드 차감"); GetInventory(); }, (error) => { print("골드 차감 실패"); GetInventory(); });
     }
 
     public void BuyApple()
     {
         var request = new PurchaseItemRequest() { CatalogVersion = "Items", ItemId = "Apple", VirtualCurrency = "GD", Price = 500 };
-        PlayFabClientAPI.PurchaseItem(request, (result) => { print("사과 구입"); GetInventory(); }, (error) => print("사과 구입 실패"));
-        GetInventory();
+        PlayFabClientAPI.PurchaseItem(request, (result) => { print("사과 구입"); GetInventory(); }, (error) => { print("사과 구입 실패"); GetInventory(); });
     }
 
     public void BuyPeach()
     {
         var request = new PurchaseItemRequest() { CatalogVersion = "Items", ItemId = "Peach", VirtualCurrency = "GD", Price = 300 };
-        PlayFabClientAPI.PurchaseItem(request, (result) => { print("복숭아 구입"); GetInventory(); }, (error) => print("복숭아 구입 실패"));
-        GetInventory();
+        PlayFabClientAPI.PurchaseItem(request, (result) => { print("복숭아 구입"); GetInventory(); }, (error) => { print("복숭아 구입 실패"); GetInventory(); });
     }
 
     public void EatApple()
     {
         var request = new ConsumeItemRequest() { ConsumeCount = 1, ItemInstanceId = lastAppleId };
-        PlayFabClientAPI.ConsumeItem(request, (result) => { print("사과를 먹었다."); GetInventory(); }, (error) => print("사과를 먹지 못했다."));
-        GetInventory();
+        PlayFabClientAPI.ConsumeItem(request, (result) => { print("사과를 먹었다."); GetInventory(); }, (error) => { print("사과를 먹지 못했다."); GetInventory(); });
     }
 
     public void EatPeach()
     {
         var request = new ConsumeItemRequest() { ConsumeCount = 1, ItemInstanceId = lastPeachId };
-        PlayFabClientAPI.ConsumeItem(request, (result) => { print("복숭아를 먹었다."); GetInventory(); }, (error) => print("복숭아를 먹지 못했다."));
-        GetInventory();
+        PlayFabClientAPI.ConsumeItem(request, (result) => { print("복숭아를 먹었다."); GetInventory(); }, (error) => { print("복숭아를 먹지 못했다."); GetInventory(); });
     }
 }

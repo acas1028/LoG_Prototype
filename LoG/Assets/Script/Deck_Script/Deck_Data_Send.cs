@@ -17,9 +17,9 @@ public class Deck_Data_Send : MonoBehaviour
         if (instance == null)
             instance = this;
         else
-            Destroy(this.gameObject);
+            Destroy(gameObject);
 
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
 
         Save_Data = new GameObject[5, 7];
 

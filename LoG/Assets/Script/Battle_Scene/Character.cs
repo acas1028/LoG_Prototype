@@ -47,18 +47,18 @@ public class Character : MonoBehaviourPunCallbacks
 
     // 전투 전 캐릭터가 기본으로 가지고 있는 변수
     // Original Variables
-    public int character_ID { get; set; } // 캐릭터 ID
-    public CharacterType character_Type { get; set; }
-    public CharacterSkill character_Skill { get; set; }
-    public bool character_Is_Allive { get; set; } // 캐릭터 생존 유무
-    public int character_HP { get; set; } // 현재 체력
+    public int character_ID; // 캐릭터 ID
+    public CharacterType character_Type;
+    public CharacterSkill character_Skill;
+    public bool character_Is_Allive; // 캐릭터 생존 유무
+    public int character_HP; // 현재 체력
 
     public int character_MaxHP { get; set; }
     public int character_AP { get; set; } // AP
-    public int character_Attack_Damage { get; set; } // 공격력
-    public int character_Num_Of_Grid { get; set; } // 그리드 넘버
-    public int character_Attack_Order { get; set; } // 공격 순서
-    public bool[] character_Attack_Range { get; set; } // 공격 범위
+    public int character_Attack_Damage; // 공격력
+    public int character_Num_Of_Grid; // 그리드 넘버
+    public int character_Attack_Order; // 공격 순서
+    public bool[] character_Attack_Range; // 공격 범위
     public int character_Counter_Probability { get; set; } // 반격확률
     // 전투 중 활성화되는 변수
     // Battle-Oriented Variables
@@ -79,22 +79,9 @@ public class Character : MonoBehaviourPunCallbacks
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
 
-    // Debug
-    public CharacterType Debug_Type;
-    public CharacterSkill Debug_Skill;
-    public int Debug_Character_ID;
-    public bool[] Debug_character_Attack_Range;
-    public int Debug_character_Grid_Number;
-    public int Debug_Character_Damage;
-    public int Debug_Character_HP;
-    public int Debug_Character_Attack_order;
-    public int Debug_Character_Buffed_Attack;
-    public int Debug_Character_Buffed_Damaged;
-
     private void Awake()
     {
         Character_Reset();
-        Debug_character_Attack_Range = new bool[9];
         gameObject.GetComponent<SpriteRenderer>().sprite = null;
     }
 
@@ -133,20 +120,6 @@ public class Character : MonoBehaviourPunCallbacks
         killedBy = null;
         is_hit_this_turn = false;
         is_overkill = false;
-    }
-
-    public void Debuging_Character()
-    {
-        Debug_Skill = character_Skill;
-        Debug_Type = character_Type;
-        Debug_Character_ID = character_ID;
-        Debug_Character_HP = character_HP;
-        Debug_character_Attack_Range = character_Attack_Range;
-        Debug_character_Grid_Number = character_Num_Of_Grid;
-        Debug_Character_Damage = character_Attack_Damage;
-        Debug_Character_Attack_order = character_Attack_Order;
-        Debug_Character_Buffed_Attack = character_Buffed_Attack;
-        Debug_Character_Buffed_Damaged = character_Buffed_Damaged;
     }
 
     protected void setting_type(int num)

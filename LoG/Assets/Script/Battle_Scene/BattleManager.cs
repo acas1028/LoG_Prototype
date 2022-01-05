@@ -135,11 +135,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     yield return new WaitForSeconds(bM_Timegap);
                 }
             }
-            for (int i = 0; i < 5; i++)
-            {
-                bM_Character_Team1[i].GetComponent<Character>().Debuging_Character();
-                bM_Character_Team2[i].GetComponent<Character>().Debuging_Character();
-            }
 
             // 캐릭터 세팅 이후 스킬체크 과정
         }
@@ -188,7 +183,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Team1CS.character_Team_Number = 1;
             Team1CS.character_Number = Team1CS.character_Attack_Order;
             Team1CS.InitializeCharacterSprite();
-            Team1CS.Debuging_Character();
 
             if (Team1CS.character_HP != 0)
                 dummy++;
@@ -201,7 +195,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Team2CS.character_Team_Number = 2;
             Team2CS.character_Number = Team2CS.character_Attack_Order;
             Team2CS.InitializeCharacterSprite();
-            Team2CS.Debuging_Character();
       
             if (Team2CS.character_HP != 0)
                 dummy++;
@@ -588,7 +581,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     yield return new WaitForSeconds(bM_Timegap);
                 }
             }
-            team1_Character.GetComponent<Character>().Debuging_Character();
         }
         
         foreach (GameObject team2_Character in bM_Character_Team2)
@@ -606,7 +598,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     yield return new WaitForSeconds(bM_Timegap);
                 }
             }
-            team2_Character.GetComponent<Character>().Debuging_Character();
         }
         Round_Finish();
     }

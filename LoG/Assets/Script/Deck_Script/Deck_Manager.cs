@@ -6,7 +6,11 @@ using UnityEngine.EventSystems;
 
 public class Deck_Manager : MonoBehaviour
 {
-    static public Deck_Manager instance;
+    private int nowPageIdx;
+    public int NowPageIdx
+    {
+        get => nowPageIdx;
+    }
 
     public GameObject[] Slot_Type;
     public GameObject[] Slot_Property;
@@ -31,29 +35,24 @@ public class Deck_Manager : MonoBehaviour
 
     public Text[] Character_Stat;
 
-    public int Page_Num;
-    private int Pre_pageNum = -1;
-
     private void Awake()
     {
-        instance = this;
         Deck_Data = Deck_Data_Send.instance;
-    }
-    void Start()
-    {
-        Page_Num = Deck_Data_Send.instance.lastPageNum;
+        nowPageIdx = Deck_Data_Send.instance.lastPageNum;
+        Page_Slot[nowPageIdx].GetComponent<Button>().onClick.Invoke();
         Load_Deck();
-        Invoke("StartDeckClick", 0.05f); //불러올때 잘못된 특성과 스킬을 불러오는 경우가 있어 덱 페이지 1를 클릭한 체 시작하도록 함
     }
 
-    void Update()
+    public void SetNowPageIndex(int pageIdx)
     {
-
+        nowPageIdx = pageIdx;
+        if (pageIdx < 0) nowPageIdx = 0;
+        else if (pageIdx > 4) nowPageIdx = 4;
     }
+
     public void Check_Stat()
     {
         Character current = Current_Character.GetComponentInChildren<Character>();
-        current.Debuging_Character();
         Character_Stat[0].text = current.character_HP.ToString();
         Character_Stat[1].text = current.character_AP.ToString();
         Character_Stat[2].text = current.character_Attack_Damage.ToString();
@@ -69,9 +68,11 @@ public class Deck_Manager : MonoBehaviour
         Show_Property_Slot();
         Select_Skill();
     }
-    public void Click_Grid_2()
+
+    public void Click_Grid()
     {
         Character current = Current_Character.GetComponentInChildren<Character>();
+        Current_Grid = EventSystem.current.currentSelectedGameObject;
         Deck_Grid CG = Current_Grid.GetComponent<Deck_Grid>();
 
         if (CG.is_Clicked_Grid == true)
@@ -98,65 +99,42 @@ public class Deck_Manager : MonoBehaviour
     }
     public void Save_Button()
     {
-        bool cant_save = false;
         for (int i = 0; i < 7; i++)
         {
             if (Character_Slot[i].GetComponentInChildren<Character>().character_ID == 0)
             {
                 Debug.Log("캐릭터를 전부 할당해 주세요");
-                cant_save = true;
                 return;
             }
         }
 
-        if (cant_save == false)
-        {
-            Character current = Current_Character.GetComponentInChildren<Character>();
+        Character current = Current_Character.GetComponentInChildren<Character>();
 
-            for (int i = 0; i < 7; i++)
-            {
-                Character ch = Character_Slot[i].GetComponentInChildren<Character>();
-
-                if(ch.character_AP > 0)
-                {
-                    ch.character_Attack_Damage += ch.character_AP;
-                    ch.character_AP = 0;
-                    ch.Debuging_Character();
-                }
-            }
-
-            for (int i = 0; i < 7; i++)
-            {
-                if (Character_Slot[i].activeSelf && Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().character_ID == 0)
-                {
-                    Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
-                    Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Debuging_Character();
-                    deckDataSync.SetData(Page_Num, i, Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>());
-                    deckDataSync.SendLastPageNum(Page_Num);
-                }
-            }
-            Character_Stat[1].text = current.character_AP.ToString();
-            Character_Stat[2].text = current.character_Attack_Damage.ToString();
-            Character_Stat[3].text = "(" + "+" + current.character_AP + ")";
-        }
-    }
-
-    public void Auto_Save()
-    {
-        bool save = false;
         for (int i = 0; i < 7; i++)
         {
-            if (Deck_Data.Save_Data[0, i].GetComponent<Character>().character_ID==0)
+            Character ch = Character_Slot[i].GetComponentInChildren<Character>();
+
+            if(ch.character_AP > 0)
             {
-                save = true;
-                return;
+                ch.character_Attack_Damage += ch.character_AP;
+                ch.character_AP = 0;
             }
         }
-        if(save)
+
+        for (int i = 0; i < 7; i++)
         {
-            Save_Button();
+            if (Character_Slot[i].activeSelf)
+            {
+                Deck_Data.Save_Data[nowPageIdx, i].GetComponent<Character>().Copy_Character_Stat(Character_Slot[i].transform.Find("Character_Prefab").gameObject);
+                deckDataSync.SetData(nowPageIdx, i, Deck_Data.Save_Data[nowPageIdx, i].GetComponent<Character>());
+                deckDataSync.SendLastPageNum(nowPageIdx);
+            }
         }
+        Character_Stat[1].text = current.character_AP.ToString();
+        Character_Stat[2].text = current.character_Attack_Damage.ToString();
+        Character_Stat[3].text = "(" + "+" + current.character_AP + ")";
     }
+
     public void Reset_Button()
     {
         Reset_Grid();
@@ -164,13 +142,11 @@ public class Deck_Manager : MonoBehaviour
         for (int i=0;i<7;i++)
         {
             Character_Slot[i].GetComponentInChildren<Character>().Character_Reset();
-            Character_Slot[i].GetComponentInChildren<Character>().Debuging_Character();
             Character_Slot[i].GetComponent<Deck_Character>().Set_Active_Character = false;
             Character_Slot[i].SetActive(false);
             Set_Character_[i].SetActive(true);
             Slot_Property[i].GetComponent<Image>().sprite = null;
-            Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Character_Reset();
-            Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().Debuging_Character();
+            Deck_Data.Save_Data[nowPageIdx, i].GetComponent<Character>().Character_Reset();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
         }
         Skill_List.Clear();
@@ -197,7 +173,7 @@ public class Deck_Manager : MonoBehaviour
         // 로그인시, 혹은 오프라인 모드 입장시 덱 데이터를 불러온 후에 진행되도록 수정하였음
         for (int i = 0; i < 7; i++)
         {
-            Character ch = Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>();
+            Character ch = Deck_Data.Save_Data[nowPageIdx, i].GetComponent<Character>();
             Character cs = Character_Slot[i].GetComponentInChildren<Character>();
             if (ch.character_ID != 0)
             {
@@ -206,42 +182,32 @@ public class Deck_Manager : MonoBehaviour
                 Slot_Type[i].SetActive(true);
                 Slot_Property[i].GetComponent<Property_Slot>().Change_property(cs.character_Skill.ToString());
                 Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type((int)ch.character_Type);
-                cs.Copy_Character_Stat(Deck_Data.Save_Data[Page_Num, i]);
-                cs.Debuging_Character();
+                cs.Copy_Character_Stat(Deck_Data.Save_Data[nowPageIdx, i]);
             }
         }
         Load_Skill();
         
     }
 
-    IEnumerator Switch_Page()
+    public void Switch_Page()
     {
-        //Reset_Button();
-        yield return StartCoroutine("Load_Deck");
-        bool Switch = true;
         for(int i=0;i<7;i++)
         {
             Character cs = Character_Slot[i].GetComponentInChildren<Character>();
-            if(cs.character_ID==0)
-            {
-                Switch = false;
-            }
-        }
-        if(Switch == false)
-        {
-            for(int i = 0; i<7; i++)
+            if(cs.character_ID == 0)
             {
                 Set_Character_[i].SetActive(true);
                 Character_Slot[i].SetActive(false);
-                Slot_Type[i].SetActive(false);            
-                //특성 (false);
+                Slot_Type[i].SetActive(false);
             }
         }
+
         for(int i=0; i<7; i++) //덱 페이지 바뀌었을 때 스프라이트 변화
         {
             CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().SetSprite();
         }
     }
+
     private void Load_Skill()
     {
         if (Deck_Data.Save_Data[0, 0].GetComponent<Character>().character_ID == 0)
@@ -252,7 +218,7 @@ public class Deck_Manager : MonoBehaviour
         { 
             for (int i = 0; i < 7; i++)
             {
-                int num = (int)Deck_Data.Save_Data[Page_Num, i].GetComponent<Character>().character_Skill;
+                int num = (int)Deck_Data.Save_Data[nowPageIdx, i].GetComponent<Character>().character_Skill;
                 Skill_List.Add(Skill_Button[num]);
             }
             for (int i = 0; i < Skill_List.Count; i++)
@@ -294,7 +260,7 @@ public class Deck_Manager : MonoBehaviour
             }
             j++;
         }
-        switch((int)Slot_Type[j].GetComponent<Deck_Type_Slot>().Character_Type)
+        switch((int)Slot_Type[j].GetComponent<Deck_Type_Slot>().characterType)
         {
             case 1:
                 Property_Slot[0].SetActive(false);
@@ -370,10 +336,5 @@ public class Deck_Manager : MonoBehaviour
         }
         cs.Character_Setting(ID);
         Check_Stat();
-    }
-
-    void StartDeckClick()
-    {
-        Page_Slot[0].GetComponent<Button>().onClick.Invoke();
     }
 }

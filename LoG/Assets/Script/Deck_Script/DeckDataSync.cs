@@ -31,7 +31,7 @@ public class DeckDataSync : MonoBehaviour
     public void SetData(int pageNum, int deckIndex, Character character)
     {
         // 서버에 저장되는 Key 값 양식
-        // 0_3_character_type
+        // 0_3_character_stats
         // 0은 페이지 번호 (맨 앞 페이지인 경우 0)
         // 3은 해당 페이지 내에서 캐릭터의 위치, 인덱스 번호 (맨 앞 인덱스인 경우 0)
 
@@ -121,7 +121,6 @@ public class DeckDataSync : MonoBehaviour
                         {
                             character.character_Attack_Range[i] = (attack_range_temp[i] != '0');
                         }
-                        character.Debuging_Character();
                         Debug.LogFormat("받은 데이터: {0} / {1}", item.Key, item.Value.Value);
                     }
                 }

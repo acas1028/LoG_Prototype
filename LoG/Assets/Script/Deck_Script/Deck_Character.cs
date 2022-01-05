@@ -4,40 +4,34 @@ using UnityEngine;
 
 public class Deck_Character : MonoBehaviour
 {
+    Deck_Manager deckManager;
     public bool Set_Active_Character = false;
-    void Start()
+
+    private void Awake()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        deckManager = FindObjectOfType<Deck_Manager>();
     }
 
     private void OnEnable()
     {
-        Deck_Manager cs = Deck_Manager.instance;
-        for (int i = 0; i < cs.Set_Character_.Length; i++)
+        for (int i = 0; i < deckManager.Set_Character_.Length; i++)
         {
-            if(this.gameObject==cs.Set_Character_[i])
+            if(this.gameObject == deckManager.Set_Character_[i])
             {
-                cs.Set_Character_[i].SetActive(false);
+                deckManager.Set_Character_[i].SetActive(false);
                 return;
             }
         }
         Set_Active_Character = true;
 
-        cs.Current_Character = this.gameObject;
+        deckManager.Current_Character = this.gameObject;
 
     }
 
     public void Check_Stat()
     {
-        Deck_Manager cs = Deck_Manager.instance;
-        cs.Current_Character = this.gameObject;
+        deckManager.Current_Character = this.gameObject;
         int num = (int)this.gameObject.GetComponentInChildren<Character>().character_Skill;
-        cs.Pre_Skill = cs.Skill_Button[num];
+        deckManager.Pre_Skill = deckManager.Skill_Button[num];
     }
 }

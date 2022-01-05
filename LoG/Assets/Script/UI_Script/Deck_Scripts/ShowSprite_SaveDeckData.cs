@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ShowSprite_SaveDeckData : MonoBehaviour
 {
-    public GameObject DeckSave;
+    public Deck_Manager deckManager;
     public GameObject TypeSlot;
     public GameObject PropertySlot;
     public GameObject Character_Sprite;
@@ -16,14 +16,14 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
     public int Page_Num;
 
     bool IsDeckSaveexist;
-    
 
     void Start()
     {
-        DeckSave = GameObject.FindGameObjectWithTag("Deck_Save_Character");
         Page_Num = 1; // 처음은 1로 고정
-        Page = DeckSave.transform.GetChild(Page_Num - 1).gameObject;
+        Page = Deck_Data_Send.instance.transform.GetChild(Page_Num - 1).gameObject;
         IsDeckSaveexist = false;
+
+        FindPageNum();
 
         isDeckSaveExist();
         Find_Save_Character();
@@ -33,14 +33,9 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         Show_Character_Sprite();
     }
 
-    private void Update()
-    {
-        FindPageNum();
-    }
-
     void isDeckSaveExist()
     {
-        if (DeckSave == null)
+        if (Deck_Data_Send.instance == null)
             return;
 
         IsDeckSaveexist = true;
@@ -120,10 +115,10 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
     void FindPageNum() // 현재 페이지 찾기
     {
-        if (Page_Num == Deck_Manager.instance.Page_Num + 1)
+        if (Page_Num == deckManager.NowPageIdx + 1)
             return;
 
-        Page_Num = Deck_Manager.instance.Page_Num + 1;
+        Page_Num = deckManager.NowPageIdx + 1;
     }
 
     public void ResetSpirteData() // 스프라이트 리셋 
@@ -148,7 +143,8 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
     public void SetSprite() // 스프라이트 적용
     {
-        Page = DeckSave.transform.GetChild(Page_Num - 1).gameObject;
+        FindPageNum();
+        Page = Deck_Data_Send.instance.transform.GetChild(Page_Num - 1).gameObject;
 
 
 

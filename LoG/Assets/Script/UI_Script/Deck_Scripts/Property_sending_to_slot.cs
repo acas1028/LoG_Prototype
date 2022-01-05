@@ -6,21 +6,24 @@ using UnityEngine.EventSystems;
 public class Property_sending_to_slot : MonoBehaviour, IPointerClickHandler
 {
     public string property_Name;
+    Deck_Manager deckManager;
+
+    private void Awake()
+    {
+        deckManager = FindObjectOfType<Deck_Manager>();
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Deck_Manager cs = Deck_Manager.instance;
-
         int j = 0;
-
 
         if (this.GetComponent<Deck_Skill>().is_selected != true)
         {
             while (j < 7)
             {
-                if (cs.Current_Character == cs.Character_Slot[j])
+                if (deckManager.Current_Character == deckManager.Character_Slot[j])
                 {
-                    cs.Slot_Property[j].GetComponent<Property_Slot>().Change_property(property_Name);
+                    deckManager.Slot_Property[j].GetComponent<Property_Slot>().Change_property(property_Name);
                     break;
                 }
                 j++;
