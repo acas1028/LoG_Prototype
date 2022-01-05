@@ -223,7 +223,7 @@ public class SkillManager : MonoBehaviour
         Character DCS = deadCharacter.GetComponent<Character>();
 
 
-        result = Skill_Balanced_Survivor_Check(deadCharacter);
+        result = Skill_Defender_Coward_Check(deadCharacter);
         if (result) return true;
 
 

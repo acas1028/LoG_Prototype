@@ -292,4 +292,65 @@ public class Character : MonoBehaviourPunCallbacks
         stack_Survivor = copy.stack_Survivor;
 
     }
+
+    // PVE ÄÁÅÙÃ÷¿ë ÇÔ¼ö
+    public void PVE_Player_Character_Setting(int num,string StageName)
+    {
+        character_data = CSVReader.Read(StageName);
+
+        Character_Reset();
+
+        character_Is_Allive = true;
+        character_ID = (int)character_data[num]["ID"];
+        setting_type(num);
+        setting_skill(num);
+        character_HP = (int)character_data[num]["HP"];
+        character_MaxHP = character_HP;
+        character_AP = (int)character_data[num]["AP"];
+        character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
+        character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
+        Setting_AttackRange(num);
+    }
+
+    public void PVE_Enemy_Character_Setting(int num,string StageName)
+    {
+        character_data = CSVReader.Read(StageName);
+
+        Character_Reset();
+
+        character_Is_Allive = true;
+        character_ID = (int)character_data[num]["ID"];
+        setting_type(num);
+        setting_skill(num);
+        character_HP = (int)character_data[num]["HP"];
+        character_MaxHP = character_HP;
+        character_AP = (int)character_data[num]["AP"];
+        character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
+        character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
+        character_Num_Of_Grid = (int)character_data[num]["Grid_Position"];
+        Setting_AttackRange(num);
+    }
+
+    public void Setting_AttackRange(int num)
+    {
+        for(int j = 0; j < 9; j++)
+        {
+            character_Attack_Range[j] = false;
+        }
+
+        int attack_Range_Value = (int)character_data[num]["Attack_Range"];
+
+        int i = 8;
+
+        while(attack_Range_Value % 10 == 0)
+        {
+            if (attack_Range_Value % 10 == 2)
+                character_Attack_Range[i] = true;
+            else
+                character_Attack_Range[i] = false;
+            attack_Range_Value /= 10;
+
+            i--;
+        }
+    }
 }
