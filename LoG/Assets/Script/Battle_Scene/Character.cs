@@ -144,6 +144,8 @@ public class Character : MonoBehaviourPunCallbacks
 
     protected void setting_skill(int num)
     {
+        Debug.Log((string)character_data[num]["Skill"]);
+
         switch ((string)character_data[num]["Skill"])
         {
             case "ÀÚ½Å°¨":
@@ -279,7 +281,6 @@ public class Character : MonoBehaviourPunCallbacks
         setting_skill(num);
         character_HP = (int)character_data[num]["HP"];
         character_MaxHP = character_HP;
-        character_AP = (int)character_data[num]["AP"];
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
         character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
         Setting_AttackRange(num);
@@ -297,7 +298,6 @@ public class Character : MonoBehaviourPunCallbacks
         setting_skill(num);
         character_HP = (int)character_data[num]["HP"];
         character_MaxHP = character_HP;
-        character_AP = (int)character_data[num]["AP"];
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
         character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
         character_Num_Of_Grid = (int)character_data[num]["Grid_Position"];
@@ -315,7 +315,7 @@ public class Character : MonoBehaviourPunCallbacks
 
         int i = 8;
 
-        while(attack_Range_Value % 10 == 0)
+        while(attack_Range_Value % 10 != 0)
         {
             if (attack_Range_Value % 10 == 2)
                 character_Attack_Range[i] = true;
