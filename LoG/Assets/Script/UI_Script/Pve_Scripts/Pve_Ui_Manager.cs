@@ -16,7 +16,7 @@ public class Pve_Ui_Manager : MonoBehaviour
     private void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
-        cameraMove_Distance = 43.6f;
+        cameraMove_Distance = 41.1f;
         stage_Numer = 1;
     }
 
