@@ -97,8 +97,8 @@ public class Character : MonoBehaviourPunCallbacks
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.
     {
         character_ID = 0;
-        character_Type = CharacterType.Attacker;
-        character_Skill = CharacterSkill.Attack_Confidence;
+        character_Type = CharacterType.Null;  //초기화 부분에서 이쪽이 기존 것으로 되어 있어 수정해놓았습니다.
+        character_Skill = CharacterSkill.Null;
         character_Is_Allive = true;
         character_MaxHP = 0;
         character_HP = 0;

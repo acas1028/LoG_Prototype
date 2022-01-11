@@ -31,6 +31,10 @@ public class Property_Slot : MonoBehaviour
 
         switch(cs.property_Name)
         {
+            case "Null":
+                this.GetComponent<Image>().sprite = null;
+                break;
+
             //°ø°ÝÇü 
             case "Attack_ArmorPiercer":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[0];

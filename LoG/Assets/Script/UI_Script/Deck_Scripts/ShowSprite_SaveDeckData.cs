@@ -61,6 +61,10 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
         switch(Save_Character.character_Type)
         {
+            case CharacterStats.CharacterType.Null:
+                TypeSlot.GetComponent<Image>().sprite = null;
+                break;
+
             case CharacterStats.CharacterType.Attacker:
                 TypeSlot.GetComponent<Image>().sprite = TypeSlot.GetComponent<Deck_Type_Slot>().Type_Image[1];
                 break;
@@ -83,9 +87,6 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         if (PropertySlot == null)
             return;
 
-        //if (Save_Character.character_Skill.ToString() == "Attack_Confidence") //촬영을 위한 임시 코드. 추후 기본 값이 confidence가 되지 않도록 조정해야함. 
-        //    return;
-
         PropertySlot.SetActive(true);
         PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
 
@@ -93,15 +94,7 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
     }
 
-   
-
-    //void Change_property_image_in_Wrong()
-    //{
-    //    if (Save_Character.character_Skill.ToString() == PropertySlot.GetComponent<Property_Slot>().property_Name)
-    //        return;
-
-    //    PropertySlot.GetComponent<Property_Slot>().Change_property(Save_Character.character_Skill.ToString());
-    //}
+  
 
     void Show_Character_Sprite()
     {
@@ -130,14 +123,23 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         if (PropertySlot == null)
             return;
 
-        Debug.Log("sss");
-
         TypeSlot.SetActive(false);
         PropertySlot.SetActive(false);
         Character_Sprite.SetActive(false);
         SetCharacter.SetActive(true);
-        //TypeSlot = null;
-        //PropertySlot = null;
+      
+
+    }
+
+    public void CharacterSpriteReset() //캐릭터 내용물에 담긴게 없으면 캐릭터 스프라이트가 off되게 함.
+    {
+        if (TypeSlot.GetComponent<Image>().sprite != null)
+            return;
+        if (PropertySlot.GetComponent<Image>().sprite != null)
+            return;
+
+        Character_Sprite.SetActive(false);
+        SetCharacter.SetActive(true);
 
     }
 
@@ -153,5 +155,7 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         Show_Type_Sprite();
         Show_Property_Sprite();
         Show_Character_Sprite();
+
+        CharacterSpriteReset();
     }
 }
