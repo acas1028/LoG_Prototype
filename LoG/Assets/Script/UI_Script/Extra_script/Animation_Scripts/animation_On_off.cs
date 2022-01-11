@@ -34,7 +34,11 @@ public class animation_On_off : MonoBehaviour
         }
 
         animator.SetInteger("PopUp", 1);
-        StartCoroutine(WaitForAnimation(animator));
+
+        if (this.gameObject.activeInHierarchy)
+        {
+            StartCoroutine(WaitForAnimation(animator));
+        }
     }
 
     private IEnumerator WaitForAnimation(Animator animator)

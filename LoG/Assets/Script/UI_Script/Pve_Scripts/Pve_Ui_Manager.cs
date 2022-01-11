@@ -9,6 +9,7 @@ public class Pve_Ui_Manager : MonoBehaviour
     public GameObject[] StageButtons; //스테이지 버튼 모음
     public Text StageNumber_text; //스테이지 넘버 텍스트
     public GameObject returnButton;
+    public GameObject nextButton;
 
     new GameObject camera; //카메라
     float cameraMove_Distance; // 카메라의 이동거리
@@ -28,6 +29,7 @@ public class Pve_Ui_Manager : MonoBehaviour
         StageButtons[stage_Numer-1].SetActive(true);
         StageNumber_text.text = stage_Numer.ToString();
         ReturnButton_active();
+        NextButton_active();
     }
 
     public void Map_Returen_Pass() // 이전 맵으로
@@ -38,6 +40,7 @@ public class Pve_Ui_Manager : MonoBehaviour
         StageButtons[stage_Numer-1].SetActive(true);
         StageNumber_text.text = stage_Numer.ToString();
         ReturnButton_active();
+        NextButton_active();
     }
 
     
@@ -63,6 +66,18 @@ public class Pve_Ui_Manager : MonoBehaviour
         else
         {
             returnButton.SetActive(true);
+        }
+    }
+
+    void NextButton_active()
+    {
+        if (stage_Numer == 4)
+        {
+            nextButton.SetActive(false);
+        }
+        else
+        {
+            nextButton.SetActive(true);
         }
     }
 }
