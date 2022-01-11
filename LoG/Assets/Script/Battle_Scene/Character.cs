@@ -10,7 +10,8 @@ namespace CharacterStats
     {
         Attacker = 1,
         Defender,
-        Balance
+        Balance,
+        Null
     };
 
     public enum CharacterSkill
@@ -35,7 +36,8 @@ namespace CharacterStats
         Defense_Responsibility,     // 책임감
         Defense_Barrier,            // 방벽
         Defense_Encourage,          // 격려
-        Defense_Thronmail           // 가시갑옷
+        Defense_Thronmail,          // 가시갑옷
+        Null                        // 스킬이 없어요
 
     };
 }
