@@ -202,15 +202,23 @@ public class Deck_Manager : MonoBehaviour
             }
         }
 
-        for(int i=0; i<7; i++) //덱 페이지 바뀌었을 때 스프라이트 변화
+        for(int i=0; i<7; i++) //덱 페이지 바뀌었을 때 스프라이트 변화, 선택되었던 스킬 버튼 색은 다시 본래대로 변화.
         {
             CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().SetSprite();
+            Reset_Skill();
+            Skill_List.Clear(); 
+            Load_Skill();
         }
     }
 
     private void Load_Skill()
     {
         if (Deck_Data.Save_Data[0, 0].GetComponent<Character>().character_ID == 0)
+        {
+            return;
+        }
+
+        if(Deck_Data.Save_Data[nowPageIdx, 0].GetComponent<Character>().character_ID == 0) // 그 덱 페이지의 캐릭터의 아이디가 0일 경우 
         {
             return;
         }
