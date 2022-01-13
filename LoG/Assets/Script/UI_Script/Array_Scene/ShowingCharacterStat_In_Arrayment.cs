@@ -12,6 +12,9 @@ public class ShowingCharacterStat_In_Arrayment : MonoBehaviour
     public Text health_Point;// ÆË¾÷Ã¢¿¡ ¶ç¿ï Ä³¸¯ÅÍ hp
     public Text property;
 
+    public Sprite EmptyGrid;
+    public Sprite NotEmptyGrid;
+
     public void ShowingStatInarray()
     {
         grid = this.transform.parent.transform.parent.gameObject.GetComponent<Arrayment_Popup_Script>().Grid;
@@ -25,11 +28,11 @@ public class ShowingCharacterStat_In_Arrayment : MonoBehaviour
         {
             if (Character.GetComponent<Character>().character_Attack_Range[i] == true)
             {
-                attack_Grid_Tile[i].GetComponent<Image>().color = Color.red;
+                attack_Grid_Tile[i].GetComponent<Image>().sprite = NotEmptyGrid;
             }
             else
             {
-                attack_Grid_Tile[i].GetComponent<Image>().color = Color.white;
+                attack_Grid_Tile[i].GetComponent<Image>().sprite =EmptyGrid;
             }
         }
 

@@ -13,6 +13,9 @@ public class ShowingCharacterStats : MonoBehaviour
     public Text health_Point;// ÆË¾÷Ã¢¿¡ ¶ç¿ï Ä³¸¯ÅÍ hp
     public Text property_text; //ÆË¾÷Ã¢¿¡ ¶ç¿ï Ä³¸¯ÅÍ Æ¯¼º
 
+    public Sprite EmptyGrid;
+    public Sprite NotEmptyGrid;
+
     int lastPageNum;
 
 
@@ -40,11 +43,11 @@ public class ShowingCharacterStats : MonoBehaviour
         {
             if(prefabCharacter.GetComponent<Character>().character_Attack_Range[i]== true)
             {
-                attack_Grid_Tile[i].GetComponent<Image>().color = Color.red;
+                attack_Grid_Tile[i].GetComponent<Image>().sprite = NotEmptyGrid;
             }
             else
             {
-                attack_Grid_Tile[i].GetComponent<Image>().color = Color.white;
+                attack_Grid_Tile[i].GetComponent<Image>().sprite = EmptyGrid;
             }
         }
 
