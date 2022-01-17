@@ -10,6 +10,7 @@ public class GoodsDataController : MonoBehaviour
 
     public List<Sprite> imageList;
     public List<string> nameList;
+    [TextArea]
     public List<string> descriptionList;
     public List<int> ValueList;
 

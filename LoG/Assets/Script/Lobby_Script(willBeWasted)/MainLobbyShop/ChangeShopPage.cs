@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivateShop : MonoBehaviour
+public class ChangeShopPage : MonoBehaviour
 {
-    public GameObject Shop;
+    public GameObject currentPage;
+    public GameObject nextPage;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,17 +18,12 @@ public class ActivateShop : MonoBehaviour
         
     }
 
-    public void OpenShop()
-    {
-        Shop.SetActive(true);
-    }
-
-    public void CloseShop()
+    public void ChangePage()
     {
         GameObject description = GameObject.FindWithTag("Description_Popup");
-        if(description != null)
+        if (description != null)
             description.SetActive(false);
-
-        Shop.SetActive(false);
+        nextPage.SetActive(true);
+        currentPage.SetActive(false);
     }
 }
