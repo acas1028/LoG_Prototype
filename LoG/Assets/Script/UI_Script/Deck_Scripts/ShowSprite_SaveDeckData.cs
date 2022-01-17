@@ -19,11 +19,16 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
     void Start()
     {
-        Page_Num = 1; // 처음은 1로 고정
-        Page = Deck_Data_Send.instance.transform.GetChild(Page_Num - 1).gameObject;
+        //Page_Num = 1; // 처음은 1로 고정
+        //Page = Deck_Data_Send.instance.transform.GetChild(Page_Num - 1).gameObject; //수정중...
         IsDeckSaveexist = false;
 
         FindPageNum();
+        Debug.Log(Page_Num);
+
+        Page = Deck_Data_Send.instance.transform.GetChild(Page_Num - 1).gameObject;
+
+        CharacterSpriteReset(); //가설. 
 
         isDeckSaveExist();
         Find_Save_Character();
