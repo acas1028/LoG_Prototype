@@ -26,9 +26,7 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         FindPageNum();
         Debug.Log(Page_Num);
 
-        Page = Deck_Data_Send.instance.transform.GetChild(Page_Num - 1).gameObject;
-
-        CharacterSpriteReset(); //°¡¼³. 
+        Page = Deck_Data_Send.instance.transform.GetChild(Page_Num - 1).gameObject; 
 
         isDeckSaveExist();
         Find_Save_Character();
