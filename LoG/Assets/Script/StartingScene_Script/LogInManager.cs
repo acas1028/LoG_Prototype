@@ -28,6 +28,9 @@ public class LogInManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(PlayFabSettings.TitleId)) PlayFabSettings.TitleId = "7CCDF"; // 우리 게임의 PlayFab ID는 7CCDF 입니다.
 
+        emailInput.text = PlayerPrefs.GetString("userID");
+        passwordInput.text = PlayerPrefs.GetString("userPassword");
+
         logInButton.onClick.AddListener(LogIn);
         signInButton.onClick.AddListener(SignIn);
         noticeText.text = string.Empty;
@@ -45,6 +48,8 @@ public class LogInManager : MonoBehaviour
 
     void OnLogInSuccess(LoginResult result) {
         Debug.Log("Log-in Success : 로그인 성공");
+        PlayerPrefs.SetString("userID", emailInput.text);
+        PlayerPrefs.SetString("userPassword", passwordInput.text);
         SceneManager.LoadScene("MainLobbyScene");
     }
 

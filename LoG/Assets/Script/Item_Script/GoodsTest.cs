@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
 
-public class InventoryManager : MonoBehaviour
+public class GoodsTest : MonoBehaviour
 {
     private string playfabId;
     private string lastAppleId;
