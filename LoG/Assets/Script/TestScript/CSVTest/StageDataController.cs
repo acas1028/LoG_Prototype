@@ -11,7 +11,8 @@ public class StageDataController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         StageName = "PVE_Stage/PVE_Character_Stage" + CSVManager.Instance.StageNumber.ToString();
 

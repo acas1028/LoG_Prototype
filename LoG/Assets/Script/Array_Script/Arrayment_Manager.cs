@@ -606,7 +606,6 @@ public class Arrayment_Manager : MonoBehaviourPun
     [PunRPC]
     private void Cancle_Sync(int i)
     {
-        Debug.Log("Cancle");
         arrData_Sync.DataSync(i);
         if(character_Arrayment_Showing.is_Mine==true)
         {
