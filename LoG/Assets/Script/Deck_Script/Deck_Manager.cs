@@ -39,7 +39,7 @@ public class Deck_Manager : MonoBehaviour
     {
         Deck_Data = Deck_Data_Send.instance;
         nowPageIdx = Deck_Data_Send.instance.lastPageNum;
-        Page_Slot[nowPageIdx].GetComponent<Button>().onClick.Invoke();
+        Page_Slot[0].GetComponent<Button>().onClick.Invoke();
         Load_Deck();
     }
 
@@ -205,10 +205,24 @@ public class Deck_Manager : MonoBehaviour
         for(int i=0; i<7; i++) //덱 페이지 바뀌었을 때 스프라이트 변화, 선택되었던 스킬 버튼 색은 다시 본래대로 변화.
         {
             CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().SetSprite();
-            Reset_Skill();
-            Skill_List.Clear(); 
-            Load_Skill();
         }
+
+        for(int i=0; i<Grid_Button.Length;i++)
+        {
+            Button Grid = Grid_Button[i].GetComponent<Button>();
+            SpriteState spriteState = Grid.spriteState;
+            spriteState.disabledSprite = Grid_disselected_sprite;
+            spriteState.highlightedSprite = Grid_disselected_sprite;
+            spriteState.pressedSprite = Grid_disselected_sprite;
+            spriteState.selectedSprite = Grid_disselected_sprite;
+            Grid.spriteState = spriteState;
+            Grid.GetComponent<Image>().sprite = Grid_disselected_sprite;
+            Grid_Button[i].GetComponent<Deck_Grid>().is_Clicked_Grid = false;
+        }
+
+        Reset_Skill();
+        Skill_List.Clear();
+        Load_Skill();
     }
 
     private void Load_Skill()
