@@ -205,6 +205,7 @@ public class Deck_Manager : MonoBehaviour
         for(int i=0; i<7; i++) //덱 페이지 바뀌었을 때 스프라이트 변화, 선택되었던 스킬 버튼 색은 다시 본래대로 변화.
         {
             CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().SetSprite();
+            Character_Slot[i].GetComponent<Image>().color = Color.white;
         }
 
         for(int i=0; i<Grid_Button.Length;i++)
