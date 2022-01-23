@@ -165,10 +165,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5917421473737087955}
-  - component: {fileID: 5388105365773550057}
   m_Layer: 5
   m_Name: DescriptionPopup
-  m_TagString: Description_Popup
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -195,20 +194,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5388105365773550057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6834213640710243614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca56e5e56f585c94aa70e82ee9d0a3da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masteryName: {fileID: 1930688012046426507}
-  masteryDescription: {fileID: 8083285446093596690}
 --- !u!1 &7534760869402578052
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +207,6 @@ GameObject:
   - component: {fileID: 7534760869402578057}
   - component: {fileID: 7534760869402578054}
   - component: {fileID: 4594135254855992774}
-  - component: {fileID: 4744674864900929398}
   m_Layer: 5
   m_Name: ShopGoods
   m_TagString: Untagged
@@ -334,7 +318,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4744674864900929398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DescriptionPopupController, Assembly-CSharp
         m_MethodName: ActivateDescriptionPopup
         m_Mode: 1
@@ -359,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Goods_Data: 1
+  descriptionPopup: {fileID: 6834213640710243614}
   imageList:
   - {fileID: 21300000, guid: 2715d7fcdbcf5804f909676471639ac3, type: 3}
   - {fileID: 21300000, guid: 1451eb4355fba4c46a5db121b74adc1f, type: 3}
@@ -403,61 +388,10 @@ MonoBehaviour:
   - "\uBC29\uBCBD"
   - "\uACA9\uB824"
   - "\uAC00\uC2DC\uAC11\uC637"
-  descriptionList:
-  - "\uC8FC\uBCC0\uC5D0 \uC544\uAD70\uC774 2\uBA85 \uC774\uC0C1 \uC788\uC744 \uC2DC\n\uC8FC\uB294
-    \uD53C\uD574\uAC00 \uC99D\uAC00\uD55C\uB2E4."
-  - "\uACF5\uACA9 \uD6C4 \uC801\uC744 \uCC98\uCE58 \uC2DC\n\uD55C \uBC88 \uB354 \uACF5\uACA9\uD55C\uB2E4."
-  - "HP\uAC00 \uAC10\uC18C\uB420 \uB54C\uB9C8\uB2E4\n\uC8FC\uB294 \uD53C\uD574\uAC00
-    \uC99D\uAC00\uD55C\uB2E4."
-  - "\uB0A8\uC740 HP\uAC00 \uAC00\uC7A5 \uB0AE\uC740 \uC801\uC744 \uACF5\uACA9\uD55C\uB2E4."
-  - "\uBC29\uC5B4\uD615 \uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574\uAC00 \uC99D\uAC00\uD55C\uB2E4."
-  - "\uBC1B\uB294 \uD53C\uD574\uB97C 1\uD68C \uBB34\uC2DC\uD55C\uB2E4."
-  - "\uC77C\uACA9\uC5D0 \uC0AC\uB9DD \uC2DC\nHP\uB97C 1 \uB0A8\uAE30\uACE0 \uBC18\uACA9\uD55C\uB2E4."
-  - "\uBC14\uB85C \uB4A4\uC758 \uC544\uAD70\uC758 \uC8FC\uB294 \uD53C\uD574\uB97C
-    \uC99D\uAC00\uC2DC\uD0A8\uB2E4.\n\uBC14\uB85C \uC55E\uC758 \uC544\uAD70\uC758
-    \uBC1B\uB294 \uD53C\uD574\uB97C \uAC10\uC18C\uC2DC\uD0A8\uB2E4."
-  - "\uC544\uAD70 \uB0B4 \uCCAB \uACF5\uACA9\uC77C \uC2DC \uC8FC\uB294 \uD53C\uD574\uAC00
-    \uC99D\uAC00\uD55C\uB2E4.\n\uC544\uAD70 \uB0B4 \uB9C8\uC9C0\uB9C9 \uACF5\uACA9\uC77C
-    \uC2DC \uBC1B\uB294 \uD53C\uD574\uAC00 \uAC10\uC18C\uD55C\uB2E4."
-  - "\uC790\uC2E0\uACFC \uAC19\uC740 \uC704\uCE58\uC758 \n\uC0C1\uB300\uC758 \uACF5\uACA9\uB825\uC744
-    \uAC10\uC18C\uC2DC\uD0A8\uB2E4."
-  - "\uC544\uAD70\uC774 \uC8FD\uC744\uC218\uB85D\n\uB2A5\uB825\uCE58\uAC00 \uC601\uAD6C\uC801\uC73C\uB85C
-    \uC0C1\uC2B9\uD55C\uB2E4."
-  - "\uC790\uC2E0\uACFC \uB9C8\uC8FC\uD55C \uC0C1\uB300\uB4E4\uC5D0\uAC8C \uC800\uC8FC\uB97C
-    \uAC74\uB2E4.\n\uC800\uC8FC\uC790\uAC00 \uC0AC\uB9DD \uC2DC \uC800\uC8FC \uB300\uC0C1\uC758
-    \uB2A5\uB825\uCE58\uAC00 \uAC10\uC18C\uD55C\uB2E4."
-  - "\uBC18\uACA9 \uC2DC \uACF5\uACA9\uC790\uC758 \uC8FC\uBCC0\uAE4C\uC9C0 \uBC18\uACA9\uD55C\uB2E4."
-  - "\uC0AC\uB9DD \uC2DC \uD655\uB960\uC801\uC73C\uB85C \uC790\uC2E0\uC744 \uC8FD\uC778\n\uC0C1\uB300\uBC29\uB3C4
-    \uAC19\uC774 \uC0AC\uB9DD\uD55C\uB2E4."
-  - "\uACF5\uACA9\uD55C \uC801\uC758 \uACF5\uACA9\uB825\uC744 \uAC10\uC18C\uC2DC\uD0A8\uB2E4."
-  - "\uC804\uD22C\uC2DC\uC791 \uC2DC \uBC1B\uB294 \uD53C\uD574\uAC00 \uAC10\uC18C\uD55C\uB2E4.\n\uC544\uAD70\uC774
-    \uC8FD\uC744 \uB54C\uB9C8\uB2E4 \uBC1B\uB294 \uD53C\uD574\uAC00 \uC99D\uAC00\uD55C\uB2E4."
-  - "\uCCAB \uD53C\uACA9 \uC774\uD6C4 \uBC1B\uB294 \uD53C\uD574\uAC00 \uAC10\uC18C\uD55C\uB2E4."
-  - "\uBC29\uC5B4\uD615\uC774 \uC790\uC2E0\uBFD0\uC77C \uACBD\uC6B0\n\uC804\uCCB4
-    \uB2A5\uB825\uCE58\uAC00 \uC0C1\uC2B9\uD55C\uB2E4."
-  - "\uBC14\uB85C \uB4A4\uC5D0 \uC544\uAD70\uC774 \uC788\uC744 \uC2DC\n\uC11C\uB85C
-    \uBC1B\uB294 \uD53C\uD574\uAC00 \uAC10\uC18C\uD55C\uB2E4."
-  - "\uD53C\uACA9 \uC2DC \uB4A4\uCABD\uC758 \uC544\uAD70\uB4E4\uC774\n\uC8FC\uB294
-    \uD53C\uD574\uAC00 \uC99D\uAC00\uD55C\uB2E4."
-  - "\uBC18\uACA9 \uC2DC \uC790\uC2E0 \uACF5\uACA9\uB825\uC758\n3\uBC30\uB85C \uBC18\uACA9\uD55C\uB2E4."
-  ValueList: 2c010000c80000002c0100002c01000090010000900100002c010000c8000000c800000064000000c8000000c8000000c8000000c8000000c8000000c8000000c8000000c8000000c8000000c8000000c8000000
-  GoodsImage: {fileID: 7534760871222741005}
-  GoodsPrice: {fileID: 7534760870652823937}
-  GoodsName: 
-  GoodsDescription: 
---- !u!114 &4744674864900929398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7534760869402578052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e253220778f9b943ad821c4bacd9f2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Popup: {fileID: 6834213640710243614}
+  itemImage: {fileID: 7534760871222741005}
+  itemName: {fileID: 1930688012046426507}
+  itemDescription: {fileID: 8083285446093596690}
+  itemCost: {fileID: 7534760870652823937}
 --- !u!1 &7534760870652824063
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +404,7 @@ GameObject:
   - component: {fileID: 7534760870652823936}
   - component: {fileID: 7534760870652823937}
   m_Layer: 5
-  m_Name: Value
+  m_Name: Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

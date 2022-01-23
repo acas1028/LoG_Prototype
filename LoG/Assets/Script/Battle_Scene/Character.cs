@@ -36,7 +36,7 @@ namespace CharacterStats
         Defense_Responsibility,     // Ã¥ÀÓ°¨
         Defense_Barrier,            // ¹æº®
         Defense_Encourage,          // °Ý·Á
-        Defense_Thronmail,          // °¡½Ã°©¿Ê
+        Defense_Thornmail,          // °¡½Ã°©¿Ê
         Null                        // ½ºÅ³ÀÌ ¾ø¾î¿ä
 
     };
@@ -210,7 +210,7 @@ public class Character : MonoBehaviourPunCallbacks
                 character_Skill = CharacterSkill.Defense_Encourage;
                 break;
             case "°¡½Ã°©¿Ê":
-                character_Skill = CharacterSkill.Defense_Thronmail;
+                character_Skill = CharacterSkill.Defense_Thornmail;
                 break;
 
 

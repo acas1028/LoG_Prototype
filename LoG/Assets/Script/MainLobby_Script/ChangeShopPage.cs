@@ -20,9 +20,6 @@ public class ChangeShopPage : MonoBehaviour
 
     public void ChangePage()
     {
-        GameObject description = GameObject.FindWithTag("Description_Popup");
-        if (description != null)
-            description.SetActive(false);
         nextPage.SetActive(true);
         currentPage.SetActive(false);
     }

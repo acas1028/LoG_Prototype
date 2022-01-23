@@ -31,9 +31,9 @@ public class PurchaseButton : MonoBehaviour
             dum.SetActive(false);
 
 
-        imageData = ShopGoods.GetComponent<GoodsDataController>().GoodsImage.sprite;
-        priceData = ShopGoods.GetComponent<GoodsDataController>().GoodsPrice.text;
-        nameData = ShopGoods.GetComponent<GoodsDataController>().GoodsName;
+        //imageData = ShopGoods.GetComponent<GoodsDataController>().GoodsImage.sprite;
+        //priceData = ShopGoods.GetComponent<GoodsDataController>().GoodsPrice.text;
+        //nameData = ShopGoods.GetComponent<GoodsDataController>().GoodsName;
 
         GameObject popupController;
 

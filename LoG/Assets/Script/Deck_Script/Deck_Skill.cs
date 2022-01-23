@@ -121,7 +121,7 @@ public class Deck_Skill : MonoBehaviour
                 case CharacterSkill.Defense_Encourage:
                     D_Character.Character_Setting(20);
                     break;
-                case CharacterSkill.Defense_Thronmail:
+                case CharacterSkill.Defense_Thornmail:
                     D_Character.Character_Setting(21);
                     break;
             }

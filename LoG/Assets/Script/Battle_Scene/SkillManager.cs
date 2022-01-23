@@ -264,7 +264,7 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        if(counterAttacker.GetComponent<Character>().character_Skill == CharacterSkill.Defense_Thronmail)
+        if(counterAttacker.GetComponent<Character>().character_Skill == CharacterSkill.Defense_Thornmail)
         {
             result = Thronmail_Production(counterAttacker);
             if (result) return true;
@@ -1740,7 +1740,7 @@ public class SkillManager : MonoBehaviour
         {
             Character TCS = team.GetComponent<Character>();
 
-            if(TCS.character_Skill == CharacterSkill.Defense_Thronmail)
+            if(TCS.character_Skill == CharacterSkill.Defense_Thornmail)
             {
                 if(is_before_counter == true)
                 {
@@ -1756,7 +1756,7 @@ public class SkillManager : MonoBehaviour
         {
             Character TCS = team.GetComponent<Character>();
 
-            if (TCS.character_Skill == CharacterSkill.Defense_Thronmail)
+            if (TCS.character_Skill == CharacterSkill.Defense_Thornmail)
             {
                 if (is_before_counter == true)
                 {
