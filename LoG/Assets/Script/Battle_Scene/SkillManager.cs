@@ -587,6 +587,7 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 9)
             {
                 CCS.character_Buffed_Damaged += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 2)
             {
@@ -596,6 +597,7 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 10)
             {
                 CCS.character_Buffed_Damaged += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
         }
         else
@@ -608,6 +610,7 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 1 && CCS.character_Attack_Order == 10)
             {
                 CCS.character_Buffed_Damaged += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 1)
             {
@@ -617,6 +620,7 @@ public class SkillManager : MonoBehaviour
             if (CCS.character_Team_Number == 2 && CCS.character_Attack_Order == 9)
             {
                 CCS.character_Buffed_Damaged += 20;
+                GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
             }
         }
 
@@ -639,7 +643,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Damaged += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
             if (CCS.character_Num_Of_Grid % 3 == 2)
@@ -648,7 +655,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Damaged += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
                     {
                         TCS.character_Buffed_Attack += 20;
@@ -679,7 +689,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Damaged += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
             if (CCS.character_Num_Of_Grid % 3 == 2)
@@ -688,7 +701,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Damaged += 20;
+                        GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
                     {
                         TCS.character_Buffed_Attack += 20;
@@ -728,7 +744,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Damaged -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
             if (CCS.character_Num_Of_Grid % 3 == 2)
@@ -737,9 +756,15 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Damaged -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Attack -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
 
@@ -749,7 +774,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Attack -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
         }
@@ -762,7 +790,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Damaged -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
             if (CCS.character_Num_Of_Grid % 3 == 2)
@@ -771,9 +802,15 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid - 1)
+                    {
                         TCS.character_Buffed_Damaged -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Attack -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
 
@@ -783,7 +820,10 @@ public class SkillManager : MonoBehaviour
                 {
                     Character TCS = team.GetComponent<Character>();
                     if (TCS.character_Num_Of_Grid == CCS.character_Num_Of_Grid + 1)
+                    {
                         TCS.character_Buffed_Attack -= 20;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    }
                 }
             }
         }
@@ -799,6 +839,7 @@ public class SkillManager : MonoBehaviour
             if(CCS.character_Num_Of_Grid == BattleManager.Instance.Reverse_Enemy(enemy.GetComponent<Character>().character_Num_Of_Grid))
             {
                 enemy.GetComponent<Character>().character_Buffed_Attack -= 40;
+                GridManager.Instance.Create_Nerfed_Grid(enemy.GetComponent<Character>().character_Team_Number, enemy.GetComponent<Character>().character_Num_Of_Grid);
             }
         }
 
@@ -957,12 +998,17 @@ public class SkillManager : MonoBehaviour
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 30;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+
                     }
                     if(TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                 }
             }
@@ -976,12 +1022,14 @@ public class SkillManager : MonoBehaviour
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                 }
             }
@@ -998,18 +1046,24 @@ public class SkillManager : MonoBehaviour
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                 }
             }
@@ -1023,18 +1077,24 @@ public class SkillManager : MonoBehaviour
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid + 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                 }
             }
@@ -1051,12 +1111,16 @@ public class SkillManager : MonoBehaviour
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                 }
             }
@@ -1070,12 +1134,16 @@ public class SkillManager : MonoBehaviour
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                     if (TCS.character_Num_Of_Grid == cursedgrid - 1)
                     {
                         TCS.character_HP -= (TCS.character_MaxHP / 10 * 3);
                         TCS.character_Buffed_Attack -= 30;
                         TCS.character_Counter_Probability -= 10;
+
+                        GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     }
                 }
             }
@@ -1339,6 +1407,8 @@ public class SkillManager : MonoBehaviour
             killedBy.GetComponent<Character>().character_HP -= killedBy.GetComponent<Character>().character_HP / 2;
             killedBy.GetComponent<Character>().character_Buffed_Attack -= 50;
             killedBy.GetComponent<Character>().character_Counter_Probability -= 40;
+
+            GridManager.Instance.Create_Nerfed_Grid(killedBy.GetComponent<Character>().character_Team_Number, killedBy.GetComponent<Character>().character_Num_Of_Grid);
         }
         return true;
     }
@@ -1377,6 +1447,8 @@ public class SkillManager : MonoBehaviour
                     if (damaged.GetComponent<Character>().character_Num_Of_Grid == i + 1)
                     {
                         damaged.GetComponent<Character>().character_Attack_Damage -= 40;
+
+                        GridManager.Instance.Create_Nerfed_Grid(damaged.GetComponent<Character>().character_Team_Number, damaged.GetComponent<Character>().character_Num_Of_Grid);
                     }
                 }
             }
@@ -1393,7 +1465,9 @@ public class SkillManager : MonoBehaviour
         Character CCS = character.GetComponent<Character>();
 
         CCS.character_Buffed_Damaged += 60;
-
+     
+        GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
+        
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character, "∞Ã¿Ô¿Ã");
 
@@ -1414,6 +1488,8 @@ public class SkillManager : MonoBehaviour
                 if(TCS.character_Skill == CharacterSkill.Defense_Coward)
                 {
                     TCS.character_Buffed_Damaged -= 30;
+
+                    GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(team, "∞Ã¿Ô¿Ã");
                     return true;
@@ -1429,6 +1505,8 @@ public class SkillManager : MonoBehaviour
                 if (TCS.character_Skill == CharacterSkill.Defense_Coward)
                 {
                     TCS.character_Buffed_Damaged -= 30;
+
+                    GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(team, "∞Ã¿Ô¿Ã");
                     return true;
@@ -1448,6 +1526,10 @@ public class SkillManager : MonoBehaviour
                 TCS.is_patience_buffed = true;
                 TCS.character_Buffed_Damaged += 40;
                 TCS.is_hit_this_turn = false;
+
+                
+                GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+               
                 skillmessage.SetActive(true);
                 skillmessage.GetComponent<SkillMessage>().Message(hittedCharacter, "¿Œ≥ªΩ…");
                 return true;
@@ -1529,6 +1611,8 @@ public class SkillManager : MonoBehaviour
                     TCS.character_Buffed_Damaged += 20;
                     CCS.character_Buffed_Damaged += 20;
 
+                    GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
+                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(character, "πÊ∫Æ");
 
@@ -1549,6 +1633,8 @@ public class SkillManager : MonoBehaviour
                     TCS.character_Buffed_Damaged += 20;
                     CCS.character_Buffed_Damaged += 20;
 
+                    GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
+                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(character, "πÊ∫Æ");
 
@@ -1573,6 +1659,9 @@ public class SkillManager : MonoBehaviour
                 {
                     TCS.character_Buffed_Damaged -= 20;
                     CCS.character_Buffed_Damaged -= 20;
+
+                    GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    GridManager.Instance.Create_Nerfed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
                 }
             }
         }
@@ -1588,6 +1677,9 @@ public class SkillManager : MonoBehaviour
                 {
                     TCS.character_Buffed_Damaged -= 20;
                     CCS.character_Buffed_Damaged -= 20;
+
+                    GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    GridManager.Instance.Create_Nerfed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
                 }
             }
         }

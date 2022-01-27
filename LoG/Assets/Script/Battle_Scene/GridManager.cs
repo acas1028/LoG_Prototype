@@ -83,5 +83,20 @@ public class GridManager : MonoBehaviour
             Destroy(BuffedGrid, BattleManager.Instance.bM_AttackTimegap);
         }
     }
+
+    public void Create_Nerfed_Grid(int Team_Num,int Nerfed_Grid_Num)
+    {
+        if(Team_Num == 1)
+        {
+            GameObject NerfedGrid = Instantiate(NerfedEffect, Team1_Map[Nerfed_Grid_Num - 1].transform.position, Quaternion.identity);
+            Destroy(NerfedGrid, BattleManager.Instance.bM_AttackTimegap);
+        }
+
+        else
+        {
+            GameObject NerfedGrid = Instantiate(NerfedEffect, Team2_Map[Nerfed_Grid_Num - 1].transform.position, Quaternion.identity);
+            Destroy(NerfedGrid, BattleManager.Instance.bM_AttackTimegap);
+        }
+    }
 }
  

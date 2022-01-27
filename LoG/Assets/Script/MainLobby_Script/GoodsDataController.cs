@@ -41,6 +41,10 @@ public class GoodsDataController : MonoBehaviour {
     }
 
     void ToggleDescription() {
+        GameObject description = GameObject.FindWithTag("Description_Popup");
+        if (description != null)
+            description.SetActive(false);
+
         descriptionPopup.SetActive(!descriptionPopup.activeSelf);
     }
 }
