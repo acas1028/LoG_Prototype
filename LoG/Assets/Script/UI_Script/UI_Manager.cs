@@ -23,7 +23,7 @@ public class UI_Manager : MonoBehaviourPunCallbacks
 
     public void BackToLobby()
     {
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("MainLobbyScene");
     }
 
     public void LeaveRoom()

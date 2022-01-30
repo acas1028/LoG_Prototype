@@ -34,6 +34,7 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
         Show_Type_Sprite();
         Show_Property_Sprite();
         Show_Character_Sprite();
+        CharacterSpriteReset();
     }
 
     void isDeckSaveExist()
