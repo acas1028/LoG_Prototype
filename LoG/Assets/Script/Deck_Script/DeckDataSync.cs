@@ -11,7 +11,6 @@ using CharacterStats;
 public class DeckDataSync : MonoBehaviour
 {
     public static DeckDataSync Instance;
-    private string playfabId;
     bool isGetAllData;
 
     // Start is called before the first frame update
@@ -22,10 +21,12 @@ public class DeckDataSync : MonoBehaviour
         else
             Destroy(gameObject);
 
-        playfabId = PlayerPrefs.GetString("PlayFabId");
-        if (playfabId == string.Empty)
-            Debug.LogError("로그인을 먼저 하십시오.");
+        if (!PlayFabClientAPI.IsClientLoggedIn())
+            Debug.LogError("로그인이 필요합니다.");
+
         isGetAllData = false;
+
+        GetData();
     }
 
     public void SetData(int pageNum, int deckIndex, Character character)
@@ -79,7 +80,7 @@ public class DeckDataSync : MonoBehaviour
     {
         int lastPageNum = -1;
 
-        var request = new GetUserDataRequest() { PlayFabId = playfabId };
+        var request = new GetUserDataRequest();
 
         PlayFabClientAPI.GetUserData(request,
             result =>
