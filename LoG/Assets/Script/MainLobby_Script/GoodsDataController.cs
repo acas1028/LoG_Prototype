@@ -30,6 +30,13 @@ public class GoodsDataController : MonoBehaviour {
         GetSkillItem();
     }
 
+    private void OnEnable() {
+        if (UserDataSynchronizer.Instance.unlockedSkillList.Contains(skill)) {
+            purchaseButton.interactable = false;
+            itemPrice.text = "보유중";
+        }
+    }
+
     void GetSkillItem() {
         PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = "Skill" },
             result => {
@@ -39,18 +46,23 @@ public class GoodsDataController : MonoBehaviour {
                         itemName.text = item.DisplayName;
                         itemDescription.text = item.Description;
                         itemPrice.text = item.VirtualCurrencyPrices["CO"].ToString();
-                        purchaseButton.interactable = true;
+
+                        if (UserDataSynchronizer.Instance.unlockedSkillList.Contains(skill)) {
+                            purchaseButton.interactable = false;
+                            itemPrice.text = "보유중";
+                        }
                         
                         return;
                     }
                 }
                 print("Skill_" + skill.ToString() + " 발견 실패");
-            }, error => print("Skill_" + skill.ToString() + " 아이템 불러오기 실패: " + error.ErrorMessage));
+            }, error => print("Skill_" + skill.ToString() + " 아이템 불러오기 실패: " + error.ErrorMessage)
+        );
     }
 
-    void ToggleDescription() {
+    public void ToggleDescription() {
         GameObject description = GameObject.FindWithTag("Description_Popup");
-        if (description != null)
+        if (description != null && description != descriptionPopup)
             description.SetActive(false);
 
         descriptionPopup.SetActive(!descriptionPopup.activeSelf);

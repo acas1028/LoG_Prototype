@@ -7,16 +7,18 @@ using PlayFab.ClientModels;
 using CharacterStats;
 
 // UserInventory에 있는 유저의 재화를 바탕으로 서버와 연동하는 곳
-// 해킹의 위험이 있으므로 정보은닉을 최대한으로 하여 신중하게 작성하여야 함
-public class UserDataSynchronizer : MonoBehaviour {
-    [SerializeField] UIDataSynchronizer uiData;
+public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
 
-    string nickname;
-    int coin;
+    public bool isAllDataLoaded;
+
+    public string nickname;
+    public int coin;
     public List<CharacterSkill> unlockedSkillList = new List<CharacterSkill>();
-    Dictionary<CharacterSkill, string> unlockedSkillInstanceIdList = new Dictionary<CharacterSkill, string>();
+    public Dictionary<CharacterSkill, string> unlockedSkillInstanceIdList = new Dictionary<CharacterSkill, string>();
 
     void OnEnable() {
+        isAllDataLoaded = false;
+
         if (!PlayFabClientAPI.IsClientLoggedIn())
             Debug.LogError("로그인이 필요합니다.");
         else
@@ -24,9 +26,13 @@ public class UserDataSynchronizer : MonoBehaviour {
     }
 
     public void GetUserDataFromServer() {
+        bool result1 = false;
+        bool result2 = false;
+
         PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), (result) => {
             nickname = result.AccountInfo.Username;
-            uiData.SetNickName(nickname);
+            result1 = true;
+            isAllDataLoaded = result1 && result2;
         }, (error) => print("계정 정보 불러오기 실패"));
 
         PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), (result) => {
@@ -42,21 +48,9 @@ public class UserDataSynchronizer : MonoBehaviour {
                     unlockedSkillInstanceIdList.Add(characterSkill, item.ItemInstanceId);
                 }
             }
-
-            uiData.SetCoin(coin.ToString());
             print("인벤토리 불러오기 성공");
+            result2 = true;
+            isAllDataLoaded = result1 && result2;
         }, (error) => print("인벤토리 불러오기 실패"));
-    }
-
-    public string GetNickname() {
-        return nickname;
-    }
-
-    public int GetCoin() {
-        return coin;
-    }
-
-    public List<CharacterSkill> GetUnlockedSkillList() {
-        return unlockedSkillList;
     }
 }

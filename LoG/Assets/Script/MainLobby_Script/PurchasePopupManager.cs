@@ -8,7 +8,7 @@ using PlayFab.ClientModels;
 
 public class PurchasePopupManager : MonoBehaviour
 {
-    [SerializeField] UserDataSynchronizer data;
+    UserDataSynchronizer data;
 
     [SerializeField] Button[] closeButtons;
     [SerializeField] Image goodsImage;
@@ -20,12 +20,10 @@ public class PurchasePopupManager : MonoBehaviour
     int price;
 
     private void Start() {
+        data = UserDataSynchronizer.Instance;
         foreach (var button in closeButtons) {
             button.onClick.AddListener(ClosePopup);
         }
-    }
-
-    private void OnEnable() {
         purchaseButton.onClick.AddListener(PurchaseSkill);
     }
 
@@ -47,6 +45,11 @@ public class PurchasePopupManager : MonoBehaviour
     }
 
     public void PurchaseSkill() {
+        if (UserDataSynchronizer.Instance.unlockedSkillList.Contains(skill)) {
+            Debug.Log("보유 중인 특성입니다.");
+            return;
+        }
+
         var request = new PurchaseItemRequest() { CatalogVersion = "Skill", ItemId = "SKILL_" + ((int)skill).ToString(), VirtualCurrency = "CO", Price = price };
         PlayFabClientAPI.PurchaseItem(request,
             (result) => {

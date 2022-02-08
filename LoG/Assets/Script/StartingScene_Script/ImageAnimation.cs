@@ -34,7 +34,6 @@ public class ImageAnimation : MonoBehaviour
             Color newcolor = new Color(1.0f,1.0f,1.0f,i/255f);
             BackGroundImage.GetComponent<Image>().color = newcolor;
             i++;
-            Debug.Log(i);
         }
        
         
@@ -55,7 +54,6 @@ public class ImageAnimation : MonoBehaviour
             Color newcolor = new Color(1.0f, 1.0f, 1.0f, i / 255f);
             TitleImage.GetComponent<Image>().color = newcolor;
             i++;
-            Debug.Log(i);
         }
 
 
@@ -101,7 +99,6 @@ public class ImageAnimation : MonoBehaviour
             Color newcolor = new Color(1.0f, 1.0f, 1.0f, i / 255f);
             OptionButton.GetComponent<Image>().color = newcolor;
             i++;
-            Debug.Log(i);
         }
 
 
