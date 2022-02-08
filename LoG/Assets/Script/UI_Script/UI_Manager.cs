@@ -9,11 +9,6 @@ public class UI_Manager : MonoBehaviourPunCallbacks
     [Header("Match Result Panel")]
     public GameObject matchResultPanel;
 
-    private void Start()
-    {
-
-    }
-
     public void ShowMatchResult(bool isWin)
     {
         Text matchResultText = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform).GetComponentInChildren<Text>();
@@ -38,6 +33,6 @@ public class UI_Manager : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable { { "IsPreemptive", null }, { "RoundWinCount", null }, { "Stack_Survivor", null } };
         PhotonNetwork.SetPlayerCustomProperties(table);
 
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("MainLobbyScene");
     }
 }

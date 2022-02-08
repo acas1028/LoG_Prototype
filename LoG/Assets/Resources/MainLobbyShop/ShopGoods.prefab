@@ -342,6 +342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f177c2309b7dc44859b5543192ba24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popup: {fileID: 0}
+  purchaseButton: {fileID: 7534760871432689770}
   Goods_Data: 1
   descriptionPopup: {fileID: 6834213640710243614}
   nameList:
@@ -369,7 +371,7 @@ MonoBehaviour:
   itemImage: {fileID: 7534760871222741005}
   itemName: {fileID: 1930688012046426507}
   itemDescription: {fileID: 8083285446093596690}
-  itemCost: {fileID: 7534760870652823937}
+  itemPrice: {fileID: 7534760870652823937}
 --- !u!1 &7534760870652824063
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +538,6 @@ GameObject:
   - component: {fileID: 7534760871432689772}
   - component: {fileID: 7534760871432689773}
   - component: {fileID: 7534760871432689770}
-  - component: {fileID: 4571678385079889733}
   m_Layer: 5
   m_Name: PurchaseButton
   m_TagString: Untagged
@@ -641,14 +642,14 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 7534760871432689773}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4571678385079889733}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PurchaseButton, Assembly-CSharp
-        m_MethodName: ActivatePurchasePopup
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -658,22 +659,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4571678385079889733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7534760871432689768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc10804bd8ec31445ae55cf19d86ec77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShopGoods: {fileID: 7534760869402578052}
-  imageData: {fileID: 0}
-  priceData: 
-  nameData: 
 --- !u!1 &7972715270798459633
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,10 @@ using PlayFab.ClientModels;
 using CharacterStats;
 
 public class GoodsDataController : MonoBehaviour {
-    public CharacterSkill Goods_Data;
+    [SerializeField] PurchasePopupManager popup;
+    [SerializeField] Button purchaseButton;
+
+    public CharacterSkill skill;
     public GameObject descriptionPopup;
 
     public List<string> nameList;
@@ -15,29 +18,34 @@ public class GoodsDataController : MonoBehaviour {
     public Image itemImage;
     public Text itemName;
     public Text itemDescription;
-    public Text itemCost;
+    public Text itemPrice;
+
+    Button thisButton;
 
     // Start is called before the first frame update
     void Start() {
-        var thisButton = GetComponent<Button>();
+        thisButton = GetComponent<Button>();
         thisButton.onClick.AddListener(ToggleDescription);
+        purchaseButton.onClick.AddListener(PurchasePopup);
         GetSkillItem();
     }
 
     void GetSkillItem() {
-        PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = "Skill Items" },
+        PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = "Skill" },
             result => {
                 foreach (var item in result.Catalog) {
-                    if (item.ItemId == ("Skill_" + Goods_Data.ToString())) {
+                    if (item.ItemId == ("SKILL_" + (int)skill)) {
                         itemImage.sprite = Resources.Load(item.ItemImageUrl, typeof(Sprite)) as Sprite;
                         itemName.text = item.DisplayName;
                         itemDescription.text = item.Description;
-                        itemCost.text = item.VirtualCurrencyPrices["CO"].ToString();
+                        itemPrice.text = item.VirtualCurrencyPrices["CO"].ToString();
+                        purchaseButton.interactable = true;
+                        
                         return;
                     }
                 }
-                print("Skill_" + Goods_Data.ToString() + " 발견 실패");
-            }, error => print("Skill_" + Goods_Data.ToString() + " 아이템 불러오기 실패: " + error.ErrorMessage));
+                print("Skill_" + skill.ToString() + " 발견 실패");
+            }, error => print("Skill_" + skill.ToString() + " 아이템 불러오기 실패: " + error.ErrorMessage));
     }
 
     void ToggleDescription() {
@@ -46,5 +54,14 @@ public class GoodsDataController : MonoBehaviour {
             description.SetActive(false);
 
         descriptionPopup.SetActive(!descriptionPopup.activeSelf);
+    }
+
+    void PurchasePopup() {
+        popup.SetSkill(skill);
+        popup.SetImage(itemImage.sprite);
+        popup.SetName(itemName.text);
+        popup.SetPrice(int.Parse(itemPrice.text));
+
+        popup.gameObject.SetActive(true);
     }
 }
