@@ -29,5 +29,13 @@ public class Deck_Page : MonoBehaviour
         {
             deckManager.CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().Show_Type_Sprite();
         }
+
+        for(int i = 0; i<deckManager.Property_Slot.Length;i++)
+        {
+            if(deckManager.Property_Slot[i].transform.childCount ==2)
+            {
+                deckManager.Property_Slot[i].SetActive(false);
+            }
+        }
     }
 }
