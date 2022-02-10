@@ -264,6 +264,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 }
             }
         }
+
+       
         alertMessage.gameObject.SetActive(true);
         alertMessage.Attack(attacker);
         yield return new WaitForSeconds(bM_Timegap);

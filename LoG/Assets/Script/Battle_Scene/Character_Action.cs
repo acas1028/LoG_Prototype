@@ -106,6 +106,8 @@ public class Character_Action : Character, IPunObservable
         isMoveToEnemy = false;
         enemyTransform = null;
 
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Source/Explosion 1") as AudioClip); // 공격 사운드 재생
+
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
         
 
@@ -123,6 +125,8 @@ public class Character_Action : Character, IPunObservable
         {
             gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters_Line3";
         }
+
+        
     }
 
     public IEnumerator SkillAttack()
