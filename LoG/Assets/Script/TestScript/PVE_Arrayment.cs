@@ -10,12 +10,14 @@ public class PVE_Arrayment : MonoBehaviour
     [SerializeField]
     private GameObject MyDeckData;
     [SerializeField]
+    private GameObject EnemyData;
+    [SerializeField]
     private GameObject[] Inventory;
     private GameObject CancleCharacter;
     [SerializeField]
     private GameObject ArrayCancleButton;
-    private List<int> EnemyLocation = new List<int>()
-    {0,1,2,3,4,5,6,7,8 };
+    [SerializeField]
+    private GameObject ReadyButton;
     private List<GameObject> MyTeamList = new List<GameObject>();
     private bool isArray;
     private bool isCancle;
@@ -68,10 +70,6 @@ public class PVE_Arrayment : MonoBehaviour
                         CancleCharacter = hit.transform.gameObject;
                         ArrayCancleButton.SetActive(!ArrayCancleButton.activeSelf);
                     }
-                    else
-                    {
-                        ArrayCancleButton.SetActive(false);
-                    }
                 }
             }
             if (hit.transform.tag == "Null_Character" && click_inventory == true)// 인벤토리를 누르고, 빈 그리드를 클릭 -> 정상적인 배치를 한 경우.
@@ -101,8 +99,6 @@ public class PVE_Arrayment : MonoBehaviour
 
     private void ArrayOnGrid(int inventoryNum, int gridNum)
     {
-        if (MyTeamList.Count >= 5)
-            return;
 
         MyGrids[gridNum - 1].tag = "Character";
         Character gridCharacter = MyGrids[gridNum - 1].GetComponentInChildren<Character>();
@@ -124,10 +120,17 @@ public class PVE_Arrayment : MonoBehaviour
         }
 
         Inventory[inventoryNum - 1].GetComponent<Inventory_ID>().SetArrayed();
+
+        if (MyTeamList.Count >= 5)
+        {
+            ReadyButton.SetActive(true);
+            return;
+        }
     }
 
     void ArrayOrder(GameObject obj)
     {
+        Debug.Log("1");
         if(isArray)
         {
             MyTeamList.Add(obj);
@@ -148,15 +151,27 @@ public class PVE_Arrayment : MonoBehaviour
     public void Arraycancle()
     {
         isCancle = true;
+        ReadyButton.SetActive(false);
 
         Character cs = CancleCharacter.GetComponentInChildren<Character>();
         Arrayed_Data T = Arrayed_Data.instance;
+
+        for(int i=0;i<7;i++)
+        {
+            Inventory_ID inven = Inventory[i].GetComponent<Inventory_ID>();
+            if (inven.GetCharacterID()==cs.character_ID)
+            {
+                inven.SetNotArrayed();
+            }
+        }
+
         for (int i = 0; i < 5; i++)
         {
             if (cs.character_ID == T.team1[i].GetComponent<Character>().character_ID)
             {
                 ArrayCancleButton.SetActive(false);
                 ArrayOrder(T.team1[i]);
+                T.team1[i].GetComponent<Character>().Character_Reset();
             }
         }
         CancleCharacter.tag = "Null_Character";
@@ -167,29 +182,17 @@ public class PVE_Arrayment : MonoBehaviour
 
     void EnemySetting()//적 배치 -> 플레이어에게 정보 제공.
     {
-        int[] num = RandomInt();
-
         for (int i = 0; i < 5; i++)
         {
-            Character Enemy = EnemyGrids[num[i]].GetComponentInChildren<Character>();
+            int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid;
+            Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
             Enemy.Copy_Character_Stat(Arrayed_Data.instance.team2[i]);
             Enemy.InitializeCharacterSprite();
-            EnemyGrids[num[i]].tag = "Character";
+            EnemyGrids[num].tag = "Character";
         }
     }
 
-    int[] RandomInt()
-    {
-        int[] Rand = new int[5];
-        for(int i=0;i<5;i++)
-        {
-            int num = Random.Range(0, EnemyLocation.Count);
-            Rand[i] = EnemyLocation[num];
-            EnemyLocation.RemoveAt(num);
-        }
 
-        return Rand;
-    }
 
     void SetInventoryID()
     {

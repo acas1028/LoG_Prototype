@@ -15,6 +15,7 @@ public class Deck_Page : MonoBehaviour
         Button_image = gameObject.GetComponent<Image>();
         deckManager.SetNowPageIndex(pageIdx);
         deckManager.Switch_Page();
+        deckManager.Skill_List.Clear();
 
         Button_image.GetComponent<Image>().color = new Color(117, 255, 0);
         for (int i = 0; i < 5; i++)

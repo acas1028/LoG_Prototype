@@ -27,6 +27,8 @@ public class Deck_Manager : MonoBehaviour
     public GameObject Deck_Reset_Button;
     public GameObject Pre_Skill;
     public DeckDataSync deckDataSync;
+    [SerializeField]
+    private GameObject NotSavePopUp;
 
     private Deck_Data_Send Deck_Data;
 
@@ -67,6 +69,7 @@ public class Deck_Manager : MonoBehaviour
         }
         Show_Property_Slot();
         Select_Skill();
+        Check_Skill();
     }
 
     public void Click_Grid()
@@ -103,7 +106,7 @@ public class Deck_Manager : MonoBehaviour
         {
             if (Character_Slot[i].GetComponentInChildren<Character>().character_ID == 0)
             {
-                Debug.Log("캐릭터를 전부 할당해 주세요");
+                NotSavePopUp.SetActive(true);
                 return;
             }
         }
@@ -222,7 +225,7 @@ public class Deck_Manager : MonoBehaviour
         }
 
         Reset_Skill();
-        Skill_List.Clear();
+        Reset_Grid();
         Load_Skill();
     }
 
@@ -331,9 +334,9 @@ public class Deck_Manager : MonoBehaviour
     {
         for(int i=0;i<Skill_List.Count;i++)
         {
-            if(Pre_Skill == Skill_List[i]&&i>0)
+            if(Pre_Skill == Skill_List[i])
             {
-                Button SKill = Skill_List[i-1].GetComponent<Button>();
+                Button SKill = Skill_List[i].GetComponent<Button>();
                 ColorBlock CB = SKill.colors;
                 Color red_Grid = Color.red;
                 CB.normalColor = red_Grid;
@@ -359,5 +362,40 @@ public class Deck_Manager : MonoBehaviour
         }
         cs.Character_Setting(ID);
         Check_Stat();
+    }
+    void Check_Skill()
+    {
+        for(int i=0;i<Skill_List.Count;i++)
+        {
+            Button SKill_List = Skill_List[i].GetComponent<Button>();
+            ColorBlock block = SKill_List.colors;
+            Color red_Grid = Color.red;
+            block.normalColor = red_Grid;
+            block.pressedColor = red_Grid;
+            block.selectedColor = red_Grid;
+            SKill_List.colors = block;
+        }
+
+        if (Current_Character.GetComponentInChildren<Character>().character_ID == 0)
+            return;
+
+        int num = Current_Character.GetComponentInChildren<Character>().character_ID;
+
+        Button SKill = Skill_Button[num-1].GetComponent<Button>();
+        ColorBlock CB = SKill.colors;
+        Color yellow_Grid = Color.yellow;
+        CB.normalColor = yellow_Grid;
+        CB.pressedColor = yellow_Grid;
+        CB.selectedColor = yellow_Grid;
+        SKill.colors = CB;
+    }
+    public void SavePopUpYES()
+    {
+
+    }
+
+    public void SavePopUpNO()
+    {
+
     }
 }

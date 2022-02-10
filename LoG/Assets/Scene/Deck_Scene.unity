@@ -2506,6 +2506,7 @@ MonoBehaviour:
   Deck_Reset_Button: {fileID: 1516910046}
   Pre_Skill: {fileID: 0}
   deckDataSync: {fileID: 2072868622}
+  NotSavePopUp: {fileID: 1599842705}
   Grid_disselected_sprite: {fileID: 21300000, guid: cbdcb5802bb91f84687f683063645f5f, type: 3}
   Grid_selected_sprite: {fileID: 21300000, guid: c06bac55e40cbc14aa01b9ae8e982d88, type: 3}
   Character_Stat:
@@ -8543,17 +8544,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1599842705}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 195619146}
+        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
+        m_MethodName: Save_Button
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &652919204
 MonoBehaviour:
@@ -11852,7 +11853,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 930085082}
   m_Direction: 2
   m_Value: 0.99999934
-  m_Size: 0.5070382
+  m_Size: 0.50703824
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24934,18 +24935,6 @@ MonoBehaviour:
       - m_Target: {fileID: 30983065}
         m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
         m_MethodName: BackToLobby
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 195619146}
-        m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
-        m_MethodName: Save_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
