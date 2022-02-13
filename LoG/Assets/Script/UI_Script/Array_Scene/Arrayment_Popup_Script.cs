@@ -8,6 +8,9 @@ public class Arrayment_Popup_Script : MonoBehaviour
     public GameObject Popup;
     public GameObject ArrayCancle;
 
+    public AudioClip arrayaudio;
+    public AudioClip Popupauido;
+
 
     private void Update()
     {
@@ -21,6 +24,8 @@ public class Arrayment_Popup_Script : MonoBehaviour
             return;
         if (this.transform.childCount != 0)
             return;
+
+        PlaySound.Instance.ChangeSoundAndPlay(arrayaudio); //°í¹Î Áß
 
         GameObject made_Popup = Instantiate(Popup);
          

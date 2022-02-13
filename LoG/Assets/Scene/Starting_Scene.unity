@@ -1019,7 +1019,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 319970418}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1773410880}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &319970418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1986,6 +1998,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1773410880}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &711566171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2475,6 +2499,7 @@ GameObject:
   - component: {fileID: 877995780}
   - component: {fileID: 877995779}
   - component: {fileID: 877995778}
+  - component: {fileID: 877995781}
   m_Layer: 5
   m_Name: PressScreenButton
   m_TagString: Untagged
@@ -2557,6 +2582,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 877995781}
+        m_TargetAssemblyTypeName: SFXSoundscript, Assembly-CSharp
+        m_MethodName: SFXSoundPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &877995779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,6 +2632,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877995776}
   m_CullTransparentMesh: 1
+--- !u!114 &877995781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877995776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a51be9bc1ecc90e46b5b9c88c5c31bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio: {fileID: 8300000, guid: 2a700b8c647fa954e929423768628c21, type: 3}
 --- !u!1 &943429389
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,7 +2771,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 950459632}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1773410880}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &950459632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4381,6 +4443,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711680567}
   m_CullTransparentMesh: 1
+--- !u!1001 &1773410879
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1560.8156
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 764.51764
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -534.17804
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423341, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_Name
+      value: SoundPlayer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+--- !u!114 &1773410880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7378571590906423343, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+  m_PrefabInstance: {fileID: 1773410879}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ae75554b55b6e47bff6ab14f19f9a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1967627257
 GameObject:
   m_ObjectHideFlags: 0
@@ -5124,6 +5254,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1773410880}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

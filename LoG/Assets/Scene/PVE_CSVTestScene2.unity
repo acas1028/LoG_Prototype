@@ -328,6 +328,8 @@ MonoBehaviour:
   Grid: {fileID: 708012427}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &14837648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,6 +1847,8 @@ MonoBehaviour:
   Grid: {fileID: 14837648}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &152590125
 GameObject:
   m_ObjectHideFlags: 0
@@ -3461,6 +3465,8 @@ MonoBehaviour:
   Grid: {fileID: 1093350291}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &254762178
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,6 +3697,8 @@ MonoBehaviour:
   Grid: {fileID: 233685121}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &273650650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3817,6 +3825,8 @@ MonoBehaviour:
   Grid: {fileID: 1207412482}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1001 &303830502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4749,6 +4759,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 3ec68f14368dc194bb53be0c84ca71d4, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &378233912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5257,6 +5279,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6471,6 +6505,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &491407329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6892,6 +6938,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 3ec68f14368dc194bb53be0c84ca71d4, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7827,6 +7885,8 @@ MonoBehaviour:
   Grid: {fileID: 1919598025}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &618812139
 GameObject:
   m_ObjectHideFlags: 0
@@ -8137,7 +8197,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 645719971}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &645719971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8277,6 +8349,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 3ec68f14368dc194bb53be0c84ca71d4, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8950,6 +9034,8 @@ MonoBehaviour:
   Grid: {fileID: 1716452459}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &708012427
 GameObject:
   m_ObjectHideFlags: 0
@@ -9373,6 +9459,8 @@ MonoBehaviour:
   Grid: {fileID: 1078559305}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &758901197
 GameObject:
   m_ObjectHideFlags: 0
@@ -10131,6 +10219,8 @@ MonoBehaviour:
   Grid: {fileID: 836625284}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &853243877
 GameObject:
   m_ObjectHideFlags: 0
@@ -10465,13 +10555,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Character_arrayment_showing, Assembly-CSharp
-        m_MethodName: is_array_ready_Click
-        m_Mode: 1
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10830,6 +10920,8 @@ MonoBehaviour:
   Grid: {fileID: 2113711182}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &946539983
 GameObject:
   m_ObjectHideFlags: 0
@@ -11005,6 +11097,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11347,6 +11451,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &978796958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11577,6 +11693,8 @@ MonoBehaviour:
   Grid: {fileID: 1907438361}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1004581107
 GameObject:
   m_ObjectHideFlags: 0
@@ -11628,6 +11746,8 @@ MonoBehaviour:
   Grid: {fileID: 1725283070}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1010455343
 GameObject:
   m_ObjectHideFlags: 0
@@ -11805,6 +11925,8 @@ MonoBehaviour:
   Grid: {fileID: 1552371117}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1033907148
 GameObject:
   m_ObjectHideFlags: 0
@@ -11931,6 +12053,8 @@ MonoBehaviour:
   Grid: {fileID: 818544683}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1053853451
 GameObject:
   m_ObjectHideFlags: 0
@@ -13040,6 +13164,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1113935862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13528,6 +13664,74 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1142878720
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1560.8156
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 764.51764
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -534.17804
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423340, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423341, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_Name
+      value: SoundPlayer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+--- !u!114 &1142878721 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7378571590906423343, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+  m_PrefabInstance: {fileID: 1142878720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ae75554b55b6e47bff6ab14f19f9a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1146330179
 GameObject:
   m_ObjectHideFlags: 0
@@ -14530,6 +14734,8 @@ MonoBehaviour:
   Grid: {fileID: 216360828}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1207412482
 GameObject:
   m_ObjectHideFlags: 0
@@ -14949,6 +15155,8 @@ MonoBehaviour:
   Grid: {fileID: 827051567}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1257338181
 GameObject:
   m_ObjectHideFlags: 0
@@ -15078,6 +15286,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -19536,6 +19756,8 @@ MonoBehaviour:
   Grid: {fileID: 1250240194}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 219052431}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1684549234
 GameObject:
   m_ObjectHideFlags: 0
@@ -20415,6 +20637,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -21486,6 +21720,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1142878721}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: ChangeSoundAndPlay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1917213172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22169,6 +22415,8 @@ MonoBehaviour:
   Grid: {fileID: 411673865}
   Popup: {fileID: 2428063862320362522, guid: 02e39fc4112a00244898ec869a0bbb3c, type: 3}
   ArrayCancle: {fileID: 0}
+  arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
+  Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
 --- !u!1 &1943768920
 GameObject:
   m_ObjectHideFlags: 0
