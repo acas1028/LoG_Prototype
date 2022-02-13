@@ -152,6 +152,7 @@ public class Deck_Skill : MonoBehaviour
             if (deckManager.Current_Character == deckManager.Character_Slot[j])
             {
                 deckManager.Slot_Type[j].GetComponent<Deck_Type_Slot>().Change_Type((int)Type_Obj.GetComponent<Type_Object>().Type);
+                deckManager.Character_Slot[j].GetComponent<Deck_Character>().Change_Character_Skin((int)Type_Obj.GetComponent<Type_Object>().Type);
                 //cs.Character_Slot[j].GetComponent<CharacterSpriteforType>().ChangeSprite((int)Type_Obj.GetComponent<Type_Object>().Type);
                 break;
             }

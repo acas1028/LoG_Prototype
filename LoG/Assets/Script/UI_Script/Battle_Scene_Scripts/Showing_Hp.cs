@@ -95,6 +95,25 @@ public class Showing_Hp : MonoBehaviour
        
     }
 
+    void Hpbar_Dead()
+    {
+        if (Team_count == 1)
+        {
+            if (BattleManager.Instance.bM_Character_Team1[character_count].GetComponent<Character>().character_is_Killed == true)
+            {
+                hp_bar.SetActive(false);
+            }
+        }
+
+        else
+        {
+            if (BattleManager.Instance.bM_Character_Team2[character_count].GetComponent<Character>().character_is_Killed == true)
+            {
+                hp_bar.SetActive(false);
+            }
+        }
+    }
+
     private void Update()
     {
         if (BattleManager.Instance.bM_Phase >= 1)
@@ -102,6 +121,8 @@ public class Showing_Hp : MonoBehaviour
             original_Hp();
 
             showing_Hp_point();
+
+            Hpbar_Dead();
 
             
         }
