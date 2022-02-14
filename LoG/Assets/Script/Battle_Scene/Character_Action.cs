@@ -106,12 +106,10 @@ public class Character_Action : Character, IPunObservable
         isMoveToEnemy = false;
         enemyTransform = null;
 
-        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Source/Explosion 1") as AudioClip); // 공격 사운드 재생
 
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
-        
 
-        if(character_Num_Of_Grid == 1 || character_Num_Of_Grid == 2 || character_Num_Of_Grid == 3)
+        if (character_Num_Of_Grid == 1 || character_Num_Of_Grid == 2 || character_Num_Of_Grid == 3)
         {
             gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Characters_Line1";
         }
@@ -140,6 +138,8 @@ public class Character_Action : Character, IPunObservable
         // 받을 데미지를 다시 계산.
         StartCoroutine(SetCharacterColor("red"));
         StartCoroutine(Character_Counter());
+
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/attack") as AudioClip); // 공격 사운드 재생
 
         int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
@@ -170,6 +170,9 @@ public class Character_Action : Character, IPunObservable
     public void Character_Counter_Damaged(GameObject attacker, int damage) // 카운터 발동
     {
         StartCoroutine(SetCharacterColor("red"));
+
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/attack") as AudioClip); // 공격 사운드 재생
+
         int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
         if (character_Divine_Shield == true && final_damage > 0)
@@ -210,6 +213,8 @@ public class Character_Action : Character, IPunObservable
         character_is_Killed = true;
         character_Counter = false;
         killedBy = attacker;
+
+
     }
 
     public IEnumerator Dead()
@@ -217,6 +222,7 @@ public class Character_Action : Character, IPunObservable
         spriteManager.SetDeadSprite();
         character_Is_Allive = false;
         character_is_Killed = false;
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/knocked down") as AudioClip);
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
     }
 

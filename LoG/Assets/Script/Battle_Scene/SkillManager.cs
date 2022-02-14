@@ -319,6 +319,7 @@ public class SkillManager : MonoBehaviour
 
         GridManager.Instance.Create_Buffed_Grid(ACS.character_Team_Number, ACS.character_Num_Of_Grid);
 
+
         skillmessage.SetActive(true);
         skillmessage.GetComponent<SkillMessage>().Message(character,"ÀÚ½Å°¨");
 

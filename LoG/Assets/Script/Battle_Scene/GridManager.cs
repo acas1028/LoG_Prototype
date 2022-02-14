@@ -60,6 +60,8 @@ public class GridManager : MonoBehaviour
     public void Create_Damaged_Grid_Team1(int Damaged_Grid_Num)
     {
         GameObject redGrid = Instantiate(Mine_Red_Grid, Team1_Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
+
+
         Destroy(redGrid, BattleManager.Instance.bM_AttackTimegap);
     }
 
@@ -67,6 +69,7 @@ public class GridManager : MonoBehaviour
     public void Create_Damaged_Grid_Team2(int Damaged_Grid_Num)
     {
         GameObject redGrid = Instantiate(Opponent_Red_Grid, Team2_Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
+
         Destroy(redGrid, BattleManager.Instance.bM_AttackTimegap);
     }
 
@@ -82,6 +85,8 @@ public class GridManager : MonoBehaviour
             GameObject BuffedGrid = Instantiate(BuffedEffect, Team2_Map[Buffed_Grid_Num - 1].transform.position, Quaternion.identity);
             Destroy(BuffedGrid, BattleManager.Instance.bM_AttackTimegap);
         }
+
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip); // 공격 사운드 재생
     }
 
     public void Create_Nerfed_Grid(int Team_Num,int Nerfed_Grid_Num)
@@ -97,6 +102,8 @@ public class GridManager : MonoBehaviour
             GameObject NerfedGrid = Instantiate(NerfedEffect, Team2_Map[Nerfed_Grid_Num - 1].transform.position, Quaternion.identity);
             Destroy(NerfedGrid, BattleManager.Instance.bM_AttackTimegap);
         }
+
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power down") as AudioClip); // 공격 사운드 재생
     }
 }
  
