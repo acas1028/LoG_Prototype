@@ -13,6 +13,7 @@ public class Inventory_ID : MonoBehaviour
     public GameObject Block_Inventory;
 
     public bool is_Arrayed;
+    public bool is_Permanent_Arrayed;
 
     public void Setting_Character_Stat(GameObject Popup)
     {
@@ -23,10 +24,17 @@ public class Inventory_ID : MonoBehaviour
         is_Arrayed = true;
         Block_Inventory.SetActive(true);
     }
+    public void SetPermanentArrayed() {
+        is_Arrayed = true;
+        is_Permanent_Arrayed = true;
+        Block_Inventory.SetActive(true);
+    }
     public void SetNotArrayed()
     {
-        is_Arrayed = false;
-        Block_Inventory.SetActive(false);
+        if (!is_Permanent_Arrayed) {
+            is_Arrayed = false;
+            Block_Inventory.SetActive(false);
+        }
     }
     public int GetCharacterID()
     {

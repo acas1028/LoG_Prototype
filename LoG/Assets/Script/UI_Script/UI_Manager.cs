@@ -32,6 +32,7 @@ public class UI_Manager : MonoBehaviourPunCallbacks
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable { { "IsPreemptive", null }, { "RoundWinCount", null }, { "Stack_Survivor", null } };
         PhotonNetwork.SetPlayerCustomProperties(table);
+        PhotonNetwork.Disconnect();
 
         SceneManager.LoadScene("MainLobbyScene");
     }

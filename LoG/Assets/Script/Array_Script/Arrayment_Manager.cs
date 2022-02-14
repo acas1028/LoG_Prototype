@@ -20,8 +20,6 @@ public class Arrayment_Manager : MonoBehaviourPun
     private int arrayedThisTurn;
     private int InvenNum;
 
-    private List<int> invenNums;
-    private List<int> gridNums;
     private List<GameObject> SwitchCharacterTag = new List<GameObject>();
 
     public GameObject Array_Time;
@@ -53,20 +51,6 @@ public class Arrayment_Manager : MonoBehaviourPun
         StartCoroutine("Get_Inventory_ID");
 
         arrayedThisTurn = 0;
-
-        invenNums = new List<int>();
-        gridNums = new List<int>();
-
-        for (int i = 1; i < 8; i++)
-        {
-            invenNums.Add(i);
-        }
-        for (int i = 1; i < 10; i++)
-        {
-            gridNums.Add(i);
-        }
-        ShuffleList<int>(invenNums);
-        ShuffleList<int>(gridNums);
 
         InventoryBlock();
     }
@@ -202,17 +186,17 @@ public class Arrayment_Manager : MonoBehaviourPun
                 return;
             }
 
-            ArrayOnGrid(InvenNum, gridNum);
+            ArrayOnGrid(InvenNum - 1, gridNum - 1);
             is_click_inventory = false;
         }
     }
 
     private void ArrayOnGrid(int inventoryNum, int gridNum)
     {
-        Grids[gridNum - 1].tag = "Character";
-        Character gridCharacter = Grids[gridNum - 1].GetComponentInChildren<Character>();
-        gridCharacter.Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventoryNum - 1]);
-        gridCharacter.character_Num_Of_Grid = gridNum;
+        Grids[gridNum].tag = "Character";
+        Character gridCharacter = Grids[gridNum].GetComponentInChildren<Character>();
+        gridCharacter.Copy_Character_Stat(Deck_Data_Send.instance.Save_Data[lastPageNum, inventoryNum]);
+        gridCharacter.character_Num_Of_Grid = gridNum + 1;
         gridCharacter.InitializeCharacterSprite();
 
         Arrayed_Data arrayedData = Arrayed_Data.instance;
@@ -220,11 +204,11 @@ public class Arrayment_Manager : MonoBehaviourPun
         {
             if (arrayedData.team1[i].GetComponent<Character>().character_ID == 0)
             {
-                arrayedData.team1[i].GetComponent<Character>().Copy_Character_Stat(Grids[gridNum - 1].transform.Find("Character_Prefab").gameObject);
+                arrayedData.team1[i].GetComponent<Character>().Copy_Character_Stat(Grids[gridNum].transform.Find("Character_Prefab").gameObject);
                 break;
             }
         }
-        Inventory[inventoryNum - 1].GetComponent<Inventory_ID>().SetArrayed();
+        Inventory[inventoryNum].GetComponent<Inventory_ID>().SetPermanentArrayed();
         Sync_Character();
         arrayedThisTurn++;
     }
@@ -636,24 +620,6 @@ public class Arrayment_Manager : MonoBehaviourPun
         arrData_Sync.DataSync(Return_num);
     }
 
-    private List<T> ShuffleList<T>(List<T> list)
-    {
-        int random1, random2;
-        T temp;
-
-        for (int i = 0; i < list.Count; ++i)
-        {
-            random1 = Random.Range(0, list.Count);
-            random2 = Random.Range(0, list.Count);
-
-            temp = list[random1];
-            list[random1] = list[random2];
-            list[random2] = temp;
-        }
-
-        return list;
-    }
-
     private void TimeOut(int count)
     {
         if (!timeText.GetComponent<Time_FlowScript>().Time_Over)
@@ -661,10 +627,10 @@ public class Arrayment_Manager : MonoBehaviourPun
 
         for (int i = 0; i < count; i++)
         {
-            ArrayOnGrid(invenNums[0], gridNums[0]);
-            // 이미 배치된 인덱스 삭제 -> 같은 캐릭터가 두번 배치되는것을 방지하기 위함
-            invenNums.RemoveAt(0);
-            gridNums.RemoveAt(0);
+            int ranInvenIdx = Random.Range(0, 7);
+            int ranGridIdx = Random.Range(0, 9);
+
+            ArrayOnGrid(ranInvenIdx, ranGridIdx);
         }
 
         Ready_Array = true;

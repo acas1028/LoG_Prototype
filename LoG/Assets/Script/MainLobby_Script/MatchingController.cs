@@ -43,7 +43,8 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
 		Debug.Log("<color=yellow>OnConnectedToMaster() 호출\n마스터 서버 연결됨</color>");
 
-		PhotonNetwork.JoinRandomRoom();
+		if (!PhotonNetwork.OfflineMode)
+			PhotonNetwork.JoinRandomRoom();
 	}
 
 	public override void OnJoinRandomFailed(short returnCode, string message) {
