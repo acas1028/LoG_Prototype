@@ -6,19 +6,17 @@ using PlayFab;
 using PlayFab.ClientModels;
 using CharacterStats;
 
+using Photon.Pun;
+
 // UserInventory에 있는 유저의 재화를 바탕으로 서버와 연동하는 곳
 public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
-
-    public bool isAllDataLoaded;
-
-    public string nickname;
-    public int coin;
-    public List<CharacterSkill> unlockedSkillList = new List<CharacterSkill>();
-    public Dictionary<CharacterSkill, string> unlockedSkillInstanceIdList = new Dictionary<CharacterSkill, string>();
+    [SerializeField] UIDataSynchronizer dataSynchronizer;
+    [HideInInspector] public string nickname;
+    [HideInInspector] public int coin;
+    [HideInInspector] public List<CharacterSkill> unlockedSkillList = new List<CharacterSkill>();
+    [HideInInspector] public Dictionary<CharacterSkill, string> unlockedSkillInstanceIdList = new Dictionary<CharacterSkill, string>();
 
     void OnEnable() {
-        isAllDataLoaded = false;
-
         if (!PlayFabClientAPI.IsClientLoggedIn())
             Debug.LogError("로그인이 필요합니다.");
         else
@@ -26,13 +24,12 @@ public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
     }
 
     public void GetUserDataFromServer() {
-        bool result1 = false;
-        bool result2 = false;
-
         PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), (result) => {
             nickname = result.AccountInfo.Username;
-            result1 = true;
-            isAllDataLoaded = result1 && result2;
+            PhotonNetwork.LocalPlayer.NickName = nickname;
+
+            dataSynchronizer.UpdateAccountInfo();
+            print("계정 정보 불러오기 성공");
         }, (error) => print("계정 정보 불러오기 실패"));
 
         PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), (result) => {
@@ -48,9 +45,10 @@ public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
                     unlockedSkillInstanceIdList.Add(characterSkill, item.ItemInstanceId);
                 }
             }
+
+            dataSynchronizer.UpdateUserInventory();
             print("인벤토리 불러오기 성공");
-            result2 = true;
-            isAllDataLoaded = result1 && result2;
+
         }, (error) => print("인벤토리 불러오기 실패"));
     }
 }

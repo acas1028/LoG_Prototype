@@ -931,7 +931,7 @@ public class SkillManager : MonoBehaviour
         Character CCS = character.GetComponent<Character>();
 
         CCS.stack_Survivor = 0;
-        StackManager.Instance.survivor_stack = 0;
+        Skill_Set_Stack_Survivor(0);
 
         return false;
     }

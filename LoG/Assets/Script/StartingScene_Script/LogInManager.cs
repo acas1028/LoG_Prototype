@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using PlayFab;
 using PlayFab.ClientModels;
 
+using Photon.Pun;
+
 public class LogInManager : MonoBehaviour
 {
     [Header("Log In Panel")]

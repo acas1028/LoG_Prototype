@@ -10,10 +10,11 @@ public class UIDataSynchronizer : MonoBehaviour
     [SerializeField] Text coinText;
     [SerializeField] Text shopCoinText;
 
-    private IEnumerator Start() {
-        yield return new WaitUntil(() => UserDataSynchronizer.Instance.isAllDataLoaded);
-
+    public void UpdateAccountInfo() {
         nicknameText.text = UserDataSynchronizer.Instance.nickname;
+    }
+    
+    public void UpdateUserInventory() {
         coinText.text = UserDataSynchronizer.Instance.coin.ToString();
         shopCoinText.text = UserDataSynchronizer.Instance.coin.ToString();
     }
