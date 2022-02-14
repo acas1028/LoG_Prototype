@@ -9036,6 +9036,79 @@ MonoBehaviour:
   ArrayCancle: {fileID: 219052431}
   arrayaudio: {fileID: 8300000, guid: 5611248718c7cdc48bb1710511a272c0, type: 3}
   Popupauido: {fileID: 8300000, guid: 55b485a8722171b4b8c4d1f2d8ad2faa, type: 3}
+--- !u!1 &706440714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 706440717}
+  - component: {fileID: 706440716}
+  - component: {fileID: 706440715}
+  m_Layer: 0
+  m_Name: Array Room Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &706440715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706440714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &706440716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706440714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0416e0eb1a47b42a3c3e8bc4218642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preemptiveCheck: {fileID: 0}
+  playerName: {fileID: 0}
+  enemyPlayerName: {fileID: 0}
+  winStateText: {fileID: 0}
+  roomStatusText: {fileID: 0}
+  timeText: {fileID: 0}
+  readyButton: {fileID: 1258084982}
+--- !u!4 &706440717
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706440714}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &708012427
 GameObject:
   m_ObjectHideFlags: 0
@@ -13719,6 +13792,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 7378571590906423341, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
 --- !u!114 &1142878721 stripped
@@ -15424,8 +15501,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PVE_Ready, Assembly-CSharp
+      - m_Target: {fileID: 706440716}
+        m_TargetAssemblyTypeName: PVE_RoomManager, Assembly-CSharp
         m_MethodName: GetReady
         m_Mode: 1
         m_Arguments:

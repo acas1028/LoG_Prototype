@@ -25,7 +25,7 @@ public class Arrayment_Popup_Script : MonoBehaviour
         if (this.transform.childCount != 0)
             return;
 
-        PlaySound.Instance.ChangeSoundAndPlay(arrayaudio); //°í¹Î Áß
+        //PlaySound.Instance.ChangeSoundAndPlay(arrayaudio); //°í¹Î Áß
 
         GameObject made_Popup = Instantiate(Popup);
          

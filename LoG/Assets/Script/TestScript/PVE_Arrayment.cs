@@ -19,6 +19,8 @@ public class PVE_Arrayment : MonoBehaviour
     [SerializeField]
     private GameObject ReadyButton;
     private List<GameObject> MyTeamList = new List<GameObject>();
+    private List<int> EnemyLocation = new List<int>()
+    {1,2,3,4,5};
     private bool isArray;
     private bool isCancle;
     private bool click_inventory = false;
@@ -182,16 +184,32 @@ public class PVE_Arrayment : MonoBehaviour
 
     void EnemySetting()//적 배치 -> 플레이어에게 정보 제공.
     {
+        int[] rand = RandomInt();
+
         for (int i = 0; i < 5; i++)
         {
+            Debug.Log(rand[i]);
             int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid;
             Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
             Enemy.Copy_Character_Stat(Arrayed_Data.instance.team2[i]);
+            EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Attack_Order = rand[i];
             Enemy.InitializeCharacterSprite();
             EnemyGrids[num].tag = "Character";
         }
     }
 
+    int[] RandomInt()
+    {
+        int[] Rand = new int[5];
+        for (int i = 0; i < 5; i++)
+        {
+            int num = Random.Range(0, EnemyLocation.Count);
+            Rand[i] = EnemyLocation[num];
+            EnemyLocation.RemoveAt(num);
+        }
+
+        return Rand;
+    }
 
 
     void SetInventoryID()
