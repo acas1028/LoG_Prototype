@@ -71,14 +71,17 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
 
             case CharacterStats.CharacterType.Attacker:
                 TypeSlot.GetComponent<Image>().sprite = TypeSlot.GetComponent<Deck_Type_Slot>().Type_Image[1];
+                Character_Sprite.GetComponent<Deck_Character>().Change_Character_Skin(1);
                 break;
 
             case CharacterStats.CharacterType.Balance:
                 TypeSlot.GetComponent<Image>().sprite = TypeSlot.GetComponent<Deck_Type_Slot>().Type_Image[2];
+                Character_Sprite.GetComponent<Deck_Character>().Change_Character_Skin(2);
                 break;
 
             case CharacterStats.CharacterType.Defender:
                 TypeSlot.GetComponent<Image>().sprite = TypeSlot.GetComponent<Deck_Type_Slot>().Type_Image[3];
+                Character_Sprite.GetComponent<Deck_Character>().Change_Character_Skin(3);
                 break;
         }
 
