@@ -60,7 +60,11 @@ public class Limit_Popup : MonoBehaviour
         {
             if (popup.GetComponent<animation_On_off>() != null)
             {
-                popup.GetComponent<animation_On_off>().AnimationOff();
+                if (popup.tag != "Popup")
+                {
+                    Debug.Log("outside");
+                    popup.GetComponent<animation_On_off>().AnimationOff();
+                }
             }
             limit_Popup_button.SetActive(false);
         }
@@ -79,6 +83,7 @@ public class Limit_Popup : MonoBehaviour
                 {
                     if (popup_List[i].activeSelf == true && popup_List[i] != popup)
                     {
+                        Debug.Log("change");
                         popup_List[i].GetComponent<animation_On_off>().AnimationOff();
                     }
                 }
