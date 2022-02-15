@@ -132,7 +132,6 @@ public class PVE_Arrayment : MonoBehaviour
 
     void ArrayOrder(GameObject obj)
     {
-        Debug.Log("1");
         if(isArray)
         {
             MyTeamList.Add(obj);

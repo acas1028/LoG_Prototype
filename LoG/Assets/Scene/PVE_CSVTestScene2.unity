@@ -5192,6 +5192,7 @@ MonoBehaviour:
   inventory_Num: 5
   Block_Inventory: {fileID: 1611844798}
   is_Arrayed: 0
+  is_Permanent_Arrayed: 0
 --- !u!114 &404040911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6413,6 +6414,7 @@ MonoBehaviour:
   inventory_Num: 3
   Block_Inventory: {fileID: 1351594307}
   is_Arrayed: 0
+  is_Permanent_Arrayed: 0
 --- !u!114 &491407328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9045,7 +9047,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 706440717}
-  - component: {fileID: 706440716}
   - component: {fileID: 706440715}
   m_Layer: 0
   m_Name: Array Room Manager
@@ -9076,25 +9077,6 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &706440716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706440714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0416e0eb1a47b42a3c3e8bc4218642, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  preemptiveCheck: {fileID: 0}
-  playerName: {fileID: 0}
-  enemyPlayerName: {fileID: 0}
-  winStateText: {fileID: 0}
-  roomStatusText: {fileID: 0}
-  timeText: {fileID: 0}
-  readyButton: {fileID: 1258084982}
 --- !u!4 &706440717
 Transform:
   m_ObjectHideFlags: 0
@@ -11083,6 +11065,7 @@ MonoBehaviour:
   inventory_Num: 4
   Block_Inventory: {fileID: 399391208}
   is_Arrayed: 0
+  is_Permanent_Arrayed: 0
 --- !u!114 &946539988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11432,6 +11415,7 @@ MonoBehaviour:
   inventory_Num: 7
   Block_Inventory: {fileID: 49968444}
   is_Arrayed: 0
+  is_Permanent_Arrayed: 0
 --- !u!114 &978796957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13145,6 +13129,7 @@ MonoBehaviour:
   inventory_Num: 2
   Block_Inventory: {fileID: 1877319646}
   is_Arrayed: 0
+  is_Permanent_Arrayed: 0
 --- !u!114 &1113935861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13794,7 +13779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7378571590906423341, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
@@ -15501,7 +15486,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 706440716}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PVE_RoomManager, Assembly-CSharp
         m_MethodName: GetReady
         m_Mode: 1
@@ -20627,6 +20612,7 @@ MonoBehaviour:
   inventory_Num: 6
   Block_Inventory: {fileID: 41990685}
   is_Arrayed: 0
+  is_Permanent_Arrayed: 0
 --- !u!114 &1757815476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21705,6 +21691,7 @@ MonoBehaviour:
   inventory_Num: 1
   Block_Inventory: {fileID: 333592959}
   is_Arrayed: 0
+  is_Permanent_Arrayed: 0
 --- !u!114 &1917213171
 MonoBehaviour:
   m_ObjectHideFlags: 0
