@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Move_Scene : MonoBehaviour
@@ -16,6 +17,10 @@ public class Move_Scene : MonoBehaviour
     }
 
     public ENUM_SCENE targetScene;
+
+    private void Start() {
+        GetComponent<Button>().onClick.AddListener(MoveScene);
+    }
 
     public void MoveScene()
     {
