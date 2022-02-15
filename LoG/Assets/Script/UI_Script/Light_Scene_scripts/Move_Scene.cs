@@ -5,10 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class Move_Scene : MonoBehaviour
 {
-    public int sceneCount;
+    public enum ENUM_SCENE {
+        STARTING_SCENE,
+        MAINLOBBY_SCENE,
+        ARRAYMENT_SCENE,
+        BATTLE_SCENE,
+        DECK_SCENE,
+        PVE_SCENE,
+        PVE_CSVTESTSCENE2
+    }
+
+    public ENUM_SCENE targetScene;
 
     public void MoveScene()
     {
-        SceneManager.LoadScene(sceneCount);
+        SceneManager.LoadScene((int)targetScene);
     }
 }

@@ -16,11 +16,6 @@ public class UI_Manager : MonoBehaviourPunCallbacks
         Invoke("LeaveRoom", 4.0f);
     }
 
-    public void BackToLobby()
-    {
-        SceneManager.LoadScene("MainLobbyScene");
-    }
-
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
