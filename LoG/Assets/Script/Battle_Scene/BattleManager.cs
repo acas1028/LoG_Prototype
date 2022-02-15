@@ -28,6 +28,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     int roundWinCount;
     int roundCount;
 
+    int roundWinCountCheck;
+
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -78,6 +80,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Phase = 0;
         roundWinCount = 0;
         roundCount = 0;
+        roundWinCountCheck = 0;
 
         for (int i = 0; i < 5; i++)
         {
@@ -745,22 +748,23 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (roundWinCount >= 2)
-        {
-            photonView.RPC("MatchOver", RpcTarget.All);
-            return;
-        }
+        roundWinCountCheck = 0;
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
         PhotonNetwork.SetPlayerCustomProperties(table);
 
-        if (PhotonNetwork.IsMasterClient)
-        {
+        if (PhotonNetwork.IsMasterClient) {
             table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount + 1 } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-
-            Invoke("LoadArraymentScene", 4.0f);
         }
+
+        StartCoroutine(ReturnToArrayment());
+    }
+
+    IEnumerator ReturnToArrayment() {
+        yield return new WaitUntil(() => roundWinCountCheck == 2);
+
+        Invoke("LoadArraymentScene", 4f);
     }
 
     void LoadArraymentScene()
@@ -768,15 +772,21 @@ public class BattleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Arrayment_Scene");
     }
 
-    [PunRPC]
-    void MatchOver()
-    {
-        uiManager.ShowMatchResult(roundWinCount >= 2 ? true : false);
-    }
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
+    #region 포톤 콜백 함수
+    public override void OnPlayerLeftRoom(Player otherPlayer) {
         uiManager.ShowMatchResult(true);
     }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
+        object o_roundWinCount;
+        targetPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
+
+        if ((int)o_roundWinCount >= 2)
+            uiManager.ShowMatchResult(roundWinCount >= 2 ? true : false);
+        else
+            roundWinCountCheck++;
+    }
+    #endregion
+
 }
 
