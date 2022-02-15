@@ -146,6 +146,7 @@ public class ShowSprite_SaveDeckData : MonoBehaviour
             return;
 
         Character_Sprite.SetActive(false);
+        Character_Sprite.GetComponent<Image>().sprite = Character_Sprite.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<CharacterSpriteManager>().characterSprites[0];
         SetCharacter.SetActive(true);
 
     }
