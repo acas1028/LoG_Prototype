@@ -151,6 +151,7 @@ public class Deck_Manager : MonoBehaviour
             Slot_Property[i].GetComponent<Image>().sprite = null;
             Deck_Data.Save_Data[nowPageIdx, i].GetComponent<Character>().Character_Reset();
             Slot_Type[i].GetComponent<Deck_Type_Slot>().Change_Type(0);
+            CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().CharacterSpriteReset();
         }
         Skill_List.Clear();
     }
