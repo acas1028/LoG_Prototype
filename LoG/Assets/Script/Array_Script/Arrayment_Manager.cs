@@ -214,6 +214,8 @@ public class Arrayment_Manager : MonoBehaviourPun
 
             ArrayOnGrid(InvenNum, gridNum);
             is_click_inventory = false;
+
+            Limit_Popup.Limit_Poup_instance.PopupOff();
         }
     }
 
