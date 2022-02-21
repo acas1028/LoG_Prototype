@@ -1284,6 +1284,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89967335}
   m_CullTransparentMesh: 1
+--- !u!1 &93024220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 93024222}
+  - component: {fileID: 93024221}
+  m_Layer: 0
+  m_Name: CharacterIdleAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &93024221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93024220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e99ac8962835d40908886193fe09ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myGrid:
+  - {fileID: 1284921950}
+  - {fileID: 751742793}
+  - {fileID: 2051647930}
+  - {fileID: 1788223937}
+  - {fileID: 459698174}
+  - {fileID: 1152681609}
+  - {fileID: 315863216}
+  - {fileID: 1801626071}
+  - {fileID: 2092676977}
+  oppenentGrid:
+  - {fileID: 983985386}
+  - {fileID: 848342424}
+  - {fileID: 515084746}
+  - {fileID: 1804376687}
+  - {fileID: 1998813282}
+  - {fileID: 994152612}
+  - {fileID: 61211055}
+  - {fileID: 2093931202}
+  - {fileID: 2051011234}
+--- !u!4 &93024222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93024220}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &99079735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4680598695156568604, guid: 5aeaf02c06b158841a95ee08e51e969d, type: 3}
@@ -3766,7 +3829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448498586279676910, guid: 206c78dfbfc66ec40b1abfce591cebb5, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3448498586279676910, guid: 206c78dfbfc66ec40b1abfce591cebb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15315,7 +15378,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 1284921951}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &930347491
 GameObject:
@@ -20654,8 +20717,8 @@ Transform:
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 512389039}
-  - {fileID: 924245246}
   - {fileID: 270354179}
+  - {fileID: 924245246}
   m_Father: {fileID: 1416772867}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
