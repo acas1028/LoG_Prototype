@@ -17,10 +17,12 @@ public class DeckInfo : MonoBehaviour
     public Text attackText;
     public Text balancedText;
     public Text defenderText;
+
+    public GameObject DeckPanel;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -31,5 +33,16 @@ public class DeckInfo : MonoBehaviour
         attackText.text = attackNumber.ToString();
         balancedText.text = balancedNumber.ToString();
         defenderText.text = defenderNumber.ToString();
+
+        if (DeckPanel.activeSelf) return;
+
+        if (attackNumber + balancedNumber + defenderNumber != 7) DeckPanel.SetActive(true);
+    }
+
+    public void SelectDeck()
+    {
+        if (attackNumber + balancedNumber + defenderNumber != 7) return;
+
+        GameObject.FindWithTag("SelectedDeck").GetComponent<DeckSelectionController>().selectedDeckNumber = selectedDeckNumber;
     }
 }

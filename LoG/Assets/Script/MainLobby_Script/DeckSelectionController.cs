@@ -5,6 +5,10 @@ using UnityEngine;
 public class DeckSelectionController : MonoBehaviour
 {
     public GameObject DeckList;
+
+    public GameObject SelectedDeckInfo;
+
+    public int selectedDeckNumber;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +18,7 @@ public class DeckSelectionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        SelectedDeckInfo.GetComponent<DeckInfo>().selectedDeckNumber = selectedDeckNumber;
     }
 
     public void ActivatingDeckList()
