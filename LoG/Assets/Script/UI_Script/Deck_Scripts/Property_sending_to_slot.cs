@@ -16,9 +16,10 @@ public class Property_sending_to_slot : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         int j = 0;
-
+        
         if (this.GetComponent<Deck_Skill>().is_selected != true)
         {
+           
             while (j < 7)
             {
                 if (deckManager.Current_Character == deckManager.Character_Slot[j])
