@@ -23,6 +23,7 @@ namespace CharacterStats
         Attack_ArmorPiercer,        // 철갑탄
         Attack_DivineShield,        // 천상의보호막
         Attack_Sturdy,              // 옹골참(기합)
+        Attack_Null,
         Balance_Blessing,           // 축복
         Balance_GBGH,               // 모아니면 도
         Balance_Smoke,              // 연막탄
@@ -30,6 +31,7 @@ namespace CharacterStats
         Balance_Curse,              // 저주
         Balance_WideCounter,        // 광역반격
         Balance_DestinyBond,        // 길동무 
+        Balance_Null,
         Defense_Disarm,             // 무장해제
         Defense_Coward,             // 겁쟁이
         Defense_Patience,           // 인내심
@@ -37,7 +39,8 @@ namespace CharacterStats
         Defense_Barrier,            // 방벽
         Defense_Encourage,          // 격려
         Defense_Thornmail,          // 가시갑옷
-        Null                        // 스킬이 없어요
+        Defense_Null,
+        Null
 
     };
 }
@@ -211,6 +214,18 @@ public class Character : MonoBehaviourPunCallbacks
                 break;
             case "가시갑옷":
                 character_Skill = CharacterSkill.Defense_Thornmail;
+                break;
+            case "Null":
+                {
+                    if(character_Type == CharacterType.Attacker)
+                        character_Skill = CharacterSkill.Attack_Null;
+                    if (character_Type == CharacterType.Balance)
+                        character_Skill = CharacterSkill.Balance_Null;
+                    if (character_Type == CharacterType.Defender)
+                        character_Skill = CharacterSkill.Defense_Null;
+                    else
+                        character_Skill = CharacterSkill.Null;
+                }
                 break;
 
 

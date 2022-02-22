@@ -16,6 +16,8 @@ public class PurchasePopupManager : MonoBehaviour
     [SerializeField] Text goodsPrice;
     [SerializeField] Button purchaseButton;
 
+    public GameObject ShopUI;
+
     CharacterSkill skill;
     int price;
 
@@ -57,6 +59,8 @@ public class PurchasePopupManager : MonoBehaviour
                 Debug.Log($"{result.Items} 구매 성공");
             },
             (error) => Debug.Log($"{error.ErrorMessage}, 구매 실패"));
+        ClosePopup();
+        ShopUI.SetActive(false);
     }
 
     void ClosePopup() {
