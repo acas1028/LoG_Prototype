@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CharacterStats;
+
 
 public class Character_inventory_filled : MonoBehaviour
 {
@@ -16,7 +18,26 @@ public class Character_inventory_filled : MonoBehaviour
         int pageNum = Deck_Data_Send.instance.lastPageNum;
         int characterId = Deck_Data_Send.instance.Save_Data[pageNum, inventoryId - 1].GetComponent<Character>().character_ID;
 
-        characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[(characterId - 1) % 5 + 1];
+        switch (Deck_Data_Send.instance.gameObject.transform.GetChild(pageNum).GetChild(inventoryId-1).GetComponent<Character>().character_Type)
+        {
+            case CharacterType.Attacker:
+                characterImage.sprite= spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[1];
+                break;
+
+            case CharacterType.Balance:
+                characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[2];
+                break;
+
+            case CharacterType.Defender:
+                characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[3];
+                break;
+
+            case CharacterType.Null:
+                characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[0];
+                break;
+        }
+
+        //characterImage.sprite = spritePrefab.GetComponent<CharacterSpriteManager>().characterSprites[(characterId - 1) % 5 + 1];
     }
 
     private void Update()

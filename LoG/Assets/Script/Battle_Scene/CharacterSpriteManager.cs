@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CharacterStats;
 
 public class CharacterSpriteManager : MonoBehaviour
 {
     public Sprite[] characterSprites;
+
+    public Sprite characterSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +19,24 @@ public class CharacterSpriteManager : MonoBehaviour
     {
         // 현재 ID 개수(14개)만큼의 스프라이트가 없어서 임시로 적용함
         // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
-        transform.GetComponentInParent<SpriteRenderer>().sprite = characterSprites[(id - 1) % 5 + 1];
+
+        switch(transform.parent.GetComponent<Character>().character_Type)
+        {
+            case CharacterType.Attacker:
+                transform.GetComponentInParent<SpriteRenderer>().sprite = characterSprites[1];
+                break;
+            case CharacterType.Balance:
+                transform.GetComponentInParent<SpriteRenderer>().sprite = characterSprites[2];
+                break;
+            case CharacterType.Defender:
+                transform.GetComponentInParent<SpriteRenderer>().sprite = characterSprites[3];
+                break;
+            case CharacterType.Null:
+                transform.GetComponentInParent<SpriteRenderer>().sprite = characterSprites[0];
+                break;
+        }
+
+        //transform.GetComponentInParent<SpriteRenderer>().sprite = characterSprites[(id - 1) % 5 + 1];
     }
 
     public void SetSortingLayer(int character_Num_Of_Grid)
