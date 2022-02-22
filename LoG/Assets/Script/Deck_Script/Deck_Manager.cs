@@ -233,9 +233,7 @@ public class Deck_Manager : MonoBehaviour
     private void Load_Skill()
     {
         if (Deck_Data.Save_Data[0, 0].GetComponent<Character>().character_ID == 0)
-        {
             return;
-        }
 
         if(Deck_Data.Save_Data[nowPageIdx, 0].GetComponent<Character>().character_ID == 0) // 그 덱 페이지의 캐릭터의 아이디가 0일 경우 
         {
@@ -333,7 +331,7 @@ public class Deck_Manager : MonoBehaviour
     }
     private void Select_Skill()
     {
-        for(int i=0;i<Skill_List.Count;i++)
+        for (int i=0;i<Skill_List.Count;i++)
         {
             if(Pre_Skill == Skill_List[i])
             {
@@ -389,14 +387,5 @@ public class Deck_Manager : MonoBehaviour
         CB.pressedColor = yellow_Grid;
         CB.selectedColor = yellow_Grid;
         SKill.colors = CB;
-    }
-    public void SavePopUpYES()
-    {
-
-    }
-
-    public void SavePopUpNO()
-    {
-
     }
 }

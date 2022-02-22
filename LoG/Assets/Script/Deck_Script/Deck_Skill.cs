@@ -50,15 +50,17 @@ public class Deck_Skill : MonoBehaviour
                 deckManager.Reset_Grid();
             }
             deckManager.Pre_Skill = this.gameObject;
-            deckManager.Skill_List.Add(this.gameObject);
-            Button SKill = this.gameObject.GetComponent<Button>();
-            ColorBlock CB = SKill.colors;
-            Color yellow_Grid = Color.yellow;
-            CB.normalColor = yellow_Grid;
-            CB.pressedColor = yellow_Grid;
-            CB.selectedColor = yellow_Grid;
-            SKill.colors = CB;
-
+            if (this.gameObject != deckManager.Skill_Button[21])
+            {
+                deckManager.Skill_List.Add(this.gameObject);
+                Button SKill = this.gameObject.GetComponent<Button>();
+                ColorBlock CB = SKill.colors;
+                Color yellow_Grid = Color.yellow;
+                CB.normalColor = yellow_Grid;
+                CB.pressedColor = yellow_Grid;
+                CB.selectedColor = yellow_Grid;
+                SKill.colors = CB;
+            }
             switch (Character_Skill)
             {
                 case CharacterSkill.Attack_Confidence:
@@ -124,13 +126,15 @@ public class Deck_Skill : MonoBehaviour
                 case CharacterSkill.Defense_Thornmail:
                     D_Character.Character_Setting(21);
                     break;
+                case CharacterSkill.Null:
+                    D_Character.Character_Setting(22);
+                    break;
             }
 
             Sync_Type();
 
         }
     }
-
     public void Cancle_Skill()
     {
         deckManager.Pre_Skill.GetComponent<Deck_Skill>().is_selected = false;

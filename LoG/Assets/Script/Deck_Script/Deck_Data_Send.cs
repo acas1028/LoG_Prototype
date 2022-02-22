@@ -5,6 +5,7 @@ using UnityEngine;
 public class Deck_Data_Send : MonoBehaviour
 {
     static public Deck_Data_Send instance = null;
+    public GameObject[] DeckPage = new GameObject[5];
     public GameObject characterPrefab;
     public GameObject[,] Save_Data;
 
@@ -31,4 +32,5 @@ public class Deck_Data_Send : MonoBehaviour
             }
         }
     }
+
 }

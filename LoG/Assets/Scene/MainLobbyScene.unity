@@ -512,17 +512,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1344158438396956625, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 91113146}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &91113148 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 951004928319056072, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
+--- !u!1 &91113149 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3280966244087262690, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 91113146}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2f495bdb770454580826348a4398e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &114711860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -641,17 +635,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1344158438396956625, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 114711860}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &114711862 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 951004928319056072, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
+--- !u!1 &114711863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3280966244087262690, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 114711860}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2f495bdb770454580826348a4398e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &115511739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,7 +1053,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeckList: {fileID: 679577112}
   SelectedDeckInfo: {fileID: 8900282256916176063}
-  selectedDeckNumber: 1
 --- !u!1 &201624190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,13 +1334,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 942944947}
-        m_TargetAssemblyTypeName: DeckInfo, Assembly-CSharp
-        m_MethodName: SelectDeck
-        m_Mode: 1
+      - m_Target: {fileID: 679577114}
+        m_TargetAssemblyTypeName: DeckListData, Assembly-CSharp
+        m_MethodName: ChangeDeckPage
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 942944948}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2140,13 +2127,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 91113148}
-        m_TargetAssemblyTypeName: DeckInfo, Assembly-CSharp
-        m_MethodName: SelectDeck
-        m_Mode: 1
+      - m_Target: {fileID: 679577114}
+        m_TargetAssemblyTypeName: DeckListData, Assembly-CSharp
+        m_MethodName: ChangeDeckPage
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 91113149}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2711,13 +2698,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 679577113}
+  - component: {fileID: 679577114}
   m_Layer: 5
   m_Name: DeckList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &679577113
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2742,6 +2730,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &679577114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679577112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96a96c3ea3fa1f243ba7563a5684fe25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoDeck:
+  - {fileID: 1391620360}
+  - {fileID: 942944948}
+  - {fileID: 91113149}
+  - {fileID: 1495884057}
+  - {fileID: 114711863}
+  DeckSelection: {fileID: 8900282256916176063}
 --- !u!1 &683290694
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,6 +3105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb86d5dece8f0f42b89d1eaaa95788e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeckPage:
+  - {fileID: 650067789}
+  - {fileID: 782519689}
+  - {fileID: 337736580}
+  - {fileID: 21349964}
+  - {fileID: 2144540466}
   characterPrefab: {fileID: 3448498586279676905, guid: 206c78dfbfc66ec40b1abfce591cebb5, type: 3}
   lastPageNum: 0
 --- !u!4 &752154424
@@ -3687,17 +3700,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1344158438396956625, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 942944945}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &942944947 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 951004928319056072, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
+--- !u!1 &942944948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3280966244087262690, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 942944945}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2f495bdb770454580826348a4398e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &966863187
 GameObject:
   m_ObjectHideFlags: 0
@@ -5246,7 +5253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1319.5, y: -199}
+  m_AnchoredPosition: {x: 1319.5, y: -64}
   m_SizeDelta: {x: 321, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1245474565
@@ -5585,13 +5592,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1495884056}
-        m_TargetAssemblyTypeName: DeckInfo, Assembly-CSharp
-        m_MethodName: SelectDeck
-        m_Mode: 1
+      - m_Target: {fileID: 679577114}
+        m_TargetAssemblyTypeName: DeckListData, Assembly-CSharp
+        m_MethodName: ChangeDeckPage
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1495884057}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6512,17 +6519,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1344158438396956625, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 1391620357}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1391620359 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 951004928319056072, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
+--- !u!1 &1391620360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3280966244087262690, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 1391620357}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2f495bdb770454580826348a4398e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1395432543
 GameObject:
   m_ObjectHideFlags: 0
@@ -6646,13 +6647,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1391620359}
-        m_TargetAssemblyTypeName: DeckInfo, Assembly-CSharp
-        m_MethodName: SelectDeck
-        m_Mode: 1
+      - m_Target: {fileID: 679577114}
+        m_TargetAssemblyTypeName: DeckListData, Assembly-CSharp
+        m_MethodName: ChangeDeckPage
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1391620360}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6977,17 +6978,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1344158438396956625, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 1495884054}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1495884056 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 951004928319056072, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
+--- !u!1 &1495884057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3280966244087262690, guid: 07eb4040e152e7c4db84e0311a0ba386, type: 3}
   m_PrefabInstance: {fileID: 1495884054}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2f495bdb770454580826348a4398e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1570260310
 GameObject:
   m_ObjectHideFlags: 0
@@ -7155,13 +7150,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114711862}
-        m_TargetAssemblyTypeName: DeckInfo, Assembly-CSharp
-        m_MethodName: SelectDeck
-        m_Mode: 1
+      - m_Target: {fileID: 679577114}
+        m_TargetAssemblyTypeName: DeckListData, Assembly-CSharp
+        m_MethodName: ChangeDeckPage
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 114711863}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

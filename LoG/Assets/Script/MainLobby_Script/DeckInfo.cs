@@ -19,14 +19,7 @@ public class DeckInfo : MonoBehaviour
     public Text defenderText;
 
     public GameObject DeckPanel;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
+    public void initSelectDeck()
     {
         selectedDeckImage.sprite = selectedDeckSprites[selectedDeckNumber - 1];
 
@@ -37,12 +30,21 @@ public class DeckInfo : MonoBehaviour
         if (DeckPanel.activeSelf) return;
 
         if (attackNumber + balancedNumber + defenderNumber != 7) DeckPanel.SetActive(true);
+
+    }
+    public void EmptyPage()
+    {
+        attackNumber = 0;
+        balancedNumber = 0;
+        defenderNumber = 0;
     }
 
-    public void SelectDeck()
+    public void CopyPage(GameObject Page)
     {
-        if (attackNumber + balancedNumber + defenderNumber != 7) return;
-
-        GameObject.FindWithTag("SelectedDeck").GetComponent<DeckSelectionController>().selectedDeckNumber = selectedDeckNumber;
+        DeckInfo Data = Page.GetComponent<DeckInfo>();
+        attackNumber = Data.attackNumber;
+        balancedNumber = Data.balancedNumber;
+        defenderNumber = Data.defenderNumber;
+        selectedDeckNumber = Data.selectedDeckNumber;
     }
 }

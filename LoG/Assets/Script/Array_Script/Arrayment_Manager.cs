@@ -25,6 +25,7 @@ public class Arrayment_Manager : MonoBehaviourPun
     private int arrayedThisTurn;
     private int InvenNum;
 
+    [SerializeField]
     private List<int> invenNums;
     private List<int> gridNums;
     private List<GameObject> SwitchCharacterTag = new List<GameObject>();
@@ -392,7 +393,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                     }
                     break;
             }
-            b_isCancle = false;
+
         }
         else
         {
@@ -571,6 +572,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         arrayedThisTurn--;
         GridOffHighLight();
 
+        Cancle_Character = null;
         b_isMyCancle = false;
     }
 
@@ -583,6 +585,7 @@ public class Arrayment_Manager : MonoBehaviourPun
         {
             cancle_num = Reverse_Array(Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Num_Of_Grid);
         }
+
         arrData_Sync.DataSync(i);
         if(character_Arrayment_Showing.is_Mine==true)
         {
@@ -594,16 +597,13 @@ public class Arrayment_Manager : MonoBehaviourPun
             character_Arrayment_Showing.cancel_Character = Arrayed_Data.instance.team2[i];
             character_Arrayment_Showing.temp = Arrayed_Data.instance.team2[i].GetComponent<Character>().character_Attack_Range;
         }
-        if (Cancle_Character==null)
-        {
-            return;
-        }
     }
     private void ResetEnemyGrid()
     {
         Enemy_Grids[cancle_num-1].GetComponentInChildren<Character>().Character_Reset();
         Enemy_Grids[cancle_num-1].GetComponentInChildren<Character>().InitializeCharacterSprite();
         Enemy_Grids[cancle_num-1].tag = "Null_Character";
+        b_isCancle = false;
     }
     public void Sync_Character()
     {
