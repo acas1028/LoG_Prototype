@@ -50,17 +50,14 @@ public class Deck_Skill : MonoBehaviour
                 deckManager.Reset_Grid();
             }
             deckManager.Pre_Skill = this.gameObject;
-            if (this.gameObject != deckManager.Skill_Button[21])
-            {
-                deckManager.Skill_List.Add(this.gameObject);
-                Button SKill = this.gameObject.GetComponent<Button>();
-                ColorBlock CB = SKill.colors;
-                Color yellow_Grid = Color.yellow;
-                CB.normalColor = yellow_Grid;
-                CB.pressedColor = yellow_Grid;
-                CB.selectedColor = yellow_Grid;
-                SKill.colors = CB;
-            }
+            deckManager.Skill_List.Add(this.gameObject);
+            Button SKill = this.gameObject.GetComponent<Button>();
+            ColorBlock CB = SKill.colors;
+            Color yellow_Grid = Color.yellow;
+            CB.normalColor = yellow_Grid;
+            CB.pressedColor = yellow_Grid;
+            CB.selectedColor = yellow_Grid;
+            SKill.colors = CB;
             switch (Character_Skill)
             {
                 case CharacterSkill.Attack_Confidence:
@@ -84,53 +81,63 @@ public class Deck_Skill : MonoBehaviour
                 case CharacterSkill.Attack_Sturdy:
                     D_Character.Character_Setting(7);
                     break;
-                case CharacterSkill.Balance_Blessing:
+                case CharacterSkill.Attack_Null:
                     D_Character.Character_Setting(8);
                     break;
-                case CharacterSkill.Balance_GBGH:
+                case CharacterSkill.Balance_Blessing:
                     D_Character.Character_Setting(9);
                     break;
-                case CharacterSkill.Balance_Smoke:
+                case CharacterSkill.Balance_GBGH:
                     D_Character.Character_Setting(10);
                     break;
-                case CharacterSkill.Balance_Survivor:
+                case CharacterSkill.Balance_Smoke:
                     D_Character.Character_Setting(11);
                     break;
-                case CharacterSkill.Balance_Curse:
+                case CharacterSkill.Balance_Survivor:
                     D_Character.Character_Setting(12);
                     break;
-                case CharacterSkill.Balance_WideCounter:
+                case CharacterSkill.Balance_Curse:
                     D_Character.Character_Setting(13);
                     break;
-                case CharacterSkill.Balance_DestinyBond:
+                case CharacterSkill.Balance_WideCounter:
                     D_Character.Character_Setting(14);
                     break;
-                case CharacterSkill.Defense_Disarm:
+                case CharacterSkill.Balance_DestinyBond:
                     D_Character.Character_Setting(15);
                     break;
-                case CharacterSkill.Defense_Coward:
+                case CharacterSkill.Balance_Null:
                     D_Character.Character_Setting(16);
                     break;
-                case CharacterSkill.Defense_Patience:
+                case CharacterSkill.Defense_Disarm:
                     D_Character.Character_Setting(17);
                     break;
-                case CharacterSkill.Defense_Responsibility:
+                case CharacterSkill.Defense_Coward:
                     D_Character.Character_Setting(18);
                     break;
-                case CharacterSkill.Defense_Barrier:
+                case CharacterSkill.Defense_Patience:
                     D_Character.Character_Setting(19);
                     break;
-                case CharacterSkill.Defense_Encourage:
+                case CharacterSkill.Defense_Responsibility:
                     D_Character.Character_Setting(20);
                     break;
-                case CharacterSkill.Defense_Thornmail:
+                case CharacterSkill.Defense_Barrier:
                     D_Character.Character_Setting(21);
+                    break;
+                case CharacterSkill.Defense_Encourage:
+                    D_Character.Character_Setting(22);
+                    break;
+                case CharacterSkill.Defense_Thornmail:
+                    D_Character.Character_Setting(23);
+                    break;
+                case CharacterSkill.Defense_Null:
+                    D_Character.Character_Setting(24);
                     break;
             }
 
             Sync_Type();
-
+            this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
         }
+        OverlapNullSkill();
     }
     public void Cancle_Skill()
     {
@@ -162,4 +169,13 @@ public class Deck_Skill : MonoBehaviour
         
     }
 
+    private void OverlapNullSkill()
+    {
+        if (this.gameObject == deckManager.Skill_Button[7] ||
+            this.gameObject == deckManager.Skill_Button[15] ||
+            this.gameObject == deckManager.Skill_Button[23])
+        {
+            Cancle_Skill();
+        }
+    }
 }

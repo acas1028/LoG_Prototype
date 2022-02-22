@@ -28,8 +28,6 @@ public class Property_sending_to_slot : MonoBehaviour, IPointerClickHandler
                 }
                 j++;
             }
-
-            this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
         }
 
     }

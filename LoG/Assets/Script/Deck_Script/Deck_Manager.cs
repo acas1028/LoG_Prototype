@@ -6,12 +6,13 @@ using UnityEngine.EventSystems;
 
 public class Deck_Manager : MonoBehaviour
 {
+    private bool NullSkill = false;
+
     private int nowPageIdx;
     public int NowPageIdx
     {
         get => nowPageIdx;
     }
-
     public GameObject[] Slot_Type;
     public GameObject[] Slot_Property;
     public GameObject[] Character_Slot;
@@ -67,8 +68,13 @@ public class Deck_Manager : MonoBehaviour
             }
         }
         Show_Property_Slot();
-        Select_Skill();
-        Check_Skill();
+        if (!NullSkill)
+        {
+            Select_Skill();
+            Check_Skill();
+        }
+        else
+            NullSkill = false;
     }
 
     public void Click_Grid()
@@ -387,5 +393,10 @@ public class Deck_Manager : MonoBehaviour
         CB.pressedColor = yellow_Grid;
         CB.selectedColor = yellow_Grid;
         SKill.colors = CB;
+    }
+
+    public void NullSkillCheck()
+    {
+        NullSkill = true;
     }
 }
