@@ -1,12 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
 public class MatchingController : MonoBehaviourPunCallbacks
 {
-    public void EnterRoom() {
+	public enum ROOM_TYPE {
+		PVE,
+		PVP
+    }
+
+	[SerializeField] Button pveButton;
+	[SerializeField] Button pvpButton;
+	ROOM_TYPE roomType;
+
+    private void Start() {
+		pveButton.onClick.AddListener(delegate () { EnterRoom(ROOM_TYPE.PVE); });
+		pvpButton.onClick.AddListener(delegate () { EnterRoom(ROOM_TYPE.PVP); });
+    }
+
+    public void EnterRoom(ROOM_TYPE roomType) {
+		this.roomType = roomType;
 		StartCoroutine(ConnectCoroutine());
 	}
 
@@ -62,7 +78,10 @@ public class MatchingController : MonoBehaviourPunCallbacks
 	public override void OnJoinedRoom() {
 		Debug.Log("<color=yellow>OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.</color>");
 
-		PhotonNetwork.LoadLevel("Arrayment_Scene");
+		if (roomType == ROOM_TYPE.PVE)
+			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_CSVTESTSCENE2);
+		else if (roomType == ROOM_TYPE.PVP)
+			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE);
 	}
 	#endregion
 }

@@ -2041,6 +2041,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28223d46c219b4243a7f408f897f83f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pveButton: {fileID: 814157598}
+  pvpButton: {fileID: 1877550028}
 --- !u!4 &391676264
 Transform:
   m_ObjectHideFlags: 0
@@ -3159,7 +3161,6 @@ GameObject:
   - component: {fileID: 814157600}
   - component: {fileID: 814157599}
   - component: {fileID: 814157598}
-  - component: {fileID: 814157601}
   m_Layer: 5
   m_Name: PVE_Button
   m_TagString: Untagged
@@ -3230,18 +3231,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814157601}
-        m_TargetAssemblyTypeName: Move_Scene, Assembly-CSharp
-        m_MethodName: MoveScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 855485478}
         m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
         m_MethodName: ChangeSoundAndPlay
@@ -3292,19 +3281,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 814157596}
   m_CullTransparentMesh: 1
---- !u!114 &814157601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 814157596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3184e29016c18b14e8e15433b806161b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: 5
 --- !u!1001 &816874060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8817,18 +8793,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 391676263}
-        m_TargetAssemblyTypeName: MatchingController, Assembly-CSharp
-        m_MethodName: EnterRoom
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 855485478}
         m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
         m_MethodName: ChangeSoundAndPlay
