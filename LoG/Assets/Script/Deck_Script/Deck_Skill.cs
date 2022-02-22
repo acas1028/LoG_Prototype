@@ -126,9 +126,6 @@ public class Deck_Skill : MonoBehaviour
                 case CharacterSkill.Defense_Thornmail:
                     D_Character.Character_Setting(21);
                     break;
-                case CharacterSkill.Null:
-                    D_Character.Character_Setting(22);
-                    break;
             }
 
             Sync_Type();

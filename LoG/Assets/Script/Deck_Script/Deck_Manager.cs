@@ -42,7 +42,6 @@ public class Deck_Manager : MonoBehaviour
         Deck_Data = Deck_Data_Send.instance;
         nowPageIdx = Deck_Data_Send.instance.lastPageNum;
         Page_Slot[0].GetComponent<Button>().onClick.Invoke();
-        Load_Deck();
     }
 
     public void SetNowPageIndex(int pageIdx)
@@ -227,6 +226,7 @@ public class Deck_Manager : MonoBehaviour
 
         Reset_Skill();
         Reset_Grid();
+        Skill_List.Clear();
         Load_Skill();
     }
 

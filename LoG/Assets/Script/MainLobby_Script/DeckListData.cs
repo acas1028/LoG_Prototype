@@ -25,7 +25,7 @@ public class DeckListData : MonoBehaviour
     }
     IEnumerator InitListData()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.9f);
         for (int i = 0; i < 5; i++)
         {
             DeckInfo DI = infoDeck[i].GetComponent<DeckInfo>();
