@@ -9,10 +9,25 @@ public class UI_Manager : MonoBehaviourPunCallbacks
     [Header("Match Result Panel")]
     public GameObject matchResultPanel;
 
+    public GameObject matchReward;
+
     public void ShowMatchResult(bool isWin)
     {
+        
         Text matchResultText = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform).GetComponentInChildren<Text>();
+        Instantiate(matchReward, GameObject.Find("Canvas").transform);
         matchResultText.text = isWin ? "½Â¸®" : "ÆÐ¹è";
+
+        if (isWin && !(PhotonNetwork.OfflineMode))
+        {
+
+            matchReward.GetComponent<MatchReward>().RewardValue.text = "100 Credit";
+        }
+
+        else if(!isWin && !(PhotonNetwork.OfflineMode))
+        {
+            matchReward.GetComponent<MatchReward>().RewardValue.text = "50 Credit";
+        }
         Invoke("LeaveRoom", 4.0f);
     }
 
