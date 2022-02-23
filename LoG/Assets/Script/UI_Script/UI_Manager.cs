@@ -14,9 +14,9 @@ public class UI_Manager : MonoBehaviourPunCallbacks
     public void ShowMatchResult(bool isWin)
     {
         
-        Text matchResultText = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform).GetComponentInChildren<Text>();
+        Image matchResultImage = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform).GetComponentInChildren<Image>();
         Instantiate(matchReward, GameObject.Find("Canvas").transform);
-        matchResultText.text = isWin ? "½Â¸®" : "ÆÐ¹è";
+        matchResultImage.sprite = isWin ? Resources.Load("Image/BattleResult/Win") as Sprite : Resources.Load("Image/BattleResult/Lose") as Sprite;
 
         if (isWin && !(PhotonNetwork.OfflineMode))
         {
