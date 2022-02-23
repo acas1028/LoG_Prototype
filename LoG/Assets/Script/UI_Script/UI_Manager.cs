@@ -9,26 +9,26 @@ public class UI_Manager : MonoBehaviourPunCallbacks
     [Header("Match Result Panel")]
     public GameObject matchResultPanel;
 
-    public GameObject matchReward;
 
     public void ShowMatchResult(bool isWin)
     {
-        
-        Image matchResultImage = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform).GetComponentInChildren<Image>();
-        Instantiate(matchReward, GameObject.Find("Canvas").transform);
-        matchResultImage.sprite = isWin ? Resources.Load("Image/BattleResult/Win") as Sprite : Resources.Load("Image/BattleResult/Lose") as Sprite;
 
-        if (isWin && !(PhotonNetwork.OfflineMode))
+        GameObject result = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform);
+
+        if (isWin)
         {
-
-            matchReward.GetComponent<MatchReward>().RewardValue.text = "100 Credit";
+            Debug.Log("Win");
+            result.GetComponent<MatchReward>().LoseTitle.SetActive(false);
+            result.GetComponent<MatchReward>().RewardValue.text = "100 credit";
         }
 
-        else if(!isWin && !(PhotonNetwork.OfflineMode))
+        else if(!isWin)
         {
-            matchReward.GetComponent<MatchReward>().RewardValue.text = "50 Credit";
+            Debug.Log("Lose");
+            result.GetComponent<MatchReward>().WinTitle.SetActive(false);
+            result.GetComponent<MatchReward>().RewardValue.text = "50 credit";
         }
-        Invoke("LeaveRoom", 4.0f);
+        Invoke("LeaveRoom", 6.0f);
     }
 
     public void LeaveRoom()

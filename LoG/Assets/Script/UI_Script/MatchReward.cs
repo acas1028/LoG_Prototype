@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class MatchReward : MonoBehaviour
 {
+    public GameObject WinTitle;
+    public GameObject LoseTitle;
+
     public Text RewardValue;
     public Image RewardImage;
     // Start is called before the first frame update
