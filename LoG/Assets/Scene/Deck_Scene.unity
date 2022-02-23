@@ -1409,7 +1409,6 @@ GameObject:
   - component: {fileID: 124278688}
   - component: {fileID: 124278687}
   - component: {fileID: 124278686}
-  - component: {fileID: 124278690}
   m_Layer: 5
   m_Name: Balance_Smoke
   m_TagString: Skill_Button
@@ -1453,6 +1452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 10
   is_selected: 0
+  property_Name: Balance_Smoke
   Type_Obj: {fileID: 988431350}
 --- !u!114 &124278687
 MonoBehaviour:
@@ -1560,19 +1560,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124278684}
   m_CullTransparentMesh: 1
---- !u!114 &124278690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124278684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_Smoke
 --- !u!1 &134932526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,7 +1648,6 @@ GameObject:
   - component: {fileID: 141519504}
   - component: {fileID: 141519503}
   - component: {fileID: 141519502}
-  - component: {fileID: 141519506}
   m_Layer: 5
   m_Name: Defense_Barrier
   m_TagString: Skill_Button
@@ -1705,6 +1691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 20
   is_selected: 0
+  property_Name: Defense_Barrier
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &141519503
 MonoBehaviour:
@@ -1812,19 +1799,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141519500}
   m_CullTransparentMesh: 1
---- !u!114 &141519506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141519500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Barrier
 --- !u!1 &147461305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2607,7 +2581,6 @@ GameObject:
   - component: {fileID: 201708447}
   - component: {fileID: 201708446}
   - component: {fileID: 201708445}
-  - component: {fileID: 201708449}
   m_Layer: 5
   m_Name: Balance_Bless
   m_TagString: Skill_Button
@@ -2651,6 +2624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 8
   is_selected: 0
+  property_Name: Balance_Bless
   Type_Obj: {fileID: 988431350}
 --- !u!114 &201708446
 MonoBehaviour:
@@ -2758,19 +2732,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201708443}
   m_CullTransparentMesh: 1
---- !u!114 &201708449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201708443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_Blessing
 --- !u!1 &206235814
 GameObject:
   m_ObjectHideFlags: 0
@@ -3702,7 +3663,6 @@ GameObject:
   - component: {fileID: 255954498}
   - component: {fileID: 255954497}
   - component: {fileID: 255954496}
-  - component: {fileID: 255954501}
   m_Layer: 5
   m_Name: Defense_Disarm
   m_TagString: Skill_Button
@@ -3724,6 +3684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 16
   is_selected: 0
+  property_Name: Defense_Disarm
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &255954497
 MonoBehaviour:
@@ -3853,19 +3814,6 @@ RectTransform:
   m_AnchoredPosition: {x: 321.36707, y: -110}
   m_SizeDelta: {x: 657.4, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &255954501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255954495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Disarm
 --- !u!1 &259108319
 GameObject:
   m_ObjectHideFlags: 0
@@ -4360,7 +4308,6 @@ GameObject:
   - component: {fileID: 269880639}
   - component: {fileID: 269880638}
   - component: {fileID: 269880637}
-  - component: {fileID: 269880636}
   m_Layer: 5
   m_Name: Defense_Null
   m_TagString: Skill_Button
@@ -4390,19 +4337,6 @@ RectTransform:
   m_AnchoredPosition: {x: 321.3672, y: 1441.207}
   m_SizeDelta: {x: 657.4, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &269880636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269880634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Null
 --- !u!114 &269880637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4417,6 +4351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 23
   is_selected: 0
+  property_Name: Defense_Null
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &269880638
 MonoBehaviour:
@@ -4909,7 +4844,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 816930069}
   m_Direction: 2
   m_Value: 1.0000005
-  m_Size: 0.4457096
+  m_Size: 0.44570962
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5134,7 +5069,6 @@ GameObject:
   - component: {fileID: 320061389}
   - component: {fileID: 320061388}
   - component: {fileID: 320061387}
-  - component: {fileID: 320061391}
   m_Layer: 5
   m_Name: Balance_WideCounter
   m_TagString: Skill_Button
@@ -5178,6 +5112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 13
   is_selected: 0
+  property_Name: Balance_WideCounter
   Type_Obj: {fileID: 988431350}
 --- !u!114 &320061388
 MonoBehaviour:
@@ -5285,19 +5220,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320061385}
   m_CullTransparentMesh: 1
---- !u!114 &320061391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320061385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_WideCounter
 --- !u!1 &321823208
 GameObject:
   m_ObjectHideFlags: 0
@@ -5390,7 +5312,6 @@ GameObject:
   - component: {fileID: 341129784}
   - component: {fileID: 341129783}
   - component: {fileID: 341129782}
-  - component: {fileID: 341129786}
   m_Layer: 5
   m_Name: Attack_Executioner
   m_TagString: Skill_Button
@@ -5434,6 +5355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 1
   is_selected: 0
+  property_Name: Attack_Executioner
   Type_Obj: {fileID: 1963468577}
 --- !u!114 &341129783
 MonoBehaviour:
@@ -5541,19 +5463,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341129780}
   m_CullTransparentMesh: 1
---- !u!114 &341129786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341129780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Attack_Executioner
 --- !u!1 &354505291
 GameObject:
   m_ObjectHideFlags: 0
@@ -7811,7 +7720,6 @@ GameObject:
   - component: {fileID: 571061014}
   - component: {fileID: 571061013}
   - component: {fileID: 571061012}
-  - component: {fileID: 571061016}
   m_Layer: 5
   m_Name: Defense_Coward
   m_TagString: Skill_Button
@@ -7855,6 +7763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 17
   is_selected: 0
+  property_Name: Defense_Coward
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &571061013
 MonoBehaviour:
@@ -7962,19 +7871,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571061010}
   m_CullTransparentMesh: 1
---- !u!114 &571061016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 571061010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Coward
 --- !u!1 &571121038
 GameObject:
   m_ObjectHideFlags: 0
@@ -11302,7 +11198,6 @@ GameObject:
   - component: {fileID: 877312900}
   - component: {fileID: 877312899}
   - component: {fileID: 877312898}
-  - component: {fileID: 877312902}
   m_Layer: 5
   m_Name: Attack_DivineShield
   m_TagString: Skill_Button
@@ -11346,6 +11241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 5
   is_selected: 0
+  property_Name: Attack_DivineShield
   Type_Obj: {fileID: 1963468577}
 --- !u!114 &877312899
 MonoBehaviour:
@@ -11453,19 +11349,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877312896}
   m_CullTransparentMesh: 1
---- !u!114 &877312902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877312896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Attack_DivineShield
 --- !u!1 &886314755
 GameObject:
   m_ObjectHideFlags: 0
@@ -11823,7 +11706,6 @@ GameObject:
   - component: {fileID: 928731428}
   - component: {fileID: 928731427}
   - component: {fileID: 928731426}
-  - component: {fileID: 928731430}
   m_Layer: 5
   m_Name: Balance_DestinyBond
   m_TagString: Skill_Button
@@ -11867,6 +11749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 14
   is_selected: 0
+  property_Name: Balance_DestinyBond
   Type_Obj: {fileID: 988431350}
 --- !u!114 &928731427
 MonoBehaviour:
@@ -11974,19 +11857,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928731424}
   m_CullTransparentMesh: 1
---- !u!114 &928731430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 928731424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_DestinyBond
 --- !u!1 &930085081
 GameObject:
   m_ObjectHideFlags: 0
@@ -12336,7 +12206,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 930085082}
   m_Direction: 2
   m_Value: 0.99999934
-  m_Size: 0.5070382
+  m_Size: 0.50703824
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13821,7 +13691,6 @@ GameObject:
   - component: {fileID: 1096728047}
   - component: {fileID: 1096728046}
   - component: {fileID: 1096728045}
-  - component: {fileID: 1096728049}
   m_Layer: 5
   m_Name: Defense_Encourage
   m_TagString: Skill_Button
@@ -13865,6 +13734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 21
   is_selected: 0
+  property_Name: Defense_Encourage
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &1096728046
 MonoBehaviour:
@@ -13972,19 +13842,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096728043}
   m_CullTransparentMesh: 1
---- !u!114 &1096728049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096728043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Encourage
 --- !u!1 &1112364850
 GameObject:
   m_ObjectHideFlags: 0
@@ -15023,7 +14880,6 @@ GameObject:
   - component: {fileID: 1197152772}
   - component: {fileID: 1197152771}
   - component: {fileID: 1197152770}
-  - component: {fileID: 1197152774}
   m_Layer: 5
   m_Name: Defense_Patience
   m_TagString: Skill_Button
@@ -15067,6 +14923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 18
   is_selected: 0
+  property_Name: Defense_Patience
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &1197152771
 MonoBehaviour:
@@ -15174,19 +15031,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197152768}
   m_CullTransparentMesh: 1
---- !u!114 &1197152774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197152768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Patience
 --- !u!1 &1205320795
 GameObject:
   m_ObjectHideFlags: 0
@@ -16164,7 +16008,6 @@ GameObject:
   - component: {fileID: 1329996502}
   - component: {fileID: 1329996501}
   - component: {fileID: 1329996500}
-  - component: {fileID: 1329996504}
   m_Layer: 5
   m_Name: Balance_Survivor
   m_TagString: Skill_Button
@@ -16208,6 +16051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 11
   is_selected: 0
+  property_Name: Balance_Survivor
   Type_Obj: {fileID: 988431350}
 --- !u!114 &1329996501
 MonoBehaviour:
@@ -16315,19 +16159,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329996498}
   m_CullTransparentMesh: 1
---- !u!114 &1329996504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329996498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_Survivor
 --- !u!1 &1369138630
 GameObject:
   m_ObjectHideFlags: 0
@@ -16865,7 +16696,6 @@ GameObject:
   - component: {fileID: 1412279025}
   - component: {fileID: 1412279024}
   - component: {fileID: 1412279023}
-  - component: {fileID: 1412279027}
   m_Layer: 5
   m_Name: Defense_Responsibility
   m_TagString: Skill_Button
@@ -16909,6 +16739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 19
   is_selected: 0
+  property_Name: Defense_Responsibility
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &1412279024
 MonoBehaviour:
@@ -17016,19 +16847,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412279021}
   m_CullTransparentMesh: 1
---- !u!114 &1412279027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412279021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Responsibility
 --- !u!1 &1418556480
 GameObject:
   m_ObjectHideFlags: 0
@@ -17220,7 +17038,6 @@ GameObject:
   - component: {fileID: 1427380977}
   - component: {fileID: 1427380976}
   - component: {fileID: 1427380979}
-  - component: {fileID: 1427380980}
   m_Layer: 5
   m_Name: Attack_Confidence
   m_TagString: Skill_Button
@@ -17370,20 +17187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 0
   is_selected: 0
-  Type_Obj: {fileID: 1963468577}
---- !u!114 &1427380980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1427380974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   property_Name: Attack_Confidence
+  Type_Obj: {fileID: 1963468577}
 --- !u!1 &1427452789
 GameObject:
   m_ObjectHideFlags: 0
@@ -17704,7 +17509,6 @@ GameObject:
   - component: {fileID: 1447566041}
   - component: {fileID: 1447566040}
   - component: {fileID: 1447566039}
-  - component: {fileID: 1447566043}
   m_Layer: 5
   m_Name: Attack_Assassination
   m_TagString: Skill_Button
@@ -17748,6 +17552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 3
   is_selected: 0
+  property_Name: Attack_Assassination
   Type_Obj: {fileID: 1963468577}
 --- !u!114 &1447566040
 MonoBehaviour:
@@ -17855,19 +17660,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447566037}
   m_CullTransparentMesh: 1
---- !u!114 &1447566043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1447566037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Attack_Ranger
 --- !u!1 &1447567459
 GameObject:
   m_ObjectHideFlags: 0
@@ -18173,7 +17965,6 @@ GameObject:
   - component: {fileID: 1457388548}
   - component: {fileID: 1457388547}
   - component: {fileID: 1457388546}
-  - component: {fileID: 1457388550}
   m_Layer: 5
   m_Name: Attack_ArmorPiercer
   m_TagString: Skill_Button
@@ -18217,6 +18008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 4
   is_selected: 0
+  property_Name: Attack_ArmorPiercer
   Type_Obj: {fileID: 1963468577}
 --- !u!114 &1457388547
 MonoBehaviour:
@@ -18324,19 +18116,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457388544}
   m_CullTransparentMesh: 1
---- !u!114 &1457388550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457388544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Attack_ArmorPiercer
 --- !u!1001 &1465134617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18830,7 +18609,6 @@ GameObject:
   - component: {fileID: 1530915203}
   - component: {fileID: 1530915202}
   - component: {fileID: 1530915201}
-  - component: {fileID: 1530915205}
   m_Layer: 5
   m_Name: Defense_Thronmall
   m_TagString: Skill_Button
@@ -18874,6 +18652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 22
   is_selected: 0
+  property_Name: Defense_Thronmall
   Type_Obj: {fileID: 1975030993}
 --- !u!114 &1530915202
 MonoBehaviour:
@@ -18981,19 +18760,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530915199}
   m_CullTransparentMesh: 1
---- !u!114 &1530915205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530915199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Defense_Thronmail
 --- !u!1 &1540390245
 GameObject:
   m_ObjectHideFlags: 0
@@ -19420,7 +19186,6 @@ GameObject:
   - component: {fileID: 1625949135}
   - component: {fileID: 1625949134}
   - component: {fileID: 1625949133}
-  - component: {fileID: 1625949132}
   m_Layer: 5
   m_Name: Attack_Null
   m_TagString: Skill_Button
@@ -19450,19 +19215,6 @@ RectTransform:
   m_AnchoredPosition: {x: 321.36575, y: -110}
   m_SizeDelta: {x: 657.4, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1625949132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625949130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Attack_Null
 --- !u!114 &1625949133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19477,6 +19229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 7
   is_selected: 0
+  property_Name: Attack_Null
   Type_Obj: {fileID: 1963468577}
 --- !u!114 &1625949134
 MonoBehaviour:
@@ -22346,6 +22099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 0
   is_selected: 0
+  property_Name: 
   Type_Obj: {fileID: 0}
 --- !u!114 &1899152990
 MonoBehaviour:
@@ -22586,7 +22340,6 @@ GameObject:
   - component: {fileID: 1917249177}
   - component: {fileID: 1917249176}
   - component: {fileID: 1917249175}
-  - component: {fileID: 1917249179}
   m_Layer: 5
   m_Name: Balance_Curse
   m_TagString: Skill_Button
@@ -22630,6 +22383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 12
   is_selected: 0
+  property_Name: Balance_Curse
   Type_Obj: {fileID: 988431350}
 --- !u!114 &1917249176
 MonoBehaviour:
@@ -22737,19 +22491,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917249173}
   m_CullTransparentMesh: 1
---- !u!114 &1917249179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917249173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_Curse
 --- !u!1001 &1920841017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23258,7 +22999,6 @@ GameObject:
   - component: {fileID: 1956904274}
   - component: {fileID: 1956904273}
   - component: {fileID: 1956904272}
-  - component: {fileID: 1956904271}
   m_Layer: 5
   m_Name: Balance_Null
   m_TagString: Skill_Button
@@ -23288,19 +23028,6 @@ RectTransform:
   m_AnchoredPosition: {x: 321.36725, y: 1441.207}
   m_SizeDelta: {x: 657.4, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1956904271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956904269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_Null
 --- !u!114 &1956904272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23315,6 +23042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 15
   is_selected: 0
+  property_Name: Balance_Null
   Type_Obj: {fileID: 988431350}
 --- !u!114 &1956904273
 MonoBehaviour:
@@ -23933,7 +23661,6 @@ GameObject:
   - component: {fileID: 1975680788}
   - component: {fileID: 1975680787}
   - component: {fileID: 1975680786}
-  - component: {fileID: 1975680790}
   m_Layer: 5
   m_Name: Balance_GBGH
   m_TagString: Skill_Button
@@ -23977,6 +23704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 9
   is_selected: 0
+  property_Name: Balance_GBGH
   Type_Obj: {fileID: 988431350}
 --- !u!114 &1975680787
 MonoBehaviour:
@@ -24084,19 +23812,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975680784}
   m_CullTransparentMesh: 1
---- !u!114 &1975680790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975680784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Balance_GBGH
 --- !u!1 &1980702883
 GameObject:
   m_ObjectHideFlags: 0
@@ -25029,7 +24744,6 @@ GameObject:
   - component: {fileID: 2082758257}
   - component: {fileID: 2082758256}
   - component: {fileID: 2082758255}
-  - component: {fileID: 2082758259}
   m_Layer: 5
   m_Name: Attack_Sturdy
   m_TagString: Skill_Button
@@ -25073,6 +24787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 6
   is_selected: 0
+  property_Name: Attack_Sturdy
   Type_Obj: {fileID: 1963468577}
 --- !u!114 &2082758256
 MonoBehaviour:
@@ -25180,19 +24895,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2082758253}
   m_CullTransparentMesh: 1
---- !u!114 &2082758259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082758253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Attack_Sturdy
 --- !u!1 &2091154790
 GameObject:
   m_ObjectHideFlags: 0
@@ -25659,7 +25361,6 @@ GameObject:
   - component: {fileID: 2125783041}
   - component: {fileID: 2125783040}
   - component: {fileID: 2125783039}
-  - component: {fileID: 2125783043}
   m_Layer: 5
   m_Name: Attack_Struggle
   m_TagString: Skill_Button
@@ -25703,6 +25404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character_Skill: 2
   is_selected: 0
+  property_Name: Attack_Struggle
   Type_Obj: {fileID: 1963468577}
 --- !u!114 &2125783040
 MonoBehaviour:
@@ -25810,19 +25512,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125783037}
   m_CullTransparentMesh: 1
---- !u!114 &2125783043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125783037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7a2b18f9a8e14c97d0fbd51a8a3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  property_Name: Attack_Struggle
 --- !u!1 &2131524523
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class Deck_Skill : MonoBehaviour
     public CharacterSkill Character_Skill;
     public bool is_selected = false;
     [SerializeField]
+    private string property_Name;
+    [SerializeField]
     private GameObject Type_Obj;
 
     Deck_Manager deckManager;
@@ -133,7 +135,7 @@ public class Deck_Skill : MonoBehaviour
                     D_Character.Character_Setting(24);
                     break;
             }
-
+            PropertySendSlot();
             Sync_Type();
             this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
         }
@@ -176,6 +178,21 @@ public class Deck_Skill : MonoBehaviour
             this.gameObject == deckManager.Skill_Button[23])
         {
             Cancle_Skill();
+        }
+    }
+
+    private void PropertySendSlot()
+    {
+        int j = 0;
+
+        while (j < 7)
+        {
+            if (deckManager.Current_Character == deckManager.Character_Slot[j])
+            {
+                deckManager.Slot_Property[j].GetComponent<Property_Slot>().Change_property(property_Name);
+                break;
+            }
+            j++;
         }
     }
 }
