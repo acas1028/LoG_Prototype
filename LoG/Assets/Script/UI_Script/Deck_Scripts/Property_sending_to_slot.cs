@@ -17,7 +17,7 @@ public class Property_sending_to_slot : MonoBehaviour, IPointerClickHandler
     {
         int j = 0;
         
-        if (this.GetComponent<Deck_Skill>().is_selected != true)
+        if (this.GetComponent<Deck_Skill>().is_selected == true)
         {
            
             while (j < 7)
