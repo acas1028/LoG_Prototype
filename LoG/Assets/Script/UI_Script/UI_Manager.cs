@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using PlayFab;
+using PlayFab.ClientModels;
+using CharacterStats;
 
 using Photon.Pun;
 
@@ -20,6 +23,12 @@ public class UI_Manager : MonoBehaviourPunCallbacks
             Debug.Log("Win");
             result.GetComponent<MatchReward>().LoseTitle.SetActive(false);
             result.GetComponent<MatchReward>().RewardValue.text = "100 credit";
+
+            var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 100 };
+            PlayFabClientAPI.AddUserVirtualCurrency(request,
+                (result) => {
+                },
+                (error) => Debug.Log("ÄÚÀÎ È¹µæ ½ÇÆÐ"));
         }
 
         else if(!isWin)
@@ -27,6 +36,12 @@ public class UI_Manager : MonoBehaviourPunCallbacks
             Debug.Log("Lose");
             result.GetComponent<MatchReward>().WinTitle.SetActive(false);
             result.GetComponent<MatchReward>().RewardValue.text = "50 credit";
+
+            var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50 };
+            PlayFabClientAPI.AddUserVirtualCurrency(request,
+                (result) => {
+                },
+                (error) => Debug.Log("ÄÚÀÎ È¹µæ ½ÇÆÐ"));
         }
         Invoke("LeaveRoom", 6.0f);
     }
