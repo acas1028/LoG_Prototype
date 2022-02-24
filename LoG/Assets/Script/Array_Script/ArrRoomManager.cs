@@ -127,6 +127,13 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
                 Debug.LogError("RoundCount 동기화 실패");
                 return false;
             }
+
+            table = new Hashtable() { { "IsPVE", false } };
+            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+            if (!result) {
+                Debug.LogError("IsPVE 동기화 실패");
+                return false;
+            }
         }
 
         return true;

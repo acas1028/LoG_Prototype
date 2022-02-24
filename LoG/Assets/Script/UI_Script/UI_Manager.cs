@@ -55,7 +55,7 @@ public class UI_Manager : MonoBehaviourPunCallbacks
     {
         Debug.Log("<color=yellow>OnLeftRoom() 호출\n룸을 나갑니다. 로비로 이동합니다.</color>");
 
-        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable { { "IsPreemptive", null }, { "RoundWinCount", null }, { "Stack_Survivor", null } };
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable { { "IsPreemptive", null }, { "RoundWinCount", null }, { "Stack_Survivor", null }, { "IsPVE", null } };
         PhotonNetwork.SetPlayerCustomProperties(table);
         PhotonNetwork.Disconnect();
 

@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PVE_Arrayment : MonoBehaviour
+using Photon.Pun;
+
+public class PVE_Arrayment : MonoBehaviourPunCallbacks
 {
     #region
     public GameObject[] MyGrids;
@@ -17,7 +20,7 @@ public class PVE_Arrayment : MonoBehaviour
     [SerializeField]
     private GameObject ArrayCancleButton;
     [SerializeField]
-    private GameObject ReadyButton;
+    private Button ReadyButton;
     private List<GameObject> MyTeamList = new List<GameObject>();
     private List<int> EnemyLocation = new List<int>()
     {1,2,3,4,5};
@@ -29,6 +32,7 @@ public class PVE_Arrayment : MonoBehaviour
 
     void Start()
     {
+        ReadyButton.onClick.AddListener(GoBattle);
         EnemySetting();
         SetInventoryID();
     }
@@ -125,7 +129,7 @@ public class PVE_Arrayment : MonoBehaviour
 
         if (MyTeamList.Count >= 5)
         {
-            ReadyButton.SetActive(true);
+            ReadyButton.gameObject.SetActive(true);
             return;
         }
     }
@@ -152,7 +156,7 @@ public class PVE_Arrayment : MonoBehaviour
     public void Arraycancle()
     {
         isCancle = true;
-        ReadyButton.SetActive(false);
+        ReadyButton.gameObject.SetActive(false);
 
         Character cs = CancleCharacter.GetComponentInChildren<Character>();
         Arrayed_Data T = Arrayed_Data.instance;
@@ -227,4 +231,13 @@ public class PVE_Arrayment : MonoBehaviour
         InvenNum = Inventory[num - 1].GetComponent<Inventory_ID>().GetInventoryNum();
     }
 
+    void GoBattle() {
+        var table = new ExitGames.Client.Photon.Hashtable() { { "IsPVE", true } };
+        var result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+        if (!result) return;
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
+        PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.BATTLE_SCENE);
+    }
 }

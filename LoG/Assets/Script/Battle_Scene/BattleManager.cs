@@ -68,10 +68,22 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         uiManager = FindObjectOfType<UI_Manager>();
 
-        if (Is_Preemptive())
+        object o_isPVE;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
+
+        if ((bool)o_isPVE == true) {
             bM_Team1_Is_Preemitive = true;
-        else
-            bM_Team1_Is_Preemitive = false;
+        }
+        else if ((bool)o_isPVE == false) {
+            if (Is_Preemptive())
+                bM_Team1_Is_Preemitive = true;
+            else
+                bM_Team1_Is_Preemitive = false;
+        }
+        else {
+            Debug.LogError("[Room CustomProperties] IsPVE 프로퍼티를 설정하지 않았습니다. 종료합니다.");
+            yield return null;
+        }
 
         bM_Remain_Character_Team1 = 0;
         bM_Remain_Character_Team2 = 0;
@@ -86,7 +98,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             bM_Character_Team1.Add(PhotonNetwork.Instantiate("Character_Action_Prefab", Vector3.zero, Quaternion.identity));
 
-            if (PhotonNetwork.OfflineMode)
+            if (PhotonNetwork.OfflineMode || (bool)o_isPVE == true)
                 bM_Character_Team2.Add(Instantiate(Character_Prefab));
             // 온라인 환경에서 bM_Character_Team2 의 캐릭터 인스턴스는 Character_Action 스크립트의 Start 부분에서 등록된다.
         }
@@ -94,12 +106,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         yield return new WaitUntil(() => { return bM_Character_Team2.Count >= 5; });
         BM_Character_Setting();
         StartCoroutine(Running_Phase());
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public bool Is_Preemptive()
