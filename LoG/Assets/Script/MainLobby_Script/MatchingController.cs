@@ -79,7 +79,7 @@ public class MatchingController : MonoBehaviourPunCallbacks
 		Debug.Log("<color=yellow>OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.</color>");
 
 		if (roomType == ROOM_TYPE.PVE)
-			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_CSVTESTSCENE2);
+			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_SCENE);
 		else if (roomType == ROOM_TYPE.PVP)
 			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE);
 	}
