@@ -6,14 +6,19 @@ using CharacterStats;
 public class CharacterSpriteManager : MonoBehaviour
 {
     public Sprite[] characterSprites;
-
+    public Sprite[] pveCharacterSprites;
     public Sprite characterSprite;
+
+    public enum PveCharacter_color { Red, Green, Blue };
+
+    public PveCharacter_color character_Color;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
+
 
     public void SetInitialSprite(int id)
     {
@@ -37,6 +42,35 @@ public class CharacterSpriteManager : MonoBehaviour
         }
 
         //transform.GetComponentInParent<SpriteRenderer>().sprite = characterSprites[(id - 1) % 5 + 1];
+    }
+
+    public void SetPveCharacterSprite()
+    {
+        GameObject[] OppenetEnemy_Grid= PVE_Arrayment.instance.EnemyGrids;
+
+        for (int i=0; i<OppenetEnemy_Grid.Length;i++)
+        {
+            if(OppenetEnemy_Grid[i].tag == "Character")
+            {
+                Debug.Log("asdgf");
+                switch(character_Color)
+                {
+                    case PveCharacter_color.Red:
+                        OppenetEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[0];
+                        break;
+
+                    case PveCharacter_color.Green:
+                        OppenetEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[1];
+                        break;
+
+                    case PveCharacter_color.Blue:                       
+                        OppenetEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[2];                       
+                        break;
+
+                }
+            }
+        }
+        
     }
 
     public void SetSortingLayer(int character_Num_Of_Grid)

@@ -98,7 +98,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.49, y: 1.3}
@@ -185,6 +185,22 @@ PrefabInstance:
       propertyPath: characterSprites.Array.data[1]
       value: 
       objectReference: {fileID: 21300000, guid: bb662de4da0460749a62a33a14aaeffd, type: 3}
+    - target: {fileID: 4605150732730570534, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
+      propertyPath: pveCharacterSprites.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605150732730570534, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
+      propertyPath: pveCharacterSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: f6b75d4c65429404fb5a8665f1a6b090, type: 3}
+    - target: {fileID: 4605150732730570534, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
+      propertyPath: pveCharacterSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8b599e619a7470c439620b8f10081ed9, type: 3}
+    - target: {fileID: 4605150732730570534, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
+      propertyPath: pveCharacterSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ce612ad085434140b35e5f8883787f4, type: 3}
     - target: {fileID: 4605150732730570535, guid: eaf8b3a303a080549b1722d02351a733, type: 3}
       propertyPath: m_Name
       value: Character Sprite Manager
