@@ -2561,10 +2561,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 394069811}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e99fc1083d9d9d45b84e1001d7c1e5b, type: 3}
+  m_Script: {fileID: 11500000, guid: e5f31521d7dd6a54cbd2354379fd1faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio_Mixer: {fileID: 24100000, guid: 32c7277b86a51e24ca5f1ed1e487f4fb, type: 2}
 --- !u!114 &394069814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2615,7 +2614,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 394069813}
+        m_TargetAssemblyTypeName: Option_SoundChange, Assembly-CSharp
+        m_MethodName: SoundvolumeControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &401492344
 GameObject:
   m_ObjectHideFlags: 0
@@ -11937,10 +11948,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844287495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e99fc1083d9d9d45b84e1001d7c1e5b, type: 3}
+  m_Script: {fileID: 11500000, guid: cec237b6c5ba8a142ac220f512a84007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio_Mixer: {fileID: 24100000, guid: 32c7277b86a51e24ca5f1ed1e487f4fb, type: 2}
 --- !u!114 &1844287498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11993,9 +12003,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1844287497}
-        m_TargetAssemblyTypeName: SetVolume, Assembly-CSharp
-        m_MethodName: SetLevel
-        m_Mode: 0
+        m_TargetAssemblyTypeName: Option_BGMChange, Assembly-CSharp
+        m_MethodName: BGMvolumeChange
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
