@@ -28,8 +28,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
     int roundWinCount;
     int roundCount;
 
-    int roundWinCountCheck;
-
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -92,7 +90,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Phase = 0;
         roundWinCount = 0;
         roundCount = 0;
-        roundWinCountCheck = 0;
 
         for (int i = 0; i < 5; i++)
         {
@@ -754,7 +751,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
         }
 
-        roundWinCountCheck = 0;
+        object o_isPVE;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
+
+        if ((bool)o_isPVE) {
+            uiManager.ShowMatchResult(roundWinCount > 0 ? true : false);
+            Invoke("LoadArraymentScene", 4f);
+        }
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
         PhotonNetwork.SetPlayerCustomProperties(table);
@@ -763,19 +766,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
             table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount + 1 } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(table);
         }
-
-        StartCoroutine(ReturnToArrayment());
-    }
-
-    IEnumerator ReturnToArrayment() {
-        yield return new WaitUntil(() => roundWinCountCheck == 2);
-
-        Invoke("LoadArraymentScene", 4f);
     }
 
     void LoadArraymentScene()
     {
-        PhotonNetwork.LoadLevel("Arrayment_Scene");
+        PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE);
+    }
+
+    void LoadPveScene() {
+        PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_SCENE);
     }
 
     #region 포톤 콜백 함수
@@ -787,10 +786,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
         object o_roundWinCount;
         targetPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
 
-        if ((int)o_roundWinCount >= 2)
+        if ((int)o_roundWinCount >= 2) {
             uiManager.ShowMatchResult(roundWinCount >= 2 ? true : false);
-        else
-            roundWinCountCheck++;
+            Invoke("LoadArraymentScene", 4f);
+        }
     }
     #endregion
 
