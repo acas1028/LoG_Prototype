@@ -41,23 +41,42 @@ public class LogInManager : MonoBehaviour
     void LogIn() {
         var request = new LoginWithEmailAddressRequest { Email = emailInput.text, Password = passwordInput.text };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLogInSuccess, OnLogInFailed);
+        noticeText.text = "로그인 시도 중..";
     }
 
     void SignIn() {
         var request = new RegisterPlayFabUserRequest { Username = usernameInputSignIn.text, Email = emailInputSignIn.text, Password = passwordInputSignIn.text };
         PlayFabClientAPI.RegisterPlayFabUser(request, OnSignInSuccess, OnSignInFailed);
+        noticeText.text = "회원가입 시도 중..";
     }
 
     void OnLogInSuccess(LoginResult result) {
         Debug.Log("Log-in Success : 로그인 성공");
+        noticeText.text = "로그인에 성공하였습니다.\n로비로 이동 중..";
         PlayerPrefs.SetString("userID", emailInput.text);
         PlayerPrefs.SetString("userPassword", passwordInput.text);
-        SceneManager.LoadScene("MainLobbyScene");
+        SceneManager.LoadSceneAsync((int)Move_Scene.ENUM_SCENE.MAINLOBBY_SCENE);
     }
 
     void OnLogInFailed(PlayFabError error) {
-        noticeText.text = "계정을 찾을 수 없습니다. 입력한 정보가 잘못되어 있거나 회원가입이 필요합니다.";
-        Debug.Log("Log-in Failed : " + noticeText.text);
+        switch (error.Error) {
+            case PlayFabErrorCode.AccountNotFound:
+                noticeText.text = "계정을 찾을 수 없습니다.\n이메일 주소를 확인해주세요.";
+                break;
+            case PlayFabErrorCode.InvalidAccount:
+                noticeText.text = "잘못된 계정 정보입니다.";
+                break;
+            case PlayFabErrorCode.InvalidEmailAddress:
+                noticeText.text = "잘못된 이메일 주소입니다.";
+                break;
+            case PlayFabErrorCode.InvalidEmailOrPassword:
+                noticeText.text = "잘못된 비밀번호 입니다.";
+                break;
+            default:
+                noticeText.text = "로그인 실패";
+                break;
+        }
+        Debug.Log($"{error.ErrorMessage}");
     }
 
     void OnSignInSuccess(RegisterPlayFabUserResult result) {
