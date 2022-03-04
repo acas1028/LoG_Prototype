@@ -757,6 +757,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if ((bool)o_isPVE) {
             uiManager.ShowMatchResult(roundWinCount > 0 ? true : false);
             Invoke("LoadArraymentScene", 4f);
+            return;
         }
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
