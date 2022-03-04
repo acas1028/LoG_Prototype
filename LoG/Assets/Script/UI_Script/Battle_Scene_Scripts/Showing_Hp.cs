@@ -83,6 +83,7 @@ public class Showing_Hp : MonoBehaviour
         if (Team_count == 1)
         {
             hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position);
+            Debug.Log(worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position));
             hp_bar.transform.Translate(0, hp_bar_y_position, 0);
         }
 
@@ -127,8 +128,9 @@ public class Showing_Hp : MonoBehaviour
             
         }
 
-        if (BattleManager.Instance.bM_Character_Team1.Count == 5 && BattleManager.Instance.bM_Character_Team2.Count == 5) //抗寇 贸府
+        if (BattleManager.Instance.bM_Character_Team1.Count >= 5 && BattleManager.Instance.bM_Character_Team2.Count >= 5) //抗寇 贸府
         {
+
             Hp_bar_position_translate();
         }
 

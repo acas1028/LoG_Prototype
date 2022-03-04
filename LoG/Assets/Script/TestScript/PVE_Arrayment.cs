@@ -132,6 +132,8 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
                 ArrayOnGrid(InvenNum, gridNum);
                 click_inventory = false;
+
+                Limit_Popup.Limit_Poup_instance.PopupOff();
             }
         }
     }

@@ -52,7 +52,6 @@ public class CharacterSpriteManager : MonoBehaviour
         {
             if(OppenetEnemy_Grid[i].tag == "Character")
             {
-                Debug.Log("asdgf");
                 switch(character_Color)
                 {
                     case PveCharacter_color.Red:
