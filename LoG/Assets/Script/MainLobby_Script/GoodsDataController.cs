@@ -31,7 +31,7 @@ public class GoodsDataController : MonoBehaviour {
     }
 
     private void OnEnable() {
-        if (UserDataSynchronizer.Instance.unlockedSkillList.Contains(skill)) {
+        if (UserDataSynchronizer.unlockedSkillList.Contains(skill)) {
             purchaseButton.interactable = false;
             itemPrice.text = "보유중";
         }
@@ -47,7 +47,7 @@ public class GoodsDataController : MonoBehaviour {
                         itemDescription.text = item.Description;
                         itemPrice.text = item.VirtualCurrencyPrices["CO"].ToString();
 
-                        if (UserDataSynchronizer.Instance.unlockedSkillList.Contains(skill)) {
+                        if (UserDataSynchronizer.unlockedSkillList.Contains(skill)) {
                             purchaseButton.interactable = false;
                             itemPrice.text = "보유중";
                         }

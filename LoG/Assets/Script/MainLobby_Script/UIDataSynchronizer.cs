@@ -11,11 +11,11 @@ public class UIDataSynchronizer : MonoBehaviour
     [SerializeField] Text shopCoinText;
 
     public void UpdateAccountInfo() {
-        nicknameText.text = UserDataSynchronizer.Instance.nickname;
+        nicknameText.text = UserDataSynchronizer.nickname;
     }
     
     public void UpdateUserInventory() {
-        coinText.text = UserDataSynchronizer.Instance.coin.ToString();
-        shopCoinText.text = UserDataSynchronizer.Instance.coin.ToString();
+        coinText.text = UserDataSynchronizer.coin.ToString();
+        shopCoinText.text = UserDataSynchronizer.coin.ToString();
     }
 }

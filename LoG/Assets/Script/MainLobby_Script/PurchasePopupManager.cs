@@ -47,7 +47,7 @@ public class PurchasePopupManager : MonoBehaviour
     }
 
     public void PurchaseSkill() {
-        if (UserDataSynchronizer.Instance.unlockedSkillList.Contains(skill)) {
+        if (UserDataSynchronizer.unlockedSkillList.Contains(skill)) {
             Debug.Log("보유 중인 특성입니다.");
             return;
         }

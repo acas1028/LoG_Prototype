@@ -38,11 +38,19 @@ public class Deck_Manager : MonoBehaviour
 
     public Text[] Character_Stat;
 
-    private void Awake()
-    {
+    private void Start() {
         Deck_Data = Deck_Data_Send.instance;
         nowPageIdx = Deck_Data_Send.instance.lastPageNum;
         Page_Slot[0].GetComponent<Button>().onClick.Invoke();
+        CheckSkillIsUnlocked();
+    }
+
+    private void CheckSkillIsUnlocked() {
+        foreach (var skill in Skill_Button) {
+            if (!UserDataSynchronizer.unlockedSkillList.Contains(skill.GetComponent<Deck_Skill>().Character_Skill))
+                skill.GetComponent<Button>().interactable = false;
+        }
+
     }
 
     public void SetNowPageIndex(int pageIdx)
