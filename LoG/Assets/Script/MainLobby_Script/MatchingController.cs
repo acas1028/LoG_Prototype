@@ -23,6 +23,7 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
     public void EnterRoom(ROOM_TYPE roomType) {
 		this.roomType = roomType;
+		PhotonNetwork.OfflineMode = roomType == ROOM_TYPE.PVE;
 		StartCoroutine(ConnectCoroutine());
 	}
 
