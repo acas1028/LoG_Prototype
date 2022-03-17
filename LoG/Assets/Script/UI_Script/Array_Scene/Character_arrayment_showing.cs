@@ -220,11 +220,11 @@ public class Character_arrayment_showing : MonoBehaviourPunCallbacks
             }
             Oppenent_Count--;
         }
-        for (int i = 0; i < Character_List.Count; i++)
-        {
-            if (Character_List[i].GetComponent<Character>().character_ID== cancel_Character.GetComponent<Character>().character_ID)
-                Character_List.RemoveAt(i);
-        }
+        //for (int i = 0; i < Character_List.Count; i++)
+        //{
+        //    if (Character_List[i].GetComponent<Character>().character_ID== cancel_Character.GetComponent<Character>().character_ID)
+        //        Character_List.RemoveAt(i);
+        //}
 
         cancel_Character = null;
     }

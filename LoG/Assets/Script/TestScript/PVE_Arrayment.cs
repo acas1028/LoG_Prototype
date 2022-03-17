@@ -226,7 +226,6 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < 5; i++)
         {
-            Debug.Log(rand[i]);
             int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid;
             Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
             Enemy.Copy_Character_Stat(Arrayed_Data.instance.team2[i]);
@@ -274,6 +273,8 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
     public void ClickInventory(int num)
     {
+        if (MyTeamList.Count == 5)
+            return;
         click_inventory = true;
         InvenNum = Inventory[num - 1].GetComponent<Inventory_ID>().GetInventoryNum();
     }

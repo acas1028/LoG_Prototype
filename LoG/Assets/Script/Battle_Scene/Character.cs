@@ -316,7 +316,7 @@ public class Character : MonoBehaviourPunCallbacks
         character_MaxHP = character_HP;
         character_Attack_Damage = (int)character_data[num]["Attack_Damage"];
         character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
-        character_Num_Of_Grid = (int)character_data[num]["Grid_Position"];
+        character_Num_Of_Grid = (int)(character_data[num]["Grid_Position"])-1;
         Setting_AttackRange(num);
     }
 
