@@ -16,11 +16,11 @@ public class LogInManager : MonoBehaviour
     [SerializeField] InputField passwordInput;
     [SerializeField] Button logInButton;
 
-    [Header("Sign In Panel")]
-    [SerializeField] InputField usernameInputSignIn;
-    [SerializeField] InputField emailInputSignIn;
-    [SerializeField] InputField passwordInputSignIn;
-    [SerializeField] Button signInButton;
+    [Header("Register Panel")]
+    [SerializeField] InputField usernameInputRegister;
+    [SerializeField] InputField emailInputRegister;
+    [SerializeField] InputField passwordInputRegister;
+    [SerializeField] Button registerButton;
 
     [Header("Notice Text")]
     [SerializeField] Text noticeText;
@@ -34,7 +34,7 @@ public class LogInManager : MonoBehaviour
         passwordInput.text = PlayerPrefs.GetString("userPassword");
 
         logInButton.onClick.AddListener(LogIn);
-        signInButton.onClick.AddListener(SignIn);
+        registerButton.onClick.AddListener(Register);
         noticeText.text = string.Empty;
     }
 
@@ -44,9 +44,9 @@ public class LogInManager : MonoBehaviour
         noticeText.text = "로그인 시도 중..";
     }
 
-    void SignIn() {
-        var request = new RegisterPlayFabUserRequest { Username = usernameInputSignIn.text, Email = emailInputSignIn.text, Password = passwordInputSignIn.text };
-        PlayFabClientAPI.RegisterPlayFabUser(request, OnSignInSuccess, OnSignInFailed);
+    void Register() {
+        var request = new RegisterPlayFabUserRequest { Username = usernameInputRegister.text, Email = emailInputRegister.text, Password = passwordInputRegister.text };
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnRegisterFailed);
         noticeText.text = "회원가입 시도 중..";
     }
 
@@ -79,17 +79,22 @@ public class LogInManager : MonoBehaviour
         Debug.Log($"{error.ErrorMessage}");
     }
 
-    void OnSignInSuccess(RegisterPlayFabUserResult result) {
-        Debug.Log("Sign-in Success : 회원가입 성공");
+    void OnRegisterSuccess(RegisterPlayFabUserResult result) {
+        Debug.Log("Registration Success : 회원가입 성공");
 
-        usernameInputSignIn.text = string.Empty;
-        emailInputSignIn.text = string.Empty;
-        passwordInputSignIn.text = string.Empty;
+        usernameInputRegister.text = string.Empty;
+        emailInputRegister.text = string.Empty;
+        passwordInputRegister.text = string.Empty;
 
         noticeText.text = "회원가입에 성공하였습니다.";
+
+        AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50000 };
+        PlayFabClientAPI.AddUserVirtualCurrency(request,
+            (result) => print("회원가입 이벤트! 50000 코인을 획득하였습니다."),
+            (error)=>print("알 수 없는 오류로 인해 50000 코인을 획득하지 못하였습니다."));
     }
 
-    void OnSignInFailed(PlayFabError error) {
+    void OnRegisterFailed(PlayFabError error) {
         noticeText.text = "회원가입에 실패하였습니다.";
         Debug.Log("Sign-in Failed : " + noticeText.text);
     }
