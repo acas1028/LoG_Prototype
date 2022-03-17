@@ -189,6 +189,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Team1CS.character_Team_Number = 1;
             Team1CS.character_Number = Team1CS.character_Attack_Order;
             Team1CS.InitializeCharacterSprite();
+            
 
             if (Team1CS.character_HP != 0)
                 dummy++;

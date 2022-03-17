@@ -80,6 +80,8 @@ public class Character : MonoBehaviourPunCallbacks
     public bool is_hit_this_turn { get; set; } //피격 시 발동되는 스킬을 위한 변수
 
     public bool is_overkill { get; set; }
+
+    public bool is_Pve { get; set; }
     public int stack_Survivor { get; set; }
 
     protected List<Dictionary<string, object>> character_data; // 데이터 저장소
@@ -94,6 +96,7 @@ public class Character : MonoBehaviourPunCallbacks
     {
         spriteManager.SetInitialSprite(character_ID);
         spriteManager.SetSortingLayer(character_Num_Of_Grid);
+
     }
 
     public void Character_Reset() // 캐릭터의 정보를 초기화한다.

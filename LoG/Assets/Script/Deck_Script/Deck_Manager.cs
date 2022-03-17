@@ -42,7 +42,7 @@ public class Deck_Manager : MonoBehaviour
         Deck_Data = Deck_Data_Send.instance;
         nowPageIdx = Deck_Data_Send.instance.lastPageNum;
         Page_Slot[0].GetComponent<Button>().onClick.Invoke();
-        CheckSkillIsUnlocked();
+        //CheckSkillIsUnlocked();
     }
 
     private void CheckSkillIsUnlocked() {

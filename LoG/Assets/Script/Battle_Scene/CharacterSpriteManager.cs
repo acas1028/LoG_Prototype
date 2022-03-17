@@ -9,14 +9,19 @@ public class CharacterSpriteManager : MonoBehaviour
     public Sprite[] pveCharacterSprites;
     public Sprite characterSprite;
 
-    public enum PveCharacter_color { Red, Green, Blue };
+    public int stageNum;
 
-    public PveCharacter_color character_Color;
+    int ColorNum;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (CSVManager.Instance != null)
+        {
+            stageNum = CSVManager.Instance.StageNumber;
+        }
 
+        ColorNum = stageNum % 3;
     }
 
 
@@ -46,29 +51,63 @@ public class CharacterSpriteManager : MonoBehaviour
 
     public void SetPveCharacterSprite()
     {
-        GameObject[] OppenetEnemy_Grid= PVE_Arrayment.instance.EnemyGrids;
+        GameObject[] OppenentEnemy_Grid;
+        GameObject[] OppenentEnemy;
 
-        for (int i=0; i<OppenetEnemy_Grid.Length;i++)
+        if (PVE_Arrayment.instance != null)
         {
-            if(OppenetEnemy_Grid[i].tag == "Character")
+            OppenentEnemy_Grid = PVE_Arrayment.instance.EnemyGrids;
+
+            for (int i = 0; i < OppenentEnemy_Grid.Length; i++)
             {
-                switch(character_Color)
+                if (OppenentEnemy_Grid[i].tag == "Character")
                 {
-                    case PveCharacter_color.Red:
-                        OppenetEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[0];
-                        break;
+                    switch (ColorNum)
+                    {
+                        case 0:
+                            OppenentEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[0];
+                            break;
 
-                    case PveCharacter_color.Green:
-                        OppenetEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[1];
-                        break;
+                        case 1:
+                            OppenentEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[1];
+                            break;
 
-                    case PveCharacter_color.Blue:                       
-                        OppenetEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[2];                       
-                        break;
+                        case 2:
+                            OppenentEnemy_Grid[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[2];
+                            break;
 
+                    }
                 }
             }
         }
+
+        else
+        {
+            OppenentEnemy = BattleManager.Instance.bM_Character_Team2.ToArray();
+
+            for(int i=0; i<OppenentEnemy.Length;i++)
+            {
+                if(OppenentEnemy[i].tag == "Character")
+                {
+                    switch (ColorNum)
+                    {
+                        case 0:
+                            OppenentEnemy[i].GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[0];
+                            break;
+                        case 1:
+                            OppenentEnemy[i].GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[1];
+                            break;
+                        case 2:
+                            OppenentEnemy[i].GetComponent<SpriteRenderer>().sprite = pveCharacterSprites[2];
+                            break;
+                    }
+                }
+            }
+        }
+
+        
+
+        
         
     }
 
