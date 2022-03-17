@@ -276,6 +276,8 @@ public class Deck_Manager : MonoBehaviour
     }
     private void Reset_Skill()
     {
+        if (Skill_List.Count == 0)
+            return;
         for(int i=0;i<Skill_List.Count;i++)
         {
             Skill_List[i].GetComponent<Deck_Skill>().is_selected = false;
