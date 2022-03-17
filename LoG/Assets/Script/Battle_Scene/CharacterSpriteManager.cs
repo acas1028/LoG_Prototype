@@ -21,6 +21,7 @@ public class CharacterSpriteManager : MonoBehaviour
             stageNum = CSVManager.Instance.StageNumber;
         }
 
+        characterSprites[0] = null;
         ColorNum = stageNum % 3;
     }
 

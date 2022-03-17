@@ -46,6 +46,14 @@ public class ArrayCharacterAnimation : MonoBehaviour
                 }
             }
 
+            else
+            {
+                if (myGrid[i].transform.Find("Character_Prefab").GetComponent<Animator>().enabled == true)
+                {
+                    myGrid[i].transform.Find("Character_Prefab").GetComponent<Animator>().enabled = false;
+                }
+            }
+
         }
 
         for (int i = 0; i < oppenentGrid.Length; i++)
@@ -75,6 +83,14 @@ public class ArrayCharacterAnimation : MonoBehaviour
                 if (oppenentGrid[i].transform.Find("Character_Prefab").GetComponent<SpriteRenderer>().sprite == oppenentGrid[i].transform.Find("Character_Prefab").GetChild(0).GetComponent<CharacterSpriteManager>().characterSprites[4])
                 {
                     oppenentGrid[i].transform.Find("Character_Prefab").GetComponent<Animator>().SetInteger("IdleNum", 0);
+                }
+            }
+
+            else
+            {
+                if (oppenentGrid[i].transform.Find("Character_Prefab").GetComponent<Animator>().enabled == true)
+                {
+                    oppenentGrid[i].transform.Find("Character_Prefab").GetComponent<Animator>().enabled = false;
                 }
             }
         }
