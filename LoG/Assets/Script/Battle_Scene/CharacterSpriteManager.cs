@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CharacterStats;
+using UnityEngine.SceneManagement;
 
 public class CharacterSpriteManager : MonoBehaviour
 {
@@ -20,8 +21,11 @@ public class CharacterSpriteManager : MonoBehaviour
         {
             stageNum = CSVManager.Instance.StageNumber;
         }
-
-        characterSprites[0] = null;
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name != "Deck_Scene")
+        {
+            characterSprites[0] = null;
+        }
         ColorNum = stageNum % 3;
     }
 

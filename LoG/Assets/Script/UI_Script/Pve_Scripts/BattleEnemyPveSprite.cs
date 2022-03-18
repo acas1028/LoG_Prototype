@@ -10,7 +10,10 @@ public class BattleEnemyPveSprite : MonoBehaviour
 
     private void Update()
     {
-        PveSpriteInset();
+        if (BattleManager.Instance.bM_Phase == 0)
+        {
+            PveSpriteInset();
+        }
     }
 
     void PveSpriteInset()
@@ -24,7 +27,6 @@ public class BattleEnemyPveSprite : MonoBehaviour
             {
                 Character Team2CS = BattleManager.Instance.bM_Character_Team2[i].GetComponent<Character>();
                 Team2CS.spriteManager.SetPveCharacterSprite();
-                //현재 tag 문제로 작동 안함.
             }
             
         }
