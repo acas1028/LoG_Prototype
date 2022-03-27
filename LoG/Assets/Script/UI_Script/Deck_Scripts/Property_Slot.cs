@@ -20,7 +20,7 @@ public class Property_Slot : MonoBehaviour
 
     private void Update()
     {
-       
+        NullisTransparent();
     }
 
     public void Change_property(string name)
@@ -107,95 +107,20 @@ public class Property_Slot : MonoBehaviour
 
     }
 
-    //void Property_array()
-    //{
-    //    if (this.GetComponent<Image>().sprite != null)
-    //        return;
+    void NullisTransparent()
+    {
+        if (gameObject.GetComponent<Image>().sprite == null)
+        {
+            gameObject.GetComponent<Image>().color = Color.clear;
+        }
 
-    //    switch (characterType)
-    //    {
-    //        case CharacterType.Attacker:
-    //            switch(character_Skill)
-    //            {
-    //                case CharacterSkill.Attack_ArmorPiercer:
-    //                    this.GetComponent<Image>().sprite = attacker_Sprites[0];
-    //                    break;
-    //                case CharacterSkill.Attack_Confidence:
-    //                    this.GetComponent<Image>().sprite = attacker_Sprites[1];
-    //                    break;
-    //                case CharacterSkill.Attack_DivineShield:
-    //                    this.GetComponent<Image>().sprite = attacker_Sprites[2];
-    //                    break;
-    //                case CharacterSkill.Attack_Executioner:
-    //                    this.GetComponent<Image>().sprite = attacker_Sprites[3];
-    //                    break;
-    //                case CharacterSkill.Attack_Ranger:
-    //                    this.GetComponent<Image>().sprite = attacker_Sprites[4];
-    //                    break;
-    //                case CharacterSkill.Attack_Struggle:
-    //                    this.GetComponent<Image>().sprite = attacker_Sprites[5];
-    //                    break;
-    //                case CharacterSkill.Attack_Sturdy:
-    //                    this.GetComponent<Image>().sprite = attacker_Sprites[6];
-    //                    break;
-    //            }
-    //            break;
-    //        case CharacterType.Balance:
-    //            switch (character_Skill)
-    //            {
-    //                case CharacterSkill.Balance_Blessing:
-    //                    this.GetComponent<Image>().sprite = balance_Sprites[0];
-    //                    break;
-    //                case CharacterSkill.Balance_Curse:
-    //                    this.GetComponent<Image>().sprite = balance_Sprites[1];
-    //                    break;
-    //                case CharacterSkill.Balance_DestinyBond:
-    //                    this.GetComponent<Image>().sprite = balance_Sprites[2];
-    //                    break;
-    //                case CharacterSkill.Balance_GBGH:
-    //                    this.GetComponent<Image>().sprite = balance_Sprites[3];
-    //                    break;
-    //                case CharacterSkill.Balance_Smoke:
-    //                    this.GetComponent<Image>().sprite = balance_Sprites[4];
-    //                    break;
-    //                case CharacterSkill.Balance_Survivor:
-    //                    this.GetComponent<Image>().sprite = balance_Sprites[5];
-    //                    break;
-    //                case CharacterSkill.Balance_WideCounter:
-    //                    this.GetComponent<Image>().sprite = balance_Sprites[6];
-    //                    break;
+        else
+        {
+            gameObject.GetComponent<Image>().color = Color.white;
+        }
+    }
 
-    //            }
-    //            break;
-    //        case CharacterType.Defender:
-    //            switch(character_Skill)
-    //            {
-    //                case CharacterSkill.Defense_Barrier:
-    //                    this.GetComponent<Image>().sprite = Defense_Sprites[0];
-    //                    break;
-    //                case CharacterSkill.Defense_Coward:
-    //                    this.GetComponent<Image>().sprite = Defense_Sprites[1];
-    //                    break;
-    //                case CharacterSkill.Defense_Disarm:
-    //                    this.GetComponent<Image>().sprite = Defense_Sprites[2];
-    //                    break;
-    //                case CharacterSkill.Defense_Encourage:
-    //                    this.GetComponent<Image>().sprite = Defense_Sprites[3];
-    //                    break;
-    //                case CharacterSkill.Defense_Patience:
-    //                    this.GetComponent<Image>().sprite = Defense_Sprites[4];
-    //                    break;
-    //                case CharacterSkill.Defense_Responsibility:
-    //                    this.GetComponent<Image>().sprite = Defense_Sprites[5];
-    //                    break;
-    //                case CharacterSkill.Defense_Thronmail:
-    //                    this.GetComponent<Image>().sprite = Defense_Sprites[6];
-    //                    break;
-    //            }
-    //            break;
-    //    }
 
-    //}
 
 
 }
