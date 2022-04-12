@@ -7,6 +7,7 @@ public class Limit_Popup : MonoBehaviour
     public GameObject popup;
     public GameObject limit_Popup_button;
     public GameObject present_Popup;
+    public GameObject arrayamanager;
 
     public List<GameObject> popup_List = new List<GameObject>();
 
@@ -52,6 +53,7 @@ public class Limit_Popup : MonoBehaviour
     private void Update()
     {
         Popup_limit_Only_One();
+        BoolPopupOn();
     }
 
     public void Popup_OutsideClick()
@@ -63,8 +65,13 @@ public class Limit_Popup : MonoBehaviour
                 
                 Debug.Log("outside");
                 popup.GetComponent<animation_On_off>().AnimationOff();
-                
+                BoolPopupOn_Off();
+
+
             }
+
+            
+
             limit_Popup_button.SetActive(false);
         }
     }
@@ -95,6 +102,25 @@ public class Limit_Popup : MonoBehaviour
     public void PopupOff()
     {
         popup.GetComponent<animation_On_off>().AnimationOff();
+    }
+
+    public void BoolPopupOn()
+    {
+        if(arrayamanager.GetComponent<Arrayment_Manager>().getisPopupOn()==false)
+        {
+            for(int i=0; i<popup_List.Count;i++)
+            {
+                if(popup_List[i].activeSelf==true)
+                {
+                    arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(true);
+                }
+            }
+        }
+    }
+
+    public void BoolPopupOn_Off()
+    {
+        arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(false);
     }
 
 

@@ -1,233 +1,234 @@
 Using pre-set license
 Built from '2020.3/release' branch; Version is '2020.3.7f1 (dd97f2c94397) revision 14522354'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Pro; OS build 22000.556; Version 2009; 64bit' Language: 'ko' Physical Memory: 16318 MB
+OS: 'Windows 10 Home; OS build 19043.1586; Version 2009; 64bit' Language: 'ko' Physical Memory: 16293 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
-D:\Unity\2020.3.7f1\Editor\Unity.exe
+C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker0
 -projectPath
-C:/Users/rucel/OneDrive/문서/GitHub/LoG_Prototype/LoG
+C:/Users/user/Documents/GitHub/LoG_Prototype/LoG
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-56373
-Successfully changed project path to: C:/Users/rucel/OneDrive/문서/GitHub/LoG_Prototype/LoG
-C:/Users/rucel/OneDrive/문서/GitHub/LoG_Prototype/LoG
+60588
+Successfully changed project path to: C:/Users/user/Documents/GitHub/LoG_Prototype/LoG
+C:/Users/user/Documents/GitHub/LoG_Prototype/LoG
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 59.25 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 47.34 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.7f1 (dd97f2c94397)
-[Subsystems] Discovering subsystems at path D:/Unity/2020.3.7f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/rucel/OneDrive/문서/GitHub/LoG_Prototype/LoG/Assets
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/user/Documents/GitHub/LoG_Prototype/LoG/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce RTX 2070 SUPER (ID=0x1e84)
+    Renderer: NVIDIA GeForce GTX 1660 SUPER (ID=0x21c4)
     Vendor:   
-    VRAM:     8012 MB
+    VRAM:     5991 MB
     Driver:   30.0.15.1179
 Initialize mono
-Mono path[0] = 'D:/Unity/2020.3.7f1/Editor/Data/Managed'
-Mono path[1] = 'D:/Unity/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
-Mono config path = 'D:/Unity/2020.3.7f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56504
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56828
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: D:/Unity/2020.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001095 seconds.
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.004617 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 46.56 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 47.42 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.885 seconds
+- Completed reload, in  1.778 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004056 seconds.
+Registered in 0.005058 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 44.82 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 44.50 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.149 seconds
+- Completed reload, in  1.001 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
-Refreshing native plugins compatible for Editor in 0.52 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 0.45 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2270 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 103.2 MB.
-System memory in use after: 103.4 MB.
+Unloading 2271 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 105.9 MB.
+System memory in use after: 106.1 MB.
 
-Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 2714.
-Total: 2.063800 ms (FindLiveObjects: 0.321700 ms CreateObjectMapping: 0.073800 ms MarkObjects: 1.601900 ms  DeleteObjects: 0.065200 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage1.csv
-  artifactKey: Guid(82cbcb87da04d584ca416cc2288282e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage1.csv using Guid(82cbcb87da04d584ca416cc2288282e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0ecbb483e7e7fe05a8b6e22b79d7023d') in 0.070268 seconds
-  Import took 0.074805 seconds .
+Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 2717.
+Total: 1.938800 ms (FindLiveObjects: 0.246900 ms CreateObjectMapping: 0.126600 ms MarkObjects: 1.510000 ms  DeleteObjects: 0.054300 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 10.544160 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage2.csv
-  artifactKey: Guid(7cff6bc93bbabd14889203c0be6f83e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage2.csv using Guid(7cff6bc93bbabd14889203c0be6f83e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8354e26565a75b03f7765d0403bd6018') in 0.007761 seconds
-  Import took 0.011990 seconds .
+  path: Assets/Scene/Arrayment_Scene.unity
+  artifactKey: Guid(9cd34926022b1a444bfa2980fb19d0ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scene/Arrayment_Scene.unity using Guid(9cd34926022b1a444bfa2980fb19d0ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01316af8d65a826df5330833d511de51') in 0.011857 seconds
+  Import took 0.018029 seconds .
 
 ========================================================================
-Received Import Request.
-  Time since last request: 11.246394 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage3.csv
-  artifactKey: Guid(9d5b8646df3faae4084e3c4c6affaeb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage3.csv using Guid(9d5b8646df3faae4084e3c4c6affaeb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6130cf8150198280e43c8f60c0f5c8db') in 0.012096 seconds
-  Import took 0.018397 seconds .
+Received Prepare
+Refreshing native plugins compatible for Editor in 6.41 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 10 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 59.7 MB.
+System memory in use after: 59.8 MB.
 
-========================================================================
-Received Import Request.
-  Time since last request: 11.064055 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage4.csv
-  artifactKey: Guid(37a14964a99196e44b8f7d3cd4b693c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage4.csv using Guid(37a14964a99196e44b8f7d3cd4b693c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08c0ced61871b934d38f0c9157408547') in 0.009580 seconds
-  Import took 0.014455 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 11.190771 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage5.csv
-  artifactKey: Guid(09c5099bb8bcc4e45a8801594e121b50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage5.csv using Guid(09c5099bb8bcc4e45a8801594e121b50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '249ad1b051da40796e9b89a2fc822294') in 0.010791 seconds
-  Import took 0.017674 seconds .
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 2717.
+Total: 3.020900 ms (FindLiveObjects: 0.350000 ms CreateObjectMapping: 0.171300 ms MarkObjects: 2.478900 ms  DeleteObjects: 0.019300 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.004634 seconds.
+Registered in 0.004231 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.46 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.822 seconds
+- Completed reload, in  0.927 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.13 ms, found 1 plugins.
+Switching build target platform(5) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 0.47 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2246 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 101.5 MB.
-System memory in use after: 101.6 MB.
+Unloading 2250 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.1 MB.
+System memory in use after: 104.2 MB.
 
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2719.
-Total: 2.347800 ms (FindLiveObjects: 0.292500 ms CreateObjectMapping: 0.052300 ms MarkObjects: 1.984900 ms  DeleteObjects: 0.016900 ms)
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2722.
+Total: 2.054600 ms (FindLiveObjects: 0.351100 ms CreateObjectMapping: 0.168700 ms MarkObjects: 1.519300 ms  DeleteObjects: 0.014500 ms)
 
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004182 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.46 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.941 seconds
+Platform modules already initialized, skipping
+Switching build target platform(5) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 0.51 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2250 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.1 MB.
+System memory in use after: 104.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2727.
+Total: 1.759300 ms (FindLiveObjects: 0.200800 ms CreateObjectMapping: 0.086200 ms MarkObjects: 1.457000 ms  DeleteObjects: 0.014500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004370 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.48 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.981 seconds
+Platform modules already initialized, skipping
+Switching build target platform(5) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 0.50 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2250 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.2 MB.
+System memory in use after: 104.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2732.
+Total: 1.990200 ms (FindLiveObjects: 0.254600 ms CreateObjectMapping: 0.119500 ms MarkObjects: 1.596100 ms  DeleteObjects: 0.018800 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004178 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.949 seconds
+Platform modules already initialized, skipping
+Switching build target platform(5) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 0.46 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2250 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.2 MB.
+System memory in use after: 104.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2737.
+Total: 1.746800 ms (FindLiveObjects: 0.211100 ms CreateObjectMapping: 0.103600 ms MarkObjects: 1.419000 ms  DeleteObjects: 0.012500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Import Request.
-  Time since last request: 253.120258 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage6.csv
-  artifactKey: Guid(150e9b88bfd687945b99b1b80d718d54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage6.csv using Guid(150e9b88bfd687945b99b1b80d718d54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42b0dc59022abdc6d2014a105b43cdde') in 0.023489 seconds
-  Import took 0.029556 seconds .
+  Time since last request: 1195.887456 seconds.
+  path: Assets/Scene/Arrayment_Scene.unity
+  artifactKey: Guid(9cd34926022b1a444bfa2980fb19d0ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scene/Arrayment_Scene.unity using Guid(9cd34926022b1a444bfa2980fb19d0ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9748c2540e3b853a7cf50c94da84f0fa') in 0.011572 seconds
+  Import took 0.017689 seconds .
 
 ========================================================================
-Received Import Request.
-  Time since last request: 30.207074 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage7.csv
-  artifactKey: Guid(83054b32a4b657142a5c372083179feb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage7.csv using Guid(83054b32a4b657142a5c372083179feb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fbc7b4f72521999d3a5866f5b31aa705') in 0.006873 seconds
-  Import took 0.011754 seconds .
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004114 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.49 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.968 seconds
+Platform modules already initialized, skipping
+Switching build target platform(5) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 0.45 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2250 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.1 MB.
+System memory in use after: 104.3 MB.
 
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2742.
+Total: 1.868400 ms (FindLiveObjects: 0.227700 ms CreateObjectMapping: 0.103300 ms MarkObjects: 1.520400 ms  DeleteObjects: 0.016200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
-Received Import Request.
-  Time since last request: 11.023704 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage8.csv
-  artifactKey: Guid(d38e83ab3e18e6c4e998b3b2f4f76871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage8.csv using Guid(d38e83ab3e18e6c4e998b3b2f4f76871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '18fc10dd541b2701d228718b69ebf744') in 0.007210 seconds
-  Import took 0.011371 seconds .
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004229 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.47 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.975 seconds
+Platform modules already initialized, skipping
+Switching build target platform(5) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 0.45 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2250 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.2 MB.
+System memory in use after: 104.4 MB.
 
-========================================================================
-Received Import Request.
-  Time since last request: 0.645018 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage9.csv
-  artifactKey: Guid(88da0739052f9454fb9847b7cbd9448c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage9.csv using Guid(88da0739052f9454fb9847b7cbd9448c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd2afc4ed35f95ae9c3e5e3475426009') in 0.007359 seconds
-  Import took 0.011595 seconds .
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2747.
+Total: 1.881400 ms (FindLiveObjects: 0.224100 ms CreateObjectMapping: 0.110400 ms MarkObjects: 1.529700 ms  DeleteObjects: 0.016600 ms)
 
-========================================================================
-Received Import Request.
-  Time since last request: 10.603095 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage9.csv
-  artifactKey: Guid(88da0739052f9454fb9847b7cbd9448c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage9.csv using Guid(88da0739052f9454fb9847b7cbd9448c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63b0e467089ae998964f5f269ca7e04e') in 0.005330 seconds
-  Import took 0.009913 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.785568 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage10.csv
-  artifactKey: Guid(3d474b538c30c69419f3f45f18b53766) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage10.csv using Guid(3d474b538c30c69419f3f45f18b53766) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8bb5700029e787d4821dca7522a9e2a5') in 0.006352 seconds
-  Import took 0.010269 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 10.464890 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage10.csv
-  artifactKey: Guid(3d474b538c30c69419f3f45f18b53766) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage10.csv using Guid(3d474b538c30c69419f3f45f18b53766) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6478aac31f4a068d71057119bde42b3') in 0.004855 seconds
-  Import took 0.010439 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.722411 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage11.csv
-  artifactKey: Guid(9897ee78764ef814bbe0863a08b49e89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage11.csv using Guid(9897ee78764ef814bbe0863a08b49e89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e94791ebdec46c5dcaeccce34ec8cf3') in 0.008357 seconds
-  Import took 0.012469 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.667088 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage11.csv
-  artifactKey: Guid(9897ee78764ef814bbe0863a08b49e89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage11.csv using Guid(9897ee78764ef814bbe0863a08b49e89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aab081372fb6a4425af6a6ce899424f8') in 0.003714 seconds
-  Import took 0.008595 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.624791 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage12.csv
-  artifactKey: Guid(0b55f758791229e4b979804c59911646) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage12.csv using Guid(0b55f758791229e4b979804c59911646) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a3c9103fcfb997797969a7b6de781ea') in 0.006297 seconds
-  Import took 0.010212 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.278636 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage12.csv
-  artifactKey: Guid(0b55f758791229e4b979804c59911646) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage12.csv using Guid(0b55f758791229e4b979804c59911646) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e17fce8e3bca19f3ecd845f91f8b4035') in 0.004952 seconds
-  Import took 0.009345 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.683784 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage13.csv
-  artifactKey: Guid(7ee63c5bf9d5d444aa6761cd08bdf008) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage13.csv using Guid(7ee63c5bf9d5d444aa6761cd08bdf008) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cc38daa483128123315e4ae2381df72') in 0.006432 seconds
-  Import took 0.010289 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.142978 seconds.
-  path: Assets/Resources/PVE_Stage/PVE_Character_Stage13.csv
-  artifactKey: Guid(7ee63c5bf9d5d444aa6761cd08bdf008) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/PVE_Stage/PVE_Character_Stage13.csv using Guid(7ee63c5bf9d5d444aa6761cd08bdf008) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62aa3dfe65169c44566d860619f55778') in 0.004993 seconds
-  Import took 0.010308 seconds .
-
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

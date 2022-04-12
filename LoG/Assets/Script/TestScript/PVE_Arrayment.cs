@@ -286,4 +286,14 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
         PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.BATTLE_SCENE);
     }
+
+    public bool GetIsClickInventory()
+    {
+        return click_inventory;
+    }
+
+    public void setIsClickInventory(bool isclick)
+    {
+        click_inventory = isclick;
+    }
 }
