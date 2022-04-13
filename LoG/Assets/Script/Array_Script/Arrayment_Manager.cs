@@ -148,6 +148,9 @@ public class Arrayment_Manager : MonoBehaviourPun
         if (!hit)
             return;
 
+        if (is_PopOn == true)
+            return;
+
         if (hit.transform.tag == "Character") //자신이나 상대의 캐릭터를 클릭한 경우.
         {
             //PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character>().character_ID);
@@ -169,8 +172,6 @@ public class Arrayment_Manager : MonoBehaviourPun
                 Limit_Popup.Limit_Poup_instance.limit_Popup_button.SetActive(false);
             }
 
-            if (is_PopOn == true)
-                return;
 
             for (int i = 0; i < 9; i++)
             {

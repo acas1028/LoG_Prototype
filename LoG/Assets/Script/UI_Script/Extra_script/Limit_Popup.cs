@@ -106,13 +106,23 @@ public class Limit_Popup : MonoBehaviour
 
     public void BoolPopupOn()
     {
+        if (arrayamanager == null)
+            return;
+
         if(arrayamanager.GetComponent<Arrayment_Manager>().getisPopupOn()==false)
         {
             for(int i=0; i<popup_List.Count;i++)
             {
-                if(popup_List[i].activeSelf==true)
+                if (popup_List[i].tag != "Popup")
                 {
-                    arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(true);
+
+                    if (popup_List[i].activeSelf == true)
+                    {
+
+                        Debug.Log(popup_List[i].name);
+                        arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(true);
+
+                    }
                 }
             }
         }
@@ -120,6 +130,7 @@ public class Limit_Popup : MonoBehaviour
 
     public void BoolPopupOn_Off()
     {
+        Debug.Log("popupfalse");
         arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(false);
     }
 
