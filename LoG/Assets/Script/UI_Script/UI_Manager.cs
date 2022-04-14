@@ -59,6 +59,10 @@ public class UI_Manager : MonoBehaviourPunCallbacks
         PhotonNetwork.SetPlayerCustomProperties(table);
         PhotonNetwork.Disconnect();
 
-        SceneManager.LoadScene("MainLobbyScene");
+        var currentScene = (Move_Scene.ENUM_SCENE)SceneManager.GetActiveScene().buildIndex;
+        if (currentScene == Move_Scene.ENUM_SCENE.PVE_CSVTESTSCENE2)
+            PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_SCENE);
+        else if (currentScene == Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE)
+            PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.MAINLOBBY_SCENE);
     }
 }
