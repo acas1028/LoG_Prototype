@@ -28,6 +28,8 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     private bool isCancle;
     private bool click_inventory = false;
     private int InvenNum;
+    [SerializeField]
+    private bool is_PopOn = false;
     #endregion
 
     private static PVE_Arrayment _instance;
@@ -86,6 +88,10 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
             if (!hit)
                 return;
+
+            if (is_PopOn == true)
+                return;
+
             if (hit.transform.tag == "Character")
             {
                 if (hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.activeSelf == false)
@@ -237,7 +243,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     {
         for(int i=0; i< 5;i++)
         {
-            int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid;
+            int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid-1;
             Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
             Enemy.spriteManager.SetPveCharacterSprite();
         }
@@ -295,5 +301,15 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     public void setIsClickInventory(bool isclick)
     {
         click_inventory = isclick;
+    }
+
+    public bool getisPopupOn()
+    {
+        return is_PopOn;
+    }
+
+    public void SetIsPopupOn(bool ispopupOn)
+    {
+        is_PopOn = ispopupOn;
     }
 }
