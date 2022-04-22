@@ -75,11 +75,11 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        if(CCS.character_Skill == CharacterSkill.Balance_Survivor)
-        {
-            result = SKill_Balanced_Survivor_Setting(character);
-            if (result) return true;
-        }
+        //if(CCS.character_Skill == CharacterSkill.Balance_Survivor)
+        //{
+        //    result = SKill_Balanced_Survivor_Setting(character);
+        //    if (result) return true;
+        //}
 
         if(CCS.character_Skill == CharacterSkill.Balance_Blessing)
         {
@@ -197,11 +197,11 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        if(DCS.character_Skill == CharacterSkill.Balance_Survivor)
-        {
-            result = Skill_Balanced_Survivor_Dead(deadCharacter);
-            if (result) return true;
-        }
+        //if(DCS.character_Skill == CharacterSkill.Balance_Survivor)
+        //{
+        //    result = Skill_Balanced_Survivor_Dead(deadCharacter);
+        //    if (result) return true;
+        //}
         if(DCS.character_Skill == CharacterSkill.Defense_Barrier)
         {
             result = Barrier_Dead(deadCharacter);
@@ -230,16 +230,16 @@ public class SkillManager : MonoBehaviour
         return false;
     }
 
-    public bool SurvivorCheck(GameObject deadCharacter)
-    {
-        bool result;
-        Character DCS = deadCharacter.GetComponent<Character>();
+    //public bool SurvivorCheck(GameObject deadCharacter)
+    //{
+    //    bool result;
+    //    Character DCS = deadCharacter.GetComponent<Character>();
 
-        result = Skill_Balanced_Survivor_Check(deadCharacter);
-        if (result) return true;
+    //    result = Skill_Balanced_Survivor_Check(deadCharacter);
+    //    if (result) return true;
 
-        return false;
-    }
+    //    return false;
+    //}
 
     public bool AfterHitted(GameObject hittedCharacter)
     {
@@ -849,6 +849,7 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
+    /*
     int Skill_Get_My_Stack_Survivor()
     {
         // 내 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 불러오는 함수
@@ -983,6 +984,8 @@ public class SkillManager : MonoBehaviour
         }
         return false;
     }
+    */
+
     bool Skill_Balanced_Curse(GameObject character)
     {
         Character CCS = character.GetComponent<Character>();

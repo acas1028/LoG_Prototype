@@ -20,7 +20,7 @@ public enum ArrayPhase
 
 public class ArrRoomManager : MonoBehaviourPunCallbacks
 {
-    private UI_Manager uiManager;
+    private MatchResultManager uiManager;
     public Arrayment_Manager arraymentManager;
 
     [SerializeField]
@@ -62,7 +62,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
     {
         bool result = false;
 
-        uiManager = FindObjectOfType<UI_Manager>();
+        uiManager = FindObjectOfType<MatchResultManager>();
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         preemptiveCheck.text = " ";
 
@@ -319,7 +319,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         RenewEnemyPlayer();
 
         timeText.gameObject.SetActive(false);
-        uiManager.ShowMatchResult(true);
+        uiManager.ShowMatchResult(true, false);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
