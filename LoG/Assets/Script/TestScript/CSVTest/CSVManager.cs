@@ -69,10 +69,6 @@ public class CSVManager : MonoBehaviourPunCallbacks
 
     #region 포톤 콜백
     // 최초로 마스터 서버에 연결됐을 때 콜백되는 함수
-    public override void OnConnectedToMaster() {
-        PhotonNetwork.JoinRandomRoom();
-    }
-
     public override void OnJoinedRoom() {
         Debug.Log("<color=yellow>OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.</color>");
 
