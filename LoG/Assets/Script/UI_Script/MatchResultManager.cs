@@ -44,6 +44,12 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
             }
         }
         else {
+            if(isWin)
+            {
+                Debug.Log("Pve_VIctory");
+                PveDataSync.instance.SetData(CSVManager.Instance.StageNumber);
+                PveDataSync.instance.SendClearStage(CSVManager.Instance.StageNumber);
+            }
             // PVE일때 보상
         }
 

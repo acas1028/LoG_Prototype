@@ -243,9 +243,12 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     {
         for(int i=0; i< 5;i++)
         {
-            int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid-1;
-            Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
-            Enemy.spriteManager.SetPveCharacterSprite();
+            if (EnemyData != null)
+            {
+                int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid - 1;
+                Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
+                Enemy.spriteManager.SetPveCharacterSprite();
+            }
         }
 
 
