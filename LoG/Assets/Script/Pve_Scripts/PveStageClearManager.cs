@@ -11,6 +11,8 @@ public class PveStageClearManager : MonoBehaviour
 
     public GameObject[] stageButtons;
 
+    public Sprite[] pve_Button_Images;
+
     private void Awake()
     {
         if (!instance)
@@ -31,15 +33,21 @@ public class PveStageClearManager : MonoBehaviour
             if(i>=clearstage+1)
             {
                 stageButtons[i].GetComponent<Button>().enabled = false;
-                //lock 사진으로 변경
+                stageButtons[i].GetComponent<Image>().sprite = pve_Button_Images[0];
+            }
+
+            else if(i == clearstage)
+            {
+                stageButtons[i].GetComponent<Button>().enabled = true;
+                stageButtons[i].GetComponent<Image>().sprite = pve_Button_Images[1];
             }
 
             else
             {
                 stageButtons[i].GetComponent<Button>().enabled = true;
+                stageButtons[i].GetComponent<Image>().sprite = pve_Button_Images[2];
             }
         }
     }
-    //clear 스테이지 넘버 갱신만 하면 됨. 그러기 위해선 battlemanager에서 게임피니쉬에 이를 변경시키도록 해야함.
 
 }
