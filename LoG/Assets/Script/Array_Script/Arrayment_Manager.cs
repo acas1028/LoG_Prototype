@@ -24,6 +24,8 @@ public class Arrayment_Manager : MonoBehaviourPun
     private int cancle_num;
     private int arrayedThisTurn;
     private int InvenNum;
+    [SerializeField]
+    private bool is_PopOn = false;
 
     [SerializeField]
     private List<int> invenNums;
@@ -146,6 +148,9 @@ public class Arrayment_Manager : MonoBehaviourPun
         if (!hit)
             return;
 
+        if (is_PopOn == true)
+            return;
+
         if (hit.transform.tag == "Character") //자신이나 상대의 캐릭터를 클릭한 경우.
         {
             //PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character>().character_ID);
@@ -166,6 +171,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 Limit_Popup.Limit_Poup_instance.SetIsbutton(null);
                 Limit_Popup.Limit_Poup_instance.limit_Popup_button.SetActive(false);
             }
+
 
             for (int i = 0; i < 9; i++)
             {
@@ -782,5 +788,16 @@ public class Arrayment_Manager : MonoBehaviourPun
                 break;
         }
         return num;
+    }
+
+
+    public bool getisPopupOn()
+    {
+        return is_PopOn;
+    }
+
+    public void SetIsPopupOn(bool ispopupOn)
+    {
+        is_PopOn = ispopupOn;
     }
 }
