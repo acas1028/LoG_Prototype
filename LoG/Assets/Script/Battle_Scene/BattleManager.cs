@@ -372,20 +372,20 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 }
 
                 result = SkillManager.Instance.CowardCheck(bM_Character_Team1[i]);
-                if(result)
+                if (result)
                 {
                     alertMessage.gameObject.SetActive(false);
                     GameObject CowardCharacter = FindCowardCharacter(1);
                     yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
                 }
 
-                //result = SkillManager.Instance.SurvivorCheck(bM_Character_Team1[i]);
-                //if (result)
-                //{
-                //    alertMessage.gameObject.SetActive(false);
-                //    GameObject CowardCharacter = FindSurvivorCharacter(1);
-                //    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
-                //}
+                result = SkillManager.Instance.SurvivorCheck(bM_Character_Team1[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    GameObject SurvivorCharacter = FindSurvivorCharacter(1);
+                    yield return StartCoroutine((SurvivorCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                }
             }
             if(Team1Script.character_is_Killed == true)
             {
@@ -414,13 +414,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
                 }
 
-                //result = SkillManager.Instance.SurvivorCheck(bM_Character_Team2[i]);
-                //if (result)
-                //{
-                //    alertMessage.gameObject.SetActive(false);
-                //    GameObject CowardCharacter = FindSurvivorCharacter(2);
-                //    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
-                //}
+                result = SkillManager.Instance.SurvivorCheck(bM_Character_Team2[i]);
+                if (result)
+                {
+                    alertMessage.gameObject.SetActive(false);
+                    GameObject SurvivorCharacter = FindSurvivorCharacter(2);
+                    yield return StartCoroutine((SurvivorCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                }
             }
             if (Team2Script.character_is_Killed == true)
             {
