@@ -48,8 +48,6 @@ public class animation_On_off : MonoBehaviour
 
         yield return new WaitForSeconds(oldLength);
 
-
-        Limit_Popup.Limit_Poup_instance.BoolPopupOn_Off();
         this.gameObject.SetActive(false);
 
     }

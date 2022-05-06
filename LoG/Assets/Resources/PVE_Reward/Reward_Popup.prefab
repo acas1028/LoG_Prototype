@@ -530,7 +530,6 @@ GameObject:
   - component: {fileID: 1900292656024410052}
   - component: {fileID: 1900292656024410053}
   - component: {fileID: 1900292656024410054}
-  - component: {fileID: 6942885015653620508}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -641,6 +640,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CSVManager, Assembly-CSharp
+        m_MethodName: SettingStage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7378571590906423343, guid: 332ebc8b23b25a146bcba9a21630b900, type: 3}
         m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
         m_MethodName: ChangeSoundAndPlay
         m_Mode: 2
@@ -652,30 +663,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6942885015653620508}
-        m_TargetAssemblyTypeName: PveStartButton, Assembly-CSharp
-        m_MethodName: SettingStage
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &6942885015653620508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900292656024410048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 871d72126ccfb9446a30253c47d6014c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1900292656510806063
 GameObject:
   m_ObjectHideFlags: 0

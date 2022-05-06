@@ -12,19 +12,24 @@ public class MatchingController : MonoBehaviourPunCallbacks
 		PVP
     }
 
+	[SerializeField] Button pveButton;
 	[SerializeField] Button pvpButton;
+	ROOM_TYPE roomType;
 
     private void Start() {
-		pvpButton.onClick.AddListener(EnterRoom);
+		pveButton.onClick.AddListener(delegate () { EnterRoom(ROOM_TYPE.PVE); });
+		pvpButton.onClick.AddListener(delegate () { EnterRoom(ROOM_TYPE.PVP); });
     }
 
-    public void EnterRoom() {
-		PhotonNetwork.OfflineMode = false;
+    public void EnterRoom(ROOM_TYPE roomType) {
+		this.roomType = roomType;
+		PhotonNetwork.OfflineMode = roomType == ROOM_TYPE.PVE;
 		StartCoroutine(ConnectCoroutine());
 	}
 
     public void EnterOfflineMode() {
 		PhotonNetwork.OfflineMode = true;
+		roomType = ROOM_TYPE.PVP;
 		StartCoroutine(ConnectCoroutine());
 	}
 
@@ -35,7 +40,7 @@ public class MatchingController : MonoBehaviourPunCallbacks
 		if (PhotonNetwork.IsConnected) {
 			// offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
 			Debug.Log("<color=lightblue>현재 서버와 연결되어있거나 오프라인 모드입니다. 룸에 입장합니다.</color>");
-			
+			// #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else {
@@ -74,7 +79,10 @@ public class MatchingController : MonoBehaviourPunCallbacks
 	public override void OnJoinedRoom() {
 		Debug.Log("<color=yellow>OnJoinedRoom() 호출\n이제 당신은 룸에 있습니다. 여기서 당신의 게임이 시작됩니다.</color>");
 
-		PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE);
+		if (roomType == ROOM_TYPE.PVE)
+			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_SCENE);
+		else if (roomType == ROOM_TYPE.PVP)
+			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE);
 	}
 	#endregion
 }

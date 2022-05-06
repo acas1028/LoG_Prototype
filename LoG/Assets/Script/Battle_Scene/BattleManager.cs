@@ -8,7 +8,7 @@ using Photon.Realtime;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
-    private MatchResultManager uiManager;
+    private UI_Manager uiManager;
 
     public AlertMessage alertMessage;
     public List<GameObject> bM_Character_Team1;
@@ -25,9 +25,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     public int bM_Phase { get; set; }
 
-    public bool isBattling;
-
-    bool isPVE;
     int roundWinCount;
     int roundCount;
 
@@ -67,15 +64,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     IEnumerator Start()
     {
-        uiManager = FindObjectOfType<MatchResultManager>();
+        uiManager = FindObjectOfType<UI_Manager>();
 
         object o_isPVE;
-        isPVE = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
 
-        if (isPVE == true) {
+        if ((bool)o_isPVE == true) {
             bM_Team1_Is_Preemitive = true;
         }
-        else if (isPVE == false) {
+        else if ((bool)o_isPVE == false) {
             if (Is_Preemptive())
                 bM_Team1_Is_Preemitive = true;
             else
@@ -91,7 +88,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
         bM_Phase = 0;
-
         roundWinCount = 0;
         roundCount = 0;
 
@@ -105,7 +101,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         yield return new WaitUntil(() => { return bM_Character_Team2.Count >= 5; });
-        isBattling = true;
         BM_Character_Setting();
         StartCoroutine(Running_Phase());
     }
@@ -149,14 +144,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             // 캐릭터 세팅 이후 스킬체크 과정
         }
-
         while (bM_Phase >= 0 && bM_Phase < 10)
         {
             bM_Phase++;
             yield return StartCoroutine(Battle(bM_Phase));
         }
 
-        isBattling = false;
         Debug.Log("게임 종료");
         Finish_Game();
     }
@@ -372,7 +365,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 }
 
                 result = SkillManager.Instance.CowardCheck(bM_Character_Team1[i]);
-                if (result)
+                if(result)
                 {
                     alertMessage.gameObject.SetActive(false);
                     GameObject CowardCharacter = FindCowardCharacter(1);
@@ -383,9 +376,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 if (result)
                 {
                     alertMessage.gameObject.SetActive(false);
-                    GameObject SurvivorCharacter = FindSurvivorCharacter(1);
-                    yield return StartCoroutine((SurvivorCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                    GameObject CowardCharacter = FindSurvivorCharacter(1);
+                    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
                 }
+                // 분리해보자.
             }
             if(Team1Script.character_is_Killed == true)
             {
@@ -418,8 +412,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 if (result)
                 {
                     alertMessage.gameObject.SetActive(false);
-                    GameObject SurvivorCharacter = FindSurvivorCharacter(2);
-                    yield return StartCoroutine((SurvivorCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
+                    GameObject CowardCharacter = FindSurvivorCharacter(2);
+                    yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
                 }
             }
             if (Team2Script.character_is_Killed == true)
@@ -712,12 +706,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Finish_Game()
     {
-        if (!isPVE) {
-            if (GetServerVariables() == false) {
-                Debug.LogError("Failed to get server variables so that can't implement finishing match");
-                return;
-            }
-        }
+        if (GetServerVariables() == false)
+        {
+            Debug.LogError("Failed to get server variables so that can't implement finishing match");
+            return;
+        }    
 
         Calculate_Remain_HP();
         Calculate_Remain_Character();
@@ -759,8 +752,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (isPVE) {
-            uiManager.ShowMatchResult(roundWinCount > 0 ? true : false, true);
+        object o_isPVE;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
+
+        if ((bool)o_isPVE) {
+            uiManager.ShowMatchResult(roundWinCount > 0 ? true : false);
+            Invoke("LoadArraymentScene", 4f);
             return;
         }
 
@@ -773,19 +770,27 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
+    void LoadArraymentScene()
+    {
+        PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE);
+    }
+
+    void LoadPveScene() {
+        PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_SCENE);
+    }
+
     #region 포톤 콜백 함수
     public override void OnPlayerLeftRoom(Player otherPlayer) {
-        uiManager.ShowMatchResult(true, false);
+        uiManager.ShowMatchResult(true);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
-        if (isPVE) return;
-
         object o_roundWinCount;
         targetPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
 
         if ((int)o_roundWinCount >= 2) {
-            uiManager.ShowMatchResult(roundWinCount >= 2 ? true : false, false, true);
+            uiManager.ShowMatchResult(roundWinCount >= 2 ? true : false);
+            Invoke("LoadArraymentScene", 4f);
         }
     }
     #endregion

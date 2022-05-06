@@ -7,7 +7,6 @@ public class Limit_Popup : MonoBehaviour
     public GameObject popup;
     public GameObject limit_Popup_button;
     public GameObject present_Popup;
-    public GameObject arrayamanager;
 
     public List<GameObject> popup_List = new List<GameObject>();
 
@@ -53,7 +52,6 @@ public class Limit_Popup : MonoBehaviour
     private void Update()
     {
         Popup_limit_Only_One();
-        BoolPopupOn();
     }
 
     public void Popup_OutsideClick()
@@ -65,13 +63,8 @@ public class Limit_Popup : MonoBehaviour
                 
                 Debug.Log("outside");
                 popup.GetComponent<animation_On_off>().AnimationOff();
-                BoolPopupOn_Off();
-
-
+                
             }
-
-            
-
             limit_Popup_button.SetActive(false);
         }
     }
@@ -102,78 +95,6 @@ public class Limit_Popup : MonoBehaviour
     public void PopupOff()
     {
         popup.GetComponent<animation_On_off>().AnimationOff();
-    }
-
-    public void BoolPopupOn()
-    {
-        if (arrayamanager == null)
-            return;
-        if (arrayamanager.GetComponent<Arrayment_Manager>() != null)
-        {
-            if (arrayamanager.GetComponent<Arrayment_Manager>().getisPopupOn() == false)
-            {
-                for (int i = 0; i < popup_List.Count; i++)
-                {
-                    if (popup_List[i].tag != "Popup")
-                    {
-
-                        if (popup_List[i].activeSelf == true)
-                        {
-
-                            Debug.Log(popup_List[i].name);
-                            if (arrayamanager.GetComponent<Arrayment_Manager>() != null)
-                            {
-                                Debug.Log("PopupOn");
-                                arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(true);
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-
-        if (arrayamanager.GetComponent<PVE_Arrayment>() != null)
-        {
-            if (arrayamanager.GetComponent<PVE_Arrayment>().getisPopupOn() == false)
-            {
-                for (int i = 0; i < popup_List.Count; i++)
-                {
-                    if (popup_List[i].tag != "Popup")
-                    {
-
-                        if (popup_List[i].activeSelf == true)
-                        {
-
-                            Debug.Log(popup_List[i].name);
-                            if (arrayamanager.GetComponent<PVE_Arrayment>() != null)
-                            {
-                                Debug.Log("PopupOn");
-                                arrayamanager.GetComponent<PVE_Arrayment>().SetIsPopupOn(true);
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void BoolPopupOn_Off()
-    {
-        if (arrayamanager == null)
-            return;
-
-        if (arrayamanager.GetComponent<Arrayment_Manager>() != null)
-        {
-            Debug.Log("PopupFalse");
-            arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(false);
-        }
-        if(arrayamanager.GetComponent<PVE_Arrayment>() != null)
-        {
-            Debug.Log("PopupFalse");
-            arrayamanager.GetComponent<PVE_Arrayment>().SetIsPopupOn(false);
-        }
     }
 
 

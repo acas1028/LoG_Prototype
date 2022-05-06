@@ -25,7 +25,6 @@ public class Popup_Onoff : MonoBehaviour
             Limit_Popup.Limit_Poup_instance.SetIsbutton(this.gameObject);
             Limit_Popup.Limit_Poup_instance.SetPopup(popup);
             Limit_Popup.Limit_Poup_instance.limit_Popup_button.SetActive(true);
-            
         }
 
         else
@@ -35,7 +34,6 @@ public class Popup_Onoff : MonoBehaviour
                 popup.GetComponent<animation_On_off>().AnimationOff();
                 Limit_Popup.Limit_Poup_instance.SetIsbutton(null);
                 Limit_Popup.Limit_Poup_instance.limit_Popup_button.SetActive(false);
-                Limit_Popup.Limit_Poup_instance.BoolPopupOn_Off();
             }
         }
     }

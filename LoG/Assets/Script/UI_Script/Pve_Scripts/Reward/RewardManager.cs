@@ -62,49 +62,19 @@ public class RewardManager : MonoBehaviour
 
         if((string)reward_data[StageNumber - 1]["Reward"] == "Mastery")
         {
-            if((string)reward_data[StageNumber - 1]["Value"] == "무장해제")
+            if((string)reward_data[StageNumber - 1]["Value"] == "처형자")
             {
                 dummy = RewardSprites[1];
             }
 
-            if ((string)reward_data[StageNumber - 1]["Value"] == "모아니면도")
+            if ((string)reward_data[StageNumber - 1]["Value"] == "무장해제")
             {
                 dummy = RewardSprites[2];
             }
 
-            if((string)reward_data[StageNumber - 1]["Value"] == "발악")
+            if((string)reward_data[StageNumber - 1]["Value"] == "명사수")
             {
                 dummy = RewardSprites[3];
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "격려")
-            {
-                dummy = RewardSprites[4];
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "생존자")
-            {
-                dummy = RewardSprites[5];
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "겁쟁이")
-            {
-                dummy = RewardSprites[6];
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "저주")
-            {
-                dummy = RewardSprites[7];
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "보호막")
-            {
-                dummy = RewardSprites[8];
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "처형인")
-            {
-                dummy = RewardSprites[9];
             }
         }
 
@@ -121,50 +91,19 @@ public class RewardManager : MonoBehaviour
 
         if ((string)reward_data[StageNumber - 1]["Reward"] == "Mastery")
         {
+            if ((string)reward_data[StageNumber - 1]["Value"] == "처형자")
+            {
+                dum = "처형자 특성";
+            }
 
             if ((string)reward_data[StageNumber - 1]["Value"] == "무장해제")
             {
                 dum = "무장해제 특성";
             }
 
-            if ((string)reward_data[StageNumber - 1]["Value"] == "모아니면도")
+            if ((string)reward_data[StageNumber - 1]["Value"] == "명사수")
             {
-                dum = "모아니면도 특성";
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "발악")
-            {
-                dum = "발악 특성";
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "격려")
-            {
-                dum = "격려 특성";
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "생존자")
-            {
-                dum = "생존자 특성";
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "겁쟁이")
-            {
-                dum = "겁쟁이 특성";
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "저주")
-            {
-                dum = "저주 특성";
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "보호막")
-            {
-                dum = "보호막 특성";
-            }
-
-            if ((string)reward_data[StageNumber - 1]["Value"] == "처형인")
-            {
-                dum = "처형인 특성";
+                dum = "명사수 특성";
             }
         }
 

@@ -83,7 +83,7 @@ public class Showing_Hp : MonoBehaviour
         if (Team_count == 1)
         {
             hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position);
-            //Debug.Log(worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position));
+            Debug.Log(worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position));
             hp_bar.transform.Translate(0, hp_bar_y_position, 0);
         }
 
@@ -117,7 +117,7 @@ public class Showing_Hp : MonoBehaviour
 
     private void Update()
     {
-        if (BattleManager.Instance.isBattling)
+        if (BattleManager.Instance.bM_Phase >= 1)
         {
             original_Hp();
 
@@ -125,8 +125,15 @@ public class Showing_Hp : MonoBehaviour
 
             Hpbar_Dead();
 
+            
+        }
+
+        if (BattleManager.Instance.bM_Character_Team1.Count >= 5 && BattleManager.Instance.bM_Character_Team2.Count >= 5) //예외 처리
+        {
+
             Hp_bar_position_translate();
         }
+
     }
 
 

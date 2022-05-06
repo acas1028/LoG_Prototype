@@ -75,11 +75,11 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        //if(CCS.character_Skill == CharacterSkill.Balance_Survivor)
-        //{
-        //    result = SKill_Balanced_Survivor_Setting(character);
-        //    if (result) return true;
-        //}
+        if(CCS.character_Skill == CharacterSkill.Balance_Survivor)
+        {
+            result = SKill_Balanced_Survivor_Setting(character);
+            if (result) return true;
+        }
 
         if(CCS.character_Skill == CharacterSkill.Balance_Blessing)
         {
@@ -197,11 +197,11 @@ public class SkillManager : MonoBehaviour
             if (result) return true;
         }
 
-        //if(DCS.character_Skill == CharacterSkill.Balance_Survivor)
-        //{
-        //    result = Skill_Balanced_Survivor_Dead(deadCharacter);
-        //    if (result) return true;
-        //}
+        if(DCS.character_Skill == CharacterSkill.Balance_Survivor)
+        {
+            result = Skill_Balanced_Survivor_Dead(deadCharacter);
+            if (result) return true;
+        }
         if(DCS.character_Skill == CharacterSkill.Defense_Barrier)
         {
             result = Barrier_Dead(deadCharacter);
@@ -235,7 +235,7 @@ public class SkillManager : MonoBehaviour
         bool result;
         Character DCS = deadCharacter.GetComponent<Character>();
 
-        result = Skill_Balance_Survivor_Check(deadCharacter);
+        result = Skill_Balanced_Survivor_Check(deadCharacter);
         if (result) return true;
 
         return false;
@@ -849,8 +849,94 @@ public class SkillManager : MonoBehaviour
 
         return true;
     }
+    int Skill_Get_My_Stack_Survivor()
+    {
+        // 내 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 불러오는 함수
+        bool result;
+        object o_stack_survivor;
+        int stack_survivor;
 
-    bool Skill_Balance_Survivor_Check(GameObject deadCharacter)
+        result = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Stack_Survivor", out o_stack_survivor);
+        if (!result || o_stack_survivor == null)
+        {
+            Debug.LogError("Failed to get \"Stack_Survivor\" from server");
+            return 0;
+        }
+
+        stack_survivor = (int)o_stack_survivor;
+        return stack_survivor;
+    }
+    int Skill_Get_Enemy_Stack_Survivor()
+    {
+        // 적 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 불러오는 함수
+        bool result;
+        object o_stack_survivor;
+        int stack_survivor;
+
+        foreach (Player player in PhotonNetwork.PlayerListOthers)
+        {
+            result = player.CustomProperties.TryGetValue("Stack_Survivor", out o_stack_survivor);
+            if (!result || o_stack_survivor == null)
+            {
+                Debug.LogError("Failed to get \"Stack_Survivor\" from server");
+                return 0;
+            }
+
+            stack_survivor = (int)o_stack_survivor;
+            return stack_survivor;
+        }
+
+        Debug.LogError("There's no other player");
+        return 0;
+    }
+    bool Skill_Set_Stack_Survivor(int val)
+    {
+        // 내 "생존자" 특성의 캐릭터가 가진 생존자 스택 변수를 서버에 저장하는 함수
+        bool result;
+
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "Stack_Survivor", val } };
+        result = PhotonNetwork.SetPlayerCustomProperties(table);
+        if (!result)
+        {
+            Debug.LogError("Failed to set \"Stack_Survivor\" to server");
+            return false;
+        }
+
+        return true;
+    }
+    bool SKill_Balanced_Survivor_Setting(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        if (CCS.character_Team_Number == 1)
+            CCS.stack_Survivor = Skill_Get_My_Stack_Survivor();
+        else if (CCS.character_Team_Number == 2)
+            CCS.stack_Survivor = Skill_Get_Enemy_Stack_Survivor();
+
+        if (CCS.stack_Survivor == 0) return false;
+
+       
+        CCS.character_Buffed_Attack += (20 * CCS.stack_Survivor);
+        CCS.character_HP *= 100 + (20 * CCS.stack_Survivor);
+        CCS.character_MaxHP *= 100 + (20 * CCS.stack_Survivor);
+
+        skillmessage.SetActive(true);
+        skillmessage.GetComponent<SkillMessage>().Message(character, "생존자");
+
+        return true;
+    }
+
+    bool Skill_Balanced_Survivor_Dead(GameObject character)
+    {
+        Character CCS = character.GetComponent<Character>();
+
+        CCS.stack_Survivor = 0;
+        Skill_Set_Stack_Survivor(0);
+
+        return false;
+    }
+
+    bool Skill_Balanced_Survivor_Check(GameObject deadCharacter)
     {
         Character DCS = deadCharacter.GetComponent<Character>();
 
@@ -864,9 +950,13 @@ public class SkillManager : MonoBehaviour
                 Character TCS = team.GetComponent<Character>();
                 if (TCS.character_Skill == CharacterSkill.Balance_Survivor)
                 {
-                    TCS.character_Buffed_Attack += 20;
+                    TCS.character_Buffed_Damaged += 20;
+                    TCS.character_MaxHP *= 120;
+                    TCS.character_HP *= 120;
+                    TCS.stack_Survivor++;
 
-                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    Skill_Set_Stack_Survivor(TCS.stack_Survivor);
+
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(team, "생존자");
                     return true;
@@ -881,9 +971,10 @@ public class SkillManager : MonoBehaviour
                 Character TCS = team.GetComponent<Character>();
                 if (TCS.character_Skill == CharacterSkill.Balance_Survivor)
                 {
-                    TCS.character_Buffed_Attack += 20;
-
-                    GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
+                    TCS.character_Buffed_Damaged += 20;
+                    TCS.character_MaxHP *= 120;
+                    TCS.character_HP *= 120;
+                    TCS.stack_Survivor++;
                     skillmessage.SetActive(true);
                     skillmessage.GetComponent<SkillMessage>().Message(team, "생존자");
                     return true;
@@ -892,7 +983,6 @@ public class SkillManager : MonoBehaviour
         }
         return false;
     }
-
     bool Skill_Balanced_Curse(GameObject character)
     {
         Character CCS = character.GetComponent<Character>();
