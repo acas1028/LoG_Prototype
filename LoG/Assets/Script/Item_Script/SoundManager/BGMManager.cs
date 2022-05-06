@@ -15,7 +15,7 @@ public class BGMManager : MonoBehaviour
             {
                 _instance = FindObjectOfType(typeof(BGMManager)) as BGMManager;
 
-                if (_instance == null)
+                if (_instance == null) ;
                     Debug.Log("no Singleton obj");
             }
             return _instance;
