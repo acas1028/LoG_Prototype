@@ -453,7 +453,7 @@ public class Deck_Manager : MonoBehaviour
 
     IEnumerator InitialCharacterID()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         for(int i=0;i<7;i++)
         {
