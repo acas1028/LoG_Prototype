@@ -14,7 +14,8 @@ public class PveScebe_Map_ScaleScript : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         backGround = GameObject.FindGameObjectsWithTag("BackGround");
         floor = GameObject.FindGameObjectsWithTag("Pve_Floor");
-        
+
+
     }
 
     // Update is called once per frame

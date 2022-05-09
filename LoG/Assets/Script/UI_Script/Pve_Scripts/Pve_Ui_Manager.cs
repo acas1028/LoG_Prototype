@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class Pve_Ui_Manager : MonoBehaviour
 {
-    public int stage_Numer; // 현 스테이지 넘버
+    public int stage_Number; // 현 스테이지 넘버
     public GameObject[] StageButtons; //스테이지 버튼 모음
+    public GameObject[] Stages;
     public Text StageNumber_text; //스테이지 넘버 텍스트
     public GameObject returnButton;
     public GameObject nextButton;
@@ -18,16 +19,16 @@ public class Pve_Ui_Manager : MonoBehaviour
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         cameraMove_Distance = 41.1f;
-        stage_Numer = 1;
+        stage_Number = 1;
     }
 
     public void Map_Next_Pass() //다음 맵으로
     {
         Camera_Move(true);
-        StageButtons[stage_Numer-1].SetActive(false);
-        stage_Numer++;
-        StageButtons[stage_Numer-1].SetActive(true);
-        StageNumber_text.text = stage_Numer.ToString();
+        StageButtons[stage_Number-1].SetActive(false);
+        stage_Number++;
+        StageButtons[stage_Number-1].SetActive(true);
+        StageNumber_text.text = stage_Number.ToString();
         ReturnButton_active();
         NextButton_active();
     }
@@ -35,10 +36,10 @@ public class Pve_Ui_Manager : MonoBehaviour
     public void Map_Returen_Pass() // 이전 맵으로
     {
         Camera_Move(false);
-        StageButtons[stage_Numer-1].SetActive(false);
-        stage_Numer--;
-        StageButtons[stage_Numer-1].SetActive(true);
-        StageNumber_text.text = stage_Numer.ToString();
+        StageButtons[stage_Number-1].SetActive(false);
+        stage_Number--;
+        StageButtons[stage_Number-1].SetActive(true);
+        StageNumber_text.text = stage_Number.ToString();
         ReturnButton_active();
         NextButton_active();
     }
@@ -49,17 +50,33 @@ public class Pve_Ui_Manager : MonoBehaviour
     {
         if (isRight == true)
         {
-            camera.transform.Translate(cameraMove_Distance, 0, 0);
+            for(int i =0; i< Stages.Length;i++)
+            {
+                if(Stages[i].activeSelf == true)
+                {
+                    Stages[i].SetActive(false);
+                    Stages[i + 1].SetActive(true);
+                    return;
+                }
+            }
         }
         else
         {
-            camera.transform.Translate(-cameraMove_Distance, 0, 0);
+            for (int i = 0; i < Stages.Length; i++)
+            {
+                if (Stages[i].activeSelf == true)
+                {
+                    Stages[i].SetActive(false);
+                    Stages[i-1].SetActive(true);
+                    return;
+                }
+            }
         }
     }
 
     void ReturnButton_active()
     {
-        if (stage_Numer == 1)
+        if (stage_Number == 1)
         {
             returnButton.SetActive(false);
         }
@@ -71,7 +88,7 @@ public class Pve_Ui_Manager : MonoBehaviour
 
     void NextButton_active()
     {
-        if (stage_Numer == 4)
+        if (stage_Number == 4)
         {
             nextButton.SetActive(false);
         }
