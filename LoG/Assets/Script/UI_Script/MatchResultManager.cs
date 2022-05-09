@@ -118,12 +118,12 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
                         return;
                     }
 
-                    var request = new PurchaseItemRequest() { CatalogVersion = "Skill", ItemId = "SKILL_" + ((int)skill).ToString() };
-                    PlayFabClientAPI.PurchaseItem(request,
+                    var request = new GrantCharacterToUserRequest() { CatalogVersion = "Skill", ItemId = "SKILL_" + ((int)skill).ToString() };
+                    PlayFabClientAPI.GrantCharacterToUser(request,
                         (result) => {
-                            Debug.Log($"{result.Items} È¹µæ ¼º°ø");
+                            Debug.Log($"Æ¯¼º È¹µæ ¼º°ø");
                         },
-                        (error) => Debug.Log($"{error.ErrorMessage}, È¹µæ ½ÇÆÐ"));
+                        (error) => Debug.Log($"Æ¯¼º È¹µæ ½ÇÆÐ"));
                 }
             }
             else {
