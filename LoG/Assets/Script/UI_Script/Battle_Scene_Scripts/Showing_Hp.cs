@@ -9,7 +9,7 @@ public class Showing_Hp : MonoBehaviour
     private float hp; //캐릭터 현재 hp
     private float original_hp; //캐릭터의 기본 hp
     private int is_this_original_hp_counting=0; // original_hp를 채웠는가를 묻는 변수
-    private int hp_bar_y_position; // 캐릭터의 hp 바와 캐릭터과의 거리.
+    private float hp_bar_y_position; // 캐릭터의 hp 바와 캐릭터과의 거리.
     private GameObject hp_bar; //hp 바
     private GameObject canvas; 
 
