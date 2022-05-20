@@ -38,6 +38,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
                 var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 100 };
                 PlayFabClientAPI.AddUserVirtualCurrency(request,
                     (result) => {
+                        Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
                     },
                     (error) => Debug.Log("ÄÚÀÎ È¹µæ ½ÇÆÐ"));
             }
@@ -50,6 +51,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
                 var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50 };
                 PlayFabClientAPI.AddUserVirtualCurrency(request,
                     (result) => {
+                        Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
                     },
                     (error) => Debug.Log("ÄÚÀÎ È¹µæ ½ÇÆÐ"));
             }
@@ -71,6 +73,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
                     var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = rewardCredit };
                     PlayFabClientAPI.AddUserVirtualCurrency(request,
                         (result) => {
+                            Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
                         },
                         (error) => Debug.Log("ÄÚÀÎ È¹µæ ½ÇÆÐ"));
                 }
@@ -130,6 +133,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
                 Debug.Log("Pve_Lose");
 
                 result.GetComponent<MatchReward>().WinTitle.SetActive(false);
+                result.GetComponent<MatchReward>().RewardValue.gameObject.SetActive(false);
             }
         }
 
