@@ -45,7 +45,9 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        Mine_Red_Grid.transform.localScale = new Vector3(Mine_Red_Grid.transform.localScale.x * canvas.GetComponent<RectTransform>().sizeDelta.x / 2960f, Mine_Red_Grid.transform.localScale.y * canvas.GetComponent<RectTransform>().sizeDelta.y / 1440f);
+        Opponent_Red_Grid.transform.localScale = new Vector3(Opponent_Red_Grid.transform.localScale.x * canvas.GetComponent<RectTransform>().sizeDelta.x / 2960f, Opponent_Red_Grid.transform.localScale.y * canvas.GetComponent<RectTransform>().sizeDelta.y / 1440f);
     }
 
     // Update is called once per frame

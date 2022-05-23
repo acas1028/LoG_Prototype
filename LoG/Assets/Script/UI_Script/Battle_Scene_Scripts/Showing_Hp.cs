@@ -13,9 +13,12 @@ public class Showing_Hp : MonoBehaviour
     private GameObject hp_bar; //hp 바
     private GameObject canvas; 
 
+
     // 아래의 변수는 inspector창에 변수를 설정해놓았다.
     public int character_count; // 같은 팀내의 캐릭터 구별 변수
     public int Team_count; //팀 구별 변수
+    public GameObject Minehp_barPositions;
+    public GameObject Enemyhp_barPositions;
 
 
     private void Start()
@@ -67,30 +70,23 @@ public class Showing_Hp : MonoBehaviour
 
     void Hp_bar_position_translate() //hp bar들의 위치 이동시키는 함수
     {
-        
-
-        //if (BattleManager.Instance.bM_Character_Team1[character_count] == null && Team_count==1)
-        //    return;
-
-        //if (BattleManager.Instance.bM_Character_Team2[character_count] == null && Team_count==2)
-        //    return;
-
-        //Debug.Log(BattleManager.Instance.bM_Character_Team2.Count);
-
-        //if (BattleManager.Instance.bM_Character_Team2.Count != 5)
-        //    return;
 
         if (Team_count == 1)
         {
-            hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position);
-            //Debug.Log(worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position));
-            hp_bar.transform.Translate(0, hp_bar_y_position, 0);
+            int grid_Num = BattleManager.Instance.bM_Character_Team1[character_count].GetComponent<Character>().character_Num_Of_Grid;
+            Vector3 hp_bar_Position = Minehp_barPositions.transform.GetChild(grid_Num-1).position;
+            hp_bar.transform.position = hp_bar_Position;
+            //hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team1[character_count].transform.position);
+            //hp_bar.transform.Translate(0, hp_bar_y_position, 0);
         }
 
         else
         {
-            hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team2[character_count].transform.position);
-            hp_bar.transform.Translate(0, hp_bar_y_position, 0);
+            int grid_Num = BattleManager.Instance.bM_Character_Team2[character_count].GetComponent<Character>().character_Num_Of_Grid;
+            Vector3 hp_bar_Position = Enemyhp_barPositions.transform.GetChild(grid_Num-1).position;
+            hp_bar.transform.position = hp_bar_Position;
+            //hp_bar.transform.position = worldToUISpace(canvas.GetComponent<Canvas>(), BattleManager.Instance.bM_Character_Team2[character_count].transform.position);
+            //hp_bar.transform.Translate(0, hp_bar_y_position, 0);
         }
 
        
