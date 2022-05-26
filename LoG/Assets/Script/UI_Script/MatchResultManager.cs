@@ -23,7 +23,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
             currentStage = 0;
     }
 
-    public void ShowMatchResult(bool isWin, bool isPVE, bool isMatchOver = false)
+    public void ShowMatchResult(bool isWin, bool isPVE, bool isMatchOver = false, bool onEnemyQuit = false)
     {
         GameObject result = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform);
         this.isPVE = isPVE;
@@ -33,14 +33,17 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
             if (isWin) {
                 Debug.Log("Win");
                 result.GetComponent<MatchReward>().LoseTitle.SetActive(false);
-                result.GetComponent<MatchReward>().RewardValue.text = "100 credit";
 
-                var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 100 };
-                PlayFabClientAPI.AddUserVirtualCurrency(request,
-                    (result) => {
-                        Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
-                    },
-                    (error) => Debug.Log("ÄÚÀÎ È¹µæ ½ÇÆÐ"));
+                if (!onEnemyQuit) {
+                    result.GetComponent<MatchReward>().RewardValue.text = "100 credit";
+
+                    var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 100 };
+                    PlayFabClientAPI.AddUserVirtualCurrency(request,
+                        (result) => {
+                            Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
+                        },
+                        (error) => Debug.Log("ÄÚÀÎ È¹µæ ½ÇÆÐ"));
+                }
             }
 
             else if (!isWin) {

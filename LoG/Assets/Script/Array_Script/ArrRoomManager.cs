@@ -319,7 +319,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         RenewEnemyPlayer();
 
         timeText.gameObject.SetActive(false);
-        uiManager.ShowMatchResult(true, false);
+        uiManager.ShowMatchResult(isWin: true, isPVE: false, onEnemyQuit: true);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
