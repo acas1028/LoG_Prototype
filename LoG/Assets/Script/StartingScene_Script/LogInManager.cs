@@ -88,10 +88,10 @@ public class LogInManager : MonoBehaviour
 
         noticeText.text = "회원가입에 성공하였습니다.";
 
-        AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50000 };
+        AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 1000 };
         PlayFabClientAPI.AddUserVirtualCurrency(request,
-            (result) => print("회원가입 이벤트! 50000 코인을 획득하였습니다."),
-            (error)=>print("알 수 없는 오류로 인해 50000 코인을 획득하지 못하였습니다."));
+            (result) => print("회원가입 이벤트! 1000 코인을 획득하였습니다."),
+            (error)=>print("알 수 없는 오류로 인해 1000 코인을 획득하지 못하였습니다."));
     }
 
     void OnRegisterFailed(PlayFabError error) {
