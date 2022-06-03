@@ -175,7 +175,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     public bool IsAllPlayersJoined()
     {
-        return PhotonNetwork.CurrentRoom.PlayerCount >= 2;
+        if (PhotonNetwork.InRoom)
+            return PhotonNetwork.CurrentRoom.PlayerCount >= 2;
+        else
+            return false;
     }
 
     public void SetPreemptivePlayer()
@@ -298,7 +301,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         RenewEnemyPlayer();
 
         timeText.gameObject.SetActive(false);
-        uiManager.ShowMatchResult(isWin: true, isPVE: false, onEnemyQuit: true);
+        uiManager.ShowMatchResult(isWin: true, isPVE: false, isMatchOver: true, onEnemyQuit: true);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

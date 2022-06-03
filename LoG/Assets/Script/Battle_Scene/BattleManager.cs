@@ -28,8 +28,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public bool isBattling;
 
     bool isPVE;
+    bool isWin;
     int roundWinCount;
     int roundCount;
+    int playersDone;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
@@ -72,20 +74,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
         object o_isPVE;
         PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
         isPVE = (bool)o_isPVE;
-        Debug.Log($"isPVE = {isPVE}");
 
         if (isPVE == true) {
             bM_Team1_Is_Preemitive = true;
         }
-        else if (isPVE == false) {
+        else {
             if (Is_Preemptive())
                 bM_Team1_Is_Preemitive = true;
             else
                 bM_Team1_Is_Preemitive = false;
-        }
-        else {
-            Debug.LogError("[Room CustomProperties] IsPVE 프로퍼티를 설정하지 않았습니다. 종료합니다.");
-            yield return null;
         }
 
         bM_Remain_Character_Team1 = 0;
@@ -730,6 +727,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             alertMessage.gameObject.SetActive(true);
             alertMessage.Lose();
+            isWin = false;
         }
         else if(bM_Remain_Character_Team2 < bM_Remain_Character_Team1)
         {
@@ -737,7 +735,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             alertMessage.gameObject.SetActive(true);
             alertMessage.Win();
-            roundWinCount++;
+            isWin = true;
         }
         else
         {
@@ -747,38 +745,46 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Lose();
+                isWin = false;
             }
             else if(bM_Remain_HP_Team2 < bM_Remain_HP_Team1)
             {
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Win();
-                roundWinCount++;
+                isWin = true;
             }
             else
             {
                 alertMessage.gameObject.SetActive(true);
                 alertMessage.Draw();
+                isWin = false;
             }
         }
 
         if (isPVE) {
-            uiManager.ShowMatchResult(roundWinCount > 0 ? true : false, true);
+            uiManager.ShowMatchResult(roundWinCount > 0 ? true : false, true, isMatchOver: true, onEnemyQuit: false);
             Debug.Log("PVE Battle End");
             return;
         }
 
-        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
-        PhotonNetwork.SetPlayerCustomProperties(table);
+        if (isWin) {
+            roundWinCount++;
+        }
+
+        ExitGames.Client.Photon.Hashtable table;
 
         if (PhotonNetwork.IsMasterClient) {
             table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount + 1 } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(table);
         }
+
+        table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
+        PhotonNetwork.SetPlayerCustomProperties(table);
     }
 
     #region 포톤 콜백 함수
     public override void OnPlayerLeftRoom(Player otherPlayer) {
-        uiManager.ShowMatchResult(isWin: true, isPVE: false, onEnemyQuit: true);
+        uiManager.ShowMatchResult(isWin: true, isPVE: false, isMatchOver: true, onEnemyQuit: true);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
@@ -787,8 +793,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         object o_roundWinCount;
         targetPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
 
+        if (o_roundWinCount == null) return;
         if ((int)o_roundWinCount >= 2) {
-            uiManager.ShowMatchResult(roundWinCount >= 2 ? true : false, false, true);
+            uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: true, onEnemyQuit: false);
+        }
+        else {
+            uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: false, onEnemyQuit: false);
         }
     }
     #endregion
