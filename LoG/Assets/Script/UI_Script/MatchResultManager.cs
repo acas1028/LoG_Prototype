@@ -5,8 +5,7 @@ using PlayFab.ClientModels;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MatchResultManager : MonoBehaviourPunCallbacks
-{
+public class MatchResultManager : MonoBehaviourPunCallbacks {
     [Header("Match Result Panel")]
     public GameObject matchResultPanel;
 
@@ -20,66 +19,68 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
         currentStage = CSVManager.StageNumber;
     }
 
-    public void ShowMatchResult(bool isWin, bool isPVE, bool isMatchOver, bool onEnemyQuit)
-    {
-        GameObject result = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform);
+    public void ShowMatchResult(bool isWin, bool isPVE, bool isMatchOver, bool onEnemyQuit) {
         this.isPVE = isPVE;
         this.isMatchOver = isMatchOver;
 
+        if (!isMatchOver) {
+            Invoke("BackToArrayment", 5f);
+            return;
+        }
+
+        GameObject resultPanel = Instantiate(matchResultPanel, GameObject.Find("Canvas").transform);
+
         if (!isPVE) { // PVP¿œ∂ß
-            if (isMatchOver) {
-                if (isWin) {
-                    Debug.Log("PVP Win");
-                    result.GetComponent<MatchReward>().LoseTitle.SetActive(false);
+            if (isWin) {
+                Debug.Log("PVP Win");
+                resultPanel.GetComponent<MatchReward>().LoseTitle.SetActive(false);
 
-                    if (!onEnemyQuit) {
-                        result.GetComponent<MatchReward>().RewardValue.text = "100 credit";
+                if (!onEnemyQuit) {
+                    resultPanel.GetComponent<MatchReward>().RewardValue.text = "100 credit";
 
-                        var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 100 };
-                        PlayFabClientAPI.AddUserVirtualCurrency(request,
-                            (result) => {
-                                Debug.Log(result.BalanceChange + " ƒ⁄¿Œ »πµÊ");
-                            },
-                            (error) => Debug.Log("ƒ⁄¿Œ »πµÊ Ω«∆–"));
-                    }
-                    else {
-                        result.GetComponent<MatchReward>().RewardValue.gameObject.SetActive(false);
-                    }
+                    var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 100 };
+                    PlayFabClientAPI.AddUserVirtualCurrency(request,
+                        (result) => {
+                            Debug.Log(result.BalanceChange + " ƒ⁄¿Œ »πµÊ");
+                        },
+                        (error) => Debug.Log("ƒ⁄¿Œ »πµÊ Ω«∆–"));
                 }
+                else {
+                    resultPanel.GetComponent<MatchReward>().RewardValue.gameObject.SetActive(false);
+                }
+            }
 
-                else if (!isWin) {
-                    Debug.Log("PVP Lose");
-                    result.GetComponent<MatchReward>().WinTitle.SetActive(false);
+            else if (!isWin) {
+                Debug.Log("PVP Lose");
+                resultPanel.GetComponent<MatchReward>().WinTitle.SetActive(false);
 
-                    if (!onEnemyQuit) {
-                        result.GetComponent<MatchReward>().RewardValue.text = "50 credit";
+                if (!onEnemyQuit) {
+                    resultPanel.GetComponent<MatchReward>().RewardValue.text = "50 credit";
 
-                        var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50 };
-                        PlayFabClientAPI.AddUserVirtualCurrency(request,
-                            (result) => {
-                                Debug.Log(result.BalanceChange + " ƒ⁄¿Œ »πµÊ");
-                            },
-                            (error) => Debug.Log("ƒ⁄¿Œ »πµÊ Ω«∆–"));
-                    }
-                    else {
-                        result.GetComponent<MatchReward>().RewardValue.gameObject.SetActive(false);
-                    }
+                    var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50 };
+                    PlayFabClientAPI.AddUserVirtualCurrency(request,
+                        (result) => {
+                            Debug.Log(result.BalanceChange + " ƒ⁄¿Œ »πµÊ");
+                        },
+                        (error) => Debug.Log("ƒ⁄¿Œ »πµÊ Ω«∆–"));
+                }
+                else {
+                    resultPanel.GetComponent<MatchReward>().RewardValue.gameObject.SetActive(false);
                 }
             }
         }
         else {
-            if(isWin)
-            {
+            if (isWin) {
                 Debug.Log("Pve_Win");
                 PveDataSync.instance.SetData(CSVManager.StageNumber);
                 PveDataSync.instance.SendClearStage(CSVManager.StageNumber);
 
-                result.GetComponent<MatchReward>().LoseTitle.SetActive(false);
+                resultPanel.GetComponent<MatchReward>().LoseTitle.SetActive(false);
 
                 if ((string)reward_data[currentStage - 1]["Reward"] == "Gold") {
                     int rewardCredit = (int)reward_data[currentStage - 1]["Value"];
 
-                    result.GetComponent<MatchReward>().RewardValue.text = rewardCredit.ToString() + " credit";
+                    resultPanel.GetComponent<MatchReward>().RewardValue.text = rewardCredit.ToString() + " credit";
 
                     var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = rewardCredit };
                     PlayFabClientAPI.AddUserVirtualCurrency(request,
@@ -91,7 +92,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
                 else if ((string)reward_data[currentStage - 1]["Reward"] == "Mastery") {
                     string rewardSkill = (string)reward_data[currentStage - 1]["Value"];
 
-                    result.GetComponent<MatchReward>().RewardValue.text = rewardSkill;
+                    resultPanel.GetComponent<MatchReward>().RewardValue.text = rewardSkill;
 
                     CharacterStats.CharacterSkill skill = CharacterStats.CharacterSkill.Null;
 
@@ -143,15 +144,12 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
             else {
                 Debug.Log("Pve_Lose");
 
-                result.GetComponent<MatchReward>().WinTitle.SetActive(false);
-                result.GetComponent<MatchReward>().RewardValue.gameObject.SetActive(false);
+                resultPanel.GetComponent<MatchReward>().WinTitle.SetActive(false);
+                resultPanel.GetComponent<MatchReward>().RewardValue.gameObject.SetActive(false);
             }
         }
 
-        if (isMatchOver)
-            Invoke("LeaveRoom", 5f);
-        else
-            Invoke("BackToArrayment", 5f);
+        Invoke("LeaveRoom", 5f);
     }
 
     private void BackToArrayment() {
@@ -164,8 +162,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.ARRAYMENT_SCENE);
     }
 
-    public void LeaveRoom()
-    {
+    public void LeaveRoom() {
         if (!isPVE.HasValue) {
             object o_isPVE;
             isPVE = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);

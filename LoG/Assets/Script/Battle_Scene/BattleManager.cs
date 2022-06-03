@@ -31,7 +31,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
     bool isWin;
     int roundWinCount;
     int roundCount;
-    int playersDone;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
