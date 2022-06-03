@@ -60,8 +60,6 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        bool result = false;
-
         uiManager = FindObjectOfType<MatchResultManager>();
         playerName.text = PhotonNetwork.LocalPlayer.NickName;
         preemptiveCheck.text = " ";
@@ -90,15 +88,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         else
             roomStatusText.text = "상대의 입장을 기다리는 중입니다...";
 
-        result = GetCustomProperties();
-        if (!result)
-        {
-            result = InitCustomProperties();
-            if (!result)
-            {
-                Debug.LogError("CustomProperties 초기화 실패");
-            }
-        }
+        GetCustomProperties();
 
         winStateText.text = winCount + " : " + enemyWinCount;
 
@@ -106,69 +96,40 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             SetPreemptivePlayer();
     }
 
-    private bool InitCustomProperties()
-    {
-        bool result = false;
-
-        Hashtable table = new Hashtable() { { "RoundWinCount", 0 } };
-        result = PhotonNetwork.SetPlayerCustomProperties(table);
-        if (!result)
-        {
-            Debug.LogError("PlayerCustomProperties 동기화 실패");
-            return false;
-        }
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            table = new Hashtable() { { "RoundCount", 1 } };
-            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-            if (!result)
-            {
-                Debug.LogError("RoundCount 동기화 실패");
-                return false;
-            }
-
-            table = new Hashtable() { { "IsPVE", false } };
-            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-            if (!result) {
-                Debug.LogError("IsPVE 동기화 실패");
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private bool GetCustomProperties()
+    private void GetCustomProperties()
     {
         object o_isPreemptive;
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_isPreemptive);
         if (o_isPreemptive == null)
         {
             Debug.LogWarning("isPreemptive 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
-            return false;
         }
-        isPreemptive = (bool)o_isPreemptive;
+        else
+            isPreemptive = (bool)o_isPreemptive;
 
         object o_winCount;
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_winCount);
         if (o_winCount == null)
         {
             Debug.LogWarning("RoundWinCount 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
-            return false;
+
+            var table = new Hashtable() { { "RoundWinCount", 0 } };
+            if (!PhotonNetwork.SetPlayerCustomProperties(table)) {
+                Debug.LogError("PlayerCustomProperties 동기화 실패");
+            }
         }
-        winCount = (int)o_winCount;
+        else
+            winCount = (int)o_winCount;
 
         object o_enemyWinCount;
         foreach (Player player in PhotonNetwork.PlayerListOthers)
         {
             player.CustomProperties.TryGetValue("RoundWinCount", out o_enemyWinCount);
-            if (o_enemyWinCount == null)
-            {
-                Debug.LogWarning("적 RoundWinCount 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
-                return false;
+            if (o_enemyWinCount == null) {
+                Debug.LogWarning("적 RoundWinCount 값을 가져오지 못했습니다.");
             }
-            enemyWinCount = (int)o_enemyWinCount;
+            else
+                enemyWinCount = (int)o_enemyWinCount;
         }
 
         object o_roundCount;
@@ -176,11 +137,29 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         if (o_roundCount == null)
         {
             Debug.LogWarning("RoundCount 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
-            return false;
-        }
-        roundCount = (int)o_roundCount;
 
-        return true;
+            if (PhotonNetwork.IsMasterClient) {
+                var table = new Hashtable() { { "RoundCount", 1 } };
+                if (!PhotonNetwork.CurrentRoom.SetCustomProperties(table)) {
+                    Debug.LogError("RoundCount 동기화 실패");
+                }
+            }
+        }
+        else
+            roundCount = (int)o_roundCount;
+
+        object o_isPVE;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
+        if (o_isPVE == null) {
+            Debug.LogWarning("isPVE 값을 가져오지 못했습니다. 값을 새로 할당합니다.");
+
+            if (PhotonNetwork.IsMasterClient) {
+                var table = new Hashtable() { { "IsPVE", false } };
+                if (!PhotonNetwork.CurrentRoom.SetCustomProperties(table)) {
+                    Debug.LogError("IsPVE 동기화 실패");
+                }
+            }
+        }
     }
 
     #region 외부에서 호출되는 public 함수

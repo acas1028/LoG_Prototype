@@ -70,7 +70,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
         uiManager = FindObjectOfType<MatchResultManager>();
 
         object o_isPVE;
-        isPVE = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
+        isPVE = (bool)o_isPVE;
+        Debug.Log($"isPVE = {isPVE}");
 
         if (isPVE == true) {
             bM_Team1_Is_Preemitive = true;
@@ -99,7 +101,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             bM_Character_Team1.Add(PhotonNetwork.Instantiate("Character_Action_Prefab", Vector3.zero, Quaternion.identity));
 
-            if (PhotonNetwork.OfflineMode || (bool)o_isPVE == true)
+            if (PhotonNetwork.OfflineMode || isPVE == true)
                 bM_Character_Team2.Add(Instantiate(Character_Prefab));
             // 온라인 환경에서 bM_Character_Team2 의 캐릭터 인스턴스는 Character_Action 스크립트의 Start 부분에서 등록된다.
         }
@@ -761,6 +763,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (isPVE) {
             uiManager.ShowMatchResult(roundWinCount > 0 ? true : false, true);
+            Debug.Log("PVE Battle End");
             return;
         }
 
@@ -775,7 +778,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     #region 포톤 콜백 함수
     public override void OnPlayerLeftRoom(Player otherPlayer) {
-        uiManager.ShowMatchResult(true, false);
+        uiManager.ShowMatchResult(isWin: true, isPVE: false, onEnemyQuit: true);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {

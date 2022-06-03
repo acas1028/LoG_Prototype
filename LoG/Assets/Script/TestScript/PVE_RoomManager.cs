@@ -21,5 +21,31 @@ public class PVE_RoomManager : MonoBehaviourPunCallbacks {
             roomStatusText.text = "PVE";
             preemptiveCheck.text = "선공";
         }
+
+        InitCustomProperties();
+    }
+
+    private void InitCustomProperties() {
+        bool result = false;
+
+        Hashtable table = new Hashtable() { { "RoundWinCount", 0 } };
+        result = PhotonNetwork.SetPlayerCustomProperties(table);
+        if (!result) {
+            Debug.LogError("PlayerCustomProperties 동기화 실패");
+        }
+
+        if (PhotonNetwork.IsMasterClient) {
+            table = new Hashtable() { { "RoundCount", 1 } };
+            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+            if (!result) {
+                Debug.LogError("RoundCount 동기화 실패");
+            }
+
+            table = new Hashtable() { { "IsPVE", true } };
+            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+            if (!result) {
+                Debug.LogError("IsPVE 동기화 실패");
+            }
+        }
     }
 }
