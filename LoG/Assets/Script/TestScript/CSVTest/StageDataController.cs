@@ -14,7 +14,7 @@ public class StageDataController : MonoBehaviour
 
     private void Awake()
     {
-        StageName = "PVE_Stage/PVE_Character_Stage" + CSVManager.Instance.StageNumber.ToString();
+        StageName = "PVE_Stage/PVE_Character_Stage" + CSVManager.StageNumber.ToString();
 
         SettingCharacter();
     }

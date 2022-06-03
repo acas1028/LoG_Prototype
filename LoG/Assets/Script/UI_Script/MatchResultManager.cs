@@ -17,10 +17,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
 
     private void Start() {
         reward_data = CSVReader.Read("PVE_Reward/PVE_Rewards");
-        if (CSVManager.Instance)
-            currentStage = CSVManager.Instance.StageNumber;
-        else
-            currentStage = 0;
+        currentStage = CSVManager.StageNumber;
     }
 
     public void ShowMatchResult(bool isWin, bool isPVE, bool isMatchOver = false, bool onEnemyQuit = false)
@@ -63,8 +60,8 @@ public class MatchResultManager : MonoBehaviourPunCallbacks
             if(isWin)
             {
                 Debug.Log("Pve_Win");
-                PveDataSync.instance.SetData(CSVManager.Instance.StageNumber);
-                PveDataSync.instance.SendClearStage(CSVManager.Instance.StageNumber);
+                PveDataSync.instance.SetData(CSVManager.StageNumber);
+                PveDataSync.instance.SendClearStage(CSVManager.StageNumber);
 
                 result.GetComponent<MatchReward>().LoseTitle.SetActive(false);
 

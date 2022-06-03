@@ -17,10 +17,7 @@ public class CharacterSpriteManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (CSVManager.Instance != null)
-        {
-            stageNum = CSVManager.Instance.StageNumber;
-        }
+        stageNum = CSVManager.StageNumber;
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name != "Deck_Scene")
         {
