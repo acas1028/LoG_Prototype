@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class CSVManager : MonoBehaviourPunCallbacks
 {
@@ -16,23 +17,25 @@ public class CSVManager : MonoBehaviourPunCallbacks
     public void SettingStage(int stageNum)
     {
         StageNumber = stageNum;
-        PhotonNetwork.OfflineMode = true;
-        Connect();
+        CreateRoom();
     }
 
-    private void Connect() {
+    private void CreateRoom() {
         // we check if we are connected or not, we join if we are , else we initiate the connection to the server.
+        string roomName = "PVE " + Random.Range(1, 100);
+
         if (PhotonNetwork.IsConnected) {
             // offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
             Debug.Log("<color=lightblue>현재 서버와 연결되어있거나 오프라인 모드입니다. 룸에 입장합니다.</color>");
 
-            PhotonNetwork.JoinRandomRoom();
+            PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 1 }, null);
         }
         else {
             Debug.Log("<color=lightblue>현재 서버와 연결되어있지 않아 새로 연결을 시도합니다.</color>");
             // #Critical, we must first and foremost connect to Photon Online Server.
 
             PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 1 }, null);
         }
     }
 

@@ -176,7 +176,6 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
     #region 포톤 콜백 함수
     public override void OnLeftRoom() {
         Debug.Log("<color=yellow>OnLeftRoom() 호출\n룸을 나갑니다. 로비로 이동합니다.</color>");
-        PhotonNetwork.Disconnect();
 
         var currentScene = (Move_Scene.ENUM_SCENE)SceneManager.GetActiveScene().buildIndex;
         if (currentScene == Move_Scene.ENUM_SCENE.BATTLE_SCENE) {

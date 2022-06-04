@@ -16,6 +16,7 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
     IEnumerator Start() {
 		pvpButton.onClick.AddListener(EnterRoom);
+		PhotonNetwork.ConnectUsingSettings();
 
 		yield return new WaitUntil(() => DeckDataSync.Instance.IsGetAllData());
 		pvpButton.interactable = true;
@@ -23,15 +24,15 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
     public void EnterRoom() {
 		PhotonNetwork.OfflineMode = false;
-		Connect();
+		JoinRoom();
 	}
 
     public void EnterOfflineMode() {
 		PhotonNetwork.OfflineMode = true;
-		Connect();
+		JoinRoom();
 	}
 
-	void Connect() {
+	void JoinRoom() {
 		// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
 		if (PhotonNetwork.IsConnected) {
 			// offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
@@ -44,20 +45,11 @@ public class MatchingController : MonoBehaviourPunCallbacks
 			// #Critical, we must first and foremost connect to Photon Online Server.
 
 			PhotonNetwork.ConnectUsingSettings();
+			PhotonNetwork.JoinRandomRoom();
 		}
 	}
 
 	#region 포톤 콜백 함수
-	public override void OnConnectedToMaster() {
-		// 최초로 마스터 서버에 연결됐을 때 콜백되는 함수
-		// we don't want to do anything if we are not attempting to join a room. 
-		// this case where isConnecting is false is typically when you lost or quit the game, when this level is loaded, OnConnectedToMaster will be called, in that case
-		// we don't want to do anything.
-
-		Debug.Log("<color=yellow>OnConnectedToMaster() 호출\n마스터 서버 연결됨</color>");
-		PhotonNetwork.JoinRandomRoom();
-	}
-
 	public override void OnJoinRandomFailed(short returnCode, string message) {
 		Debug.Log("<color=yellow>OnJoinRandomFailed() 호출\n입장 가능한 룸이 없어 새 룸을 만듭니다.</color>");
 
