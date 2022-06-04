@@ -16,7 +16,6 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
     IEnumerator Start() {
 		pvpButton.onClick.AddListener(EnterRoom);
-		PhotonNetwork.ConnectUsingSettings();
 
 		yield return new WaitUntil(() => DeckDataSync.Instance.IsGetAllData());
 		pvpButton.interactable = true;
@@ -24,15 +23,15 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
     public void EnterRoom() {
 		PhotonNetwork.OfflineMode = false;
-		JoinRoom();
+		Connect();
 	}
 
     public void EnterOfflineMode() {
 		PhotonNetwork.OfflineMode = true;
-		JoinRoom();
+		Connect();
 	}
 
-	void JoinRoom() {
+	void Connect() {
 		// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
 		if (PhotonNetwork.IsConnected) {
 			// offline mode = true 인 경우 즉시 PhotonNetwork.IsConnected = true 가 된다.
@@ -56,6 +55,7 @@ public class MatchingController : MonoBehaviourPunCallbacks
 		// we don't want to do anything.
 
 		Debug.Log("<color=yellow>OnConnectedToMaster() 호출\n마스터 서버 연결됨</color>");
+		PhotonNetwork.JoinRandomRoom();
 	}
 
 	public override void OnJoinRandomFailed(short returnCode, string message) {

@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-
 using PlayFab;
 using PlayFab.ClientModels;
-
-using Photon.Pun;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LogInManager : MonoBehaviour
 {
