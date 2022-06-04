@@ -56,9 +56,11 @@ public class CharacterSpriteManager : MonoBehaviour
         GameObject[] OppenentEnemy_Grid;
         GameObject[] OppenentEnemy;
 
-        if (PVE_Arrayment.instance != null)
+        PVE_Arrayment pveArrayment = FindObjectOfType<PVE_Arrayment>();
+
+        if (pveArrayment != null)
         {
-            OppenentEnemy_Grid = PVE_Arrayment.instance.EnemyGrids;
+            OppenentEnemy_Grid = pveArrayment.EnemyGrids;
 
             for (int i = 0; i < OppenentEnemy_Grid.Length; i++)
             {

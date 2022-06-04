@@ -761,7 +761,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         if (isPVE) {
-            uiManager.ShowMatchResult(roundWinCount > 0 ? true : false, true, isMatchOver: true, onEnemyQuit: false);
+            uiManager.ShowMatchResult(isWin: isWin, isPVE: true, isMatchOver: true, onEnemyQuit: false);
             Debug.Log("PVE Battle End");
             return;
         }

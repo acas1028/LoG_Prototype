@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Photon.Pun;
+using Photon.Realtime;
 
 public class PVE_Arrayment : MonoBehaviourPunCallbacks
 {
@@ -30,39 +31,9 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     private int InvenNum;
     [SerializeField]
     private bool is_PopOn = false;
+
+    private int syncCount = 0;
     #endregion
-
-    private static PVE_Arrayment _instance;
-    //// 인스턴스에 접근하기 위한 프로퍼티
-    public static PVE_Arrayment instance
-    {
-        get
-        {
-            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
-            if (!_instance)
-            {
-                _instance = FindObjectOfType(typeof(PVE_Arrayment)) as PVE_Arrayment;
-                if (_instance == null)
-                    Debug.Log("no Singleton obj");
-            }
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-
 
     void Start()
     {
@@ -287,13 +258,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     }
 
     void GoBattle() {
-        var table = new ExitGames.Client.Photon.Hashtable() { { "IsPVE", true } };
-        var result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-        if (!result) return;
-    }
-
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
-        PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.BATTLE_SCENE);
+        InitCustomProperties();
     }
 
     public bool GetIsClickInventory()
@@ -314,5 +279,45 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     public void SetIsPopupOn(bool ispopupOn)
     {
         is_PopOn = ispopupOn;
+    }
+
+    private void InitCustomProperties() {
+        bool result = false;
+
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", 0 } };
+        result = PhotonNetwork.SetPlayerCustomProperties(table);
+        if (!result) {
+            Debug.LogError("PlayerCustomProperties 동기화 실패");
+        }
+
+        if (PhotonNetwork.IsMasterClient) {
+            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", 1 } };
+            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+            if (!result) {
+                Debug.LogError("RoundCount 동기화 실패");
+            }
+
+            table = new ExitGames.Client.Photon.Hashtable() { { "IsPVE", true } };
+            result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+            if (!result) {
+                Debug.LogError("IsPVE 동기화 실패");
+            }
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
+        syncCount++;
+
+        if (syncCount >= 3) {
+            PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.BATTLE_SCENE);
+        }
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
+        syncCount++;
+
+        if (syncCount >= 3) {
+            PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.BATTLE_SCENE);
+        }
     }
 }
