@@ -108,6 +108,8 @@ public class Limit_Popup : MonoBehaviour
     {
         if (arrayamanager == null)
             return;
+
+
         if (arrayamanager.GetComponent<Arrayment_Manager>() != null)
         {
             if (arrayamanager.GetComponent<Arrayment_Manager>().getisPopupOn() == false)
@@ -127,6 +129,27 @@ public class Limit_Popup : MonoBehaviour
                                 arrayamanager.GetComponent<Arrayment_Manager>().SetIsPopupOn(true);
                             }
 
+                        }
+                    }
+                }
+            }
+        }
+
+        if(arrayamanager.GetComponent<PveStageClearManager>() != null)
+        {
+            if(arrayamanager.GetComponent<PveStageClearManager>().getisPopupOn()==false)
+            {
+                for(int i =0; i<popup_List.Count;i++)
+                {
+                    if(popup_List[i].tag != "Popup")
+                    {
+                        if(popup_List[i].activeSelf == true)
+                        {
+                            if(arrayamanager.GetComponent<PveStageClearManager>() != null)
+                            {
+                                Debug.Log("PopupOn");
+                                arrayamanager.GetComponent<PveStageClearManager>().setisPopupOn(true);
+                            }
                         }
                     }
                 }
@@ -173,6 +196,12 @@ public class Limit_Popup : MonoBehaviour
         {
             Debug.Log("PopupFalse");
             arrayamanager.GetComponent<PVE_Arrayment>().SetIsPopupOn(false);
+        }
+
+        if(arrayamanager.GetComponent<PveStageClearManager>() != null)
+        {
+            Debug.Log("PopupFalse");
+            arrayamanager.GetComponent<PveStageClearManager>().setisPopupOn(true);
         }
     }
 

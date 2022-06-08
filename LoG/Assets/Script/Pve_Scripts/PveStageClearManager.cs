@@ -13,6 +13,8 @@ public class PveStageClearManager : MonoBehaviour
 
     public Sprite[] pve_Button_Images;
 
+    public bool is_PopOn = false;
+
     private void Awake()
     {
         if (!instance)
@@ -48,6 +50,16 @@ public class PveStageClearManager : MonoBehaviour
                 stageButtons[i].GetComponent<Image>().sprite = pve_Button_Images[2];
             }
         }
+    }
+
+    public bool getisPopupOn()
+    {
+        return is_PopOn;
+    }
+
+    public void setisPopupOn(bool isPopup)
+    {
+        is_PopOn = isPopup;
     }
 
 }

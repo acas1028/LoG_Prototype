@@ -18,6 +18,7 @@ public class Deck_Skill : MonoBehaviour
     private void Awake()
     {
         deckManager = FindObjectOfType<Deck_Manager>();
+        LockSkill();
     }
 
     public void On_Skill_Button()
@@ -193,6 +194,16 @@ public class Deck_Skill : MonoBehaviour
                 break;
             }
             j++;
+        }
+    }
+
+    public void LockSkill()
+    {
+        if(this.GetComponent<Button>().interactable ==false)
+        {
+            GameObject lockImage = this.transform.GetChild(3).gameObject;
+            lockImage.SetActive(true);
+
         }
     }
 }

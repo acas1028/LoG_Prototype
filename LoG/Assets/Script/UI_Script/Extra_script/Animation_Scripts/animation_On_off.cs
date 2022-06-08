@@ -14,7 +14,7 @@ public class animation_On_off : MonoBehaviour
 
     private void Start()
     {
-        
+        this.transform.SetAsLastSibling();
     }
 
 
