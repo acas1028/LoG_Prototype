@@ -7,6 +7,8 @@ using Photon.Realtime;
 
 public class MatchingController : MonoBehaviourPunCallbacks
 {
+	bool offlineMode;
+
 	public enum ROOM_TYPE {
 		PVE,
 		PVP
@@ -23,13 +25,20 @@ public class MatchingController : MonoBehaviourPunCallbacks
 	}
 
     public void EnterRoom() {
+		offlineMode = false;
 		PhotonNetwork.OfflineMode = false;
 		JoinRoom();
 	}
 
     public void EnterOfflineMode() {
-		PhotonNetwork.OfflineMode = true;
-		JoinRoom();
+		offlineMode = true;
+
+		if (PhotonNetwork.IsConnected)
+			PhotonNetwork.Disconnect();
+		else {
+			PhotonNetwork.OfflineMode = true;
+			JoinRoom();
+		}
 	}
 
 	void JoinRoom() {
@@ -60,6 +69,11 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
 	public override void OnDisconnected(DisconnectCause cause) {
 		Debug.LogWarning("<color=yellow>Disconnected\nø¨∞· «ÿ¡¶µ </color>");
+
+		if (offlineMode) {
+			PhotonNetwork.OfflineMode = true;
+			JoinRoom();
+		}
 	}
 
 	public override void OnJoinedRoom() {
