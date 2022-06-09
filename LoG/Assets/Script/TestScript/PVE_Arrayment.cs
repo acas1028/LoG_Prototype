@@ -13,6 +13,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     public GameObject[] EnemyGrids;
     [SerializeField]
     private GameObject MyDeckData;
+    private Arrayed_Data m_ArrayData;
     [SerializeField]
     private GameObject EnemyData;
     [SerializeField]
@@ -22,6 +23,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     private GameObject ArrayCancleButton;
     [SerializeField]
     private Button ReadyButton;
+    [SerializeField]
     private List<GameObject> MyTeamList = new List<GameObject>();
     private List<int> EnemyLocation = new List<int>()
     {1,2,3,4,5};
@@ -40,6 +42,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
         ReadyButton.onClick.AddListener(GoBattle);
         EnemySetting();
         SetInventoryID();
+        Invoke("InitArrayData", 0.5f);
     }
 
     // Update is called once per frame
@@ -117,22 +120,20 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
     private void ArrayOnGrid(int inventoryNum, int gridNum)
     {
-
         MyGrids[gridNum - 1].tag = "Character";
         Character gridCharacter = MyGrids[gridNum - 1].GetComponentInChildren<Character>();
         gridCharacter.Copy_Character_Stat(MyDeckData.transform.GetChild(inventoryNum-1).gameObject);
         gridCharacter.character_Num_Of_Grid = gridNum;
         gridCharacter.InitializeCharacterSprite();
 
-        Arrayed_Data arrayedData = Arrayed_Data.instance;
         isArray = true;
 
         for (int i = 0; i < 5; i++)
         {
-            if (arrayedData.team1[i].GetComponent<Character>().character_ID == 0)
+            if (m_ArrayData.team1[i].GetComponent<Character>().character_ID == 0)
             {
-                arrayedData.team1[i].GetComponent<Character>().Copy_Character_Stat(MyGrids[gridNum - 1].transform.Find("Character_Prefab").gameObject);
-                ArrayOrder(arrayedData.team1[i]);
+                m_ArrayData.team1[i].GetComponent<Character>().Copy_Character_Stat(MyGrids[gridNum - 1].transform.Find("Character_Prefab").gameObject);
+                ArrayOrder(gridCharacter.gameObject);
                 break;
             }
         }
@@ -318,6 +319,23 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
         if (syncCount >= 3) {
             PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.BATTLE_SCENE);
+        }
+    }
+
+    private void InitArrayData()
+    {
+        m_ArrayData = Arrayed_Data.instance;
+        if (EnemyData == null)
+        {
+            EnemyData = m_ArrayData.transform.GetChild(1).gameObject;
+        }
+    }
+
+    public void ClearData()
+    {
+        for(int i=0;i<5;i++)
+        {
+            m_ArrayData.team1[i].GetComponent<Character>().Character_Reset();
         }
     }
 }
