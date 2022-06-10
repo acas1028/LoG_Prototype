@@ -18,14 +18,15 @@ public class Deck_Skill : MonoBehaviour
     private void Awake()
     {
         deckManager = FindObjectOfType<Deck_Manager>();
+        LockSkill();
     }
 
     public void On_Skill_Button()
     {
-        bool b_isNull = false;
         Character D_Character = deckManager.Current_Character.GetComponentInChildren<Character>();
         bool overlap = false;
-        for (int i = 0; i < deckManager.Skill_List.Count; i++)
+
+        for(int i = 0; i < deckManager.Skill_List.Count; i++)
         {
             if (deckManager.Skill_List[i]==this.gameObject)
             {
@@ -51,6 +52,15 @@ public class Deck_Skill : MonoBehaviour
                 Cancle_Skill();
                 deckManager.Reset_Grid();
             }
+            deckManager.Pre_Skill = this.gameObject;
+            deckManager.Skill_List.Add(this.gameObject);
+            Button SKill = this.gameObject.GetComponent<Button>();
+            ColorBlock CB = SKill.colors;
+            Color yellow_Grid = Color.yellow;
+            CB.normalColor = yellow_Grid;
+            CB.pressedColor = yellow_Grid;
+            CB.selectedColor = yellow_Grid;
+            SKill.colors = CB;
             switch (Character_Skill)
             {
                 case CharacterSkill.Attack_Confidence:
@@ -76,7 +86,6 @@ public class Deck_Skill : MonoBehaviour
                     break;
                 case CharacterSkill.Attack_Null:
                     D_Character.Character_Setting(8);
-                    b_isNull = true;
                     break;
                 case CharacterSkill.Balance_Blessing:
                     D_Character.Character_Setting(9);
@@ -101,7 +110,6 @@ public class Deck_Skill : MonoBehaviour
                     break;
                 case CharacterSkill.Balance_Null:
                     D_Character.Character_Setting(16);
-                    b_isNull = true;
                     break;
                 case CharacterSkill.Defense_Disarm:
                     D_Character.Character_Setting(17);
@@ -126,26 +134,13 @@ public class Deck_Skill : MonoBehaviour
                     break;
                 case CharacterSkill.Defense_Null:
                     D_Character.Character_Setting(24);
-                    b_isNull = true;
                     break;
-            }
-            if (!b_isNull)
-            {
-                Debug.Log("µ¶ Ω∫≈≥ø°º≠ »£√‚µ ");
-                deckManager.Pre_Skill = this.gameObject;
-                deckManager.Skill_List.Add(this.gameObject);
-                Button SKill = this.gameObject.GetComponent<Button>();
-                ColorBlock CB = SKill.colors;
-                Color yellow_Grid = Color.yellow;
-                CB.normalColor = yellow_Grid;
-                CB.pressedColor = yellow_Grid;
-                CB.selectedColor = yellow_Grid;
-                SKill.colors = CB;
-                this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
             }
             PropertySendSlot();
             Sync_Type();
+            this.gameObject.GetComponent<Deck_Skill>().is_selected = true;
         }
+        OverlapNullSkill();
     }
     public void Cancle_Skill()
     {
@@ -177,6 +172,16 @@ public class Deck_Skill : MonoBehaviour
         
     }
 
+    private void OverlapNullSkill()
+    {
+        if (this.gameObject == deckManager.Skill_Button[7] ||
+            this.gameObject == deckManager.Skill_Button[15] ||
+            this.gameObject == deckManager.Skill_Button[23])
+        {
+            Cancle_Skill();
+        }
+    }
+
     private void PropertySendSlot()
     {
         int j = 0;
@@ -189,6 +194,16 @@ public class Deck_Skill : MonoBehaviour
                 break;
             }
             j++;
+        }
+    }
+
+    public void LockSkill()
+    {
+        if(this.GetComponent<Button>().interactable ==false)
+        {
+            GameObject lockImage = this.transform.GetChild(3).gameObject;
+            lockImage.SetActive(true);
+
         }
     }
 }
