@@ -11,6 +11,8 @@ public class Arrayment_Manager : MonoBehaviourPun
     private int lastPageNum;
     [SerializeField]
     private bool is_click_inventory = false;
+    [SerializeField]
+    private bool[] b_ArrayedInven = new bool[7] { false, false, false, false, false, false, false };
     public bool Ready_Array = false; // 레디 버튼을 눌렀다.
     private bool my_turn = true; // 나의 턴이다.
     private bool Pick = true;// true라면 배치. false라면 정보를 읽을수만있다. 추가 배치를 막는다.
@@ -100,7 +102,10 @@ public class Arrayment_Manager : MonoBehaviourPun
     {
         for (int i = 0; i < 7; i++)
         {
-            Inventory[i].GetComponent<Inventory_ID>().SetNotArrayed();
+            if (!b_ArrayedInven[i])
+            {
+                Inventory[i].GetComponent<Inventory_ID>().SetNotArrayed();
+            }
         }
     }
 
@@ -220,6 +225,7 @@ public class Arrayment_Manager : MonoBehaviourPun
             }
 
             ArrayOnGrid(InvenNum, gridNum);
+            b_ArrayedInven[InvenNum] = true;
             is_click_inventory = false;
 
             Limit_Popup.Limit_Poup_instance.PopupOff();

@@ -25,19 +25,19 @@ public class Deck_Page : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < deckManager.CharacterSpace.Length; i++)
-        {
-            deckManager.CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().Show_Type_Sprite();
-            Character DC = deckManager.Character_Slot[i].GetComponentInChildren<Character>();
-            DC.Character_Reset();
-        }
+        //for (int i = 0; i < deckManager.CharacterSpace.Length; i++)
+        //{
+        //    deckManager.CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().Show_Type_Sprite();
+        //    Character DC = deckManager.Character_Slot[i].GetComponentInChildren<Character>();
+        //    DC.Character_Reset();
+        //}
 
-        for(int i = 0; i<deckManager.Property_Slot.Length;i++)
-        {
-            if(deckManager.Property_Slot[i].transform.childCount ==2)
-            {
-                deckManager.Property_Slot[i].SetActive(false);
-            }
-        }
+        //for(int i = 0; i<deckManager.Property_Slot.Length;i++)
+        //{
+        //    if(deckManager.Property_Slot[i].transform.childCount ==2)
+        //    {
+        //        deckManager.Property_Slot[i].SetActive(false);
+        //    }
+        //}
     }
 }
