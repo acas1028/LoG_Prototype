@@ -225,7 +225,7 @@ public class Arrayment_Manager : MonoBehaviourPun
             }
 
             ArrayOnGrid(InvenNum, gridNum);
-            b_ArrayedInven[InvenNum] = true;
+            b_ArrayedInven[InvenNum - 1] = true;
             is_click_inventory = false;
 
             Limit_Popup.Limit_Poup_instance.PopupOff();
