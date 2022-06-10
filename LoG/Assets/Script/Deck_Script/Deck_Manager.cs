@@ -153,7 +153,22 @@ public class Deck_Manager : MonoBehaviour
                 return;
             }
         }
-
+        for(int i=0;i<7;i++)
+        {
+            int CountAttackRange = 0;
+            for(int j=0;j<9;j++)
+            {
+                if (Character_Slot[i].GetComponentInChildren<Character>().character_Attack_Range[j] == true)
+                {
+                    CountAttackRange++;
+                }
+            }
+            if(CountAttackRange==0)
+            {
+                NotSavePopUp.SetActive(true);//추후 공격 범위 지정안됨 알리는 팝업 제작.
+                return;
+            }
+        }
         Character current = Current_Character.GetComponentInChildren<Character>();
 
         for (int i = 0; i < 7; i++)
