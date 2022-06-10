@@ -168,8 +168,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
             isPVE = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
         }
 
-        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable { { "IsPreemptive", null }, { "RoundWinCount", null } };
-        PhotonNetwork.SetPlayerCustomProperties(table);
+        PhotonNetwork.RemovePlayerCustomProperties(new string[] { "IsPreemptive", "RoundWinCount" } );
         PhotonNetwork.LeaveRoom();
     }
 

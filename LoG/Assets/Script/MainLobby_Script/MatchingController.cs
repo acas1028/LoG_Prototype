@@ -18,6 +18,8 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
     IEnumerator Start() {
 		pvpButton.onClick.AddListener(EnterRoom);
+
+		PhotonNetwork.AutomaticallySyncScene = false;
 		PhotonNetwork.ConnectUsingSettings();
 
 		yield return new WaitUntil(() => DeckDataSync.Instance.IsGetAllData());
