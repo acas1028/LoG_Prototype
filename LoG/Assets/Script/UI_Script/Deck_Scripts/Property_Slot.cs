@@ -57,6 +57,9 @@ public class Property_Slot : MonoBehaviour
             case "Attack_Sturdy":
                 this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[6];
                 break;
+            case "Attack_Null":
+                this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[7];
+                break;
             //밸런스형
             case "Balance_Blessing":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[0];
@@ -79,6 +82,9 @@ public class Property_Slot : MonoBehaviour
             case "Balance_WideCounter":
                 this.GetComponent<Image>().sprite = property_Images_Collection.balance_Sprites[6];
                 break;
+            case "Balance_Null":
+                this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[7];
+                break;
             //방어형
             case "Defense_Barrier":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[0];
@@ -100,6 +106,9 @@ public class Property_Slot : MonoBehaviour
                 break;
             case "Defense_Thronmail":
                 this.GetComponent<Image>().sprite = property_Images_Collection.defender_Sprites[6];
+                break;
+            case "Defense_Null":
+                this.GetComponent<Image>().sprite = property_Images_Collection.attack_Sprites[7];
                 break;
 
         }
