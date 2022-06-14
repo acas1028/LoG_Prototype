@@ -164,7 +164,7 @@ public class Character : MonoBehaviourPunCallbacks
             case "¹ß¾Ç":
                 character_Skill = CharacterSkill.Attack_Struggle;
                 break;
-            case "¸í»ç¼ö":
+            case "¾Ï»ì":
                 character_Skill = CharacterSkill.Attack_Ranger;
                 break;
             case "Ã¶°©Åº":
