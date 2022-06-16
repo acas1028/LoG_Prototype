@@ -10,10 +10,17 @@ public class Inventory_ID : MonoBehaviour
     private int CharacterID;
     [SerializeField]
     public int inventory_Num;
+    [SerializeField]
+    private GameObject popUp;
     public GameObject Block_Inventory;
 
     public bool is_Arrayed;
     public bool is_Permanent_Arrayed;
+
+    private void Start()
+    {
+        Setting_Character_Stat(popUp);
+    }
 
     public void Setting_Character_Stat(GameObject Popup)
     {
