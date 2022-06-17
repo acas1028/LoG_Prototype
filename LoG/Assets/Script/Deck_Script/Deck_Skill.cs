@@ -196,6 +196,13 @@ public class Deck_Skill : MonoBehaviour
 
     public void LockSkill()
     {
+        if(Character_Skill == CharacterSkill.Attack_Null ||
+            Character_Skill == CharacterSkill.Balance_Null ||
+            Character_Skill == CharacterSkill.Defense_Null)
+        {
+            this.gameObject.GetComponent<Button>().interactable = true;
+            return;
+        }
         if(this.GetComponent<Button>().interactable ==false)
         {
             GameObject lockImage = this.transform.GetChild(3).gameObject;

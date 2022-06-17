@@ -165,7 +165,8 @@ public class Arrayment_Manager : MonoBehaviourPun
             if (hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.activeSelf == false)
             {
                 hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.SetActive(true);
-                hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).transform.GetChild(0).GetComponent<ShowingCharacterStat_In_Arrayment>().ShowingStatInarray();
+                hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).transform.GetChild(0).
+                    GetComponent<ShowingCharacterStat_In_Arrayment>().ShowingStatInarray();
                 Limit_Popup.Limit_Poup_instance.SetIsbutton(this.gameObject);
                 Limit_Popup.Limit_Poup_instance.SetPopup(hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject);
                 Limit_Popup.Limit_Poup_instance.limit_Popup_button.SetActive(true);

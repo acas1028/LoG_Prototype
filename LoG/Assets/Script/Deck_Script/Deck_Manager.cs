@@ -31,6 +31,9 @@ public class Deck_Manager : MonoBehaviour
 
     private Deck_Data_Send Deck_Data;
 
+    [SerializeField]
+    private GameObject saving_Popup;
+
     public Sprite Grid_disselected_sprite;
     public Sprite Grid_selected_sprite;
 
@@ -163,6 +166,10 @@ public class Deck_Manager : MonoBehaviour
                     CountAttackRange++;
                 }
             }
+            if(Character_Slot[i].GetComponentInChildren<Character>().character_Skill == CharacterStats.CharacterSkill.Attack_Ranger)
+            {
+                continue;
+            }
             if(CountAttackRange==0)
             {
                 NotSavePopUp.SetActive(true);//추후 공격 범위 지정안됨 알리는 팝업 제작.
@@ -194,6 +201,8 @@ public class Deck_Manager : MonoBehaviour
         Character_Stat[1].text = current.character_AP.ToString();
         Character_Stat[2].text = current.character_Attack_Damage.ToString();
         Character_Stat[3].text = "(" + "+" + current.character_AP + ")";
+
+        StartCoroutine("CompleteSavePopup");
     }
 
     public void Reset_Button()
@@ -477,5 +486,13 @@ public class Deck_Manager : MonoBehaviour
         {
             Character_Slot[i].GetComponentInChildren<Character>().Copy_Character_Stat(Deck_Data.Save_Data[nowPageIdx, i]);
         }
+    }
+    IEnumerator CompleteSavePopup()
+    {
+        saving_Popup.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        saving_Popup.SetActive(false);
     }
 }

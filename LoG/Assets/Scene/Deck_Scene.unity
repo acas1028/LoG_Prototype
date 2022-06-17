@@ -2673,6 +2673,7 @@ MonoBehaviour:
   Pre_Skill: {fileID: 0}
   deckDataSync: {fileID: 2072868622}
   NotSavePopUp: {fileID: 1599842705}
+  saving_Popup: {fileID: 353278982}
   Grid_disselected_sprite: {fileID: 21300000, guid: cbdcb5802bb91f84687f683063645f5f, type: 3}
   Grid_selected_sprite: {fileID: 21300000, guid: c06bac55e40cbc14aa01b9ae8e982d88, type: 3}
   Character_Stat:
@@ -5109,7 +5110,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 816930069}
   m_Direction: 2
   m_Value: 1.0000005
-  m_Size: 0.4457096
+  m_Size: 0.44570962
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9505,18 +9506,6 @@ MonoBehaviour:
       - m_Target: {fileID: 195619146}
         m_TargetAssemblyTypeName: Deck_Manager, Assembly-CSharp
         m_MethodName: Save_Button
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1225632524}
-        m_TargetAssemblyTypeName: SaveComplete, Assembly-CSharp
-        m_MethodName: DeckCompleteSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

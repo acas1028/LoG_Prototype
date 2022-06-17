@@ -40,7 +40,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     void Start()
     {
         ReadyButton.onClick.AddListener(GoBattle);
-        EnemySetting();
+        Invoke("EnemySetting", 0.3f);
         SetInventoryID();
         Invoke("InitArrayData", 0.5f);
     }
@@ -336,6 +336,14 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
         for(int i=0;i<5;i++)
         {
             m_ArrayData.team1[i].GetComponent<Character>().Character_Reset();
+        }
+    }
+
+    public void OnClickReady()
+    {
+        for(int i=0;i<5;i++)
+        {
+            m_ArrayData.team1[i].GetComponent<Character>().character_Attack_Order = MyTeamList[i].GetComponent<Character>().character_Attack_Order;
         }
     }
 }
