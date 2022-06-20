@@ -18,7 +18,7 @@ public class Deck_Skill : MonoBehaviour
     private void Awake()
     {
         deckManager = FindObjectOfType<Deck_Manager>();
-        LockSkill();
+        Invoke("LockSkill", 0.3f);
     }
 
     public void On_Skill_Button()
@@ -201,6 +201,7 @@ public class Deck_Skill : MonoBehaviour
             Character_Skill == CharacterSkill.Defense_Null)
         {
             this.gameObject.GetComponent<Button>().interactable = true;
+            Debug.Log("Null 스킬 잠금");
             return;
         }
         if(this.GetComponent<Button>().interactable ==false)
