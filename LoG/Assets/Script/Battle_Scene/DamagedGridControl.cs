@@ -27,6 +27,6 @@ public class DamagedGridControl : MonoBehaviour
 
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
 
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
+        this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
