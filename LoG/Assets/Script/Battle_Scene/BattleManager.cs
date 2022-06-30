@@ -781,6 +781,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SetPlayerCustomProperties(table);
     }
 
+    [PunRPC]
+    void ShowMatchResult(bool isMatchOver) {
+        uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: true, onEnemyQuit: false);
+    }
+
     #region 포톤 콜백 함수
     public override void OnPlayerLeftRoom(Player otherPlayer) {
         uiManager.ShowMatchResult(isWin: true, isPVE: false, isMatchOver: true, onEnemyQuit: true);
@@ -789,16 +794,16 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
         if (isPVE) return;
 
-        object o_roundWinCount;
-        targetPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount);
+        if (!PhotonNetwork.IsMasterClient) return;
 
-        if (o_roundWinCount == null) return;
-        if ((int)o_roundWinCount >= 2) {
-            uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: true, onEnemyQuit: false);
+        object[] o_roundWinCount = new object[2];
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++) {
+            PhotonNetwork.PlayerList[i].CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount[i]);
+            if ((int)o_roundWinCount[i] >= 2)
+                photonView.RPC("ShowMatchResult", RpcTarget.All, true);
         }
-        else {
-            uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: false, onEnemyQuit: false);
-        }
+
+        photonView.RPC("ShowMatchResult", RpcTarget.All, false);
     }
     #endregion
 
