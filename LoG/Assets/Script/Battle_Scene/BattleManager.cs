@@ -792,18 +792,15 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
+        if (!changedProps.ContainsKey("RoundWinCount")) return;
         if (isPVE) return;
 
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        object[] o_roundWinCount = new object[2];
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++) {
-            PhotonNetwork.PlayerList[i].CustomProperties.TryGetValue("RoundWinCount", out o_roundWinCount[i]);
-            if ((int)o_roundWinCount[i] >= 2)
-                photonView.RPC("ShowMatchResult", RpcTarget.All, true);
+        if ((int)changedProps["RoundWinCount"] >= 2) {
+            photonView.RPC("ShowMatchResult", RpcTarget.All, true);
+            return;
         }
-
-        photonView.RPC("ShowMatchResult", RpcTarget.All, false);
+        if (targetPlayer == PhotonNetwork.MasterClient)
+            photonView.RPC("ShowMatchResult", RpcTarget.All, false);
     }
     #endregion
 
