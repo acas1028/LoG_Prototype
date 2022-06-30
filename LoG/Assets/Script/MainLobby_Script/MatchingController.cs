@@ -20,7 +20,8 @@ public class MatchingController : MonoBehaviourPunCallbacks
 		pvpButton.onClick.AddListener(EnterRoom);
 
 		PhotonNetwork.AutomaticallySyncScene = false;
-		PhotonNetwork.ConnectUsingSettings();
+		if (!PhotonNetwork.IsConnected)
+			PhotonNetwork.ConnectUsingSettings();
 
 		yield return new WaitUntil(() => DeckDataSync.Instance.IsGetAllData());
 		pvpButton.interactable = true;
