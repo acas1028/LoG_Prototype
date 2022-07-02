@@ -13,9 +13,10 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     public GameObject[] EnemyGrids;
     [SerializeField]
     private GameObject MyDeckData;
+    [SerializeField]
     private Arrayed_Data m_ArrayData;
     [SerializeField]
-    private GameObject EnemyData;
+    private GameObject[] EnemyData;
     [SerializeField]
     private GameObject[] Inventory;
     private GameObject CancleCharacter;
@@ -40,16 +41,15 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     void Start()
     {
         ReadyButton.onClick.AddListener(GoBattle);
-        Invoke("EnemySetting", 0.3f);
-        SetInventoryID();
-        Invoke("InitArrayData", 0.5f);
+        Invoke("SetInventoryID", 0.5f);
+        Invoke("InitArrayData", 0.6f);
+        Invoke("EnemySetting", 0.7f);
     }
 
     // Update is called once per frame
     void Update()
     {
         Raycast();
-        EnemySpriteSetting();
     }
 
     void Raycast()
@@ -200,15 +200,18 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
     void EnemySetting()//적 배치 -> 플레이어에게 정보 제공.
     {
-
         for (int i = 0; i < 5; i++)
         {
-            int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid-1;
+            int num = EnemyData[i].GetComponent<Character>().character_Num_Of_Grid-1;
+            Debug.Log(num);
             Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
             Enemy.Copy_Character_Stat(Arrayed_Data.instance.team2[i]);
             Enemy.InitializeCharacterSprite();
             EnemyGrids[num].tag = "Character";
+            Debug.Log(EnemyGrids[num]);
         }
+
+        EnemySpriteSetting();
     }
 
     void EnemySpriteSetting()
@@ -217,7 +220,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
         {
             if (EnemyData != null)
             {
-                int num = EnemyData.transform.GetChild(i).gameObject.GetComponent<Character>().character_Num_Of_Grid - 1;
+                int num = EnemyData[i].GetComponent<Character>().character_Num_Of_Grid - 1;
                 Character Enemy = EnemyGrids[num].GetComponentInChildren<Character>();
                 Enemy.spriteManager.SetPveCharacterSprite();
             }
@@ -327,7 +330,7 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
         m_ArrayData = Arrayed_Data.instance;
         if (EnemyData == null)
         {
-            EnemyData = m_ArrayData.transform.GetChild(1).gameObject;
+            //EnemyData = m_ArrayData.transform.GetChild(1).gameObject;
         }
     }
 
