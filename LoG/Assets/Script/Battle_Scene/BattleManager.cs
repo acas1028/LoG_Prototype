@@ -155,7 +155,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         isBattling = false;
-        Debug.Log("게임 종료");
+        //Debug.Log("게임 종료");
         Finish_Game();
     }
 
@@ -246,7 +246,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     IEnumerator Character_Attack(GameObject attacker, List<GameObject> enemy_Characters) //캐릭터 공격
     {
         bool result;
-        Debug.LogFormat("<color=red>Character_Attack 코루틴 시작, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
+        //Debug.LogFormat("<color=red>Character_Attack 코루틴 시작, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
         // 공격 하는 캐릭터와, 적의 모든 캐릭터들, 공격 할 위치를 받아온다.
         // 적의 모든 캐릭터들을 탐색하여, 공격 할 위치에 존재하고, 살아있는 캐릭터를 공격한다.
 
@@ -333,7 +333,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             yield return StartCoroutine(Dead());
         }
 
-        Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
+        //Debug.LogFormat("<color=lightblue>Character_Attack 코루틴 종료, 공격자: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
     }
 
     bool Check_Character_Dead()
@@ -578,7 +578,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     IEnumerator Battle(int Round) // 선공,후공에 따라 배틀을 진행한다.
     {
-        Debug.LogFormat("<color=#FF69B4> Round: {0}</color>", Round);
+        //Debug.LogFormat("<color=#FF69B4> Round: {0}</color>", Round);
         foreach(GameObject team1_Character in bM_Character_Team1)
         {
             if (team1_Character.GetComponent<Character>().character_Attack_Order == Round)
@@ -769,11 +769,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (isWin) {
             roundWinCount++;
         }
+        roundCount++;
 
         ExitGames.Client.Photon.Hashtable table;
 
         if (PhotonNetwork.IsMasterClient) {
-            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount + 1 } };
+            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(table);
         }
 
@@ -782,7 +783,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void ShowMatchResult(bool matchOver) {
+    private void ShowMatchResult(bool matchOver) {
         uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: matchOver, onEnemyQuit: false);
     }
 
@@ -792,15 +793,74 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
-        if (!changedProps.ContainsKey("RoundWinCount")) return;
         if (isPVE) return;
 
-        if ((int)changedProps["RoundWinCount"] >= 2) {
-            photonView.RPC("ShowMatchResult", RpcTarget.All, true);
+        object o_roundCount;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
+
+        if ((int)o_roundCount != roundCount) {
+            Debug.Log($"{targetPlayer.NickName} 의 RoundCount가 서버와 다릅니다.");
             return;
         }
-        if (targetPlayer == PhotonNetwork.MasterClient)
-            photonView.RPC("ShowMatchResult", RpcTarget.All, false);
+
+        bool isEnd = false;
+
+        if (changedProps.ContainsKey("RoundWinCount")) {
+            int totalWin = 0;
+            foreach (var player in PhotonNetwork.PlayerList) {
+                object o_winCount;
+                if (player.CustomProperties.TryGetValue("RoundWinCount", out o_winCount)) {
+                    totalWin += (int)o_winCount;
+                    if ((int)o_winCount >= 2) {
+                        isEnd = true;
+                    }
+                }
+            }
+
+            if (totalWin < roundCount) {
+                Debug.Log($"{targetPlayer.NickName} 의 totalWin 측정치가 서버와 다릅니다.");
+                return;
+            }
+
+            if (isEnd)
+                photonView.RPC("ShowMatchResult", RpcTarget.All, true);
+            else
+                photonView.RPC("ShowMatchResult", RpcTarget.All, false);
+        }
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
+        if (isPVE) return;
+
+        if (roundCount != (int)propertiesThatChanged["RoundCount"]) {
+            Debug.Log($"RoundCount가 서버와 다릅니다.");
+            return;
+        }
+
+        bool isEnd = false;
+
+        if (propertiesThatChanged.ContainsKey("RoundCount")) {
+            int totalWin = 0;
+            foreach (var player in PhotonNetwork.PlayerList) {
+                object o_winCount;
+                if (player.CustomProperties.TryGetValue("RoundWinCount", out o_winCount)) {
+                    totalWin += (int)o_winCount;
+                    if ((int)o_winCount >= 2) {
+                        isEnd = true;
+                    }
+                }
+            }
+
+            if (totalWin < roundCount) {
+                Debug.Log($"totalWin 측정치가 서버와 다릅니다.");
+                return;
+            }
+
+            if (isEnd)
+                photonView.RPC("ShowMatchResult", RpcTarget.All, true);
+            else
+                photonView.RPC("ShowMatchResult", RpcTarget.All, false);
+        }
     }
     #endregion
 

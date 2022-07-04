@@ -168,7 +168,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
             isPVE = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsPVE", out o_isPVE);
         }
 
-        PhotonNetwork.RemovePlayerCustomProperties(new string[] { "IsPreemptive", "RoundWinCount" } );
+        PhotonNetwork.RemovePlayerCustomProperties(new string[] { "IsPreemptive", "RoundWinCount", "Ready" } );
         PhotonNetwork.LeaveRoom();
     }
 

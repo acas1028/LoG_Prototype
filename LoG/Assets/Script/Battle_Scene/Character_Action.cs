@@ -207,7 +207,7 @@ public class Character_Action : Character, IPunObservable
 
     public void Character_Dead(GameObject attacker) // 캐릭터 사망 함수. 아마 나중에 무언가가 더 추가되겠지?
     {
-        Debug.Log(character_Num_Of_Grid + " is Dead");
+        //Debug.Log(character_Num_Of_Grid + " is Dead");
         character_HP = 0;
         attacker.GetComponent<Character>().character_is_Kill++;
         character_is_Killed = true;

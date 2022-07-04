@@ -489,7 +489,7 @@ public class SkillManager : MonoBehaviour
         {
             CCS.character_Attack_Range[i] = false;
         }
-        Debug.Log(enemy[num].GetComponent<Character>().character_Num_Of_Grid - 1);
+        //Debug.Log(enemy[num].GetComponent<Character>().character_Num_Of_Grid - 1);
         CCS.character_Attack_Range[enemy[num].GetComponent<Character>().character_Num_Of_Grid - 1] = true;
 
         skillmessage.SetActive(true);
