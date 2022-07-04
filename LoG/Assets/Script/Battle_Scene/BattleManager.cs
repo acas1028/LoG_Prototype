@@ -761,6 +761,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         if (isPVE) {
+            GameObject gameobject = GameObject.Find("ArrayData");
+            Destroy(gameobject);
             uiManager.ShowMatchResult(isWin: isWin, isPVE: true, isMatchOver: true, onEnemyQuit: false);
             Debug.Log("PVE Battle End");
             return;
