@@ -782,8 +782,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void ShowMatchResult(bool isMatchOver) {
-        uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: true, onEnemyQuit: false);
+    void ShowMatchResult(bool matchOver) {
+        uiManager.ShowMatchResult(isWin: isWin, isPVE: isPVE, isMatchOver: matchOver, onEnemyQuit: false);
     }
 
     #region 포톤 콜백 함수
