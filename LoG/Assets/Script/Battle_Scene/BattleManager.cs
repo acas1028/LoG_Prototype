@@ -773,10 +773,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         ExitGames.Client.Photon.Hashtable table;
 
-        if (PhotonNetwork.IsMasterClient) {
-            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount } };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-        }
+        table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(table);
 
         table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
         PhotonNetwork.SetPlayerCustomProperties(table);
@@ -794,14 +792,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
         if (isPVE) return;
-
-        object o_roundCount;
-        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
-
-        if ((int)o_roundCount != roundCount) {
-            Debug.Log($"{targetPlayer.NickName} 의 RoundCount가 서버와 다릅니다.");
-            return;
-        }
 
         bool isEnd = false;
 
@@ -831,11 +821,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
         if (isPVE) return;
-
-        if (roundCount != (int)propertiesThatChanged["RoundCount"]) {
-            Debug.Log($"RoundCount가 서버와 다릅니다.");
-            return;
-        }
 
         bool isEnd = false;
 
