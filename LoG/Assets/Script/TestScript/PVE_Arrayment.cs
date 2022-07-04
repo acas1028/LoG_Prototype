@@ -41,9 +41,9 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
     void Start()
     {
         ReadyButton.onClick.AddListener(GoBattle);
-        Invoke("SetInventoryID", 0.5f);
-        Invoke("InitArrayData", 0.6f);
-        Invoke("EnemySetting", 0.7f);
+        Invoke("InitArrayData", 0.1f);
+        Invoke("EnemySetting", 0.2f);
+        Invoke("SetInventoryID", 0.3f);
     }
 
     // Update is called once per frame
@@ -327,10 +327,9 @@ public class PVE_Arrayment : MonoBehaviourPunCallbacks
 
     private void InitArrayData()
     {
-        m_ArrayData = Arrayed_Data.instance;
-        if (EnemyData == null)
+        for(int i=0;i<5;i++)
         {
-            //EnemyData = m_ArrayData.transform.GetChild(1).gameObject;
+            EnemyData[i] = Arrayed_Data.instance.team2[i];
         }
     }
 

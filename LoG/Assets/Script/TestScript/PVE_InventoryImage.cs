@@ -15,19 +15,23 @@ public class PVE_InventoryImage : MonoBehaviour
     
 
     private void Start()
-    { 
+    {
+        Invoke("SetInvenImage", 0.3f);
+    }
+    public void SetInvenImage()
+    {
         characterImage = gameObject.GetComponent<Image>();
 
         int characterID = spritePrefab.GetComponent<Character>().character_ID;
 
-        if(isPve==true)
+        if (isPve == true)
         {
             StageDataController stageDataController = stagedata.GetComponent<StageDataController>();
-            int Num =gameObject.transform.parent.GetComponent<Inventory_ID>().GetInventoryNum();
+            int Num = gameObject.transform.parent.GetComponent<Inventory_ID>().GetInventoryNum();
             Character character = stageDataController.PlayerCharacters[Num - 1].GetComponent<Character>();
             CharacterType type = character.character_Type;
 
-            switch(type)
+            switch (type)
             {
                 case CharacterType.Attacker:
                     characterImage.sprite = character.spriteManager.characterSprites[1];
@@ -40,7 +44,7 @@ public class PVE_InventoryImage : MonoBehaviour
                     break;
             }
 
-            
+
 
 
         }
@@ -51,3 +55,4 @@ public class PVE_InventoryImage : MonoBehaviour
         }
     }
 }
+

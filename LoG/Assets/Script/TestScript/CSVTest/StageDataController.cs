@@ -17,6 +17,10 @@ public class StageDataController : MonoBehaviour
     private void Start()
     {
         StageName = "PVE_Stage/PVE_Character_Stage" + CSVManager.StageNumber.ToString();
+        for(int i=0;i<5;i++)
+        {
+            EnemyCharacters[i] = Arrayed_Data.instance.team2[i];
+        }
         if (ArrayData)
         {
             SettingCharacter();
@@ -37,10 +41,6 @@ public class StageDataController : MonoBehaviour
         }
 
         for(int j = 0; j < EnemyCharacters.Length; j++)
-        {
-            EnemyCharacters[j].GetComponent<Character>().PVE_Enemy_Character_Setting(j, StageName);
-        }
-        for (int j = 0; j < EnemyCharacters.Length; j++)
         {
             EnemyCharacters[j].GetComponent<Character>().PVE_Enemy_Character_Setting(j, StageName);
         }
