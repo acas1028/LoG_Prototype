@@ -84,6 +84,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 bM_Team1_Is_Preemitive = false;
         }
 
+        if (GetServerVariables() == false) {
+            Debug.LogError("Failed to get server variables so that can't implement finishing match");
+        }
+
+        roundCount++;
+
         bM_Remain_Character_Team1 = 0;
         bM_Remain_Character_Team2 = 0;
         bM_Remain_HP_Team1 = 0;
@@ -710,11 +716,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Finish_Game()
     {
-        if (!isPVE) {
-            if (GetServerVariables() == false) {
-                Debug.LogError("Failed to get server variables so that can't implement finishing match");
-                return;
-            }
+        if (isPVE) {
+            Debug.Log("Finishing game only proceeds when PVP mode");
+            return;
         }
 
         Calculate_Remain_HP();
@@ -771,7 +775,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (isWin) {
             roundWinCount++;
         }
-        roundCount++;
 
         ExitGames.Client.Photon.Hashtable table;
 
