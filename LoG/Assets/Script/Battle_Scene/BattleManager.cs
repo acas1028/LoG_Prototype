@@ -92,6 +92,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         callbackCount = 0;
         roundCount++;
 
+        if (PhotonNetwork.IsMasterClient) {
+            ExitGames.Client.Photon.Hashtable table;
+            table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(table);
+        }
+
         bM_Remain_Character_Team1 = 0;
         bM_Remain_Character_Team2 = 0;
         bM_Remain_HP_Team1 = 0;
@@ -777,9 +783,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         ExitGames.Client.Photon.Hashtable table;
 
-        table = new ExitGames.Client.Photon.Hashtable() { { "RoundCount", roundCount } };
-        PhotonNetwork.CurrentRoom.SetCustomProperties(table);
-
         table = new ExitGames.Client.Photon.Hashtable() { { "RoundWinCount", roundWinCount } };
         PhotonNetwork.SetPlayerCustomProperties(table);
     }
@@ -801,10 +804,16 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (changedProps.ContainsKey("RoundWinCount")) {
             if (callbackCount >= 2) {
-                if ((int)changedProps["RoundWinCount"] >= 2) {
-                    photonView.RPC("ShowMatchResult", RpcTarget.All, true);
-                    return;
+                foreach (var player in PhotonNetwork.PlayerList) {
+                    object o_winCount;
+                    if (player.CustomProperties.TryGetValue("RoundWinCount", out o_winCount)) {
+                        if ((int)o_winCount >= 2) {
+                            photonView.RPC("ShowMatchResult", RpcTarget.All, true);
+                            return;
+                        }
+                    }
                 }
+
 
                 photonView.RPC("ShowMatchResult", RpcTarget.All, false);
             }
