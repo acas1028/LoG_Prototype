@@ -810,36 +810,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
 
             if (totalWin < roundCount) {
-                Debug.Log($"{targetPlayer.NickName} 의 totalWin 측정치가 서버와 다릅니다.");
-                return;
-            }
-
-            if (isEnd)
-                photonView.RPC("ShowMatchResult", RpcTarget.All, true);
-            else
-                photonView.RPC("ShowMatchResult", RpcTarget.All, false);
-        }
-    }
-
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
-        if (isPVE) return;
-
-        bool isEnd = false;
-
-        if (propertiesThatChanged.ContainsKey("RoundCount")) {
-            int totalWin = 0;
-            foreach (var player in PhotonNetwork.PlayerList) {
-                object o_winCount;
-                if (player.CustomProperties.TryGetValue("RoundWinCount", out o_winCount)) {
-                    totalWin += (int)o_winCount;
-                    if ((int)o_winCount >= 2) {
-                        isEnd = true;
-                    }
-                }
-            }
-
-            if (totalWin < roundCount) {
-                Debug.Log($"totalWin 측정치가 서버와 다릅니다.");
+                Debug.Log($"{PhotonNetwork.LocalPlayer.NickName} 의 totalWin 측정치가 서버와 다릅니다.");
                 return;
             }
 
