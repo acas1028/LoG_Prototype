@@ -148,7 +148,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
             return;
 
-        if (changedProps.ContainsKey("IsPreemptive") || changedProps.ContainsKey("RoundWinCount"))
+        if (changedProps.ContainsKey("RoundWinCount"))
             return;
 
         if (targetPlayer == PhotonNetwork.LocalPlayer)

@@ -121,12 +121,26 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     public bool Is_Preemptive()
     {
-        object o_is_preemptive;
-        bool is_preemptive;
-        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_is_preemptive);
-        is_preemptive = (bool)o_is_preemptive;
+        //object o_is_preemptive;
+        //bool is_preemptive;
+        //PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_is_preemptive);
+        //is_preemptive = (bool)o_is_preemptive;
 
-        return is_preemptive;
+        bool isPreemptive = false;
+
+        if (roundCount == 2) {
+            if (PhotonNetwork.IsMasterClient)
+                isPreemptive = false;
+            else
+                isPreemptive = true;
+        }
+        else {
+            if (PhotonNetwork.IsMasterClient)
+                isPreemptive = true;
+            else
+                isPreemptive = false;
+        }
+        return isPreemptive;
     }
 
     IEnumerator Running_Phase()
