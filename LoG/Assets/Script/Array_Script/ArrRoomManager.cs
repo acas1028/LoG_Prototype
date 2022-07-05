@@ -316,7 +316,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
                 && IsAllPlayersJoined()) {
             callbackCount++;
 
-            if (targetPlayer == PhotonNetwork.LocalPlayer) {
+            if (targetPlayer == PhotonNetwork.LocalPlayer && callbackCount < 2) {
                 Debug.LogFormat("Player <color=lightblue>#{0} {1}</color> Properties Updated due to <color=green>{2}</color>", targetPlayer.ActorNumber, targetPlayer.NickName, changedProps.ToString());
 
                 object o_is_preemptive;
