@@ -778,8 +778,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         if (isWin) {
-            GameObject gameobject = GameObject.Find("Arrayed_Data");
-            Destroy(gameobject);
             roundWinCount++;
         }
 
