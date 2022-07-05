@@ -58,6 +58,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         get { return roundCount; }
     }
 
+    int callbackCount;
+
     private void Start()
     {
         uiManager = FindObjectOfType<MatchResultManager>();
@@ -94,6 +96,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient && IsAllPlayersJoined())
             SetPreemptivePlayer();
+
+        callbackCount = 0;
     }
 
     private void GetCustomProperties()
@@ -306,6 +310,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        callbackCount++;
+
         // 선, 후공 결정에 관한 데이터이면서 '나'의 선, 후공 데이터인 경우에만 아래 과정을 거친다. 또한 두 플레이어가 방에 입장 후 처음 한 번만 이 과정을 거친다.
         if (targetPlayer == PhotonNetwork.LocalPlayer)
         {
@@ -333,13 +339,11 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
                         preemptiveCheck.text = "후공";
                     }
                 }
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    Invoke("StartArrayPhase", 1.0f);
-                }
             }
         }
+
+        if (callbackCount >= 2)
+            StartArrayPhase();
     }
     #endregion
 }
