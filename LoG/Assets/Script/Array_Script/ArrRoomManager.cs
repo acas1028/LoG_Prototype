@@ -336,7 +336,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (callbackCount >= 2)
+            if (PhotonNetwork.IsMasterClient && callbackCount >= 2)
                 StartArrayPhase();
         }
     }
