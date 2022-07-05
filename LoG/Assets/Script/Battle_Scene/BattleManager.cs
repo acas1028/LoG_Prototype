@@ -31,6 +31,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     bool isWin;
     int roundWinCount;
     int roundCount;
+    int callbackCount;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static BattleManager _instance;
@@ -88,6 +89,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Debug.LogError("Failed to get server variables so that can't implement finishing match");
         }
 
+        callbackCount = 0;
         roundCount++;
 
         bM_Remain_Character_Team1 = 0;
@@ -95,9 +97,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
         bM_Phase = 0;
-
-        roundWinCount = 0;
-        roundCount = 0;
 
         for (int i = 0; i < 5; i++)
         {
@@ -798,29 +797,17 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
         if (isPVE) return;
 
-        bool isEnd = false;
+        callbackCount++;
 
         if (changedProps.ContainsKey("RoundWinCount")) {
-            int totalWin = 0;
-            foreach (var player in PhotonNetwork.PlayerList) {
-                object o_winCount;
-                if (player.CustomProperties.TryGetValue("RoundWinCount", out o_winCount)) {
-                    totalWin += (int)o_winCount;
-                    if ((int)o_winCount >= 2) {
-                        isEnd = true;
-                    }
+            if (callbackCount >= 2) {
+                if ((int)changedProps["RoundWinCount"] >= 2) {
+                    photonView.RPC("ShowMatchResult", RpcTarget.All, true);
+                    return;
                 }
-            }
 
-            if (totalWin < roundCount) {
-                Debug.Log($"{PhotonNetwork.LocalPlayer.NickName} 의 totalWin 측정치가 서버와 다릅니다.");
-                return;
-            }
-
-            if (isEnd)
-                photonView.RPC("ShowMatchResult", RpcTarget.All, true);
-            else
                 photonView.RPC("ShowMatchResult", RpcTarget.All, false);
+            }
         }
     }
     #endregion
