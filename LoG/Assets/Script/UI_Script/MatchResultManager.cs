@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using PlayFab;
-using PlayFab.ClientModels;
+using PlayFab.ServerModels;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,7 +39,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
                     resultPanel.GetComponent<MatchReward>().RewardValue.text = "100 credit";
 
                     var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 100 };
-                    PlayFabClientAPI.AddUserVirtualCurrency(request,
+                    PlayFabServerAPI.AddUserVirtualCurrency(request,
                         (result) => {
                             Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
                         },
@@ -58,7 +58,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
                     resultPanel.GetComponent<MatchReward>().RewardValue.text = "50 credit";
 
                     var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50 };
-                    PlayFabClientAPI.AddUserVirtualCurrency(request,
+                    PlayFabServerAPI.AddUserVirtualCurrency(request,
                         (result) => {
                             Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
                         },
@@ -83,7 +83,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
                     resultPanel.GetComponent<MatchReward>().RewardValue.text = rewardCredit.ToString() + " credit";
 
                     var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = rewardCredit };
-                    PlayFabClientAPI.AddUserVirtualCurrency(request,
+                    PlayFabServerAPI.AddUserVirtualCurrency(request,
                         (result) => {
                             Debug.Log(result.BalanceChange + " ÄÚÀÎ È¹µæ");
                         },
@@ -133,12 +133,12 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
                         return;
                     }
 
-                    var request = new GrantCharacterToUserRequest() { CatalogVersion = "Skill", ItemId = "SKILL_" + ((int)skill).ToString() };
-                    PlayFabClientAPI.GrantCharacterToUser(request,
+                    var request = new GrantItemsToUserRequest() { CatalogVersion = "Skill", ItemIds = new List<string>() { $"SKILL_{(int)skill}" }, PlayFabId = PhotonNetwork.NickName };
+                    PlayFabServerAPI.GrantItemsToUser(request,
                         (result) => {
                             Debug.Log($"Æ¯¼º È¹µæ ¼º°ø");
                         },
-                        (error) => Debug.Log($"Æ¯¼º È¹µæ ½ÇÆÐ"));
+                        (error) => Debug.Log($"Æ¯¼º È¹µæ ½ÇÆÐ: " + error.ErrorMessage));
                 }
             }
             else {
