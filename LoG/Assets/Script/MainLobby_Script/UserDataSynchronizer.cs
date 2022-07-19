@@ -13,6 +13,7 @@ public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
     [SerializeField] UIDataSynchronizer dataSynchronizer;
     public static string nickname = string.Empty;
     public static int coin = default;
+    public static string userID = string.Empty;
     public static List<CharacterSkill> unlockedSkillList = new List<CharacterSkill>();
     public static Dictionary<CharacterSkill, string> unlockedSkillInstanceIdList = new Dictionary<CharacterSkill, string>();
 
@@ -27,6 +28,7 @@ public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
         PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), (result) => {
             nickname = result.AccountInfo.Username;
             PhotonNetwork.LocalPlayer.NickName = nickname;
+            userID = result.AccountInfo.PlayFabId;
 
             if (dataSynchronizer)
                 dataSynchronizer.UpdateAccountInfo();

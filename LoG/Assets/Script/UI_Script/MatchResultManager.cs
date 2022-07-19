@@ -133,7 +133,7 @@ public class MatchResultManager : MonoBehaviourPunCallbacks {
                         return;
                     }
 
-                    var request = new GrantItemsToUserRequest() { CatalogVersion = "Skill", ItemIds = new List<string>() { $"SKILL_{(int)skill}" }, PlayFabId = PhotonNetwork.NickName };
+                    var request = new GrantItemsToUserRequest() { CatalogVersion = "Skill", ItemIds = new List<string>() { $"SKILL_{(int)skill}" }, PlayFabId = UserDataSynchronizer.userID };
                     PlayFabServerAPI.GrantItemsToUser(request,
                         (result) => {
                             Debug.Log($"Æ¯¼º È¹µæ ¼º°ø");
