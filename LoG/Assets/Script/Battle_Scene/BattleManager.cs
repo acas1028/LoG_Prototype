@@ -735,10 +735,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Finish_Game()
     {
-        if (isPVE) {
+        /*if (isPVE) {
             Debug.Log("Finishing game only proceeds when PVP mode");
             return;
-        }
+        }*/
 
         Calculate_Remain_HP();
         Calculate_Remain_Character();
@@ -784,18 +784,19 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         if (isPVE) {
-            GameObject gameobject = GameObject.Find("ArrayData");
-            Destroy(gameobject);
+            GameObject gobject = GameObject.Find("ArrayData");
+            Destroy(gobject);
             uiManager.ShowMatchResult(isWin: isWin, isPVE: true, isMatchOver: true, onEnemyQuit: false);
             Debug.Log("PVE Battle End");
             return;
         }
 
         if (isWin) {
-            GameObject gameobject = GameObject.Find("Arrayed_Data");
-            Destroy(gameobject);
             roundWinCount++;
         }
+
+        GameObject gameobject = GameObject.Find("Arrayed_Data");
+        if(gameobject != null) Destroy(gameobject);
 
         ExitGames.Client.Photon.Hashtable table;
 
