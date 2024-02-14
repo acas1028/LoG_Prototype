@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class Showing_Hp : MonoBehaviour
 {
 
-    private float hp; //Ä³¸¯ÅÍ ÇöÀç hp
-    private float original_hp; //Ä³¸¯ÅÍÀÇ ±âº» hp
-    private int is_this_original_hp_counting=0; // original_hp¸¦ Ã¤¿ü´Â°¡¸¦ ¹¯´Â º¯¼ö
-    private int hp_bar_y_position; // Ä³¸¯ÅÍÀÇ hp ¹Ù¿Í Ä³¸¯ÅÍ°úÀÇ °Å¸®.
-    private GameObject hp_bar; //hp ¹Ù
+    private float hp; //ìºë¦­í„° í˜„ìž¬ hp
+    private float original_hp; //ìºë¦­í„°ì˜ ê¸°ë³¸ hp
+    private int is_this_original_hp_counting=0; // original_hpë¥¼ ì±„ì› ëŠ”ê°€ë¥¼ ë¬»ëŠ” ë³€ìˆ˜
+    private int hp_bar_y_position; // ìºë¦­í„°ì˜ hp ë°”ì™€ ìºë¦­í„°ê³¼ì˜ ê±°ë¦¬.
+    private GameObject hp_bar; //hp ë°”
     private GameObject canvas; 
 
-    // ¾Æ·¡ÀÇ º¯¼ö´Â inspectorÃ¢¿¡ º¯¼ö¸¦ ¼³Á¤ÇØ³õ¾Ò´Ù.
-    public int character_count; // °°Àº ÆÀ³»ÀÇ Ä³¸¯ÅÍ ±¸º° º¯¼ö
-    public int Team_count; //ÆÀ ±¸º° º¯¼ö
+    // ì•„ëž˜ì˜ ë³€ìˆ˜ëŠ” inspectorì°½ì— ë³€ìˆ˜ë¥¼ ì„¤ì •í•´ë†“ì•˜ë‹¤.
+    public int character_count; // ê°™ì€ íŒ€ë‚´ì˜ ìºë¦­í„° êµ¬ë³„ ë³€ìˆ˜
+    public int Team_count; //íŒ€ êµ¬ë³„ ë³€ìˆ˜
 
 
     private void Start()
@@ -27,7 +27,7 @@ public class Showing_Hp : MonoBehaviour
 
     }
 
-    void showing_Hp_point() //ÇöÀç hp¸¦ hp bar·Î Ç¥Çö
+    void showing_Hp_point() //í˜„ìž¬ hpë¥¼ hp barë¡œ í‘œí˜„
     {
         if (Team_count == 1)
         {
@@ -42,7 +42,7 @@ public class Showing_Hp : MonoBehaviour
         }
     }
 
-    void original_Hp() // Ä³¸¯ÅÍ ±âº» hp¸¦ original_hp¿¡ ±âÀÔÇÏ±â À§ÇÑ ÇÔ¼ö
+    void original_Hp() // ìºë¦­í„° ê¸°ë³¸ hpë¥¼ original_hpì— ê¸°ìž…í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
     {
         if(hp>0&& is_this_original_hp_counting==0)
         {
@@ -53,7 +53,7 @@ public class Showing_Hp : MonoBehaviour
         }
     }
 
-    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos) //Äµ¹ö½ºÀÇ Æ÷Áö¼Ç°ú ¿ùµåÀÇ Æ÷Áö¼ÇÀÇ Åë·Î ¿ªÇÒÀ» ÇØÁÖ´Â ÇÔ¼ö
+    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos) //ìº”ë²„ìŠ¤ì˜ í¬ì§€ì…˜ê³¼ ì›”ë“œì˜ í¬ì§€ì…˜ì˜ í†µë¡œ ì—­í• ì„ í•´ì£¼ëŠ” í•¨ìˆ˜
     {
         //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function
         Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
@@ -65,7 +65,7 @@ public class Showing_Hp : MonoBehaviour
         return parentCanvas.transform.TransformPoint(movePos);
     }
 
-    void Hp_bar_position_translate() //hp barµéÀÇ À§Ä¡ ÀÌµ¿½ÃÅ°´Â ÇÔ¼ö
+    void Hp_bar_position_translate() //hp barë“¤ì˜ ìœ„ì¹˜ ì´ë™ì‹œí‚¤ëŠ” í•¨ìˆ˜
     {
         
 
@@ -128,7 +128,7 @@ public class Showing_Hp : MonoBehaviour
             
         }
 
-        if (BattleManager.Instance.bM_Character_Team1.Count >= 5 && BattleManager.Instance.bM_Character_Team2.Count >= 5) //¿¹¿Ü Ã³¸®
+        if (BattleManager.Instance.bM_Character_Team1.Count >= 5 && BattleManager.Instance.bM_Character_Team2.Count >= 5) //ì˜ˆì™¸ ì²˜ë¦¬
         {
 
             Hp_bar_position_translate();

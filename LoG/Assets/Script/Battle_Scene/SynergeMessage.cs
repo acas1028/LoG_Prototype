@@ -18,7 +18,7 @@ public class SynergeMessage : MonoBehaviour
     }
     public void Message(int teamNumber, string synergeName)
     {
-        this.GetComponent<Text>().text = teamNumber + "ÆÀ " + synergeName + "½Ã³ÊÁö ¹ßµ¿!";
+        this.GetComponent<Text>().text = teamNumber + "íŒ€ " + synergeName + "ì‹œë„ˆì§€ ë°œë™!";
 
         Invoke("Disable", BattleManager.Instance.bM_Timegap);
     }

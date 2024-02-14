@@ -8,12 +8,12 @@ using Photon.Realtime;
 public class SkillManager : MonoBehaviour
 {
     private static SkillManager _instance;
-    // ÀÎ½ºÅÏ½º¿¡ Á¢±ÙÇÏ±â À§ÇÑ ÇÁ·ÎÆÛÆ¼
+    // ì¸ìŠ¤í„´ìŠ¤ì— ì ‘ê·¼í•˜ê¸° ìœ„í•œ í”„ë¡œí¼í‹°
     public static SkillManager Instance
     {
         get
         {
-            // ÀÎ½ºÅÏ½º°¡ ¾ø´Â °æ¿ì¿¡ Á¢±ÙÇÏ·Á ÇÏ¸é ÀÎ½ºÅÏ½º¸¦ ÇÒ´çÇØÁØ´Ù.
+            // ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ëŠ” ê²½ìš°ì— ì ‘ê·¼í•˜ë ¤ í•˜ë©´ ì¸ìŠ¤í„´ìŠ¤ë¥¼ í• ë‹¹í•´ì¤€ë‹¤.
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(SkillManager)) as SkillManager;
@@ -30,7 +30,7 @@ public class SkillManager : MonoBehaviour
         {
             _instance = this;
         }
-        // ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ´Â °æ¿ì »õ·Î»ı±â´Â ÀÎ½ºÅÏ½º¸¦ »èÁ¦ÇÑ´Ù.
+        // ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš° ìƒˆë¡œìƒê¸°ëŠ” ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì‚­ì œí•œë‹¤.
         else if (_instance != this)
         {
             Destroy(gameObject);
@@ -272,8 +272,8 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
-    // °ø°İÇü ½ºÅ³
-    bool Skill_Attack_Confidence(GameObject character) // ÀÚ½Å°¨
+    // ê³µê²©í˜• ìŠ¤í‚¬
+    bool Skill_Attack_Confidence(GameObject character) // ìì‹ ê°
     {
         Character ACS = character.GetComponent<Character>();
 
@@ -314,14 +314,14 @@ public class SkillManager : MonoBehaviour
             return false;
         }
 
-        //½ºÅ³ ¹ßµ¿ Ã¼Å©
+        //ìŠ¤í‚¬ ë°œë™ ì²´í¬
         ACS.character_Buffed_Attack += 20;
 
         GridManager.Instance.Create_Buffed_Grid(ACS.character_Team_Number, ACS.character_Num_Of_Grid);
 
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character,"ÀÚ½Å°¨");
+        skillmessage.GetComponent<SkillMessage>().Message(character,"ìì‹ ê°");
 
         return true;
     }
@@ -333,7 +333,7 @@ public class SkillManager : MonoBehaviour
         {
             foreach(var team1 in BattleManager.Instance.bM_Character_Team1)
             {
-                Debug.Log("Ã¼Å© ¾î¶ó¿îµå : " + dum);
+                Debug.Log("ì²´í¬ ì–´ë¼ìš´ë“œ : " + dum);
                 Character CCS = team1.GetComponent<Character>();
                 if (CCS.character_Num_Of_Grid == num1) dum++;
                 if (CCS.character_Num_Of_Grid == num2) dum++;
@@ -416,7 +416,7 @@ public class SkillManager : MonoBehaviour
             return true;
         return false;
     }
-    bool Skill_Attack_Executioner(GameObject attacker) // Ã³ÇüÀÚ
+    bool Skill_Attack_Executioner(GameObject attacker) // ì²˜í˜•ì
     {
         Character ACS = attacker.GetComponent<Character>();
 
@@ -424,17 +424,17 @@ public class SkillManager : MonoBehaviour
         {
             return false;
         }
-        //½ºÅ³ ¹ßµ¿ Ã¼Å©
+        //ìŠ¤í‚¬ ë°œë™ ì²´í¬
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(attacker, "Ã³ÇüÀÚ");
+        skillmessage.GetComponent<SkillMessage>().Message(attacker, "ì²˜í˜•ì");
 
         BattleManager.Instance.bM_Phase--;
         ACS.character_is_Kill = 0;
 
         return true;
     }                                       
-    bool Skill_Attack_Struggle(GameObject character) // ¹ß¾Ç
+    bool Skill_Attack_Struggle(GameObject character) // ë°œì•…
     {
         Character CCS = character.GetComponent<Character>();
 
@@ -453,11 +453,11 @@ public class SkillManager : MonoBehaviour
         GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character,"¹ß¾Ç");
+        skillmessage.GetComponent<SkillMessage>().Message(character,"ë°œì•…");
 
         return true;
     }
-    bool SKill_Attack_Ranger(GameObject character, List<GameObject> enemy) // ¸í»ç¼ö 
+    bool SKill_Attack_Ranger(GameObject character, List<GameObject> enemy) // ëª…ì‚¬ìˆ˜ 
     {
         Character CCS = character.GetComponent<Character>();
 
@@ -493,11 +493,11 @@ public class SkillManager : MonoBehaviour
         CCS.character_Attack_Range[enemy[num].GetComponent<Character>().character_Num_Of_Grid - 1] = true;
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character,"¸í»ç¼ö");
+        skillmessage.GetComponent<SkillMessage>().Message(character,"ëª…ì‚¬ìˆ˜");
 
         return true;
     }
-    public int ArmorPiercer(GameObject character,GameObject enemy) // Ã¶°©Åº
+    public int ArmorPiercer(GameObject character,GameObject enemy) // ì² ê°‘íƒ„
     {
         Character ACS = character.GetComponent<Character>();
         Character DCS = enemy.GetComponent<Character>();
@@ -539,17 +539,17 @@ public class SkillManager : MonoBehaviour
 
         return false;
     }
-    bool Skill_Attack_DivineShield(GameObject character) // Ãµ»óÀÇ º¸È£¸· 
+    bool Skill_Attack_DivineShield(GameObject character) // ì²œìƒì˜ ë³´í˜¸ë§‰ 
     {
         Character CCS = character.GetComponent<Character>();
         CCS.character_Divine_Shield = true;
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "Ãµ»óÀÇ º¸È£¸·");
+        skillmessage.GetComponent<SkillMessage>().Message(character, "ì²œìƒì˜ ë³´í˜¸ë§‰");
 
         return true;
     }
-    bool Skill_Attack_Sturdy(GameObject character) // ¿Ë°ñÂü 
+    bool Skill_Attack_Sturdy(GameObject character) // ì˜¹ê³¨ì°¸ 
     {
         Character CCS = character.GetComponent<Character>();
         if (CCS.is_overkill == false)
@@ -562,14 +562,14 @@ public class SkillManager : MonoBehaviour
         CCS.killedBy = null;
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "¿Ë°ñÂü");
+        skillmessage.GetComponent<SkillMessage>().Message(character, "ì˜¹ê³¨ì°¸");
 
         return true;
     }
 
 
-    // ¹ë·±½ºÇü ½ºÅ³
-    bool Skill_Balanced_GBGH(GameObject character) // ¸ğ¾Æ´Ï¸éµµ
+    // ë°¸ëŸ°ìŠ¤í˜• ìŠ¤í‚¬
+    bool Skill_Balanced_GBGH(GameObject character) // ëª¨ì•„ë‹ˆë©´ë„
     {
         Character CCS = character.GetComponent<Character>();
 
@@ -628,11 +628,11 @@ public class SkillManager : MonoBehaviour
 
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character,"¸ğ ¾Æ´Ï¸é µµ");
+        skillmessage.GetComponent<SkillMessage>().Message(character,"ëª¨ ì•„ë‹ˆë©´ ë„");
 
         return true;
     }
-    bool Skill_Balanced_Blessing(GameObject character) // Ãàº¹
+    bool Skill_Balanced_Blessing(GameObject character) // ì¶•ë³µ
     {
         Character CCS = character.GetComponent<Character>();
 
@@ -729,11 +729,11 @@ public class SkillManager : MonoBehaviour
         }
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "Ãàº¹");
+        skillmessage.GetComponent<SkillMessage>().Message(character, "ì¶•ë³µ");
 
         return true;
     }
-    bool Blessing_Dead(GameObject character) // Ãàº¹ Ä³¸¯ÅÍ »ç¸Á ½Ã
+    bool Blessing_Dead(GameObject character) // ì¶•ë³µ ìºë¦­í„° ì‚¬ë§ ì‹œ
     {
         Character CCS = character.GetComponent<Character>();
 
@@ -845,13 +845,13 @@ public class SkillManager : MonoBehaviour
         }
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "¿¬¸·Åº");
+        skillmessage.GetComponent<SkillMessage>().Message(character, "ì—°ë§‰íƒ„");
 
         return true;
     }
     int Skill_Get_My_Stack_Survivor()
     {
-        // ³» "»ıÁ¸ÀÚ" Æ¯¼ºÀÇ Ä³¸¯ÅÍ°¡ °¡Áø »ıÁ¸ÀÚ ½ºÅÃ º¯¼ö¸¦ ºÒ·¯¿À´Â ÇÔ¼ö
+        // ë‚´ "ìƒì¡´ì" íŠ¹ì„±ì˜ ìºë¦­í„°ê°€ ê°€ì§„ ìƒì¡´ì ìŠ¤íƒ ë³€ìˆ˜ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” í•¨ìˆ˜
         bool result;
         object o_stack_survivor;
         int stack_survivor;
@@ -868,7 +868,7 @@ public class SkillManager : MonoBehaviour
     }
     int Skill_Get_Enemy_Stack_Survivor()
     {
-        // Àû "»ıÁ¸ÀÚ" Æ¯¼ºÀÇ Ä³¸¯ÅÍ°¡ °¡Áø »ıÁ¸ÀÚ ½ºÅÃ º¯¼ö¸¦ ºÒ·¯¿À´Â ÇÔ¼ö
+        // ì  "ìƒì¡´ì" íŠ¹ì„±ì˜ ìºë¦­í„°ê°€ ê°€ì§„ ìƒì¡´ì ìŠ¤íƒ ë³€ìˆ˜ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” í•¨ìˆ˜
         bool result;
         object o_stack_survivor;
         int stack_survivor;
@@ -891,7 +891,7 @@ public class SkillManager : MonoBehaviour
     }
     bool Skill_Set_Stack_Survivor(int val)
     {
-        // ³» "»ıÁ¸ÀÚ" Æ¯¼ºÀÇ Ä³¸¯ÅÍ°¡ °¡Áø »ıÁ¸ÀÚ ½ºÅÃ º¯¼ö¸¦ ¼­¹ö¿¡ ÀúÀåÇÏ´Â ÇÔ¼ö
+        // ë‚´ "ìƒì¡´ì" íŠ¹ì„±ì˜ ìºë¦­í„°ê°€ ê°€ì§„ ìƒì¡´ì ìŠ¤íƒ ë³€ìˆ˜ë¥¼ ì„œë²„ì— ì €ì¥í•˜ëŠ” í•¨ìˆ˜
         bool result;
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable() { { "Stack_Survivor", val } };
@@ -921,7 +921,7 @@ public class SkillManager : MonoBehaviour
         CCS.character_MaxHP *= 100 + (20 * CCS.stack_Survivor);
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "»ıÁ¸ÀÚ");
+        skillmessage.GetComponent<SkillMessage>().Message(character, "ìƒì¡´ì");
 
         return true;
     }
@@ -958,7 +958,7 @@ public class SkillManager : MonoBehaviour
                     Skill_Set_Stack_Survivor(TCS.stack_Survivor);
 
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(team, "»ıÁ¸ÀÚ");
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "ìƒì¡´ì");
                     return true;
                 }
             }
@@ -976,7 +976,7 @@ public class SkillManager : MonoBehaviour
                     TCS.character_HP *= 120;
                     TCS.stack_Survivor++;
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(team, "»ıÁ¸ÀÚ");
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "ìƒì¡´ì");
                     return true;
                 }
             }
@@ -1151,7 +1151,7 @@ public class SkillManager : MonoBehaviour
         }
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "ÀúÁÖ");
+        skillmessage.GetComponent<SkillMessage>().Message(character, "ì €ì£¼");
 
         return true;
     }
@@ -1189,7 +1189,7 @@ public class SkillManager : MonoBehaviour
         }
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(counterAttacker, "±¤¿ª¹İ°İ");
+        skillmessage.GetComponent<SkillMessage>().Message(counterAttacker, "ê´‘ì—­ë°˜ê²©");
 
         return true;
     }
@@ -1413,8 +1413,8 @@ public class SkillManager : MonoBehaviour
         }
         return true;
     }
-    // ¹æ¾îÇü ½ºÅ³
-    bool Skill_Defender_Disarm(GameObject attacker, List<GameObject> Damaged) // ¹«ÀåÇØÁ¦ 
+    // ë°©ì–´í˜• ìŠ¤í‚¬
+    bool Skill_Defender_Disarm(GameObject attacker, List<GameObject> Damaged) // ë¬´ì¥í•´ì œ 
     {
         Character ACS = attacker.GetComponent<Character>();
 
@@ -1456,7 +1456,7 @@ public class SkillManager : MonoBehaviour
         }
 
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(attacker,"¹«ÀåÇØÁ¦");
+        skillmessage.GetComponent<SkillMessage>().Message(attacker,"ë¬´ì¥í•´ì œ");
 
         return true;
     }
@@ -1470,7 +1470,7 @@ public class SkillManager : MonoBehaviour
         GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
         
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(character, "°ÌÀïÀÌ");
+        skillmessage.GetComponent<SkillMessage>().Message(character, "ê²ìŸì´");
 
         return true;
     }
@@ -1492,7 +1492,7 @@ public class SkillManager : MonoBehaviour
 
                     GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(team, "°ÌÀïÀÌ");
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "ê²ìŸì´");
                     return true;
                 }
             }
@@ -1509,7 +1509,7 @@ public class SkillManager : MonoBehaviour
 
                     GridManager.Instance.Create_Nerfed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(team, "°ÌÀïÀÌ");
+                    skillmessage.GetComponent<SkillMessage>().Message(team, "ê²ìŸì´");
                     return true;
                 }
             }
@@ -1532,7 +1532,7 @@ public class SkillManager : MonoBehaviour
                 GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                
                 skillmessage.SetActive(true);
-                skillmessage.GetComponent<SkillMessage>().Message(hittedCharacter, "ÀÎ³»½É");
+                skillmessage.GetComponent<SkillMessage>().Message(hittedCharacter, "ì¸ë‚´ì‹¬");
                 return true;
             }
         }
@@ -1565,7 +1565,7 @@ public class SkillManager : MonoBehaviour
 
                 GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
                 skillmessage.SetActive(true);
-                skillmessage.GetComponent<SkillMessage>().Message(character, "Ã¥ÀÓ°¨");
+                skillmessage.GetComponent<SkillMessage>().Message(character, "ì±…ì„ê°");
                 return true;
             }
         }
@@ -1590,7 +1590,7 @@ public class SkillManager : MonoBehaviour
                 CCS.character_Counter_Probability += 20;
 
                 skillmessage.SetActive(true);
-                skillmessage.GetComponent<SkillMessage>().Message(character, "Ã¥ÀÓ°¨");
+                skillmessage.GetComponent<SkillMessage>().Message(character, "ì±…ì„ê°");
                 return true;
             }
         }
@@ -1615,7 +1615,7 @@ public class SkillManager : MonoBehaviour
                     GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
                     GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "¹æº®");
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "ë°©ë²½");
 
                     return true;
                 }
@@ -1637,7 +1637,7 @@ public class SkillManager : MonoBehaviour
                     GridManager.Instance.Create_Buffed_Grid(CCS.character_Team_Number, CCS.character_Num_Of_Grid);
                     GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "¹æº®");
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "ë°©ë²½");
 
                     return true;
                 }
@@ -1775,7 +1775,7 @@ public class SkillManager : MonoBehaviour
                     TCS.character_Buffed_Attack += 20;
                     GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "°İ·Á");
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "ê²©ë ¤");
                 }
             }
         }
@@ -1790,7 +1790,7 @@ public class SkillManager : MonoBehaviour
                     TCS.character_Buffed_Attack += 20;
                     GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "°İ·Á");
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "ê²©ë ¤");
                 }
             }
         }
@@ -1807,7 +1807,7 @@ public class SkillManager : MonoBehaviour
                     TCS.character_Buffed_Attack += 20;
                     GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "°İ·Á");
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "ê²©ë ¤");
                 }
             }
         }
@@ -1822,7 +1822,7 @@ public class SkillManager : MonoBehaviour
                     TCS.character_Buffed_Attack += 20;
                     GridManager.Instance.Create_Buffed_Grid(TCS.character_Team_Number, TCS.character_Num_Of_Grid);
                     skillmessage.SetActive(true);
-                    skillmessage.GetComponent<SkillMessage>().Message(character, "°İ·Á");
+                    skillmessage.GetComponent<SkillMessage>().Message(character, "ê²©ë ¤");
                 }
             }
         }
@@ -1866,7 +1866,7 @@ public class SkillManager : MonoBehaviour
     bool Thronmail_Production(GameObject counterAttacker)
     {
         skillmessage.SetActive(true);
-        skillmessage.GetComponent<SkillMessage>().Message(counterAttacker, "°¡½Ã°©¿Ê");
+        skillmessage.GetComponent<SkillMessage>().Message(counterAttacker, "ê°€ì‹œê°‘ì˜·");
 
         return true;
     }

@@ -49,7 +49,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         return list;
     }
 
-    #region ¿ÜºÎ¿¡¼­ È£ÃâµÇ´Â public ÇÔ¼ö
+    #region ì™¸ë¶€ì—ì„œ í˜¸ì¶œë˜ëŠ” public í•¨ìˆ˜
     public void DataSync(int index)
     {
         if (PhotonNetwork.OfflineMode)
@@ -57,11 +57,11 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         if (index < 0 || index > 4)
         {
-            Debug.LogError("DataSync ½ÇÆĞ: Ä³¸¯ÅÍ ÀÎµ¦½º´Â 0ÀÌ»ó 4ÀÌÇÏ¿©¾ß ÇÕ´Ï´Ù.");
+            Debug.LogError("DataSync ì‹¤íŒ¨: ìºë¦­í„° ì¸ë±ìŠ¤ëŠ” 0ì´ìƒ 4ì´í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.");
             return;
         }    
 
-        Debug.Log("<color=yellow>DataSync È£Ãâ</color>");
+        Debug.Log("<color=yellow>DataSync í˜¸ì¶œ</color>");
 
         bool result = false;
         Character c;
@@ -84,7 +84,7 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
 
         result = PhotonNetwork.LocalPlayer.SetCustomProperties(team1_table);
         if (!result)
-            Debug.LogWarning("Team1 Custom Property ¼³Á¤ ½ÇÆĞ");
+            Debug.LogWarning("Team1 Custom Property ì„¤ì • ì‹¤íŒ¨");
     }
 
     public void SetArrayPhaseInOffline()
@@ -138,10 +138,10 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region Æ÷Åæ Äİ¹é ÇÔ¼ö : MonoBehaviourPunCallbacks Å¬·¡½ºÀÇ »ó¼ÓÀ» ¹Ş´Â ÇÔ¼ö
+    #region í¬í†¤ ì½œë°± í•¨ìˆ˜ : MonoBehaviourPunCallbacks í´ë˜ìŠ¤ì˜ ìƒì†ì„ ë°›ëŠ” í•¨ìˆ˜
 
     /// <summary>
-    /// SetCustomProperties¸¦ ÅëÇØ °¢ ÇÃ·¹ÀÌ¾îÀÇ Custom Property°¡ ¹Ù²ï °æ¿ì È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    /// SetCustomPropertiesë¥¼ í†µí•´ ê° í”Œë ˆì´ì–´ì˜ Custom Propertyê°€ ë°”ë€ ê²½ìš° í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     /// </summary>
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
@@ -188,12 +188,12 @@ public class ArrData_Sync : MonoBehaviourPunCallbacks
         object o_attackOrder;
         Character c;
 
-        // ¼­¹ö¿¡ ÀÖ´Â Team2ÀÇ Character_Action Á¤º¸¸¦ ¿©±â team2¿¡ ÀúÀåÇÏ´Â °úÁ¤
+        // ì„œë²„ì— ìˆëŠ” Team2ì˜ Character_Action ì •ë³´ë¥¼ ì—¬ê¸° team2ì— ì €ì¥í•˜ëŠ” ê³¼ì •
 
         targetPlayer.CustomProperties.TryGetValue("Character_Index", out o_index);
         int index = (int)o_index;
 
-        // »ó´ë°¡ Á¢¼ÓÇÏÁö ¾Ê¾Ò°Å³ª, Ready ¹öÆ°À» ´©¸£Áö ¾ÊÀº »óÅÂ¿¡¼­´Â ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Ã ¼ö ¾øÀ¸¹Ç·Î return Ã³¸®
+        // ìƒëŒ€ê°€ ì ‘ì†í•˜ì§€ ì•Šì•˜ê±°ë‚˜, Ready ë²„íŠ¼ì„ ëˆ„ë¥´ì§€ ì•Šì€ ìƒíƒœì—ì„œëŠ” ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜¬ ìˆ˜ ì—†ìœ¼ë¯€ë¡œ return ì²˜ë¦¬
         c = Arrayed_Data.instance.team2[index].GetComponent<Character>();
         if (!c)
             return;

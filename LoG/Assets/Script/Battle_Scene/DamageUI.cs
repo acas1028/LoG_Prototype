@@ -31,7 +31,7 @@ public class DamageUI : MonoBehaviour
     {
         transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0));
 
-        alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed); // ÅØ½ºÆ® ¾ËÆÄ°ª
+        alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed); // í…ìŠ¤íŠ¸ ì•ŒíŒŒê°’
         text.color = alpha;
     }
 
@@ -40,7 +40,7 @@ public class DamageUI : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos) //Äµ¹ö½ºÀÇ Æ÷Áö¼Ç°ú ¿ùµåÀÇ Æ÷Áö¼ÇÀÇ Åë·Î ¿ªÇÒÀ» ÇØÁÖ´Â ÇÔ¼ö
+    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos) //ìº”ë²„ìŠ¤ì˜ í¬ì§€ì…˜ê³¼ ì›”ë“œì˜ í¬ì§€ì…˜ì˜ í†µë¡œ ì—­í• ì„ í•´ì£¼ëŠ” í•¨ìˆ˜
     {
         //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function
         Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);

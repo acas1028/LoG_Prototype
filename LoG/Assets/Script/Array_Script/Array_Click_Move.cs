@@ -44,8 +44,8 @@ public class Array_Click_Move : MonoBehaviour
             overlab = false;
         }
 
-        // Å¬¸¯½Ã ÇÁ¸®Æé »ö º¯°æ.
-        // transform.Getchild(1) -> ÇÁ¸®Æé °¡Á®¿Ã ¼ö ÀÖÀ½.
-        // °¡Á®¿Â ÇÁ¸®Æé »ö º¯°æ.
+        // í´ë¦­ì‹œ í”„ë¦¬íŽ© ìƒ‰ ë³€ê²½.
+        // transform.Getchild(1) -> í”„ë¦¬íŽ© ê°€ì ¸ì˜¬ ìˆ˜ ìžˆìŒ.
+        // ê°€ì ¸ì˜¨ í”„ë¦¬íŽ© ìƒ‰ ë³€ê²½.
     }
 }

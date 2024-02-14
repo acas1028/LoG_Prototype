@@ -75,8 +75,8 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.OfflineMode)
         {
-            roomStatusText.text = "<¿ÀÇÁ¶óÀÎ ¸ğµå>";
-            preemptiveCheck.text = "¼±°ø";
+            roomStatusText.text = "<ì˜¤í”„ë¼ì¸ ëª¨ë“œ>";
+            preemptiveCheck.text = "ì„ ê³µ";
 
             Hashtable table = new Hashtable() { { "IsPreemptive", true } };
             PhotonNetwork.SetPlayerCustomProperties(table);
@@ -84,11 +84,11 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             StartArrayPhase();
         }
         else if (!PhotonNetwork.IsConnected)
-            roomStatusText.text = "·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù";
+            roomStatusText.text = "ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤";
         else if (IsAllPlayersJoined())
-            roomStatusText.text = "Àá½Ã ÈÄ °ÔÀÓÀÌ ½ÃÀÛµË´Ï´Ù.";
+            roomStatusText.text = "ì ì‹œ í›„ ê²Œì„ì´ ì‹œì‘ë©ë‹ˆë‹¤.";
         else
-            roomStatusText.text = "»ó´ëÀÇ ÀÔÀåÀ» ±â´Ù¸®´Â ÁßÀÔ´Ï´Ù...";
+            roomStatusText.text = "ìƒëŒ€ì˜ ì…ì¥ì„ ê¸°ë‹¤ë¦¬ëŠ” ì¤‘ì…ë‹ˆë‹¤...";
 
         result = GetCustomProperties();
         if (!result)
@@ -96,7 +96,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             result = InitCustomProperties();
             if (!result)
             {
-                Debug.LogError("CustomProperties ÃÊ±âÈ­ ½ÇÆĞ");
+                Debug.LogError("CustomProperties ì´ˆê¸°í™” ì‹¤íŒ¨");
             }
         }
 
@@ -114,7 +114,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         result = PhotonNetwork.SetPlayerCustomProperties(table);
         if (!result)
         {
-            Debug.LogError("PlayerCustomProperties µ¿±âÈ­ ½ÇÆĞ");
+            Debug.LogError("PlayerCustomProperties ë™ê¸°í™” ì‹¤íŒ¨");
             return false;
         }
 
@@ -124,14 +124,14 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
             if (!result)
             {
-                Debug.LogError("RoundCount µ¿±âÈ­ ½ÇÆĞ");
+                Debug.LogError("RoundCount ë™ê¸°í™” ì‹¤íŒ¨");
                 return false;
             }
 
             table = new Hashtable() { { "IsPVE", false } };
             result = PhotonNetwork.CurrentRoom.SetCustomProperties(table);
             if (!result) {
-                Debug.LogError("IsPVE µ¿±âÈ­ ½ÇÆĞ");
+                Debug.LogError("IsPVE ë™ê¸°í™” ì‹¤íŒ¨");
                 return false;
             }
         }
@@ -145,7 +145,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsPreemptive", out o_isPreemptive);
         if (o_isPreemptive == null)
         {
-            Debug.LogWarning("isPreemptive °ªÀ» °¡Á®¿ÀÁö ¸øÇß½À´Ï´Ù. °ªÀ» »õ·Î ÇÒ´çÇÕ´Ï´Ù.");
+            Debug.LogWarning("isPreemptive ê°’ì„ ê°€ì ¸ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. ê°’ì„ ìƒˆë¡œ í• ë‹¹í•©ë‹ˆë‹¤.");
             return false;
         }
         isPreemptive = (bool)o_isPreemptive;
@@ -154,7 +154,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("RoundWinCount", out o_winCount);
         if (o_winCount == null)
         {
-            Debug.LogWarning("RoundWinCount °ªÀ» °¡Á®¿ÀÁö ¸øÇß½À´Ï´Ù. °ªÀ» »õ·Î ÇÒ´çÇÕ´Ï´Ù.");
+            Debug.LogWarning("RoundWinCount ê°’ì„ ê°€ì ¸ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. ê°’ì„ ìƒˆë¡œ í• ë‹¹í•©ë‹ˆë‹¤.");
             return false;
         }
         winCount = (int)o_winCount;
@@ -165,7 +165,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             player.CustomProperties.TryGetValue("RoundWinCount", out o_enemyWinCount);
             if (o_enemyWinCount == null)
             {
-                Debug.LogWarning("Àû RoundWinCount °ªÀ» °¡Á®¿ÀÁö ¸øÇß½À´Ï´Ù. °ªÀ» »õ·Î ÇÒ´çÇÕ´Ï´Ù.");
+                Debug.LogWarning("ì  RoundWinCount ê°’ì„ ê°€ì ¸ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. ê°’ì„ ìƒˆë¡œ í• ë‹¹í•©ë‹ˆë‹¤.");
                 return false;
             }
             enemyWinCount = (int)o_enemyWinCount;
@@ -175,7 +175,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("RoundCount", out o_roundCount);
         if (o_roundCount == null)
         {
-            Debug.LogWarning("RoundCount °ªÀ» °¡Á®¿ÀÁö ¸øÇß½À´Ï´Ù. °ªÀ» »õ·Î ÇÒ´çÇÕ´Ï´Ù.");
+            Debug.LogWarning("RoundCount ê°’ì„ ê°€ì ¸ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. ê°’ì„ ìƒˆë¡œ í• ë‹¹í•©ë‹ˆë‹¤.");
             return false;
         }
         roundCount = (int)o_roundCount;
@@ -183,7 +183,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    #region ¿ÜºÎ¿¡¼­ È£ÃâµÇ´Â public ÇÔ¼ö
+    #region ì™¸ë¶€ì—ì„œ í˜¸ì¶œë˜ëŠ” public í•¨ìˆ˜
     public bool IsPlayerPreemptive()
     {
         return firstPlayer == PhotonNetwork.LocalPlayer;
@@ -205,7 +205,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         result = IsAllPlayersJoined();
         if (!result)
         {
-            Debug.LogError("ÇÃ·¹ÀÌ¾î ÇÑ ¸íÀÌ ³ª°£ »óÅÂÀÔ´Ï´Ù. ¼±/ÈÄ°ø °áÁ¤À» Ãë¼ÒÇÕ´Ï´Ù. °ÔÀÓÀ» ÁøÇàÇÒ ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("í”Œë ˆì´ì–´ í•œ ëª…ì´ ë‚˜ê°„ ìƒíƒœì…ë‹ˆë‹¤. ì„ /í›„ê³µ ê²°ì •ì„ ì·¨ì†Œí•©ë‹ˆë‹¤. ê²Œì„ì„ ì§„í–‰í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -215,7 +215,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             _isPreemptive = !isPreemptive;
         else
         {
-            Debug.Log("ÇöÀç ¶ó¿îµå°¡ Ã¹ ¶ó¿îµå È¤Àº 3 ÀÌ»óÀÌ¹Ç·Î ¹«ÀÛÀ§·Î ¼±°øÀ» Àç°áÁ¤ÇÕ´Ï´Ù.");
+            Debug.Log("í˜„ì¬ ë¼ìš´ë“œê°€ ì²« ë¼ìš´ë“œ í˜¹ì€ 3 ì´ìƒì´ë¯€ë¡œ ë¬´ì‘ìœ„ë¡œ ì„ ê³µì„ ì¬ê²°ì •í•©ë‹ˆë‹¤.");
             _isPreemptive = Random.Range(0, 2) == 0 ? false : true;
         }
 
@@ -224,10 +224,10 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
         result = PhotonNetwork.PlayerList[0].SetCustomProperties(player_1_table);
         if (!result)
-            Debug.LogWarning("ÇÃ·¹ÀÌ¾î 1 ¼±°ø¿©ºÎ µ¿±âÈ­ ½ÇÆĞ");
+            Debug.LogWarning("í”Œë ˆì´ì–´ 1 ì„ ê³µì—¬ë¶€ ë™ê¸°í™” ì‹¤íŒ¨");
         result = PhotonNetwork.PlayerList[1].SetCustomProperties(player_2_table);
         if (!result)
-            Debug.LogWarning("ÇÃ·¹ÀÌ¾î 2 ¼±°ø¿©ºÎ µ¿±âÈ­ ½ÇÆĞ");
+            Debug.LogWarning("í”Œë ˆì´ì–´ 2 ì„ ê³µì—¬ë¶€ ë™ê¸°í™” ì‹¤íŒ¨");
     }
 
     public void StartArrayPhase()
@@ -235,7 +235,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         bool result = IsAllPlayersJoined();
         if (!result && !PhotonNetwork.OfflineMode)
         {
-            Debug.LogError("ÇÃ·¹ÀÌ¾î ÇÑ ¸íÀÌ ³ª°£ »óÅÂÀÔ´Ï´Ù. ±³Â÷ ¼±ÅÃÀ» Ãë¼ÒÇÕ´Ï´Ù. °ÔÀÓÀ» ÁøÇàÇÒ ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("í”Œë ˆì´ì–´ í•œ ëª…ì´ ë‚˜ê°„ ìƒíƒœì…ë‹ˆë‹¤. êµì°¨ ì„ íƒì„ ì·¨ì†Œí•©ë‹ˆë‹¤. ê²Œì„ì„ ì§„í–‰í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -254,13 +254,13 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         arrayPhase++;
         if (arrayPhase == (int)ArrayPhase.END)
         {
-            roomStatusText.text = "¸ğµç ¹èÄ¡°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+            roomStatusText.text = "ëª¨ë“  ë°°ì¹˜ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
             readyButton.gameObject.SetActive(false);
             PhotonNetwork.LoadLevel("BattleScene");
         }
         else if (arrayPhase % 2 == 0)
         {
-            roomStatusText.text = "<color=#FFE439>" + firstPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "°³ÀÇ Ä³¸¯ÅÍ¸¦ ¹èÄ¡ÇÏ½Ê½Ã¿À.";
+            roomStatusText.text = "<color=#FFE439>" + firstPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.FIRST1 ? 1 : 2) + "ê°œì˜ ìºë¦­í„°ë¥¼ ë°°ì¹˜í•˜ì‹­ì‹œì˜¤.";
             if (IsPlayerPreemptive())
             {
                 arraymentManager.InventoryUnblock();
@@ -274,7 +274,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
         }
         else if (arrayPhase % 2 == 1)
         {
-            roomStatusText.text = "<color=#FFE439>" + secondPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "°³ÀÇ Ä³¸¯ÅÍ¸¦ ¹èÄ¡ÇÏ½Ê½Ã¿À.";
+            roomStatusText.text = "<color=#FFE439>" + secondPlayer.NickName + "</color>, " + (arrayPhase == (int)ArrayPhase.SECOND5 ? 1 : 2) + "ê°œì˜ ìºë¦­í„°ë¥¼ ë°°ì¹˜í•˜ì‹­ì‹œì˜¤.";
             if (IsPlayerPreemptive())
             {
                 arraymentManager.InventoryBlock();
@@ -298,24 +298,24 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
             enemyPlayerName.text = player.NickName;
     }
 
-    #region Æ÷Åæ Äİ¹é ÇÔ¼ö
+    #region í¬í†¤ ì½œë°± í•¨ìˆ˜
     public override void OnPlayerEnteredRoom(Player other)
     {
-        roomStatusText.text = "»ó´ë ÇÃ·¹ÀÌ¾î " + other.NickName + " ÀÔÀå";
-        Debug.Log("<color=yellow>ÇÃ·¹ÀÌ¾î " + other.NickName + " ÀÔÀå</color>");
+        roomStatusText.text = "ìƒëŒ€ í”Œë ˆì´ì–´ " + other.NickName + " ì…ì¥";
+        Debug.Log("<color=yellow>í”Œë ˆì´ì–´ " + other.NickName + " ì…ì¥</color>");
         RenewEnemyPlayer();
 
         if (PhotonNetwork.IsMasterClient && IsAllPlayersJoined())
         {
-            roomStatusText.text = "Àá½Ã ÈÄ °ÔÀÓÀÌ ½ÃÀÛµË´Ï´Ù.";
+            roomStatusText.text = "ì ì‹œ í›„ ê²Œì„ì´ ì‹œì‘ë©ë‹ˆë‹¤.";
             Invoke("SetPreemptivePlayer", 4.0f);
         }
     }
 
     public override void OnPlayerLeftRoom(Player other)
     {
-        roomStatusText.text = "»ó´ë ÇÃ·¹ÀÌ¾î " + other.NickName + " ÅğÀå";
-        Debug.Log("<color=yellow>ÇÃ·¹ÀÌ¾î " + other.NickName + " ÅğÀå</color>");
+        roomStatusText.text = "ìƒëŒ€ í”Œë ˆì´ì–´ " + other.NickName + " í‡´ì¥";
+        Debug.Log("<color=yellow>í”Œë ˆì´ì–´ " + other.NickName + " í‡´ì¥</color>");
         RenewEnemyPlayer();
 
         timeText.gameObject.SetActive(false);
@@ -324,7 +324,7 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        // ¼±, ÈÄ°ø °áÁ¤¿¡ °üÇÑ µ¥ÀÌÅÍÀÌ¸é¼­ '³ª'ÀÇ ¼±, ÈÄ°ø µ¥ÀÌÅÍÀÎ °æ¿ì¿¡¸¸ ¾Æ·¡ °úÁ¤À» °ÅÄ£´Ù. ¶ÇÇÑ µÎ ÇÃ·¹ÀÌ¾î°¡ ¹æ¿¡ ÀÔÀå ÈÄ Ã³À½ ÇÑ ¹ø¸¸ ÀÌ °úÁ¤À» °ÅÄ£´Ù.
+        // ì„ , í›„ê³µ ê²°ì •ì— ê´€í•œ ë°ì´í„°ì´ë©´ì„œ 'ë‚˜'ì˜ ì„ , í›„ê³µ ë°ì´í„°ì¸ ê²½ìš°ì—ë§Œ ì•„ë˜ ê³¼ì •ì„ ê±°ì¹œë‹¤. ë˜í•œ ë‘ í”Œë ˆì´ì–´ê°€ ë°©ì— ì…ì¥ í›„ ì²˜ìŒ í•œ ë²ˆë§Œ ì´ ê³¼ì •ì„ ê±°ì¹œë‹¤.
         if (targetPlayer == PhotonNetwork.LocalPlayer)
         {
             if (changedProps.ContainsKey("IsPreemptive")
@@ -343,12 +343,12 @@ public class ArrRoomManager : MonoBehaviourPunCallbacks
                     if (is_preemptive)
                     {
                         secondPlayer = player;
-                        preemptiveCheck.text = "¼±°ø";
+                        preemptiveCheck.text = "ì„ ê³µ";
                     }
                     else
                     {
                         firstPlayer = player;
-                        preemptiveCheck.text = "ÈÄ°ø";
+                        preemptiveCheck.text = "í›„ê³µ";
                     }
                 }
 

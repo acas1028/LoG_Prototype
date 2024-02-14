@@ -14,7 +14,7 @@ public class Sprite_Image_flipx : MonoBehaviour
 
     private void Update()
     {
-        if (BattleManager.Instance.bM_Character_Team1.Count == 5 && BattleManager.Instance.bM_Character_Team2.Count == 5) //¿¹¿Ü Ã³¸®
+        if (BattleManager.Instance.bM_Character_Team1.Count == 5 && BattleManager.Instance.bM_Character_Team2.Count == 5) //ì˜ˆì™¸ ì²˜ë¦¬
         {
             Change_Team2_flip();
         }

@@ -21,68 +21,68 @@ public class SkillMessage_Explanation : MonoBehaviour
     {
         switch (skillname)
         {
-            case "Ã³ÇüÀÚ":
-                this.GetComponent<Text>().text = "°°Àº ¹üÀ§¸¦ ÇÑ¹ø´õ °ø°İ";
+            case "ì²˜í˜•ì":
+                this.GetComponent<Text>().text = "ê°™ì€ ë²”ìœ„ë¥¼ í•œë²ˆë” ê³µê²©";
                 break;
-            case "¹ß¾Ç":
-                this.GetComponent<Text>().text = "ÇÇÇØ¸¦ ÀÔÀ¸¸é, °ø°İ·Â Áõ°¡";
+            case "ë°œì•…":
+                this.GetComponent<Text>().text = "í”¼í•´ë¥¼ ì…ìœ¼ë©´, ê³µê²©ë ¥ ì¦ê°€";
                 break;
-            case "¸í»ç¼ö":
-                this.GetComponent<Text>().text = "¾àÇÑ Ä³¸¯ÅÍ °ø°İ";
+            case "ëª…ì‚¬ìˆ˜":
+                this.GetComponent<Text>().text = "ì•½í•œ ìºë¦­í„° ê³µê²©";
                 break;
-            case "ÀÚ½Å°¨":
-                this.GetComponent<Text>().text = "ÁÖº¯ ¾Æ±º Á¸Àç½Ã °ø°İ·Â Áõ°¡";
+            case "ìì‹ ê°":
+                this.GetComponent<Text>().text = "ì£¼ë³€ ì•„êµ° ì¡´ì¬ì‹œ ê³µê²©ë ¥ ì¦ê°€";
                 break;
-            case "Ã¶°©Åº":
-                this.GetComponent<Text>().text = "¹æ¾îÇü Àû Á¸Àç½Ã °ø°İ·Â Áõ°¡";
+            case "ì² ê°‘íƒ„":
+                this.GetComponent<Text>().text = "ë°©ì–´í˜• ì  ì¡´ì¬ì‹œ ê³µê²©ë ¥ ì¦ê°€";
                 break;
-            case "Ãµ»óÀÇ º¸È£¸·":
-                this.GetComponent<Text>().text = "ÇÇÇØ 1È¸ ¹«½Ã";
+            case "ì²œìƒì˜ ë³´í˜¸ë§‰":
+                this.GetComponent<Text>().text = "í”¼í•´ 1íšŒ ë¬´ì‹œ";
                 break;
-            case "¿Ë°ñÂü":
-                this.GetComponent<Text>().text = "1È¸ »ıÁ¸ ¹× ¹İ°İ";
+            case "ì˜¹ê³¨ì°¸":
+                this.GetComponent<Text>().text = "1íšŒ ìƒì¡´ ë° ë°˜ê²©";
                 break;
-            case "¸ğ ¾Æ´Ï¸é µµ":
-                this.GetComponent<Text>().text = "Ã³À½Àº °ø°İ·Â Áõ°¡, ¸¶Áö¸·Àº ¹æ¾î·Â Áõ°¡";
+            case "ëª¨ ì•„ë‹ˆë©´ ë„":
+                this.GetComponent<Text>().text = "ì²˜ìŒì€ ê³µê²©ë ¥ ì¦ê°€, ë§ˆì§€ë§‰ì€ ë°©ì–´ë ¥ ì¦ê°€";
                 break;
-            case "Ãàº¹":
-                this.GetComponent<Text>().text = "ÈÄ¹æ °ø°İ·Â Áõ°¡, Àü¹æ ¹æ¾î·Â Áõ°¡";
+            case "ì¶•ë³µ":
+                this.GetComponent<Text>().text = "í›„ë°© ê³µê²©ë ¥ ì¦ê°€, ì „ë°© ë°©ì–´ë ¥ ì¦ê°€";
                 break;
-            case "¿¬¸·Åº":
-                this.GetComponent<Text>().text = "»ó´ë °ø°İ·Â °¨¼Ò";
+            case "ì—°ë§‰íƒ„":
+                this.GetComponent<Text>().text = "ìƒëŒ€ ê³µê²©ë ¥ ê°ì†Œ";
                 break;
-            case "»ıÁ¸ÀÚ":
-                this.GetComponent<Text>().text = "¾Æ±º »ç¸Á½Ã ´É·ÂÄ¡ »ó½Â";
+            case "ìƒì¡´ì":
+                this.GetComponent<Text>().text = "ì•„êµ° ì‚¬ë§ì‹œ ëŠ¥ë ¥ì¹˜ ìƒìŠ¹";
                 break;
-            case "ÀúÁÖ":
-                this.GetComponent<Text>().text = "ÀúÁÖ »ç¿ë";
+            case "ì €ì£¼":
+                this.GetComponent<Text>().text = "ì €ì£¼ ì‚¬ìš©";
                 break;
-            case "±¤¿ª¹İ°İ":
-                this.GetComponent<Text>().text = "°ø°İÀÚ Æ÷ÇÔ 4Ä­ ¹İ°İ";
+            case "ê´‘ì—­ë°˜ê²©":
+                this.GetComponent<Text>().text = "ê³µê²©ì í¬í•¨ 4ì¹¸ ë°˜ê²©";
                 break;
-            case "±æµ¿¹«":
-                this.GetComponent<Text>().text = "ÀÚ½ÅÀ» »ìÀÎÇÑ Ä³¸¯ÅÍ¸¦ ÀÏÁ¤ È®·ü·Î Áï»ç";
+            case "ê¸¸ë™ë¬´":
+                this.GetComponent<Text>().text = "ìì‹ ì„ ì‚´ì¸í•œ ìºë¦­í„°ë¥¼ ì¼ì • í™•ë¥ ë¡œ ì¦‰ì‚¬";
                 break;
-            case "°ÌÀïÀÌ":
-                this.GetComponent<Text>().text = "¹æ¾î·Â Áõ°¡ ¹× ¾Æ±º »ç¸Á½Ã ¹æ¾î·Â °¨¼Ò";
+            case "ê²ìŸì´":
+                this.GetComponent<Text>().text = "ë°©ì–´ë ¥ ì¦ê°€ ë° ì•„êµ° ì‚¬ë§ì‹œ ë°©ì–´ë ¥ ê°ì†Œ";
                 break;
-            case "ÀÎ³»½É":
-                this.GetComponent<Text>().text = "1È¸ ÇÇ°İ ¹ŞÀº ÈÄ ¹æ¾î·Â Áõ°¡";
+            case "ì¸ë‚´ì‹¬":
+                this.GetComponent<Text>().text = "1íšŒ í”¼ê²© ë°›ì€ í›„ ë°©ì–´ë ¥ ì¦ê°€";
                 break;
-            case "Ã¥ÀÓ°¨":
-                this.GetComponent<Text>().text = "º»ÀÎ¸¸ÀÌ ¹æ¾îÇüÀÏ °æ¿ì ¾Æ±º ´É·ÂÄ¡ »ó½Â";
+            case "ì±…ì„ê°":
+                this.GetComponent<Text>().text = "ë³¸ì¸ë§Œì´ ë°©ì–´í˜•ì¼ ê²½ìš° ì•„êµ° ëŠ¥ë ¥ì¹˜ ìƒìŠ¹";
                 break;
-            case "¹«ÀåÇØÁ¦":
-                this.GetComponent<Text>().text = "°ø°İÇÑ ÀûÀÇ °ø°İ·Â °¨¼Ò";
+            case "ë¬´ì¥í•´ì œ":
+                this.GetComponent<Text>().text = "ê³µê²©í•œ ì ì˜ ê³µê²©ë ¥ ê°ì†Œ";
                 break;
-            case "¹æº®":
-                this.GetComponent<Text>().text = "ÈÄ¹æ¿¡ ÀÖ´Â ¾Æ±º ¹æ¾î·Â Áõ°¡";
+            case "ë°©ë²½":
+                this.GetComponent<Text>().text = "í›„ë°©ì— ìˆëŠ” ì•„êµ° ë°©ì–´ë ¥ ì¦ê°€";
                 break;
-            case "°İ·Á":
-                this.GetComponent<Text>().text = "ÇÇ°İ½Ã ÈÄ¹æ ¾Æ±º °ø°İ·Â Áõ°¡";
+            case "ê²©ë ¤":
+                this.GetComponent<Text>().text = "í”¼ê²©ì‹œ í›„ë°© ì•„êµ° ê³µê²©ë ¥ ì¦ê°€";
                 break;
-            case "°¡½Ã °©¿Ê":
-                this.GetComponent<Text>().text = "¹İ°İ½Ã °ø°İ·Â Áõ°¡";
+            case "ê°€ì‹œ ê°‘ì˜·":
+                this.GetComponent<Text>().text = "ë°˜ê²©ì‹œ ê³µê²©ë ¥ ì¦ê°€";
                 break;
 
                 

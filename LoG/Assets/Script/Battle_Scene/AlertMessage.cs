@@ -23,39 +23,39 @@ public class AlertMessage : MonoBehaviour
     public void CantAttack(GameObject attacker)
     {
         Character ACS = attacker.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "ÆÀ " + ACS.character_Number + "¹ø Ä³¸¯ÅÍ°¡ »ç¸ÁÇÏ¿© °ø°İ ÇÒ ¼ö ¾ø½À´Ï´Ù!";
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "íŒ€ " + ACS.character_Number + "ë²ˆ ìºë¦­í„°ê°€ ì‚¬ë§í•˜ì—¬ ê³µê²© í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤!";
     }
 
     public void Attack(GameObject attacker)
     {
         Character ACS = attacker.GetComponent<Character>();
-        this.GetComponent<Text>().text = ACS.character_Team_Number + "ÆÀ " + ACS.character_Number + "¹ø Ä³¸¯ÅÍÀÇ °ø°İ!";
+        this.GetComponent<Text>().text = ACS.character_Team_Number + "íŒ€ " + ACS.character_Number + "ë²ˆ ìºë¦­í„°ì˜ ê³µê²©!";
     }
 
     public void Dead(GameObject character)
     {
         Character CCS = character.GetComponent<Character>();
-        this.GetComponent<Text>().text = CCS.character_Team_Number + "ÆÀ " + CCS.character_Number + "¹ø Ä³¸¯ÅÍ »ç¸Á!";
+        this.GetComponent<Text>().text = CCS.character_Team_Number + "íŒ€ " + CCS.character_Number + "ë²ˆ ìºë¦­í„° ì‚¬ë§!";
     }
 
     public void Win()
     {
-        this.GetComponent<Text>().text = "½Â¸®ÇÏ¿´½À´Ï´Ù! Àá½Ã ÈÄ Àç¹èÄ¡¸¦ ½ÃÀÛÇÕ´Ï´Ù..";
+        this.GetComponent<Text>().text = "ìŠ¹ë¦¬í•˜ì˜€ìŠµë‹ˆë‹¤! ì ì‹œ í›„ ì¬ë°°ì¹˜ë¥¼ ì‹œì‘í•©ë‹ˆë‹¤..";
     }
 
     public void Lose()
     {
-        this.GetComponent<Text>().text = "ÆĞ¹èÇÏ¿´½À´Ï´Ù. Àá½Ã ÈÄ Àç¹èÄ¡¸¦ ½ÃÀÛÇÕ´Ï´Ù..";
+        this.GetComponent<Text>().text = "íŒ¨ë°°í•˜ì˜€ìŠµë‹ˆë‹¤. ì ì‹œ í›„ ì¬ë°°ì¹˜ë¥¼ ì‹œì‘í•©ë‹ˆë‹¤..";
     }
 
     public void Draw()
     {
-        this.GetComponent<Text>().text = "ºñ°å½À´Ï´Ù. Àá½Ã ÈÄ Àç¹èÄ¡¸¦ ½ÃÀÛÇÕ´Ï´Ù..";
+        this.GetComponent<Text>().text = "ë¹„ê²¼ìŠµë‹ˆë‹¤. ì ì‹œ í›„ ì¬ë°°ì¹˜ë¥¼ ì‹œì‘í•©ë‹ˆë‹¤..";
     }
 
     public void Counter(GameObject Counter)
     {
         Character CCS = Counter.GetComponent<Character>();
-        this.GetComponent<Text>().text = CCS.character_Team_Number + "ÆÀ " + CCS.character_Number + "¹ø Ä³¸¯ÅÍ ¹İ°İ!";
+        this.GetComponent<Text>().text = CCS.character_Team_Number + "íŒ€ " + CCS.character_Number + "ë²ˆ ìºë¦­í„° ë°˜ê²©!";
     }
 }

@@ -8,7 +8,7 @@ using CharacterStats;
 
 using Photon.Pun;
 
-// UserInventory¿¡ ÀÖ´Â À¯ÀúÀÇ ÀçÈ­¸¦ ¹ÙÅÁÀ¸·Î ¼­¹ö¿Í ¿¬µ¿ÇÏ´Â °÷
+// UserInventoryì— ìˆëŠ” ìœ ì €ì˜ ì¬í™”ë¥¼ ë°”íƒ•ìœ¼ë¡œ ì„œë²„ì™€ ì—°ë™í•˜ëŠ” ê³³
 public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
     [SerializeField] UIDataSynchronizer dataSynchronizer;
     public static string nickname = string.Empty;
@@ -18,7 +18,7 @@ public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
 
     void OnEnable() {
         if (!PlayFabClientAPI.IsClientLoggedIn())
-            Debug.LogError("·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.");
+            Debug.LogError("ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.");
         else
             GetUserDataFromServer();
     }
@@ -31,8 +31,8 @@ public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
             if (dataSynchronizer)
                 dataSynchronizer.UpdateAccountInfo();
 
-            print("°èÁ¤ Á¤º¸ ºÒ·¯¿À±â ¼º°ø");
-        }, (error) => print("°èÁ¤ Á¤º¸ ºÒ·¯¿À±â ½ÇÆĞ"));
+            print("ê³„ì • ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì„±ê³µ");
+        }, (error) => print("ê³„ì • ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨"));
 
         PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), (result) => {
             coin = result.VirtualCurrency["CO"];
@@ -51,8 +51,8 @@ public class UserDataSynchronizer : Singleton<UserDataSynchronizer> {
             if (dataSynchronizer)
                 dataSynchronizer.UpdateUserInventory();
 
-            print("ÀÎº¥Åä¸® ºÒ·¯¿À±â ¼º°ø");
+            print("ì¸ë²¤í† ë¦¬ ë¶ˆëŸ¬ì˜¤ê¸° ì„±ê³µ");
 
-        }, (error) => print("ÀÎº¥Åä¸® ºÒ·¯¿À±â ½ÇÆĞ"));
+        }, (error) => print("ì¸ë²¤í† ë¦¬ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨"));
     }
 }

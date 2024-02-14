@@ -4,7 +4,7 @@ using CharacterStats;
 
 using Photon.Pun;
 
-// Ä³¸¯ÅÍÀÇ ½ºÅÈÀ» ±â¹İÀ¸·Î Æ¯Á¤ Çàµ¿À» ÃëÇÏ´Â Å¬·¡½º
+// ìºë¦­í„°ì˜ ìŠ¤íƒ¯ì„ ê¸°ë°˜ìœ¼ë¡œ íŠ¹ì • í–‰ë™ì„ ì·¨í•˜ëŠ” í´ë˜ìŠ¤
 public class Character_Action : Character, IPunObservable
 {
     public GameObject hudDamageText;
@@ -76,7 +76,7 @@ public class Character_Action : Character, IPunObservable
 
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
 
-        // Àû Ä³¸¯ÅÍ¸¦ ¹Ş¾Æ¿Í¼­, ±× Ä³¸¯ÅÍÀÇ Á¤º¸¿¡ Á¢±ÙÇÏ¿© ¹ŞÀ» µ¥¹ÌÁö¿¡ °ø°İ·Â ¸¸Å­À» ÀúÀå½ÃÅ´.
+        // ì  ìºë¦­í„°ë¥¼ ë°›ì•„ì™€ì„œ, ê·¸ ìºë¦­í„°ì˜ ì •ë³´ì— ì ‘ê·¼í•˜ì—¬ ë°›ì„ ë°ë¯¸ì§€ì— ê³µê²©ë ¥ ë§Œí¼ì„ ì €ì¥ì‹œí‚´.
 
         Character_Action enemy_Character_Action;
         enemy_Character_Action = enemy_Character.GetComponent<Character_Action>();
@@ -88,7 +88,7 @@ public class Character_Action : Character, IPunObservable
             if (isCounter)
             {
                 damage = character_Attack_Damage;
-                enemy_Character_Action.Character_Counter_Damaged(this.gameObject, damage); // ¹ŞÀ» µ¥¹ÌÁö¿¡ °ªÀÌ ÀúÀåµÇÀÚ¸¶ÀÚ ÇÇ°İ ÇÔ¼ö ¹ßµ¿
+                enemy_Character_Action.Character_Counter_Damaged(this.gameObject, damage); // ë°›ì„ ë°ë¯¸ì§€ì— ê°’ì´ ì €ì¥ë˜ìë§ˆì í”¼ê²© í•¨ìˆ˜ ë°œë™
 
                 character_Counter = false;
             }
@@ -99,7 +99,7 @@ public class Character_Action : Character, IPunObservable
                 else
                     damage = (character_Attack_Damage * (100 + character_Buffed_Attack)) / 100;
 
-                enemy_Character_Action.Character_Damaged(this.gameObject, damage); // ¹ŞÀ» µ¥¹ÌÁö¿¡ °ªÀÌ ÀúÀåµÇÀÚ¸¶ÀÚ ÇÇ°İ ÇÔ¼ö ¹ßµ¿
+                enemy_Character_Action.Character_Damaged(this.gameObject, damage); // ë°›ì„ ë°ë¯¸ì§€ì— ê°’ì´ ì €ì¥ë˜ìë§ˆì í”¼ê²© í•¨ìˆ˜ ë°œë™
             }
         }
 
@@ -133,13 +133,13 @@ public class Character_Action : Character, IPunObservable
         yield return StartCoroutine(SetCharacterColor("blue"));
     }
 
-    public void Character_Damaged(GameObject attacker, int damage) // ÇÇ°İ ÇÔ¼ö
+    public void Character_Damaged(GameObject attacker, int damage) // í”¼ê²© í•¨ìˆ˜
     {
-        // ¹ŞÀ» µ¥¹ÌÁö¸¦ ´Ù½Ã °è»ê.
+        // ë°›ì„ ë°ë¯¸ì§€ë¥¼ ë‹¤ì‹œ ê³„ì‚°.
         StartCoroutine(SetCharacterColor("red"));
         StartCoroutine(Character_Counter());
 
-        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/attack") as AudioClip); // °ø°İ »ç¿îµå Àç»ı
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/attack") as AudioClip); // ê³µê²© ì‚¬ìš´ë“œ ì¬ìƒ
 
         int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
@@ -160,18 +160,18 @@ public class Character_Action : Character, IPunObservable
         if (character_HP == character_MaxHP && character_HP <= final_damage)
             is_overkill = true;
 
-        if (character_HP <= 0) // Ã¼·ÂÀÌ 0ÀÌÇÏ°¡µÇ¸é Ã¼·ÂÀ» 0À¸·Î ÃÊ±âÈ­ÇÏ°í »ç¸ÁÇÔ¼ö ¹ßµ¿
+        if (character_HP <= 0) // ì²´ë ¥ì´ 0ì´í•˜ê°€ë˜ë©´ ì²´ë ¥ì„ 0ìœ¼ë¡œ ì´ˆê¸°í™”í•˜ê³  ì‚¬ë§í•¨ìˆ˜ ë°œë™
         { 
             Character_Dead(attacker);
         }
 
     }
 
-    public void Character_Counter_Damaged(GameObject attacker, int damage) // Ä«¿îÅÍ ¹ßµ¿
+    public void Character_Counter_Damaged(GameObject attacker, int damage) // ì¹´ìš´í„° ë°œë™
     {
         StartCoroutine(SetCharacterColor("red"));
 
-        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/attack") as AudioClip); // °ø°İ »ç¿îµå Àç»ı
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/attack") as AudioClip); // ê³µê²© ì‚¬ìš´ë“œ ì¬ìƒ
 
         int final_damage = (damage * (100 - character_Buffed_Damaged)) / 100;
 
@@ -184,7 +184,7 @@ public class Character_Action : Character, IPunObservable
         is_hit_this_turn = true;
         character_HP -= final_damage;
 
-        if (character_HP <= 0) // Ã¼·ÂÀÌ 0ÀÌÇÏ°¡µÇ¸é Ã¼·ÂÀ» 0À¸·Î ÃÊ±âÈ­ÇÏ°í »ç¸ÁÇÔ¼ö ¹ßµ¿
+        if (character_HP <= 0) // ì²´ë ¥ì´ 0ì´í•˜ê°€ë˜ë©´ ì²´ë ¥ì„ 0ìœ¼ë¡œ ì´ˆê¸°í™”í•˜ê³  ì‚¬ë§í•¨ìˆ˜ ë°œë™
         {
             Character_Dead(attacker);
         }
@@ -205,7 +205,7 @@ public class Character_Action : Character, IPunObservable
         prevCounterRand = nowCounterRand;
     }
 
-    public void Character_Dead(GameObject attacker) // Ä³¸¯ÅÍ »ç¸Á ÇÔ¼ö. ¾Æ¸¶ ³ªÁß¿¡ ¹«¾ğ°¡°¡ ´õ Ãß°¡µÇ°ÚÁö?
+    public void Character_Dead(GameObject attacker) // ìºë¦­í„° ì‚¬ë§ í•¨ìˆ˜. ì•„ë§ˆ ë‚˜ì¤‘ì— ë¬´ì–¸ê°€ê°€ ë” ì¶”ê°€ë˜ê² ì§€?
     {
         Debug.Log(character_Num_Of_Grid + " is Dead");
         character_HP = 0;
@@ -226,7 +226,7 @@ public class Character_Action : Character, IPunObservable
         yield return new WaitForSeconds(BattleManager.Instance.bM_AttackTimegap);
     }
 
-    #region Æ÷Åæ µ¥ÀÌÅÍ ±³È¯, IPunObservable ÀÎÅÍÆäÀÌ½º »ó¼Ó
+    #region í¬í†¤ ë°ì´í„° êµí™˜, IPunObservable ì¸í„°í˜ì´ìŠ¤ ìƒì†
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo message)
     {
         if (stream.IsWriting)

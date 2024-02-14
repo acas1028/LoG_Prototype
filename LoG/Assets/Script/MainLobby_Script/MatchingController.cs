@@ -38,34 +38,34 @@ public class MatchingController : MonoBehaviourPunCallbacks
 
 		// we check if we are connected or not, we join if we are , else we initiate the connection to the server.
 		if (PhotonNetwork.IsConnected) {
-			// offline mode = true ÀÎ °æ¿ì Áï½Ã PhotonNetwork.IsConnected = true °¡ µÈ´Ù.
-			Debug.Log("<color=lightblue>ÇöÀç ¼­¹ö¿Í ¿¬°áµÇ¾îÀÖ°Å³ª ¿ÀÇÁ¶óÀÎ ¸ğµåÀÔ´Ï´Ù. ·ë¿¡ ÀÔÀåÇÕ´Ï´Ù.</color>");
+			// offline mode = true ì¸ ê²½ìš° ì¦‰ì‹œ PhotonNetwork.IsConnected = true ê°€ ëœë‹¤.
+			Debug.Log("<color=lightblue>í˜„ì¬ ì„œë²„ì™€ ì—°ê²°ë˜ì–´ìˆê±°ë‚˜ ì˜¤í”„ë¼ì¸ ëª¨ë“œì…ë‹ˆë‹¤. ë£¸ì— ì…ì¥í•©ë‹ˆë‹¤.</color>");
 			// #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else {
-			Debug.Log("<color=lightblue>ÇöÀç ¼­¹ö¿Í ¿¬°áµÇ¾îÀÖÁö ¾Ê¾Æ »õ·Î ¿¬°áÀ» ½ÃµµÇÕ´Ï´Ù.</color>");
+			Debug.Log("<color=lightblue>í˜„ì¬ ì„œë²„ì™€ ì—°ê²°ë˜ì–´ìˆì§€ ì•Šì•„ ìƒˆë¡œ ì—°ê²°ì„ ì‹œë„í•©ë‹ˆë‹¤.</color>");
 			// #Critical, we must first and foremost connect to Photon Online Server.
 
 			PhotonNetwork.ConnectUsingSettings();
 		}
 	}
 
-	#region Æ÷Åæ Äİ¹é ÇÔ¼ö
+	#region í¬í†¤ ì½œë°± í•¨ìˆ˜
 	public override void OnConnectedToMaster() {
-		// ÃÖÃÊ·Î ¸¶½ºÅÍ ¼­¹ö¿¡ ¿¬°áµÆÀ» ¶§ Äİ¹éµÇ´Â ÇÔ¼ö
+		// ìµœì´ˆë¡œ ë§ˆìŠ¤í„° ì„œë²„ì— ì—°ê²°ëì„ ë•Œ ì½œë°±ë˜ëŠ” í•¨ìˆ˜
 		// we don't want to do anything if we are not attempting to join a room. 
 		// this case where isConnecting is false is typically when you lost or quit the game, when this level is loaded, OnConnectedToMaster will be called, in that case
 		// we don't want to do anything.
 
-		Debug.Log("<color=yellow>OnConnectedToMaster() È£Ãâ\n¸¶½ºÅÍ ¼­¹ö ¿¬°áµÊ</color>");
+		Debug.Log("<color=yellow>OnConnectedToMaster() í˜¸ì¶œ\në§ˆìŠ¤í„° ì„œë²„ ì—°ê²°ë¨</color>");
 
 		if (!PhotonNetwork.OfflineMode)
 			PhotonNetwork.JoinRandomRoom();
 	}
 
 	public override void OnJoinRandomFailed(short returnCode, string message) {
-		Debug.Log("<color=yellow>OnJoinRandomFailed() È£Ãâ\nÀÔÀå °¡´ÉÇÑ ·ëÀÌ ¾ø¾î »õ ·ëÀ» ¸¸µì´Ï´Ù.</color>");
+		Debug.Log("<color=yellow>OnJoinRandomFailed() í˜¸ì¶œ\nì…ì¥ ê°€ëŠ¥í•œ ë£¸ì´ ì—†ì–´ ìƒˆ ë£¸ì„ ë§Œë“­ë‹ˆë‹¤.</color>");
 
 		string roomName = "Room " + Random.Range(1, 100);
 
@@ -73,11 +73,11 @@ public class MatchingController : MonoBehaviourPunCallbacks
 	}
 
 	public override void OnDisconnected(DisconnectCause cause) {
-		Debug.LogWarning("<color=yellow>Disconnected\n¿¬°á ÇØÁ¦µÊ</color>");
+		Debug.LogWarning("<color=yellow>Disconnected\nì—°ê²° í•´ì œë¨</color>");
 	}
 
 	public override void OnJoinedRoom() {
-		Debug.Log("<color=yellow>OnJoinedRoom() È£Ãâ\nÀÌÁ¦ ´ç½ÅÀº ·ë¿¡ ÀÖ½À´Ï´Ù. ¿©±â¼­ ´ç½ÅÀÇ °ÔÀÓÀÌ ½ÃÀÛµË´Ï´Ù.</color>");
+		Debug.Log("<color=yellow>OnJoinedRoom() í˜¸ì¶œ\nì´ì œ ë‹¹ì‹ ì€ ë£¸ì— ìˆìŠµë‹ˆë‹¤. ì—¬ê¸°ì„œ ë‹¹ì‹ ì˜ ê²Œì„ì´ ì‹œì‘ë©ë‹ˆë‹¤.</color>");
 
 		if (roomType == ROOM_TYPE.PVE)
 			PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_SCENE);

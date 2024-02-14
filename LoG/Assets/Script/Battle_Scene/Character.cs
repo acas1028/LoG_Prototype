@@ -16,75 +16,75 @@ namespace CharacterStats
 
     public enum CharacterSkill
     {
-        Attack_Confidence,          // ÀÚ½Å°¨
-        Attack_Executioner,         // Ã³ÇüÀÚ
-        Attack_Struggle,            // ¹ß¾Ç
-        Attack_Ranger,              // ¸í»ç¼ö
-        Attack_ArmorPiercer,        // Ã¶°©Åº
-        Attack_DivineShield,        // Ãµ»óÀÇº¸È£¸·
-        Attack_Sturdy,              // ¿Ë°ñÂü(±âÇÕ)
+        Attack_Confidence,          // ìì‹ ê°
+        Attack_Executioner,         // ì²˜í˜•ì
+        Attack_Struggle,            // ë°œì•…
+        Attack_Ranger,              // ëª…ì‚¬ìˆ˜
+        Attack_ArmorPiercer,        // ì² ê°‘íƒ„
+        Attack_DivineShield,        // ì²œìƒì˜ë³´í˜¸ë§‰
+        Attack_Sturdy,              // ì˜¹ê³¨ì°¸(ê¸°í•©)
         Attack_Null,
-        Balance_Blessing,           // Ãàº¹
-        Balance_GBGH,               // ¸ğ¾Æ´Ï¸é µµ
-        Balance_Smoke,              // ¿¬¸·Åº
-        Balance_Survivor,           // »ıÁ¸ÀÚ
-        Balance_Curse,              // ÀúÁÖ
-        Balance_WideCounter,        // ±¤¿ª¹İ°İ
-        Balance_DestinyBond,        // ±æµ¿¹« 
+        Balance_Blessing,           // ì¶•ë³µ
+        Balance_GBGH,               // ëª¨ì•„ë‹ˆë©´ ë„
+        Balance_Smoke,              // ì—°ë§‰íƒ„
+        Balance_Survivor,           // ìƒì¡´ì
+        Balance_Curse,              // ì €ì£¼
+        Balance_WideCounter,        // ê´‘ì—­ë°˜ê²©
+        Balance_DestinyBond,        // ê¸¸ë™ë¬´ 
         Balance_Null,
-        Defense_Disarm,             // ¹«ÀåÇØÁ¦
-        Defense_Coward,             // °ÌÀïÀÌ
-        Defense_Patience,           // ÀÎ³»½É
-        Defense_Responsibility,     // Ã¥ÀÓ°¨
-        Defense_Barrier,            // ¹æº®
-        Defense_Encourage,          // °İ·Á
-        Defense_Thornmail,          // °¡½Ã°©¿Ê
+        Defense_Disarm,             // ë¬´ì¥í•´ì œ
+        Defense_Coward,             // ê²ìŸì´
+        Defense_Patience,           // ì¸ë‚´ì‹¬
+        Defense_Responsibility,     // ì±…ì„ê°
+        Defense_Barrier,            // ë°©ë²½
+        Defense_Encourage,          // ê²©ë ¤
+        Defense_Thornmail,          // ê°€ì‹œê°‘ì˜·
         Defense_Null,
         Null
 
     };
 }
 
-// Ä³¸¯ÅÍÀÇ ½ºÅÈÀ» °¡Áö°í ÀÖ´Â Å¬·¡½º
+// ìºë¦­í„°ì˜ ìŠ¤íƒ¯ì„ ê°€ì§€ê³  ìˆëŠ” í´ë˜ìŠ¤
 public class Character : MonoBehaviourPunCallbacks
 {
     public CharacterSpriteManager spriteManager;
 
-    // ÀüÅõ Àü Ä³¸¯ÅÍ°¡ ±âº»À¸·Î °¡Áö°í ÀÖ´Â º¯¼ö
+    // ì „íˆ¬ ì „ ìºë¦­í„°ê°€ ê¸°ë³¸ìœ¼ë¡œ ê°€ì§€ê³  ìˆëŠ” ë³€ìˆ˜
     // Original Variables
-    public int character_ID; // Ä³¸¯ÅÍ ID
+    public int character_ID; // ìºë¦­í„° ID
     public CharacterType character_Type;
     public CharacterSkill character_Skill;
-    public bool character_Is_Allive; // Ä³¸¯ÅÍ »ıÁ¸ À¯¹«
-    public int character_HP; // ÇöÀç Ã¼·Â
+    public bool character_Is_Allive; // ìºë¦­í„° ìƒì¡´ ìœ ë¬´
+    public int character_HP; // í˜„ì¬ ì²´ë ¥
 
     public int character_MaxHP { get; set; }
     public int character_AP { get; set; } // AP
-    public int character_Attack_Damage; // °ø°İ·Â
-    public int character_Num_Of_Grid; // ±×¸®µå ³Ñ¹ö
-    public int character_Attack_Order; // °ø°İ ¼ø¼­
-    public bool[] character_Attack_Range; // °ø°İ ¹üÀ§
-    public int character_Counter_Probability { get; set; } // ¹İ°İÈ®·ü
-    // ÀüÅõ Áß È°¼ºÈ­µÇ´Â º¯¼ö
+    public int character_Attack_Damage; // ê³µê²©ë ¥
+    public int character_Num_Of_Grid; // ê·¸ë¦¬ë“œ ë„˜ë²„
+    public int character_Attack_Order; // ê³µê²© ìˆœì„œ
+    public bool[] character_Attack_Range; // ê³µê²© ë²”ìœ„
+    public int character_Counter_Probability { get; set; } // ë°˜ê²©í™•ë¥ 
+    // ì „íˆ¬ ì¤‘ í™œì„±í™”ë˜ëŠ” ë³€ìˆ˜
     // Battle-Oriented Variables
-    public int character_Number { get; set; }  // ~~¹ø Ä³¸¯ÅÍ °ø°İ!ÇÒ¶§ ¾²´Â º¯¼ö
-    public int character_Team_Number { get; set; } // ÆÀ ±¸ºĞ
-    public int character_Buffed_Attack { get; set; } // °¡ÇÏ´Â ÇÇÇØ Áõ°¡·®
-    public int character_Buffed_Damaged { get; set; } // ¹Ş´Â ÇÇÇØ Áõ°¡·®
-    public bool character_Counter { get; set; } //ÇØ´ç ÅÏ¿¡ ÇÇ°İ´çÇÏ¿©, Ä«¿îÅÍ¸¦ Ä¡´ÂÁö ÆÇ´ÜÇÏ´Â º¯¼ö
-    public bool character_is_Killed { get; set; } //  ÇØ´ç ÅÏ¿¡ »ç¸ÁÇß´ÂÁö¸¦ ÆÇ´ÜÇÏ´Â º¯¼ö
-    public int character_is_Kill { get; set; } // ÇØ´ç ÅÏ¿¡ ÀûÀ» Á×¿´´ÂÁö¸¦ ÆÇ´ÜÇÏ´Â º¯¼ö
-    public bool character_Divine_Shield { get; set; } // Ãµ»óÀÇ º¸È£¸· À¯/¹« true = ÀÖÀ½ false = ¾øÀ½
-    public bool is_patience_buffed { get; set; } // ÀÎ³»½É ¹öÇÁ°¡ ÄÑÁ®ÀÖ´Â°¡? (ÀÎ³»½ÉÄ³¸¯ÅÍ¸¸ Àû¿ë)
+    public int character_Number { get; set; }  // ~~ë²ˆ ìºë¦­í„° ê³µê²©!í• ë•Œ ì“°ëŠ” ë³€ìˆ˜
+    public int character_Team_Number { get; set; } // íŒ€ êµ¬ë¶„
+    public int character_Buffed_Attack { get; set; } // ê°€í•˜ëŠ” í”¼í•´ ì¦ê°€ëŸ‰
+    public int character_Buffed_Damaged { get; set; } // ë°›ëŠ” í”¼í•´ ì¦ê°€ëŸ‰
+    public bool character_Counter { get; set; } //í•´ë‹¹ í„´ì— í”¼ê²©ë‹¹í•˜ì—¬, ì¹´ìš´í„°ë¥¼ ì¹˜ëŠ”ì§€ íŒë‹¨í•˜ëŠ” ë³€ìˆ˜
+    public bool character_is_Killed { get; set; } //  í•´ë‹¹ í„´ì— ì‚¬ë§í–ˆëŠ”ì§€ë¥¼ íŒë‹¨í•˜ëŠ” ë³€ìˆ˜
+    public int character_is_Kill { get; set; } // í•´ë‹¹ í„´ì— ì ì„ ì£½ì˜€ëŠ”ì§€ë¥¼ íŒë‹¨í•˜ëŠ” ë³€ìˆ˜
+    public bool character_Divine_Shield { get; set; } // ì²œìƒì˜ ë³´í˜¸ë§‰ ìœ /ë¬´ true = ìˆìŒ false = ì—†ìŒ
+    public bool is_patience_buffed { get; set; } // ì¸ë‚´ì‹¬ ë²„í”„ê°€ ì¼œì ¸ìˆëŠ”ê°€? (ì¸ë‚´ì‹¬ìºë¦­í„°ë§Œ ì ìš©)
     public GameObject killedBy { get; set; }
-    public bool is_hit_this_turn { get; set; } //ÇÇ°İ ½Ã ¹ßµ¿µÇ´Â ½ºÅ³À» À§ÇÑ º¯¼ö
+    public bool is_hit_this_turn { get; set; } //í”¼ê²© ì‹œ ë°œë™ë˜ëŠ” ìŠ¤í‚¬ì„ ìœ„í•œ ë³€ìˆ˜
 
     public bool is_overkill { get; set; }
 
     public bool is_Pve { get; set; }
     public int stack_Survivor { get; set; }
 
-    protected List<Dictionary<string, object>> character_data; // µ¥ÀÌÅÍ ÀúÀå¼Ò
+    protected List<Dictionary<string, object>> character_data; // ë°ì´í„° ì €ì¥ì†Œ
 
     private void Awake()
     {
@@ -99,10 +99,10 @@ public class Character : MonoBehaviourPunCallbacks
 
     }
 
-    public void Character_Reset() // Ä³¸¯ÅÍÀÇ Á¤º¸¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+    public void Character_Reset() // ìºë¦­í„°ì˜ ì •ë³´ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
     {
         character_ID = 0;
-        character_Type = CharacterType.Null;  //ÃÊ±âÈ­ ºÎºĞ¿¡¼­ ÀÌÂÊÀÌ ±âÁ¸ °ÍÀ¸·Î µÇ¾î ÀÖ¾î ¼öÁ¤ÇØ³õ¾Ò½À´Ï´Ù.
+        character_Type = CharacterType.Null;  //ì´ˆê¸°í™” ë¶€ë¶„ì—ì„œ ì´ìª½ì´ ê¸°ì¡´ ê²ƒìœ¼ë¡œ ë˜ì–´ ìˆì–´ ìˆ˜ì •í•´ë†“ì•˜ìŠµë‹ˆë‹¤.
         character_Skill = CharacterSkill.Null;
         character_Is_Allive = true;
         character_MaxHP = 0;
@@ -131,17 +131,17 @@ public class Character : MonoBehaviourPunCallbacks
 
     protected void setting_type(int num)
     {
-        if ((string)character_data[num]["Type"] == "°ø°İÇü")
+        if ((string)character_data[num]["Type"] == "ê³µê²©í˜•")
         {
             character_Type = CharacterType.Attacker;
         }
 
-        if ((string)character_data[num]["Type"] == "¹ë·±½ºÇü")
+        if ((string)character_data[num]["Type"] == "ë°¸ëŸ°ìŠ¤í˜•")
         {
             character_Type = CharacterType.Balance;
         }
 
-        if ((string)character_data[num]["Type"] == "¹æ¾îÇü")
+        if ((string)character_data[num]["Type"] == "ë°©ì–´í˜•")
         {
             character_Type = CharacterType.Defender;
         }
@@ -155,67 +155,67 @@ public class Character : MonoBehaviourPunCallbacks
 
         switch ((string)character_data[num]["Skill"])
         {
-            case "ÀÚ½Å°¨":
+            case "ìì‹ ê°":
                 character_Skill = CharacterSkill.Attack_Confidence;
                 break;
-            case "Ã³ÇüÀÚ":
+            case "ì²˜í˜•ì":
                 character_Skill = CharacterSkill.Attack_Executioner;
                 break;
-            case "¹ß¾Ç":
+            case "ë°œì•…":
                 character_Skill = CharacterSkill.Attack_Struggle;
                 break;
-            case "¸í»ç¼ö":
+            case "ëª…ì‚¬ìˆ˜":
                 character_Skill = CharacterSkill.Attack_Ranger;
                 break;
-            case "Ã¶°©Åº":
+            case "ì² ê°‘íƒ„":
                 character_Skill = CharacterSkill.Attack_ArmorPiercer;
                 break;
-            case "Ãµ»óÀÇº¸È£¸·":
+            case "ì²œìƒì˜ë³´í˜¸ë§‰":
                 character_Skill = CharacterSkill.Attack_DivineShield;
                 break;
-            case "±âÇÕ":
+            case "ê¸°í•©":
                 character_Skill = CharacterSkill.Attack_Sturdy;
                 break;
-            case "Ãàº¹":
+            case "ì¶•ë³µ":
                 character_Skill = CharacterSkill.Balance_Blessing;
                 break;
-            case "¸ğ¾Æ´Ï¸éµµ":
+            case "ëª¨ì•„ë‹ˆë©´ë„":
                 character_Skill = CharacterSkill.Balance_GBGH;
                 break;
-            case "¹«ÀåÇØÁ¦":
+            case "ë¬´ì¥í•´ì œ":
                 character_Skill = CharacterSkill.Defense_Disarm;
                 break;
-            case "¿¬¸·Åº":
+            case "ì—°ë§‰íƒ„":
                 character_Skill = CharacterSkill.Balance_Smoke;
                 break;
-            case "»ıÁ¸ÀÚ":
+            case "ìƒì¡´ì":
                 character_Skill = CharacterSkill.Balance_Survivor;
                 break;
-            case "ÀúÁÖ":
+            case "ì €ì£¼":
                 character_Skill = CharacterSkill.Balance_Curse;
                 break;
-            case "±¤¿ª¹İ°İ":
+            case "ê´‘ì—­ë°˜ê²©":
                 character_Skill = CharacterSkill.Balance_WideCounter;
                 break;
-            case "±æµ¿¹«":
+            case "ê¸¸ë™ë¬´":
                 character_Skill = CharacterSkill.Balance_DestinyBond;
                 break;
-            case "°ÌÀïÀÌ":
+            case "ê²ìŸì´":
                 character_Skill = CharacterSkill.Defense_Coward;
                 break;
-            case "ÀÎ³»½É":
+            case "ì¸ë‚´ì‹¬":
                 character_Skill = CharacterSkill.Defense_Patience;
                 break;
-            case "Ã¥ÀÓ°¨":
+            case "ì±…ì„ê°":
                 character_Skill = CharacterSkill.Defense_Responsibility;
                 break;
-            case "¹æº®":
+            case "ë°©ë²½":
                 character_Skill = CharacterSkill.Defense_Barrier;
                 break;
-            case "°İ·Á":
+            case "ê²©ë ¤":
                 character_Skill = CharacterSkill.Defense_Encourage;
                 break;
-            case "°¡½Ã°©¿Ê":
+            case "ê°€ì‹œê°‘ì˜·":
                 character_Skill = CharacterSkill.Defense_Thornmail;
                 break;
             case "Null":
@@ -235,15 +235,15 @@ public class Character : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Character_Setting(int num) // µ¥ÀÌÅÍ ¼¼ÆÃ
+    public void Character_Setting(int num) // ë°ì´í„° ì„¸íŒ…
     {
-        //µ¥ÀÌÅÍ ¼¼ÆÃ.
+        //ë°ì´í„° ì„¸íŒ….
 
-        // È¤½Ã³ª »ç¿ë¹ı ±Ã±İÇÒ±îºÁ ³²±â´Â ÁÖ¼®
-        // character_data ¿¡ ¸ğµç µ¥ÀÌÅÍµéÀÌ ÀúÀåµÇ°í,
-        // ±× µ¥ÀÌÅÍÀÇ »ç¿ë¹ıÀº ÀÌ·¯ÇÏ´Ù
-        // character_data[¿øÇÏ´Â Çà(°¡·ÎÁÙ)]["¿øÇÏ´Â º¯¼ö"]
-        // ¾µÀÏ¾ø±â¸¦ ¹Ù¶÷. ¾îÂ÷ÇÇ ÃÊ±âÈ­¿ëµµÀÓ.
+        // í˜¹ì‹œë‚˜ ì‚¬ìš©ë²• ê¶ê¸ˆí• ê¹Œë´ ë‚¨ê¸°ëŠ” ì£¼ì„
+        // character_data ì— ëª¨ë“  ë°ì´í„°ë“¤ì´ ì €ì¥ë˜ê³ ,
+        // ê·¸ ë°ì´í„°ì˜ ì‚¬ìš©ë²•ì€ ì´ëŸ¬í•˜ë‹¤
+        // character_data[ì›í•˜ëŠ” í–‰(ê°€ë¡œì¤„)]["ì›í•˜ëŠ” ë³€ìˆ˜"]
+        // ì“¸ì¼ì—†ê¸°ë¥¼ ë°”ëŒ. ì–´ì°¨í”¼ ì´ˆê¸°í™”ìš©ë„ì„.
 
         character_data = CSVReader.Read("Character_DB");
 
@@ -261,7 +261,7 @@ public class Character : MonoBehaviourPunCallbacks
         character_Counter_Probability = (int)character_data[num]["Counter_Probability"];
     }
 
-    public void Copy_Character_Stat(GameObject copyObject) // Ä³¸¯ÅÍ½ºÅ©¸³Æ® ³»ÀÇ º¯¼öµéÀ» º¹»çÇÏ´Â ÇÔ¼ö
+    public void Copy_Character_Stat(GameObject copyObject) // ìºë¦­í„°ìŠ¤í¬ë¦½íŠ¸ ë‚´ì˜ ë³€ìˆ˜ë“¤ì„ ë³µì‚¬í•˜ëŠ” í•¨ìˆ˜
     {
         Character copy = copyObject.GetComponent<Character>();
         character_Skill = copy.character_Skill;
@@ -287,7 +287,7 @@ public class Character : MonoBehaviourPunCallbacks
 
     }
 
-    // PVE ÄÁÅÙÃ÷¿ë ÇÔ¼ö
+    // PVE ì»¨í…ì¸ ìš© í•¨ìˆ˜
     public void PVE_Player_Character_Setting(int num,string StageName)
     {
         character_data = CSVReader.Read(StageName);

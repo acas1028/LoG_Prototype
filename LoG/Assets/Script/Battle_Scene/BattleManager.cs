@@ -28,14 +28,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
     int roundWinCount;
     int roundCount;
 
-    // ½Ì±ÛÅæ ÆĞÅÏÀ» »ç¿ëÇÏ±â À§ÇÑ ÀÎ½ºÅÏ½º º¯¼ö
+    // ì‹±ê¸€í†¤ íŒ¨í„´ì„ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ ë³€ìˆ˜
     private static BattleManager _instance;
-    // ÀÎ½ºÅÏ½º¿¡ Á¢±ÙÇÏ±â À§ÇÑ ÇÁ·ÎÆÛÆ¼
+    // ì¸ìŠ¤í„´ìŠ¤ì— ì ‘ê·¼í•˜ê¸° ìœ„í•œ í”„ë¡œí¼í‹°
     public static BattleManager Instance
     {
         get
         {
-            // ÀÎ½ºÅÏ½º°¡ ¾ø´Â °æ¿ì¿¡ Á¢±ÙÇÏ·Á ÇÏ¸é ÀÎ½ºÅÏ½º¸¦ ÇÒ´çÇØÁØ´Ù.
+            // ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ëŠ” ê²½ìš°ì— ì ‘ê·¼í•˜ë ¤ í•˜ë©´ ì¸ìŠ¤í„´ìŠ¤ë¥¼ í• ë‹¹í•´ì¤€ë‹¤.
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(BattleManager)) as BattleManager;
@@ -52,7 +52,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             _instance = this;
         }
-        // ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ´Â °æ¿ì »õ·Î»ı±â´Â ÀÎ½ºÅÏ½º¸¦ »èÁ¦ÇÑ´Ù.
+        // ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš° ìƒˆë¡œìƒê¸°ëŠ” ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì‚­ì œí•œë‹¤.
         else if (_instance != this)
         {
             Destroy(gameObject);
@@ -79,7 +79,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 bM_Team1_Is_Preemitive = false;
         }
         else {
-            Debug.LogError("[Room CustomProperties] IsPVE ÇÁ·ÎÆÛÆ¼¸¦ ¼³Á¤ÇÏÁö ¾Ê¾Ò½À´Ï´Ù. Á¾·áÇÕ´Ï´Ù.");
+            Debug.LogError("[Room CustomProperties] IsPVE í”„ë¡œí¼í‹°ë¥¼ ì„¤ì •í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. ì¢…ë£Œí•©ë‹ˆë‹¤.");
             yield return null;
         }
 
@@ -97,7 +97,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.OfflineMode || (bool)o_isPVE == true)
                 bM_Character_Team2.Add(Instantiate(Character_Prefab));
-            // ¿Â¶óÀÎ È¯°æ¿¡¼­ bM_Character_Team2 ÀÇ Ä³¸¯ÅÍ ÀÎ½ºÅÏ½º´Â Character_Action ½ºÅ©¸³Æ®ÀÇ Start ºÎºĞ¿¡¼­ µî·ÏµÈ´Ù.
+            // ì˜¨ë¼ì¸ í™˜ê²½ì—ì„œ bM_Character_Team2 ì˜ ìºë¦­í„° ì¸ìŠ¤í„´ìŠ¤ëŠ” Character_Action ìŠ¤í¬ë¦½íŠ¸ì˜ Start ë¶€ë¶„ì—ì„œ ë“±ë¡ëœë‹¤.
         }
 
         yield return new WaitUntil(() => { return bM_Character_Team2.Count >= 5; });
@@ -142,7 +142,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 }
             }
 
-            // Ä³¸¯ÅÍ ¼¼ÆÃ ÀÌÈÄ ½ºÅ³Ã¼Å© °úÁ¤
+            // ìºë¦­í„° ì„¸íŒ… ì´í›„ ìŠ¤í‚¬ì²´í¬ ê³¼ì •
         }
         while (bM_Phase >= 0 && bM_Phase < 10)
         {
@@ -150,7 +150,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             yield return StartCoroutine(Battle(bM_Phase));
         }
 
-        Debug.Log("°ÔÀÓ Á¾·á");
+        Debug.Log("ê²Œì„ ì¢…ë£Œ");
         Finish_Game();
     }
 
@@ -179,7 +179,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         int dummy = 0;
         Arrayed_Data data = Arrayed_Data.instance;
         if (data == null)
-            Debug.LogError("Arrayed_Data ÀÎ½ºÅÏ½º°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError("Arrayed_Data ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ìŠµë‹ˆë‹¤.");
 
         for (int i = 0; i < 5; i++)
         {
@@ -238,14 +238,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
         return dummy;
     }
 
-    IEnumerator Character_Attack(GameObject attacker, List<GameObject> enemy_Characters) //Ä³¸¯ÅÍ °ø°İ
+    IEnumerator Character_Attack(GameObject attacker, List<GameObject> enemy_Characters) //ìºë¦­í„° ê³µê²©
     {
         bool result;
-        Debug.LogFormat("<color=red>Character_Attack ÄÚ·çÆ¾ ½ÃÀÛ, °ø°İÀÚ: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
-        // °ø°İ ÇÏ´Â Ä³¸¯ÅÍ¿Í, ÀûÀÇ ¸ğµç Ä³¸¯ÅÍµé, °ø°İ ÇÒ À§Ä¡¸¦ ¹Ş¾Æ¿Â´Ù.
-        // ÀûÀÇ ¸ğµç Ä³¸¯ÅÍµéÀ» Å½»öÇÏ¿©, °ø°İ ÇÒ À§Ä¡¿¡ Á¸ÀçÇÏ°í, »ì¾ÆÀÖ´Â Ä³¸¯ÅÍ¸¦ °ø°İÇÑ´Ù.
+        Debug.LogFormat("<color=red>Character_Attack ì½”ë£¨í‹´ ì‹œì‘, ê³µê²©ì: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
+        // ê³µê²© í•˜ëŠ” ìºë¦­í„°ì™€, ì ì˜ ëª¨ë“  ìºë¦­í„°ë“¤, ê³µê²© í•  ìœ„ì¹˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.
+        // ì ì˜ ëª¨ë“  ìºë¦­í„°ë“¤ì„ íƒìƒ‰í•˜ì—¬, ê³µê²© í•  ìœ„ì¹˜ì— ì¡´ì¬í•˜ê³ , ì‚´ì•„ìˆëŠ” ìºë¦­í„°ë¥¼ ê³µê²©í•œë‹¤.
 
-        result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // ½ºÅ³ ¹ßµ¿ ½ÃÁ¡ Ã¼Å©
+        result = SkillManager.Instance.BeforeAttack(attacker, enemy_Characters); // ìŠ¤í‚¬ ë°œë™ ì‹œì  ì²´í¬
         if (result)
         {
             alertMessage.gameObject.SetActive(false);
@@ -254,7 +254,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         for (int j = 0; j < 9; j++)
         {
-            if (attacker.GetComponent<Character>().character_Attack_Range[j] == true) // °ø°İ¹üÀ§¸¸Å­ °ø°İÇÑ´Ù.
+            if (attacker.GetComponent<Character>().character_Attack_Range[j] == true) // ê³µê²©ë²”ìœ„ë§Œí¼ ê³µê²©í•œë‹¤.
             {
                 if (attacker.GetComponent<Character>().character_Team_Number == 1)
                     GridManager.Instance.Create_Damaged_Grid_Team2(j + 1);
@@ -297,7 +297,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             alertMessage.gameObject.SetActive(false);
             yield return StartCoroutine(attacker.GetComponent<Character_Action>().SetCharacterColor("blue"));
         }
-        // ¾Æ·¡ ÄÚ·çÆ¾ÀÌ ³¡³¯ ¶§ ±îÁö ´ë±â(¹İ°İ)
+        // ì•„ë˜ ì½”ë£¨í‹´ì´ ëë‚  ë•Œ ê¹Œì§€ ëŒ€ê¸°(ë°˜ê²©)
         yield return StartCoroutine(Counter(attacker, enemy_Characters));
 
         result = Check_Character_Dead();
@@ -314,7 +314,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             yield return StartCoroutine(Hitted());
         }
 
-        result = SkillManager.Instance.AfterCounterAttack(attacker, enemy_Characters); // ½ºÅ³ ¹ßµ¿ ½ÃÁ¡ Ã¼Å©
+        result = SkillManager.Instance.AfterCounterAttack(attacker, enemy_Characters); // ìŠ¤í‚¬ ë°œë™ ì‹œì  ì²´í¬
         if (result)
         {
             alertMessage.gameObject.SetActive(false);
@@ -328,7 +328,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             yield return StartCoroutine(Dead());
         }
 
-        Debug.LogFormat("<color=lightblue>Character_Attack ÄÚ·çÆ¾ Á¾·á, °ø°İÀÚ: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
+        Debug.LogFormat("<color=lightblue>Character_Attack ì½”ë£¨í‹´ ì¢…ë£Œ, ê³µê²©ì: {0}</color>", attacker.GetComponent<Character>().character_Attack_Order);
     }
 
     bool Check_Character_Dead()
@@ -379,7 +379,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
                     GameObject CowardCharacter = FindSurvivorCharacter(1);
                     yield return StartCoroutine((CowardCharacter.GetComponent<Character>() as Character_Action).SkillAttack());
                 }
-                // ºĞ¸®ÇØº¸ÀÚ.
+                // ë¶„ë¦¬í•´ë³´ì.
             }
             if(Team1Script.character_is_Killed == true)
             {
@@ -572,14 +572,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    IEnumerator Battle(int Round) // ¼±°ø,ÈÄ°ø¿¡ µû¶ó ¹èÆ²À» ÁøÇàÇÑ´Ù.
+    IEnumerator Battle(int Round) // ì„ ê³µ,í›„ê³µì— ë”°ë¼ ë°°í‹€ì„ ì§„í–‰í•œë‹¤.
     {
         Debug.LogFormat("<color=#FF69B4> Round: {0}</color>", Round);
         foreach(GameObject team1_Character in bM_Character_Team1)
         {
             if (team1_Character.GetComponent<Character>().character_Attack_Order == Round)
             {
-                if (team1_Character.GetComponent<Character>().character_Is_Allive) // ÆÀ1ÀÇ Ä³¸¯ÅÍ Áß °ø°İ¼ø¼­°¡ ÆäÀÌÁî¿Í ¶È°°°í, »ì¾ÆÀÖ´Â Ä³¸¯ÅÍ°¡ °ø°İÀ» ½ÇÇàÇÑ´Ù.
+                if (team1_Character.GetComponent<Character>().character_Is_Allive) // íŒ€1ì˜ ìºë¦­í„° ì¤‘ ê³µê²©ìˆœì„œê°€ í˜ì´ì¦ˆì™€ ë˜‘ê°™ê³ , ì‚´ì•„ìˆëŠ” ìºë¦­í„°ê°€ ê³µê²©ì„ ì‹¤í–‰í•œë‹¤.
                 {
                     yield return StartCoroutine(Character_Attack(team1_Character, bM_Character_Team2));
                 }
@@ -596,7 +596,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             if (team2_Character.GetComponent<Character>().character_Attack_Order == Round)
             {
-                if (team2_Character.GetComponent<Character>().character_Is_Allive) // ÆÀ2ÀÇ Ä³¸¯ÅÍ Áß °ø°İ¼ø¼­°¡ ÆäÀÌÁî¿Í ¶È°°°í, »ì¾ÆÀÖ´Â Ä³¸¯ÅÍ°¡ °ø°İÀ» ½ÇÇàÇÑ´Ù.
+                if (team2_Character.GetComponent<Character>().character_Is_Allive) // íŒ€2ì˜ ìºë¦­í„° ì¤‘ ê³µê²©ìˆœì„œê°€ í˜ì´ì¦ˆì™€ ë˜‘ê°™ê³ , ì‚´ì•„ìˆëŠ” ìºë¦­í„°ê°€ ê³µê²©ì„ ì‹¤í–‰í•œë‹¤.
                 {
                     yield return StartCoroutine(Character_Attack(team2_Character, bM_Character_Team1));
                 }
@@ -611,7 +611,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         Round_Finish();
     }
 
-    void Calculate_Remain_HP() //³²Àº Ã¼·Â °è»ê
+    void Calculate_Remain_HP() //ë‚¨ì€ ì²´ë ¥ ê³„ì‚°
     {
         bM_Remain_HP_Team1 = 0;
         bM_Remain_HP_Team2 = 0;
@@ -644,7 +644,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public int Reverse_Enemy(int num) // Àû °ø°İ ½Ã °ø°İ¹üÀ§¸¦ ÁÂ¿ì¹İÀü½ÃÅ´.
+    public int Reverse_Enemy(int num) // ì  ê³µê²© ì‹œ ê³µê²©ë²”ìœ„ë¥¼ ì¢Œìš°ë°˜ì „ì‹œí‚´.
     {
         int dummy = 0;
         switch(num)
@@ -717,14 +717,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (bM_Remain_Character_Team1 < bM_Remain_Character_Team2)
         {
-            // ÆĞ¹è
+            // íŒ¨ë°°
 
             alertMessage.gameObject.SetActive(true);
             alertMessage.Lose();
         }
         else if(bM_Remain_Character_Team2 < bM_Remain_Character_Team1)
         {
-            // ½Â¸®
+            // ìŠ¹ë¦¬
 
             alertMessage.gameObject.SetActive(true);
             alertMessage.Win();
@@ -732,7 +732,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            // Ã¼·Â ºñ±³
+            // ì²´ë ¥ ë¹„êµ
 
             if (bM_Remain_HP_Team1 < bM_Remain_HP_Team2)
             {
@@ -779,7 +779,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel((int)Move_Scene.ENUM_SCENE.PVE_SCENE);
     }
 
-    #region Æ÷Åæ Äİ¹é ÇÔ¼ö
+    #region í¬í†¤ ì½œë°± í•¨ìˆ˜
     public override void OnPlayerLeftRoom(Player otherPlayer) {
         uiManager.ShowMatchResult(true);
     }

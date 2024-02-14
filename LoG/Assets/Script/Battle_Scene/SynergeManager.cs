@@ -9,12 +9,12 @@ public class SynergeManager : MonoBehaviour
     public GameObject synergeEffect_Team2;
 
     private static SynergeManager _instance;
-    // ÀÎ½ºÅÏ½º¿¡ Á¢±ÙÇÏ±â À§ÇÑ ÇÁ·ÎÆÛÆ¼
+    // ì¸ìŠ¤í„´ìŠ¤ì— ì ‘ê·¼í•˜ê¸° ìœ„í•œ í”„ë¡œí¼í‹°
     public static SynergeManager Instance
     {
         get
         {
-            // ÀÎ½ºÅÏ½º°¡ ¾ø´Â °æ¿ì¿¡ Á¢±ÙÇÏ·Á ÇÏ¸é ÀÎ½ºÅÏ½º¸¦ ÇÒ´çÇØÁØ´Ù.
+            // ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ëŠ” ê²½ìš°ì— ì ‘ê·¼í•˜ë ¤ í•˜ë©´ ì¸ìŠ¤í„´ìŠ¤ë¥¼ í• ë‹¹í•´ì¤€ë‹¤.
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(SynergeManager)) as SynergeManager;
@@ -31,7 +31,7 @@ public class SynergeManager : MonoBehaviour
         {
             _instance = this;
         }
-        // ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ´Â °æ¿ì »õ·Î»ı±â´Â ÀÎ½ºÅÏ½º¸¦ »èÁ¦ÇÑ´Ù.
+        // ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš° ìƒˆë¡œìƒê¸°ëŠ” ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì‚­ì œí•œë‹¤.
         else if (_instance != this)
         {
             Destroy(gameObject);
@@ -112,7 +112,7 @@ public class SynergeManager : MonoBehaviour
         }
     }
 
-    void A1D1B1(List<GameObject> team,int lineNumber) // °ø1¹æ1¹ë1 ½Ã³ÊÁö
+    void A1D1B1(List<GameObject> team,int lineNumber) // ê³µ1ë°©1ë°¸1 ì‹œë„ˆì§€
     {
         foreach(var character in team)
         {
@@ -128,9 +128,9 @@ public class SynergeManager : MonoBehaviour
 
         PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip);
         synergemessage.SetActive(true);
-        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "°ø1¹æ1¹ë1");
+        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "ê³µ1ë°©1ë°¸1");
     }
-    void A2(List<GameObject> team, int lineNumber) // °ø2 ½Ã³ÊÁö
+    void A2(List<GameObject> team, int lineNumber) // ê³µ2 ì‹œë„ˆì§€
     {
         foreach (var character in team)
         {
@@ -149,9 +149,9 @@ public class SynergeManager : MonoBehaviour
 
         PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip);
         synergemessage.SetActive(true);
-        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "°ø2");
+        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "ê³µ2");
     }
-    void A3(List<GameObject> team, int lineNumber) // °ø3 ½Ã³ÊÁö
+    void A3(List<GameObject> team, int lineNumber) // ê³µ3 ì‹œë„ˆì§€
     {
         foreach (var character in team)
         {
@@ -168,9 +168,9 @@ public class SynergeManager : MonoBehaviour
 
         PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip);
         synergemessage.SetActive(true);
-        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "°ø3");
+        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "ê³µ3");
     }
-    void B2(List<GameObject> team, int lineNumber) // ¹ë2 ½Ã³ÊÁö
+    void B2(List<GameObject> team, int lineNumber) // ë°¸2 ì‹œë„ˆì§€
     {
         foreach (var character in team)
         {
@@ -191,9 +191,9 @@ public class SynergeManager : MonoBehaviour
 
         PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip);
         synergemessage.SetActive(true);
-        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "¹ë2");
+        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "ë°¸2");
     }
-    void B3(List<GameObject> team, int lineNumber) // ¹ë3 ½Ã³ÊÁö
+    void B3(List<GameObject> team, int lineNumber) // ë°¸3 ì‹œë„ˆì§€
     {
         foreach (var character in team)
         {
@@ -211,10 +211,10 @@ public class SynergeManager : MonoBehaviour
 
         PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip);
         synergemessage.SetActive(true);
-        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "¹ë3");
+        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "ë°¸3");
     }
 
-    void D2(List<GameObject> team, int lineNumber) // ¹æ2 ½Ã³ÊÁö
+    void D2(List<GameObject> team, int lineNumber) // ë°©2 ì‹œë„ˆì§€
     {
         foreach(var character in team)
         {
@@ -232,10 +232,10 @@ public class SynergeManager : MonoBehaviour
 
         PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip);
         synergemessage.SetActive(true);
-        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "¹æ2");
+        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "ë°©2");
     }
 
-    void D3(List<GameObject> team, int lineNumber) // ¹æ3 ½Ã³ÊÁö
+    void D3(List<GameObject> team, int lineNumber) // ë°©3 ì‹œë„ˆì§€
     {
         foreach (var character in team)
         {
@@ -250,6 +250,6 @@ public class SynergeManager : MonoBehaviour
 
         PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip);
         synergemessage.SetActive(true);
-        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "¹æ3");
+        synergemessage.GetComponent<SynergeMessage>().Message(team[0].GetComponent<Character>().character_Team_Number, "ë°©3");
     }
 }

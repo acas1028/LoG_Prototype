@@ -128,7 +128,7 @@ public class Deck_Manager : MonoBehaviour
             Recolor_Grid(CG.Grid_Num);
             Check_Stat();
         }
-        else//±×¸®µå ¼±ÅÃ
+        else//ê·¸ë¦¬ë“œ ì„ íƒ
         {
             if (current.character_AP < 20)
                 return;
@@ -216,7 +216,7 @@ public class Deck_Manager : MonoBehaviour
 
     void Load_Deck()
     {
-        // ·Î±×ÀÎ½Ã, È¤Àº ¿ÀÇÁ¶óÀÎ ¸ğµå ÀÔÀå½Ã µ¦ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Â ÈÄ¿¡ ÁøÇàµÇµµ·Ï ¼öÁ¤ÇÏ¿´À½
+        // ë¡œê·¸ì¸ì‹œ, í˜¹ì€ ì˜¤í”„ë¼ì¸ ëª¨ë“œ ì…ì¥ì‹œ ë± ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¨ í›„ì— ì§„í–‰ë˜ë„ë¡ ìˆ˜ì •í•˜ì˜€ìŒ
         for (int i = 0; i < 7; i++)
         {
             Character ch = Deck_Data.Save_Data[nowPageIdx, i].GetComponent<Character>();
@@ -247,7 +247,7 @@ public class Deck_Manager : MonoBehaviour
             }
         }
 
-        for(int i=0; i<7; i++) //µ¦ ÆäÀÌÁö ¹Ù²î¾úÀ» ¶§ ½ºÇÁ¶óÀÌÆ® º¯È­, ¼±ÅÃµÇ¾ú´ø ½ºÅ³ ¹öÆ° »öÀº ´Ù½Ã º»·¡´ë·Î º¯È­.
+        for(int i=0; i<7; i++) //ë± í˜ì´ì§€ ë°”ë€Œì—ˆì„ ë•Œ ìŠ¤í”„ë¼ì´íŠ¸ ë³€í™”, ì„ íƒë˜ì—ˆë˜ ìŠ¤í‚¬ ë²„íŠ¼ ìƒ‰ì€ ë‹¤ì‹œ ë³¸ë˜ëŒ€ë¡œ ë³€í™”.
         {
             CharacterSpace[i].GetComponent<ShowSprite_SaveDeckData>().SetSprite();
             Character_Slot[i].GetComponent<Image>().color = Color.white;
@@ -279,7 +279,7 @@ public class Deck_Manager : MonoBehaviour
 
     private void Load_Skill()
     {
-        if(Deck_Data.Save_Data[nowPageIdx, 0].GetComponent<Character>().character_ID == 0) // ±× µ¦ ÆäÀÌÁöÀÇ Ä³¸¯ÅÍÀÇ ¾ÆÀÌµğ°¡ 0ÀÏ °æ¿ì 
+        if(Deck_Data.Save_Data[nowPageIdx, 0].GetComponent<Character>().character_ID == 0) // ê·¸ ë± í˜ì´ì§€ì˜ ìºë¦­í„°ì˜ ì•„ì´ë””ê°€ 0ì¼ ê²½ìš° 
         {
             return;
         }

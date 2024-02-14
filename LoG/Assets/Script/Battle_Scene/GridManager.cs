@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    public GameObject Mine_Red_Grid;     // ºÓÀº ±×¸®µå(³ª)
-    public GameObject Opponent_Red_Grid; // ºÓÀº ±×¸®µå(Àû)
+    public GameObject Mine_Red_Grid;     // ë¶‰ì€ ê·¸ë¦¬ë“œ(ë‚˜)
+    public GameObject Opponent_Red_Grid; // ë¶‰ì€ ê·¸ë¦¬ë“œ(ì )
     public GameObject[] Team1Character_Position;
     public GameObject[] Team2Character_Position;
     public GameObject[] Team1_Map;
@@ -13,12 +13,12 @@ public class GridManager : MonoBehaviour
     public GameObject BuffedEffect;
     public GameObject NerfedEffect;
     private static GridManager _instance;
-    // ÀÎ½ºÅÏ½º¿¡ Á¢±ÙÇÏ±â À§ÇÑ ÇÁ·ÎÆÛÆ¼
+    // ì¸ìŠ¤í„´ìŠ¤ì— ì ‘ê·¼í•˜ê¸° ìœ„í•œ í”„ë¡œí¼í‹°
     public static GridManager Instance
     {
         get
         {
-            // ÀÎ½ºÅÏ½º°¡ ¾ø´Â °æ¿ì¿¡ Á¢±ÙÇÏ·Á ÇÏ¸é ÀÎ½ºÅÏ½º¸¦ ÇÒ´çÇØÁØ´Ù.
+            // ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ëŠ” ê²½ìš°ì— ì ‘ê·¼í•˜ë ¤ í•˜ë©´ ì¸ìŠ¤í„´ìŠ¤ë¥¼ í• ë‹¹í•´ì¤€ë‹¤.
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(GridManager)) as GridManager;
@@ -35,7 +35,7 @@ public class GridManager : MonoBehaviour
         {
             _instance = this;
         }
-        // ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ´Â °æ¿ì »õ·Î»ı±â´Â ÀÎ½ºÅÏ½º¸¦ »èÁ¦ÇÑ´Ù.
+        // ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš° ìƒˆë¡œìƒê¸°ëŠ” ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì‚­ì œí•œë‹¤.
         else if (_instance != this)
         {
             Destroy(gameObject);
@@ -55,8 +55,8 @@ public class GridManager : MonoBehaviour
     }
 
 
-    // ÀüÅõÁß¿¡ ÇÇ°İ´çÇÑ ¹üÀ§¿¡ ºÓÀº ±×¸®µå »ı¼º (1ÆÀ)
-    // ³ªÁß¿¡ ¸Ê ±×·¡ÇÈÀ» ¹ŞÀ» ½Ã »õ·Î º¯°æ ÇÊ¿ä
+    // ì „íˆ¬ì¤‘ì— í”¼ê²©ë‹¹í•œ ë²”ìœ„ì— ë¶‰ì€ ê·¸ë¦¬ë“œ ìƒì„± (1íŒ€)
+    // ë‚˜ì¤‘ì— ë§µ ê·¸ë˜í”½ì„ ë°›ì„ ì‹œ ìƒˆë¡œ ë³€ê²½ í•„ìš”
     public void Create_Damaged_Grid_Team1(int Damaged_Grid_Num)
     {
         GameObject redGrid = Instantiate(Mine_Red_Grid, Team1_Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
@@ -65,7 +65,7 @@ public class GridManager : MonoBehaviour
         Destroy(redGrid, BattleManager.Instance.bM_AttackTimegap);
     }
 
-    //ÀüÅõÁß¿¡ ÇÇ°İ´çÇÑ ¹üÀ§¿¡ ºÓÀº ±×¸®µå »ı¼º (2ÆÀ)
+    //ì „íˆ¬ì¤‘ì— í”¼ê²©ë‹¹í•œ ë²”ìœ„ì— ë¶‰ì€ ê·¸ë¦¬ë“œ ìƒì„± (2íŒ€)
     public void Create_Damaged_Grid_Team2(int Damaged_Grid_Num)
     {
         GameObject redGrid = Instantiate(Opponent_Red_Grid, Team2_Map[Damaged_Grid_Num - 1].transform.position, Quaternion.identity);
@@ -86,7 +86,7 @@ public class GridManager : MonoBehaviour
             Destroy(BuffedGrid, BattleManager.Instance.bM_AttackTimegap);
         }
 
-        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip); // °ø°İ »ç¿îµå Àç»ı
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power up") as AudioClip); // ê³µê²© ì‚¬ìš´ë“œ ì¬ìƒ
     }
 
     public void Create_Nerfed_Grid(int Team_Num,int Nerfed_Grid_Num)
@@ -103,7 +103,7 @@ public class GridManager : MonoBehaviour
             Destroy(NerfedGrid, BattleManager.Instance.bM_AttackTimegap);
         }
 
-        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power down") as AudioClip); // °ø°İ »ç¿îµå Àç»ı
+        PlaySound.Instance.ChangeSoundAndPlay(Resources.Load("Sound/Sound/Sound/SFX/power down") as AudioClip); // ê³µê²© ì‚¬ìš´ë“œ ì¬ìƒ
     }
 }
  

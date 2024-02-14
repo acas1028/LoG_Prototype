@@ -12,11 +12,11 @@ public class Arrayment_Manager : MonoBehaviourPun
     private bool is_click_inventory = false;
     [SerializeField]
     private bool[] b_ArrayedInven = new bool[7] { false,false,false,false,false,false,false };
-    public bool Ready_Array = false; // ·¹µğ ¹öÆ°À» ´­·¶´Ù.
-    private bool my_turn = true; // ³ªÀÇ ÅÏÀÌ´Ù.
-    private bool Pick = true;// true¶ó¸é ¹èÄ¡. false¶ó¸é Á¤º¸¸¦ ÀĞÀ»¼ö¸¸ÀÖ´Ù. Ãß°¡ ¹èÄ¡¸¦ ¸·´Â´Ù.
+    public bool Ready_Array = false; // ë ˆë”” ë²„íŠ¼ì„ ëˆŒë €ë‹¤.
+    private bool my_turn = true; // ë‚˜ì˜ í„´ì´ë‹¤.
+    private bool Pick = true;// trueë¼ë©´ ë°°ì¹˜. falseë¼ë©´ ì •ë³´ë¥¼ ì½ì„ìˆ˜ë§Œìˆë‹¤. ì¶”ê°€ ë°°ì¹˜ë¥¼ ë§‰ëŠ”ë‹¤.
     [SerializeField]
-    private bool On_Raycast = false;//¹èÄ¡¸¦ ´ÙÇß´Ù.
+    private bool On_Raycast = false;//ë°°ì¹˜ë¥¼ ë‹¤í–ˆë‹¤.
     [SerializeField]
     private bool b_isCancle = false;
     private bool b_isMyCancle = false;
@@ -48,7 +48,7 @@ public class Arrayment_Manager : MonoBehaviourPun
     public ArrData_Sync arrData_Sync;
     public Character_arrayment_showing character_Arrayment_Showing;
     private Arrayed_Data saved;
-    #endregion//º¯¼öµé 
+    #endregion//ë³€ìˆ˜ë“¤ 
 
     void Start()
     {
@@ -106,8 +106,8 @@ public class Arrayment_Manager : MonoBehaviourPun
         }
     }
 
-    // Áö±İÀº »ç¿ëµÇÁö ¾Ê´Â ÇÔ¼ö
-    // Arraed_Data¿¡ ÀÖ´Â µ¥ÀÌÅÍ¿¡ µû¶ó ±×¸®µå¿¡ Ä³¸¯ÅÍ¸¦ ¹èÄ¡
+    // ì§€ê¸ˆì€ ì‚¬ìš©ë˜ì§€ ì•ŠëŠ” í•¨ìˆ˜
+    // Arraed_Dataì— ìˆëŠ” ë°ì´í„°ì— ë”°ë¼ ê·¸ë¦¬ë“œì— ìºë¦­í„°ë¥¼ ë°°ì¹˜
     private void InitGridCharacters()
     {
         for (int i = 0; i < 5; i++)
@@ -150,12 +150,12 @@ public class Arrayment_Manager : MonoBehaviourPun
         if (!hit)
             return;
 
-        if (hit.transform.tag == "Character") //ÀÚ½ÅÀÌ³ª »ó´ëÀÇ Ä³¸¯ÅÍ¸¦ Å¬¸¯ÇÑ °æ¿ì.
+        if (hit.transform.tag == "Character") //ìì‹ ì´ë‚˜ ìƒëŒ€ì˜ ìºë¦­í„°ë¥¼ í´ë¦­í•œ ê²½ìš°.
         {
             //PopUp_Manager.GetComponent<ShowingCharacterStats>().Character_Showing_Stats(hit.collider.gameObject.GetComponent<Character>().character_ID);
-            //Å¬¸¯ÇÑ Ä³¸¯ÅÍÀÇ Á¤º¸¸¦ º¸¿©ÁØ´Ù
+            //í´ë¦­í•œ ìºë¦­í„°ì˜ ì •ë³´ë¥¼ ë³´ì—¬ì¤€ë‹¤
 
-            //Ä³¸¯ÅÍ Å¬¸¯½Ã ÆË¾÷ »ı¼º ¹× »èÁ¦
+            //ìºë¦­í„° í´ë¦­ì‹œ íŒì—… ìƒì„± ë° ì‚­ì œ
             if (hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.activeSelf == false)
             {
                 hit.transform.gameObject.GetComponent<GridCharacter_To_PopupPosition>().Popup_Position.transform.GetChild(0).gameObject.SetActive(true);
@@ -173,15 +173,15 @@ public class Arrayment_Manager : MonoBehaviourPun
 
             for (int i = 0; i < 9; i++)
             {
-                if (hit.transform.gameObject == Grids[i])//ÀÚ½ÅÀÇ ±×¸®µå¿¡ ÀÖ´Â Ä³¸¯ÅÍ¸¦ Å¬¸¯ÇÑ °æ¿ì.
+                if (hit.transform.gameObject == Grids[i])//ìì‹ ì˜ ê·¸ë¦¬ë“œì— ìˆëŠ” ìºë¦­í„°ë¥¼ í´ë¦­í•œ ê²½ìš°.
                 {
 
-                    if (my_turn == true)//ÀÚ½ÅÀÇ ÅÏÀÌ¸é Ãë¼Ò°¡ °¡´ÉÇÏ´Ù
+                    if (my_turn == true)//ìì‹ ì˜ í„´ì´ë©´ ì·¨ì†Œê°€ ê°€ëŠ¥í•˜ë‹¤
                     {
                         Cancle_Character = hit.transform.gameObject;
                         Array_Cancle_Button.SetActive(!Array_Cancle_Button.activeSelf);
                     }
-                    else//ÀÚ½ÅÀÇ ÅÏÀÌ ¾Æ´Ï¸é Ãë¼Ò°¡ ºÒ°¡´É ÇÏ´Ù.
+                    else//ìì‹ ì˜ í„´ì´ ì•„ë‹ˆë©´ ì·¨ì†Œê°€ ë¶ˆê°€ëŠ¥ í•˜ë‹¤.
                     {
                         Array_Cancle_Button.SetActive(false);
                     }
@@ -190,7 +190,7 @@ public class Arrayment_Manager : MonoBehaviourPun
 
 
         }
-        if (hit.transform.tag == "Null_Character" && is_click_inventory == true)// ÀÎº¥Åä¸®¸¦ ´©¸£°í, ºó ±×¸®µå¸¦ Å¬¸¯ -> Á¤»óÀûÀÎ ¹èÄ¡¸¦ ÇÑ °æ¿ì.
+        if (hit.transform.tag == "Null_Character" && is_click_inventory == true)// ì¸ë²¤í† ë¦¬ë¥¼ ëˆ„ë¥´ê³ , ë¹ˆ ê·¸ë¦¬ë“œë¥¼ í´ë¦­ -> ì •ìƒì ì¸ ë°°ì¹˜ë¥¼ í•œ ê²½ìš°.
         {
             GameObject Grid_Character = hit.transform.gameObject;
             int gridNum = 0;
@@ -207,13 +207,13 @@ public class Arrayment_Manager : MonoBehaviourPun
 
             if (gridNum <= 0 || gridNum > 9)
             {
-                Debug.LogError("Grid_Character ¿¡ ÇØ´çÇÏ´Â Grids[i]ÀÇ °³Ã¼ Ã£À» ¼ö ¾øÀ½");
+                Debug.LogError("Grid_Character ì— í•´ë‹¹í•˜ëŠ” Grids[i]ì˜ ê°œì²´ ì°¾ì„ ìˆ˜ ì—†ìŒ");
                 return;
             }
 
             if(InvenNum<=0||InvenNum>7)
             {
-                Debug.LogError("¹üÀ§¸¦ ¹ş¾î³²");
+                Debug.LogError("ë²”ìœ„ë¥¼ ë²—ì–´ë‚¨");
                 return;
             }
 
@@ -266,7 +266,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                         if (Ready_Array == true)
                         {
                             saved.team1[0].GetComponent<Character>().character_Attack_Order = 1;
-                            Debug.Log((ArrayPhase)Phase + "¹èÄ¡ ¿Ï·á");
+                            Debug.Log((ArrayPhase)Phase + "ë°°ì¹˜ ì™„ë£Œ");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
                             On_Raycast = false;
@@ -317,7 +317,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                         {
                             saved.team1[1].GetComponent<Character>().character_Attack_Order = 2;
                             saved.team1[2].GetComponent<Character>().character_Attack_Order = 3;
-                            Debug.Log((ArrayPhase)Phase + "¹èÄ¡ ¿Ï·á");
+                            Debug.Log((ArrayPhase)Phase + "ë°°ì¹˜ ì™„ë£Œ");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
                             On_Raycast = false;
@@ -367,7 +367,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                         {
                             saved.team1[3].GetComponent<Character>().character_Attack_Order = 4;
                             saved.team1[4].GetComponent<Character>().character_Attack_Order = 5;
-                            Debug.Log((ArrayPhase)Phase + "¹èÄ¡ ¿Ï·á");
+                            Debug.Log((ArrayPhase)Phase + "ë°°ì¹˜ ì™„ë£Œ");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
                             On_Raycast = false;
@@ -438,7 +438,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                         {
                             saved.team1[0].GetComponent<Character>().character_Attack_Order = 1;
                             saved.team1[1].GetComponent<Character>().character_Attack_Order = 2;
-                            Debug.Log((ArrayPhase)Phase + "¹èÄ¡ ¿Ï·á");
+                            Debug.Log((ArrayPhase)Phase + "ë°°ì¹˜ ì™„ë£Œ");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
                             On_Raycast = false;
@@ -488,7 +488,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                         {
                             saved.team1[2].GetComponent<Character>().character_Attack_Order = 3;
                             saved.team1[3].GetComponent<Character>().character_Attack_Order = 4;
-                            Debug.Log((ArrayPhase)Phase + "¹èÄ¡ ¿Ï·á");
+                            Debug.Log((ArrayPhase)Phase + "ë°°ì¹˜ ì™„ë£Œ");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
                             On_Raycast = false;
@@ -537,7 +537,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                         if (Ready_Array == true)
                         {
                             saved.team1[4].GetComponent<Character>().character_Attack_Order = 5;
-                            Debug.Log((ArrayPhase)Phase + "¹èÄ¡ ¿Ï·á");
+                            Debug.Log((ArrayPhase)Phase + "ë°°ì¹˜ ì™„ë£Œ");
                             arrRoomManager.StartArrayPhase();
                             Ready_Array = false;
                             On_Raycast = false;
@@ -569,7 +569,7 @@ public class Arrayment_Manager : MonoBehaviourPun
                 Order_Rearrange(i);
             }
         }
-        Debug.Log("Ãë¼Ò");
+        Debug.Log("ì·¨ì†Œ");
         character_Arrayment_Showing.Set_AttackRange_Ui(false);
         Cancle_Character.tag = "Null_Character";
         cs.Character_Reset();

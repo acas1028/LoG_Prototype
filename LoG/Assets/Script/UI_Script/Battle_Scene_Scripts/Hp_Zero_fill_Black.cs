@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Hp_Zero_fill_Black : MonoBehaviour
 {
-    private GameObject hp_bar; //Ä³¸¯ÅÍ ¹ØÀÇ hp ¹Ù
-    private GameObject fill; //hp ¹Ù ¹è°æ
+    private GameObject hp_bar; //ìºë¦­í„° ë°‘ì˜ hp ë°”
+    private GameObject fill; //hp ë°” ë°°ê²½
 
     void Start()
     {
@@ -20,7 +20,7 @@ public class Hp_Zero_fill_Black : MonoBehaviour
         hp_bar_fill_black_in_zero();
     }
 
-    void hp_bar_fill_black_in_zero() //hp°¡ 0ÀÌ µÇ¾úÀ»¶§ ½Ã½ºÅÛ»ó ³²´Â ´õ¹Ì hp°¡ º¸ÀÌÁö ¾Ê°Ô, ½½¶óÀÌ´õÀÇ ¹è°æÀ» °Ë°Ô Ä¥ÇØ¹ö¸®´Â ÇÔ¼ö.
+    void hp_bar_fill_black_in_zero() //hpê°€ 0ì´ ë˜ì—ˆì„ë•Œ ì‹œìŠ¤í…œìƒ ë‚¨ëŠ” ë”ë¯¸ hpê°€ ë³´ì´ì§€ ì•Šê²Œ, ìŠ¬ë¼ì´ë”ì˜ ë°°ê²½ì„ ê²€ê²Œ ì¹ í•´ë²„ë¦¬ëŠ” í•¨ìˆ˜.
     {
         if(hp_bar.GetComponent<Slider>().value ==0)
         {

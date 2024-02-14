@@ -48,17 +48,18 @@ public class PurchasePopupManager : MonoBehaviour
 
     public void PurchaseSkill() {
         if (UserDataSynchronizer.unlockedSkillList.Contains(skill)) {
-            Debug.Log("º¸À¯ ÁßÀÎ Æ¯¼ºÀÔ´Ï´Ù.");
+            Debug.Log("ë³´ìœ  ì¤‘ì¸ íŠ¹ì„±ìž…ë‹ˆë‹¤.");
             return;
         }
 
-        var request = new PurchaseItemRequest() { CatalogVersion = "Skill", ItemId = "SKILL_" + ((int)skill).ToString(), VirtualCurrency = "CO", Price = price };
+        var request = new PurchaseItemRequest() { CatalogVersion = "Skill",
+        ItemId = "SKILL_" + ((int)skill).ToString(), VirtualCurrency = "CO", Price = price };
         PlayFabClientAPI.PurchaseItem(request,
             (result) => {
                 data.GetUserDataFromServer();
-                Debug.Log($"{result.Items} ±¸¸Å ¼º°ø");
+                Debug.Log($"{result.Items} êµ¬ë§¤ ì„±ê³µ");
             },
-            (error) => Debug.Log($"{error.ErrorMessage}, ±¸¸Å ½ÇÆÐ"));
+            (error) => Debug.Log($"{error.ErrorMessage}, êµ¬ë§¤ ì‹¤íŒ¨"));
         ClosePopup();
         ShopUI.SetActive(false);
     }

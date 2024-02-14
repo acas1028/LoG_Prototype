@@ -131,7 +131,7 @@ public class Deck_Skill : MonoBehaviour
             }
             if (!b_isNull)
             {
-                Debug.Log("µ¦ ½ºÅ³¿¡¼­ È£ÃâµÊ");
+                Debug.Log("ë± ìŠ¤í‚¬ì—ì„œ í˜¸ì¶œë¨");
                 deckManager.Pre_Skill = this.gameObject;
                 deckManager.Skill_List.Add(this.gameObject);
                 Button SKill = this.gameObject.GetComponent<Button>();

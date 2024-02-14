@@ -5,7 +5,7 @@ using UnityEngine;
 public class SynergeEffect : MonoBehaviour
 {
     // Start is called before the first frame update
-    // 0 : nothing 1: °ø°ÝÇü(»¡) 2: ¹æ¾îÇü(ÆÄ)  3: ¹ë·±½ºÇü(ÃÊ)
+    // 0 : nothing 1: ê³µê²©í˜•(ë¹¨) 2: ë°©ì–´í˜•(íŒŒ)  3: ë°¸ëŸ°ìŠ¤í˜•(ì´ˆ)
 
     public GameObject RedEffect;
     public GameObject BlueEffect;

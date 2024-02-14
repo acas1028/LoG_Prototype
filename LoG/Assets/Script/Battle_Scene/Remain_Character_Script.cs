@@ -18,11 +18,11 @@ public class Remain_Character_Script : MonoBehaviour
     {
         if(TeamNumber == 1)
         {
-            this.gameObject.GetComponent<Text>().text = "ÆÀ 1 ³²Àº Ä³¸¯ÅÍ " + BattleManager.Instance.bM_Remain_Character_Team1;
+            this.gameObject.GetComponent<Text>().text = "íŒ€ 1 ë‚¨ì€ ìºë¦­í„° " + BattleManager.Instance.bM_Remain_Character_Team1;
         }
         if(TeamNumber == 2)
         {
-            this.gameObject.GetComponent<Text>().text = "ÆÀ 2 ³²Àº Ä³¸¯ÅÍ " + BattleManager.Instance.bM_Remain_Character_Team2;
+            this.gameObject.GetComponent<Text>().text = "íŒ€ 2 ë‚¨ì€ ìºë¦­í„° " + BattleManager.Instance.bM_Remain_Character_Team2;
         }
     }
 }

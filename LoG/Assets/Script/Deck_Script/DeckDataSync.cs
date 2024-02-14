@@ -22,7 +22,7 @@ public class DeckDataSync : MonoBehaviour
             Destroy(gameObject);
 
         if (!PlayFabClientAPI.IsClientLoggedIn())
-            Debug.LogError("·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.");
+            Debug.LogError("ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.");
 
         isGetAllData = false;
 
@@ -31,10 +31,10 @@ public class DeckDataSync : MonoBehaviour
 
     public void SetData(int pageNum, int deckIndex, Character character)
     {
-        // ¼­¹ö¿¡ ÀúÀåµÇ´Â Key °ª ¾ç½Ä
+        // ì„œë²„ì— ì €ì¥ë˜ëŠ” Key ê°’ ì–‘ì‹
         // 0_3_character_stats
-        // 0Àº ÆäÀÌÁö ¹øÈ£ (¸Ç ¾Õ ÆäÀÌÁöÀÎ °æ¿ì 0)
-        // 3Àº ÇØ´ç ÆäÀÌÁö ³»¿¡¼­ Ä³¸¯ÅÍÀÇ À§Ä¡, ÀÎµ¦½º ¹øÈ£ (¸Ç ¾Õ ÀÎµ¦½ºÀÎ °æ¿ì 0)
+        // 0ì€ í˜ì´ì§€ ë²ˆí˜¸ (ë§¨ ì• í˜ì´ì§€ì¸ ê²½ìš° 0)
+        // 3ì€ í•´ë‹¹ í˜ì´ì§€ ë‚´ì—ì„œ ìºë¦­í„°ì˜ ìœ„ì¹˜, ì¸ë±ìŠ¤ ë²ˆí˜¸ (ë§¨ ì• ì¸ë±ìŠ¤ì¸ ê²½ìš° 0)
 
         string character_id = character.character_ID.ToString();
         string character_type = ((int)character.character_Type).ToString();
@@ -42,7 +42,7 @@ public class DeckDataSync : MonoBehaviour
         string character_hp = character.character_HP.ToString();
         string character_attack_damage = character.character_Attack_Damage.ToString();
 
-        // ¿À¹öÇìµå¸¦ ÁÙÀÌ±â À§ÇÏ¿© StringBuilder »ç¿ë
+        // ì˜¤ë²„í—¤ë“œë¥¼ ì¤„ì´ê¸° ìœ„í•˜ì—¬ StringBuilder ì‚¬ìš©
         StringBuilder sb = new StringBuilder();
         foreach (var item in character.character_Attack_Range)
         {
@@ -50,9 +50,9 @@ public class DeckDataSync : MonoBehaviour
         }
         string character_attack_range = sb.ToString();
 
-        // ÀúÀåµÇ´Â µ¥ÀÌÅÍÀÇ Key¿Í Value°ª ¿¹½Ã
-        // Key°ª: 0_5_character_stats
-        // Value°ª: id14_type2_skill13_hp350_damage40_range111110101
+        // ì €ì¥ë˜ëŠ” ë°ì´í„°ì˜ Keyì™€ Valueê°’ ì˜ˆì‹œ
+        // Keyê°’: 0_5_character_stats
+        // Valueê°’: id14_type2_skill13_hp350_damage40_range111110101
         var data = new Dictionary<string, string>() {
             { pageNum + "_" + deckIndex + "_character_stats", string.Format("id{0}_type{1}_skill{2}_hp{3}_damage{4}_range{5}",
             character_id, character_type, character_skill, character_hp, character_attack_damage, character_attack_range) },
@@ -63,16 +63,16 @@ public class DeckDataSync : MonoBehaviour
 
     private void SendData(Dictionary<string, string> data)
     {
-        // Key °ª Áö¿ì´Â ¹æ¹ı: value °ªÀ» null ·Î ÇØÁØ´Ù.
+        // Key ê°’ ì§€ìš°ëŠ” ë°©ë²•: value ê°’ì„ null ë¡œ í•´ì¤€ë‹¤.
         var request = new UpdateUserDataRequest() { Data = data, Permission = UserDataPermission.Private };
         PlayFabClientAPI.UpdateUserData(request,
             result =>
             {
                 foreach (var item in request.Data)
                 {
-                    Debug.LogFormat("ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ÀúÀå ¼º°ø: {0} / {1}", item.Key, item.Value);
+                    Debug.LogFormat("í”Œë ˆì´ì–´ ë°ì´í„° ì €ì¥ ì„±ê³µ: {0} / {1}", item.Key, item.Value);
                 }
-            }, error => Debug.LogWarningFormat("ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ÀúÀå ½ÇÆĞ: {0}", error.ErrorMessage)
+            }, error => Debug.LogWarningFormat("í”Œë ˆì´ì–´ ë°ì´í„° ì €ì¥ ì‹¤íŒ¨: {0}", error.ErrorMessage)
         );
     }
 
@@ -91,7 +91,7 @@ public class DeckDataSync : MonoBehaviour
                     {
                         lastPageNum = int.Parse(item.Value.Value);
                         Deck_Data_Send.instance.lastPageNum = lastPageNum;
-                        Debug.Log("¸¶Áö¸· ÆäÀÌÁö ¹øÈ£ ºÒ·¯¿À±â: " + lastPageNum);
+                        Debug.Log("ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸ ë¶ˆëŸ¬ì˜¤ê¸°: " + lastPageNum);
                     }
                     else if (item.Key.Contains("character_stats"))
                     {
@@ -99,7 +99,7 @@ public class DeckDataSync : MonoBehaviour
                         int index = (int)(item.Key[2] - '0');
                         if (index == -1)
                         {
-                            Debug.LogError("ÀÎµ¦½º ¹øÈ£°¡ -1 ÀÌ¹Ç·Î µ¦ Á¤º¸¸¦ ºÒ·¯¿Ã ¼ö ¾ø½À´Ï´Ù.");
+                            Debug.LogError("ì¸ë±ìŠ¤ ë²ˆí˜¸ê°€ -1 ì´ë¯€ë¡œ ë± ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¬ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                             break;
                         }
 
@@ -122,26 +122,26 @@ public class DeckDataSync : MonoBehaviour
                         {
                             character.character_Attack_Range[i] = (attack_range_temp[i] != '0');
                         }
-                        Debug.LogFormat("¹ŞÀº µ¥ÀÌÅÍ: {0} / {1}", item.Key, item.Value.Value);
+                        Debug.LogFormat("ë°›ì€ ë°ì´í„°: {0} / {1}", item.Key, item.Value.Value);
                     }
                 }
                 isGetAllData = true;
-            }, error => Debug.LogWarningFormat("µ¥ÀÌÅÍ ºÒ·¯¿À±â ½ÇÆĞ: {0}", error.ErrorMessage)
+            }, error => Debug.LogWarningFormat("ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨: {0}", error.ErrorMessage)
         );
     }
 
     public void SendLastPageNum(int lastPageNum)
     {
-        // Key °ª Áö¿ì´Â ¹æ¹ı: value °ªÀ» null ·Î ÇØÁØ´Ù.
+        // Key ê°’ ì§€ìš°ëŠ” ë°©ë²•: value ê°’ì„ null ë¡œ í•´ì¤€ë‹¤.
         var request = new UpdateUserDataRequest() { Data = new Dictionary<string, string>() { { "lastPageNum", lastPageNum.ToString() } }, Permission = UserDataPermission.Private };
         PlayFabClientAPI.UpdateUserData(request,
             result =>
             {
                 foreach (var item in request.Data)
                 {
-                    Debug.LogFormat("¸¶Áö¸· ÆäÀÌÁö ¹øÈ£ ÀúÀå ¼º°ø: {0} / {1}", item.Key, item.Value);
+                    Debug.LogFormat("ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸ ì €ì¥ ì„±ê³µ: {0} / {1}", item.Key, item.Value);
                 }
-            }, error => Debug.LogWarningFormat("¸¶Áö¸· ÆäÀÌÁö ¹øÈ£ ÀúÀå ½ÇÆĞ: {0}", error.ErrorMessage)
+            }, error => Debug.LogWarningFormat("ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸ ì €ì¥ ì‹¤íŒ¨: {0}", error.ErrorMessage)
         );
     }
 

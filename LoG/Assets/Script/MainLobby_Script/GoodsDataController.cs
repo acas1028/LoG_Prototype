@@ -33,7 +33,7 @@ public class GoodsDataController : MonoBehaviour {
     private void OnEnable() {
         if (UserDataSynchronizer.unlockedSkillList.Contains(skill)) {
             purchaseButton.interactable = false;
-            itemPrice.text = "º¸À¯Áß";
+            itemPrice.text = "ë³´ìœ ì¤‘";
         }
     }
 
@@ -49,14 +49,14 @@ public class GoodsDataController : MonoBehaviour {
 
                         if (UserDataSynchronizer.unlockedSkillList.Contains(skill)) {
                             purchaseButton.interactable = false;
-                            itemPrice.text = "º¸À¯Áß";
+                            itemPrice.text = "ë³´ìœ ì¤‘";
                         }
                         
                         return;
                     }
                 }
-                print("Skill_" + skill.ToString() + " ¹ß°ß ½ÇÆĞ");
-            }, error => print("Skill_" + skill.ToString() + " ¾ÆÀÌÅÛ ºÒ·¯¿À±â ½ÇÆĞ: " + error.ErrorMessage)
+                print("Skill_" + skill.ToString() + " ë°œê²¬ ì‹¤íŒ¨");
+            }, error => print("Skill_" + skill.ToString() + " ì•„ì´í…œ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨: " + error.ErrorMessage)
         );
     }
 

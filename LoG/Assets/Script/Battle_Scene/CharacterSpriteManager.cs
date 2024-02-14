@@ -32,7 +32,7 @@ public class CharacterSpriteManager : MonoBehaviour
 
     public void SetInitialSprite(int id)
     {
-        // ÇöÀç ID °³¼ö(14°³)¸¸Å­ÀÇ ½ºÇÁ¶óÀÌÆ®°¡ ¾ø¾î¼­ ÀÓ½Ã·Î Àû¿ëÇÔ
+        // í˜„ì¬ ID ê°œìˆ˜(14ê°œ)ë§Œí¼ì˜ ìŠ¤í”„ë¼ì´íŠ¸ê°€ ì—†ì–´ì„œ ì„ì‹œë¡œ ì ìš©í•¨
         // gameObject.GetComponent<SpriteRenderer>().sprite = Character_Sprite[Character_ID];
 
         switch(transform.parent.GetComponent<Character>().character_Type)

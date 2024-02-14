@@ -28,7 +28,7 @@ public class LogInManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (string.IsNullOrEmpty(PlayFabSettings.TitleId)) PlayFabSettings.TitleId = "7CCDF"; // ¿ì¸® °ÔÀÓÀÇ PlayFab ID´Â 7CCDF ÀÔ´Ï´Ù.
+        if (string.IsNullOrEmpty(PlayFabSettings.TitleId)) PlayFabSettings.TitleId = "7CCDF"; // ìš°ë¦¬ ê²Œìž„ì˜ PlayFab IDëŠ” 7CCDF ìž…ë‹ˆë‹¤.
 
         emailInput.text = PlayerPrefs.GetString("userID");
         passwordInput.text = PlayerPrefs.GetString("userPassword");
@@ -41,18 +41,18 @@ public class LogInManager : MonoBehaviour
     void LogIn() {
         var request = new LoginWithEmailAddressRequest { Email = emailInput.text, Password = passwordInput.text };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLogInSuccess, OnLogInFailed);
-        noticeText.text = "·Î±×ÀÎ ½Ãµµ Áß..";
+        noticeText.text = "ë¡œê·¸ì¸ ì‹œë„ ì¤‘..";
     }
 
     void Register() {
         var request = new RegisterPlayFabUserRequest { Username = usernameInputRegister.text, Email = emailInputRegister.text, Password = passwordInputRegister.text };
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnRegisterFailed);
-        noticeText.text = "È¸¿ø°¡ÀÔ ½Ãµµ Áß..";
+        noticeText.text = "íšŒì›ê°€ìž… ì‹œë„ ì¤‘..";
     }
 
     void OnLogInSuccess(LoginResult result) {
-        Debug.Log("Log-in Success : ·Î±×ÀÎ ¼º°ø");
-        noticeText.text = "·Î±×ÀÎ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.\n·Îºñ·Î ÀÌµ¿ Áß..";
+        Debug.Log("Log-in Success : ë¡œê·¸ì¸ ì„±ê³µ");
+        noticeText.text = "ë¡œê·¸ì¸ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.\në¡œë¹„ë¡œ ì´ë™ ì¤‘..";
         PlayerPrefs.SetString("userID", emailInput.text);
         PlayerPrefs.SetString("userPassword", passwordInput.text);
         SceneManager.LoadSceneAsync((int)Move_Scene.ENUM_SCENE.MAINLOBBY_SCENE);
@@ -61,41 +61,41 @@ public class LogInManager : MonoBehaviour
     void OnLogInFailed(PlayFabError error) {
         switch (error.Error) {
             case PlayFabErrorCode.AccountNotFound:
-                noticeText.text = "°èÁ¤À» Ã£À» ¼ö ¾ø½À´Ï´Ù.\nÀÌ¸ÞÀÏ ÁÖ¼Ò¸¦ È®ÀÎÇØÁÖ¼¼¿ä.";
+                noticeText.text = "ê³„ì •ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\nì´ë©”ì¼ ì£¼ì†Œë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”.";
                 break;
             case PlayFabErrorCode.InvalidAccount:
-                noticeText.text = "Àß¸øµÈ °èÁ¤ Á¤º¸ÀÔ´Ï´Ù.";
+                noticeText.text = "ìž˜ëª»ëœ ê³„ì • ì •ë³´ìž…ë‹ˆë‹¤.";
                 break;
             case PlayFabErrorCode.InvalidEmailAddress:
-                noticeText.text = "Àß¸øµÈ ÀÌ¸ÞÀÏ ÁÖ¼ÒÀÔ´Ï´Ù.";
+                noticeText.text = "ìž˜ëª»ëœ ì´ë©”ì¼ ì£¼ì†Œìž…ë‹ˆë‹¤.";
                 break;
             case PlayFabErrorCode.InvalidEmailOrPassword:
-                noticeText.text = "Àß¸øµÈ ºñ¹Ð¹øÈ£ ÀÔ´Ï´Ù.";
+                noticeText.text = "ìž˜ëª»ëœ ë¹„ë°€ë²ˆí˜¸ ìž…ë‹ˆë‹¤.";
                 break;
             default:
-                noticeText.text = "·Î±×ÀÎ ½ÇÆÐ";
+                noticeText.text = "ë¡œê·¸ì¸ ì‹¤íŒ¨";
                 break;
         }
         Debug.Log($"{error.ErrorMessage}");
     }
 
     void OnRegisterSuccess(RegisterPlayFabUserResult result) {
-        Debug.Log("Registration Success : È¸¿ø°¡ÀÔ ¼º°ø");
+        Debug.Log("Registration Success : íšŒì›ê°€ìž… ì„±ê³µ");
 
         usernameInputRegister.text = string.Empty;
         emailInputRegister.text = string.Empty;
         passwordInputRegister.text = string.Empty;
 
-        noticeText.text = "È¸¿ø°¡ÀÔ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.";
+        noticeText.text = "íšŒì›ê°€ìž…ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.";
 
         AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = 50000 };
         PlayFabClientAPI.AddUserVirtualCurrency(request,
-            (result) => print("È¸¿ø°¡ÀÔ ÀÌº¥Æ®! 50000 ÄÚÀÎÀ» È¹µæÇÏ¿´½À´Ï´Ù."),
-            (error)=>print("¾Ë ¼ö ¾ø´Â ¿À·ù·Î ÀÎÇØ 50000 ÄÚÀÎÀ» È¹µæÇÏÁö ¸øÇÏ¿´½À´Ï´Ù."));
+            (result) => print("íšŒì›ê°€ìž… ì´ë²¤íŠ¸! 50000 ì½”ì¸ì„ íšë“í•˜ì˜€ìŠµë‹ˆë‹¤."),
+            (error)=>print("ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ë¡œ ì¸í•´ 50000 ì½”ì¸ì„ íšë“í•˜ì§€ ëª»í•˜ì˜€ìŠµë‹ˆë‹¤."));
     }
 
     void OnRegisterFailed(PlayFabError error) {
-        noticeText.text = "È¸¿ø°¡ÀÔ¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù.";
+        noticeText.text = "íšŒì›ê°€ìž…ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.";
         Debug.Log("Sign-in Failed : " + noticeText.text);
     }
 }
